@@ -1,0 +1,102 @@
+.signup {
+    background-color: var(--light-grey);
+    padding: 80px 16px 150px;
+}
+
+@media screen and (max-width: 500px) {
+    .signup {
+        .card {
+            padding: 24px 16px 32px;
+            border-radius: 8px;
+            background-color: var(--white-color);
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+
+            h4 {
+                font-size: 16px;
+                font-weight: 600;
+                line-height: 24px;
+                font-family: 'Open Sans', sans-serif;
+                margin-bottom: 24px;
+            }
+
+
+            .form-group {
+                margin-bottom: 24px;
+            }
+
+            .forgot {
+                margin: 16px 0 24px;
+                font-size: 14px;
+                font-weight: 600;
+                line-height: 17px;
+                font-family: 'Open Sans', sans-serif;
+            }
+
+            .confirm-terms {
+                display: flex;
+                justify-content: center;
+                align-items: flex-start;
+                margin-bottom: 24px;
+
+                input[type="checkbox"] {
+                    appearance: none;
+                    width: 35px;
+                    height: 20px;
+                    background-color: #fff;
+                    border: 2px solid #333;
+                    border-radius: 4px;
+                    margin-right: 8px;
+                    cursor: pointer;
+                    position: relative;
+                }
+
+                input[type="checkbox"]:checked {
+                    background-color: #333;
+                    border-color: #fff;
+                }
+
+                input[type="checkbox"]::before {
+                    content: '\2713';
+                    font-size: 16px;
+                    color: #fff;
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    opacity: 0;
+                }
+
+                input[type="checkbox"]:checked::before {
+                    opacity: 1;
+                }
+
+                p {
+                    font-family: 'Open Sans', sans-serif;
+                    font-size: 12px;
+                    font-weight: 400;
+                    line-height: 17px;
+
+                    span {
+                        color: #1E9A8D;
+                    }
+                }
+
+
+            }
+
+            .no-account {
+                color: var(--black-color);
+                font-size: 14px;
+                font-weight: 600;
+                font-family: 'Open Sans', sans-serif;
+                margin-top: 24px;
+
+                span {
+                    color: var(--primary-color);
+                }
+            }
+        }
+    }
+}

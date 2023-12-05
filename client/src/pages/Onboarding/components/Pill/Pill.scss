@@ -1,0 +1,25 @@
+.pill {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    border-radius: 6px;
+
+    h3 {
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 40px;
+    }
+
+    &-red {
+        background-color: #FAEBEB;
+    }
+
+    &-pink {
+        background-color: #FDDDF6;
+    }
+
+    &-green {
+        background-color: #EAF1DA;
+    }
+}

@@ -1,0 +1,61 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #0E2D52;
+    --white-color: #ffffff;
+    --black-color: #000000;
+    --light-grey: #f9f9f9;
+}
+
+#app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+body {
+    color: var(--primary-color);
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+main {
+    flex-grow: 1;
+    margin-top: 84px;
+}
+
+img {
+    width: 100%;
+}
+
+.icon {
+
+    &-menu,
+    &-cancel {
+        width: 24px;
+        height: 20px;
+
+        &:after {
+            content: '';
+            position: absolute;
+            top: -35px;
+            bottom: -35px;
+            left: -35px;
+            right: -35px;
+        }
+
+        &>path {
+            fill: var(--primary-color);
+        }
+    }
+}
