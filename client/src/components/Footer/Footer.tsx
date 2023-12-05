@@ -13,7 +13,7 @@ const Footer = () => {
         <div className='top'>
           <h2>BIZCONNECT (LOGO)</h2>
           <p>
-            Connecting Global Afro-Caribbean Businesses with their customers
+          Connecting Global all small and medium Businesses with their customers
           </p>
         </div>
         <div className='bottom'>

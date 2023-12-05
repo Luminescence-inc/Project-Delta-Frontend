@@ -13,6 +13,10 @@ import ForgotPasswordFinal from 'pages/Authentication/ForgotPassword/ForgotPassw
 import Signup from 'pages/Authentication/Signup/Signup';
 import BusinessProfile from 'pages/Authentication/Signup/BusinessProfile';
 import OperationInfo from 'pages/Authentication/Signup/OperationInfo';
+import ViewBusiness from 'pages/Home/Business/ViewBusiness';
+import Email from 'pages/Authentication/ForgotPassword/Email';
+import VerifiedEmail from 'pages/Authentication/Verification/VerifiedEmail';
+import VerifiedAccount from 'pages/Authentication/Verification/VerifyAccount';
 
 function App() {
   const { pathname } = useLocation();
@@ -29,17 +33,15 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='/onboarding' element={<Onboarding />} />
           <Route path='/login' element={<Login />} />
-          <Route path='/forgot-password' element={<ForgotPassword />} />
-          <Route
-            path='/forgot-password-final'
-            element={<ForgotPasswordFinal />}
-          />
+          <Route path='/forgot-password/reset/:userId/:uniqueString' element={<ForgotPassword />} />
+          <Route path='/verify-email/:userId/:uniqueString' element={<VerifiedEmail />} />
+          <Route path='/verify-account' element={<VerifiedAccount />} />
+          <Route path='/forgot-password/email' element={<Email />} />
+          <Route path='/forgot-password-final' element={<ForgotPasswordFinal />} />
           <Route path='/signup' element={<Signup />} />
-          <Route
-            path='/signup/business-profile'
-            element={<BusinessProfile />}
-          />
+          <Route path='/signup/business-profile' element={<BusinessProfile />} />
           <Route path='/signup/operation-info' element={<OperationInfo />} />
+          <Route path='/view-your-business' element={<ViewBusiness />} />
         </Routes>
       </main>
       <Footer />

@@ -22,6 +22,12 @@
             }
         }
 
+        .button-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
         section.section-why {
             margin: 96px 0 120px;
 

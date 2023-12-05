@@ -9,10 +9,12 @@ a.btn {
     font-weight: 600;
     text-align: center;
     display: flex;
+    gap: 12px;
     align-items: center;
     justify-content: center;
     text-decoration: none;
     padding: 8px;
+    cursor: pointer;
 
     &-md {
         height: 37px;
