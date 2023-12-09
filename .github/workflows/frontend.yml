@@ -18,6 +18,8 @@ jobs:
       - name: Setup Symfony
         working-directory: ./client
         run: |
+          touch .env 
+          echo DATABASE_URL=${{secrets.BACKEND_URL}} >> .env
           yarn install
           yarn build
 
