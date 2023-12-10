@@ -14,7 +14,7 @@ export const registerUser = (data: SignUpData) => {
 export const loginUser = (data: LogInData) => {
   const url = `${tempUrl}/api/user/login`;
   // const url = `${bizConnectAPI.baseURL}/api/user/register`;
-  return axios.put(url, data);
+  return axios.post(url, data);
 };
 
 export const resetUserPassword = (
