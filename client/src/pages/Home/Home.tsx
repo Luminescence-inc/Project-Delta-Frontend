@@ -38,7 +38,7 @@ const Home = () => {
       })
       .catch((err)=>{
         setAuthenticated(false);
-        // console.error(err)
+        console.error(err)
         // console.log("home-aut")
       });
 
@@ -67,7 +67,7 @@ const Home = () => {
       })
       .catch((err)=>{
         setAuthenticated(false);
-        // console.error(err)
+        console.error(err)
         // console.log("home-aut")
       });
   }

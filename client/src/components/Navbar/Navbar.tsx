@@ -73,7 +73,7 @@ const Navbar = () => {
         setAuthenticated(false);
         setMenuOpen(true)
         // console.log("navbar-auth")
-        // console.error(err)
+        console.error(err)
       })
     
   }
