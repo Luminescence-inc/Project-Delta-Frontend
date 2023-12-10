@@ -3,7 +3,7 @@ import { LogInData, ResetPasswordData, SignUpData } from "types/auth";
 import axios from "axios";
 
 const tempUrl =
-  "bizconnectloadbalancer-233118861.ca-central-1.elb.amazonaws.com";
+  "http://bizconnectloadbalancer-233118861.ca-central-1.elb.amazonaws.com";
 
 export const registerUser = (data: SignUpData) => {
   const url = `${tempUrl}/api/user/register`;

@@ -1,21 +1,22 @@
 /** @format */
-import { Link } from "react-router-dom";
-import EyeIcon from "assets/icons/eye-icon.svg?react";
-import MailIcon from "assets/icons/mail-icon.svg?react";
-import Button from "components/Button/Button";
-import Input from "components/Input/Input";
+import { Link } from 'react-router-dom';
+import EyeIcon from 'assets/icons/eye-icon.svg?react';
+import ClosedEyeIcon from 'assets/icons/closed-eye-icon.svg?react';
+import MailIcon from 'assets/icons/mail-icon.svg?react';
+import Button from 'components/Button/Button';
+import Input from 'components/Input/Input';
 import { useFormik } from "formik";
-import { LogInData, LogInResponse, TOKEN_NAME, JwtPayload } from "types/auth";
-import { loginUser } from "api/auth";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "./Login.scss";
+import { SignUpResponse, SignUpData, LogInData, LogInResponse, TOKEN_NAME, JwtPayload } from 'types/auth';
+import { loginUser, registerUser } from 'api/auth';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './Login.scss';
 import * as yup from "yup";
 
 const validationSchema = yup.object({
   email: yup.string().email("Enter valid email").required(),
   password: yup.string().required("Please Enter your password"),
-});
+})
 
 const Login = () => {
   const navigate = useNavigate();
@@ -24,17 +25,18 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const onSubmit = async (values: LogInData) => {
-    const { ...data } = values;
+    const {...data} = values;
     try {
-      const res = await loginUser(data).catch((err) => {
-        const errorResponse: LogInResponse = err.response.data;
+      const res = await loginUser(data)
+      .catch((err)=>{
+        const errorResponse:LogInResponse = err.response.data;
 
         // Set error message
-        const errorCode = errorResponse?.message.code;
-        if (errorCode == 404 || errorCode == 401) {
-          setErrorMessage(errorResponse?.message.desc);
-        } else {
-          setErrorMessage("error occured while login");
+        const errorCode = errorResponse?.message.code; 
+        if(errorCode == 404 || errorCode == 401){
+          setErrorMessage(errorResponse?.message.desc)
+        }else{
+          setErrorMessage("error occured while login")
         }
         setError(true);
         console.error(err);
@@ -42,36 +44,37 @@ const Login = () => {
 
       const resData: LogInResponse = res?.data;
 
-      if (resData?.success) {
-        //res &&
+      if(resData?.success){ //res && 
         // Set token in local Storage
-        const tokenString = resData.data.token.split(" ")[1];
+        const tokenString = resData.data.token.split(' ')[1]
         localStorage.setItem(TOKEN_NAME, tokenString);
 
         // const authToken = localStorage.getItem(TOKEN_NAME) as string;
-        const parsedToken: JwtPayload = tokenString
-          ? JSON.parse(atob(tokenString?.split(".")[1]))
-          : {}; //check atob
+        const parsedToken: JwtPayload = tokenString? JSON.parse(atob(tokenString?.split('.')[1])) : {}; //check atob
 
         // route to homepage
         //check token and route accourdingly
-        if (parsedToken.verified) {
+        if(parsedToken.verified){
           // window.location.reload();
-          navigate("/");
-          window.location.reload();
-        } else {
-          navigate("/verify-account");
+
+          //add spinner
+          navigate('/?login=true');
+          // window.location.reload();
+        }else{
+          navigate('/verify-account');
           window.location.reload();
         }
-
+        
         setError(false);
         // window.location.reload();
+
       }
+
     } catch (err) {
       setError(true);
-      setErrorMessage("error occured while login");
+      setErrorMessage("error occured while login")
     }
-  };
+  }
 
   const formik = useFormik({
     initialValues: {
@@ -80,64 +83,70 @@ const Login = () => {
     },
     validateOnBlur: true,
     onSubmit,
-    validationSchema: validationSchema,
+    validationSchema: validationSchema
   });
 
+  // Custom Styles
+  const errorMessageStyle = {
+    color: 'red',
+    display: 'flex',
+    fontSize: '13px'
+  }
+
+  const submitErrorMessageStyle = {
+    color: 'red',
+    fontSize: '13px'
+  }
+
   return (
-    <div className="login">
-      <div className="card">
+    <div className='login'>
+      <div className='card'>
         <h4>Sign in</h4>
 
         {/* Display Error message */}
-        {error && <span>{errorMessage}</span>}
+        {error && (<span style={submitErrorMessageStyle}>{errorMessage}</span>)}
 
         <form onSubmit={formik.handleSubmit}>
+          <span style={errorMessageStyle}>{formik.touched.email && formik.errors.email
+                ? formik.errors.email
+                : ""}
+          </span>
           <Input
-            type="email"
-            label="Email Address"
-            name="email"
+            type='email'
+            label='Email Address'
+            name='email'
             value={formik.values.email}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            icon={<MailIcon className="input-icon" />}
-            placeholder="Enter Email Address"
+            icon={<MailIcon className='input-icon' />}
+            placeholder='Enter Email Address'
           />
-          <span>
-            {formik.touched.email && formik.errors.email
-              ? formik.errors.email
-              : ""}
-          </span>
 
+          <span style={errorMessageStyle}>{formik.touched.password && formik.errors.password
+                ? formik.errors.password
+                : ""}
+          </span>
           <Input
-            type={!showPassword ? "password" : "text"}
-            label="Password"
-            name="password"
+            type= {!showPassword? 'password': 'text'}
+            label='Password'
+            name='password'
             value={formik.values.password}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            icon={
-              <div onClick={() => setShowPassword(!showPassword)}>
-                <EyeIcon className="input-icon" />
-              </div>
-            }
-            placeholder="Enter Password"
+            icon={showPassword? <EyeIcon onClick={()=> setShowPassword(!showPassword)} className='input-icon'/> : <ClosedEyeIcon onClick={()=> setShowPassword(!showPassword)} className='input-icon'/>}
+            placeholder='Enter Password'
           />
-          <span>
-            {formik.touched.password && formik.errors.password
-              ? formik.errors.password
-              : ""}
-          </span>
-
-          <Button label="Submit" variant="primary" size="lg" type="submit" />
+          
+          <Button label='Submit' variant='primary' size='lg' type='submit' />
         </form>
 
-        <Link className="forgot" to="/forgot-password/email">
+        <Link className='forgot' to='/forgot-password/email'>
           <p>Forgot password?</p>
         </Link>
 
-        <p className="no-account">
-          Don't have an Account?{" "}
-          <Link to="/signup">
+        <p className='no-account'>
+          Don't have an Account?{' '}
+          <Link to='/signup'>
             <span>Sign up</span>
           </Link>
         </p>
