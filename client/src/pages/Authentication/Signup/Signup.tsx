@@ -2,6 +2,7 @@
 
 import { Link } from 'react-router-dom';
 import EyeIcon from 'assets/icons/eye-icon.svg?react';
+import ClosedEyeIcon from 'assets/icons/closed-eye-icon.svg?react';
 import MailIcon from 'assets/icons/mail-icon.svg?react';
 import ContactIcon from 'assets/icons/contact-icon.svg?react';
 import Input from 'components/Input/Input';
@@ -82,15 +83,31 @@ const Signup = () => {
     validationSchema: validationSchema
   });
 
+  // Custom Styles
+  const errorMessageStyle = {
+    color: 'red',
+    display: 'flex',
+    fontSize: '13px'
+  }
+
+  const submitErrorMessageStyle = {
+    color: 'red',
+    fontSize: '13px'
+  }
+
   return (
     <div className='signup'>
       <div className='card'>
         <h4>Quick write about signing up</h4>
         
         {/* Display Error message */}
-        {error && (<span>{errorMessage}</span>)}
+        {error && (<span style={submitErrorMessageStyle}>{errorMessage}</span>)}
         
         <form onSubmit={formik.handleSubmit}>
+          <span style={errorMessageStyle}>{formik.touched.firstName && formik.errors.firstName
+              ? formik.errors.firstName
+              : ""}
+          </span>
           <Input
             type='text'
             label='First Name'
@@ -101,10 +118,11 @@ const Signup = () => {
             onBlur={formik.handleBlur}
             placeholder='Enter First Name'
           />
-          <span>{formik.touched.firstName && formik.errors.firstName
-              ? formik.errors.firstName
-              : ""}</span>
-
+          
+          <span style={errorMessageStyle}>{formik.touched.lastName && formik.errors.lastName
+              ? formik.errors.lastName
+              : ""}
+          </span>
           <Input
             type='text'
             label='Last Name'
@@ -115,10 +133,11 @@ const Signup = () => {
             icon={<ContactIcon className='input-icon' />}
             placeholder='Enter Last Name'
           />
-          <span>{formik.touched.lastName && formik.errors.lastName
-              ? formik.errors.lastName
-              : ""}</span>
-
+          
+          <span style={errorMessageStyle}>{formik.touched.email && formik.errors.email
+              ? formik.errors.email
+              : ""}
+          </span>
           <Input
             type='email'
             label='Email Address'
@@ -129,10 +148,11 @@ const Signup = () => {
             icon={<MailIcon className='input-icon' />}
             placeholder='Enter Email Address'
           />
-          <span>{formik.touched.email && formik.errors.email
-              ? formik.errors.email
-              : ""}</span>
-
+          
+          <span style={errorMessageStyle}>{formik.touched.password && formik.errors.password
+              ? formik.errors.password
+              : ""}
+          </span>
           <Input
             type={!showPassword? 'password': 'text'}
             label='Email Password'
@@ -140,13 +160,14 @@ const Signup = () => {
             value={formik.values.password}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            icon={<div onClick={()=> setShowPassword(!showPassword)}><EyeIcon className='input-icon' /></div>}
+            icon={showPassword? <EyeIcon onClick={()=> setShowPassword(!showPassword)} className='input-icon'/> : <ClosedEyeIcon onClick={()=> setShowPassword(!showPassword)} className='input-icon'/>}
             placeholder='Enter Password'
           />
-          <span>{formik.touched.password && formik.errors.password
-              ? formik.errors.password
-              : ""}</span>
-
+          
+          <span style={errorMessageStyle}>{formik.touched.confirmPassword && formik.errors.confirmPassword
+              ? formik.errors.confirmPassword
+              : ""}
+          </span>
           <Input
             type={!showConfirmPassword? 'password': 'text'}
             label='Confirm Password'
@@ -154,12 +175,9 @@ const Signup = () => {
             value={formik.values.confirmPassword}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            icon={<div onClick={()=> setShowConirmPassword(!showConfirmPassword)}><EyeIcon className='input-icon' /></div>}
+            icon={showConfirmPassword? <EyeIcon onClick={()=> setShowConirmPassword(!showConfirmPassword)} className='input-icon'/> : <ClosedEyeIcon onClick={()=> setShowConirmPassword(!showConfirmPassword)} className='input-icon'/>}
             placeholder='Enter Password'
           />
-          <span>{formik.touched.confirmPassword && formik.errors.confirmPassword
-              ? formik.errors.confirmPassword
-              : ""}</span>
 
           <div className='confirm-terms'>
             <input type='checkbox' />

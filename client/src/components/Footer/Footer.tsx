@@ -1,5 +1,7 @@
 /** @format */
 
+import LogoFooterIcon from 'assets/icons/logo-footer-icon.svg?react';
+import Logo from 'assets/images/logo_img.png';
 import FacebookIcon from 'assets/icons/facebook-icon.svg?react';
 import LinkedinIcon from 'assets/icons/linkedin-icon.svg?react';
 import InstagramIcon from 'assets/icons/instagram-icon.svg?react';
@@ -11,9 +13,10 @@ const Footer = () => {
     <footer className='footer'>
       <div className='footer-main'>
         <div className='top'>
-          <h2>BIZCONNECT (LOGO)</h2>
+        {/* <LogoFooterIcon /> */}
+        <img style={{height:"59px", width:"132px"}} src={Logo} alt={Logo} />
           <p>
-          Connecting Global all small and medium Businesses with their customers
+          Connecting Global small and medium Businesses with their customers
           </p>
         </div>
         <div className='bottom'>

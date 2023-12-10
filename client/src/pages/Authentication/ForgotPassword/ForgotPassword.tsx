@@ -1,6 +1,7 @@
 /** @format */
 
 import EyeIcon from 'assets/icons/eye-icon.svg?react';
+import ClosedEyeIcon from 'assets/icons/closed-eye-icon.svg?react';
 import Button from 'components/Button/Button';
 import Input from 'components/Input/Input';
 import './ForgotPassword.scss';
@@ -85,12 +86,13 @@ const ForgotPassword = () => {
             value={formik.values.password}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            icon={<div onClick={()=> setShowPassword(!showPassword)}><EyeIcon className='input-icon' /></div>}
+            icon={showPassword? <EyeIcon onClick={()=> setShowPassword(!showPassword)} className='input-icon'/> : <ClosedEyeIcon onClick={()=> setShowPassword(!showPassword)} className='input-icon'/>}
             placeholder='Enter password'
           />
           <span>{formik.touched.password && formik.errors.password
               ? formik.errors.password
-              : ""}</span>
+              : ""}
+          </span>
 
           <Input
             type={!showConfirmPassword? 'password': 'text'}
@@ -99,12 +101,13 @@ const ForgotPassword = () => {
             value={formik.values.confirmPassword}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            icon={<div onClick={()=> setShowConirmPassword(!showConfirmPassword)}><EyeIcon className='input-icon' /></div>}
+            icon={showConfirmPassword? <EyeIcon onClick={()=> setShowConirmPassword(!showConfirmPassword)} className='input-icon'/> : <ClosedEyeIcon onClick={()=> setShowConirmPassword(!showConfirmPassword)} className='input-icon'/>}
             placeholder='Re-Enter Password'
           />
           <span>{formik.touched.confirmPassword && formik.errors.confirmPassword
               ? formik.errors.confirmPassword
-              : ""}</span>
+              : ""}
+          </span>
 
           <Button
            type='submit'
