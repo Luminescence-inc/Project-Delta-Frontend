@@ -1,6 +1,5 @@
 /** @format */
 
-import LogoFooterIcon from 'assets/icons/logo-footer-icon.svg?react';
 import Logo from 'assets/images/logo_img.png';
 import FacebookIcon from 'assets/icons/facebook-icon.svg?react';
 import LinkedinIcon from 'assets/icons/linkedin-icon.svg?react';
