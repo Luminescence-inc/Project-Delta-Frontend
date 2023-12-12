@@ -80,7 +80,7 @@ const Home = () => {
       <header>
         <h2>Welcome to Bizconnect</h2>
         <p>
-          Connecting Global all small and medium Businesses with their customers
+          Connecting Global small and medium Businesses with their customers
         </p>
 
         {!authenticated && <Button label='Get Started' variant='primary' to='/onboarding' />}
