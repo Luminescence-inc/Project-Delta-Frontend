@@ -1,16 +1,24 @@
 /** @format */
 
-import './Card.scss';
+import "./Card.scss";
 
 interface Icard {
   icon: React.ReactNode;
   title: string;
-  description: string;
+  description?: string;
+  email?: string;
+  phoneNumber?: number;
+  address?: string;
+  openDays?: string;
+  closeDays?: string;
+  categories?: string[];
+  socials?: string[];
+  action?: () => void;
 }
 
 const Card = ({ icon, title, description }: Icard) => {
   return (
-    <div className='card card-home'>
+    <div className="card card-home">
       {icon}
       <h3>{title}</h3>
       <p>{description}</p>
