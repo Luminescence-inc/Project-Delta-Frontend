@@ -148,6 +148,8 @@ const Navbar = () => {
                   variant='transparent'
                   size='lg'
                   icon={<PlusIcon />}
+                  to='/signup/register-business'
+                  onClick={()=>setMenuOpen(false)}
                 />
               </>
             )}

@@ -19,7 +19,7 @@ const Onboarding = () => {
 
       isAuthenticated(authToken, parsedToken.id)
         .then(() => {
-          navigate("/signup/business-profile");
+          navigate("/signup/register-business");
         })
         .catch((err) => {
           navigate("/signup");
