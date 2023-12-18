@@ -14,12 +14,15 @@ import { useEffect, useState } from 'react';
 import { JwtPayload, TOKEN_NAME } from 'types/auth';
 import { isAuthenticated } from 'api/auth';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { getUserBusinessProfileList } from 'api/business';
+import { UserBusinessListResponse } from 'types/business';
 
 const Home = () => {
   const navigate = useNavigate();
   const [authenticated, setAuthenticated] = useState(false);
   const [tokenData, setTokenData] = useState<JwtPayload | null>(null);
   const [searchParams] = useSearchParams();
+  const [businessPresent, setBusinessPresent] = useState(false);
   const login = searchParams.get('login');
 
   const authToken = localStorage.getItem(TOKEN_NAME) as string;
@@ -41,6 +44,12 @@ const Home = () => {
         console.error(err)
         // console.log("home-aut")
       });
+
+      getUserBusinessProfileList(authToken).then((res)=>{
+        const businessListResponse: UserBusinessListResponse = res.data
+        
+        setBusinessPresent(businessListResponse.data?.businessProfiles.length > 0 || false)
+      })
 
       // const timer = setTimeout(() => {
       //   setShowComponent(true);
@@ -87,18 +96,18 @@ const Home = () => {
         
         {authenticated && (
           <div className='button-wrapper'>
-            <Button
+            {businessPresent && (<Button
               label='View your business'
               variant='primary'
               size='lg'
               to='/view-your-business'
               icon={<SearchIcon />}
-            />
+            />)}
             <Button
               label='Add a new business'
               variant='transparent'
               size='lg'
-              to='/signup/business-profile'
+              to='/signup/register-business'
               icon={<PlusIcon />}
             />
           </div>

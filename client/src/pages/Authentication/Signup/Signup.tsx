@@ -194,6 +194,7 @@ const Signup = () => {
             variant='primary'
             size='lg'
             // to='/signup/business-profile'
+            // to='/signup/register-business'
           />
         </form>
 

@@ -1,6 +1,6 @@
 .signup {
     background-color: var(--light-grey);
-    padding: 80px 16px 150px;
+    padding: 40px 16px 150px;
 }
 
 @media screen and (max-width: 500px) {
@@ -96,6 +96,57 @@
                 span {
                     color: var(--primary-color);
                 }
+            }
+
+            .file-upload {
+                position: relative;
+                display: inline-block;
+                font-family: 'Open Sans';
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                margin-top: 10px;
+            }
+
+            .file-upload-label {
+                display: flex;
+                align-items: center;
+                padding: 16px;
+                cursor: pointer;
+                justify-content: space-around;
+            }
+              
+            .placeholder-text {
+            flex: 1;
+            display: flex;
+            color: #0E2D52;
+            font-family: 'Open Sans';
+            font-size: 10px;
+            font-weight: 700;
+            line-height: 14px;
+            justify-content: center;
+            }
+            
+            .upload-arrow {
+            margin-left: 10px;
+            cursor: pointer;
+            }
+            
+            .delete-button {
+            display: flex;
+            background-color: transparent;
+            border: none;
+            color: #f00;
+            margin-left: 5px;
+            cursor: pointer;
+            }
+
+            .input-icon-social {
+                position: absolute;
+                left: 20px;
+            }
+
+            .input-text-social {
+                padding-left: 60px;
             }
         }
     }
