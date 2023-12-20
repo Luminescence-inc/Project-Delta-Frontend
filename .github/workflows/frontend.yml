@@ -19,7 +19,9 @@ jobs:
         working-directory: ./client
         run: |
           touch .env 
-          echo DATABASE_URL=${{secrets.BACKEND_URL}} >> .env
+          echo VITE_BACKEND_URL=${{secrets.VITE_BACKEND_URL}} >> .env
+          echo VITE_CLOUDINARY_NAME=${{secrets.VITE_CLOUDINARY_NAME}} >> .env
+          echo VITE_CLOUDINARY_API_KEY=${{secrets.VITE_CLOUDINARY_API_KEY}} >> .env
           yarn install
           yarn build
           

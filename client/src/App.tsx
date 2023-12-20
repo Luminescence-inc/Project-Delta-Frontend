@@ -11,13 +11,12 @@ import Login from "pages/Authentication/Login/Login";
 import ForgotPassword from "pages/Authentication/ForgotPassword/ForgotPassword";
 import ForgotPasswordFinal from "pages/Authentication/ForgotPassword/ForgotPasswordFinal";
 import Signup from "pages/Authentication/Signup/Signup";
-import BusinessProfile from "pages/Authentication/Signup/BusinessProfile";
-import OperationInfo from "pages/Authentication/Signup/OperationInfo";
 import ViewBusiness from "pages/Home/ViewBusiness/ViewBusiness";
 import Email from "pages/Authentication/ForgotPassword/Email";
 import VerifiedEmail from "pages/Authentication/Verification/VerifiedEmail";
 import VerifiedAccount from "pages/Authentication/Verification/VerifyAccount";
 import DiscoverBusinesses from "./pages/DiscoverBusinesses/DiscoverBusinesses";
+import RegisterBusiness from "pages/Authentication/Signup/RegisterBusiness/RegisterBusiness";
 
 function App() {
   const { pathname } = useLocation();
@@ -49,13 +48,12 @@ function App() {
             element={<ForgotPasswordFinal />}
           />
           <Route path="/signup" element={<Signup />} />
-          <Route
-            path="/signup/business-profile"
-            element={<BusinessProfile />}
-          />
-          <Route path="/signup/operation-info" element={<OperationInfo />} />
           <Route path="/view-your-business" element={<ViewBusiness />} />
           <Route path="/discover-businesses" element={<DiscoverBusinesses />} />
+          <Route
+            path="/signup/register-business"
+            element={<RegisterBusiness />}
+          />
         </Routes>
       </main>
       <Footer />
