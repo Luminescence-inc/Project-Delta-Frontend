@@ -4,6 +4,7 @@ import { IBusinessProfile } from "types/business-profile";
 import Card from "pages/Home/components/Card/Card";
 import Button from "components/Button/Button";
 import { formatDays } from "../helper";
+import { CloudinaryConfig } from "../../../config";
 import "./BusinessCatalogue.scss";
 interface IBusinessCatalogue {
   listOfBusinessProfiles: IBusinessProfile[] | null;
@@ -17,8 +18,12 @@ const BusinessCatalogue = (props: IBusinessCatalogue) => {
   const [disabledPrevious, setDisabledPrevious] = useState<boolean>(
     props.currentPage > 1 ? false : true
   );
+  // if (props.listOfBusinessProfiles) {
+  //   //console.log("Logo Url", props.listOfBusinessProfiles[0].logoUrl);
+  //   //console.log("Cloude Name", CloudinaryConfig.cloudName);
+  // }
   const handlePrevious = () => {
-    console.log("Before" + props.currentPage);
+    //console.log("Before" + props.currentPage);
     if (props.currentPage > 1) {
       setDisabledPrevious(false);
       props.onPageChange(props.currentPage - 1);
@@ -26,10 +31,10 @@ const BusinessCatalogue = (props: IBusinessCatalogue) => {
         setDisabledNext(false);
       }
     } else {
-      console.log("Here");
+      //console.log("Here");
       setDisabledPrevious(true);
     }
-    console.log("After" + props.currentPage);
+    //console.log("After" + props.currentPage);
   };
   const handleNext = () => {
     if (props.currentPage < props.totalPages) {
@@ -62,14 +67,13 @@ const BusinessCatalogue = (props: IBusinessCatalogue) => {
             ")";
           thisBusinessProfile.operationInfo = operationInfo;
           return (
-            <div>
+            <div key={thisBusinessProfile.uuid}>
               <Card
-                key={thisBusinessProfile.uuid}
                 title={thisBusinessProfile?.name}
                 openDays={operationInfo}
                 phoneNumber={thisBusinessProfile?.phoneNumber}
                 usedInBusinessCataloge={true}
-                imagePath="https://www.w3schools.com/images/w3schools_green.jpg"
+                imagePath={`https://res.cloudinary.com/${CloudinaryConfig.cloudName}/image/upload/w_200,h_100,c_fill,q_300/${thisBusinessProfile?.logoUrl}.jpg`}
                 action={
                   <Button
                     variant="primary"

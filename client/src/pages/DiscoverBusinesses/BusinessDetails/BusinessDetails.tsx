@@ -1,12 +1,12 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { CloudinaryConfig } from "../../../config";
 import Card from "../../Home/components/Card/Card";
 import "./BusinessDetails.scss";
-import businessImage from "assets/images/business_img.png";
 import Button from "components/Button/Button";
 import { IBusinessProfile } from "types/business-profile";
 import { formatDays } from "../helper";
-import { getBusinsessCategories } from "api/businessProfile";
+import { getBusinsessCategories } from "api/business";
 import { IBusinessCategory } from "types/business-profile";
 
 interface BusinessDetailsProps {
@@ -41,7 +41,7 @@ const BusinessDetails: React.FC<BusinessDetailsProps> = ({
   useEffect(() => {
     getBusinsessCategories()
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
         let businessCategories: IBusinessCategory[] =
           res?.data.data.businessCategories;
 
@@ -65,7 +65,7 @@ const BusinessDetails: React.FC<BusinessDetailsProps> = ({
       <Card
         title={businessProfile?.name || ""}
         description={businessProfile?.description}
-        imagePath={businessImage}
+        imagePath={`https://res.cloudinary.com/${CloudinaryConfig.cloudName}/image/upload/w_200,h_100,c_fill,q_300/${businessProfile?.logoUrl}.jpg`}
         email={businessProfile?.businessEmail}
         phoneNumber={businessProfile?.phoneNumber}
         address={businessProfile?.street}

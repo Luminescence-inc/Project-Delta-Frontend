@@ -46,14 +46,14 @@ export const getListOfBusinsessProfile = (
   search: ISearch | null
 ) => {
   let searchQuery: ISearch = search || ({ filters: [] } as ISearch);
-  const url = `${bizConnectAPI}/api/business_profile/search`;
-  console.log(url);
+  const url = `${bizConnectAPI.baseURL}/api/business_profile/search`;
+
   return axios.post(url, { paging, search: searchQuery || { filters: [] } });
 };
 
 export const getBusinsessCategories = () => {
-  const url = `${bizConnectAPI}/api/business_profile/categories`;
-  console.log(url);
+  const url = `${bizConnectAPI.baseURL}/api/business_profile/categories`;
+
   return axios.get(url);
 };
 

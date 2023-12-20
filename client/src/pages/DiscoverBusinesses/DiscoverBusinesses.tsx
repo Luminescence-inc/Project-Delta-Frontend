@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { getListOfBusinsessProfile } from "../../api/businessProfile";
+import { getListOfBusinsessProfile } from "api/business";
 import BusinessCatalogue from "./BusinessCatalogue/BusinessCatalogue";
 import BusinessDetails from "./BusinessDetails/BusinessDetails";
 import { IBusinessProfile, ISearch } from "types/business-profile";
@@ -35,16 +35,16 @@ export const DiscoverBusinesses = () => {
         page: currentPage,
         sortBy: "createdUtc",
         sortDirection: "asc",
-        limit: 2,
+        limit: 100,
       },
       searchQuery
     )
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
         const { businessProfiles } = res.data?.data;
         console.log(businessProfiles);
         setListOfBusinessProfiles(businessProfiles?.data);
-        console.log("Total Page" + businessProfiles?.totalPages);
+        //console.log("Total Page" + businessProfiles?.totalPages);
         setTotalPages(businessProfiles?.totalPages);
       })
       .catch((err) => {

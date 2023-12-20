@@ -45,6 +45,7 @@ const Card = (props: Icard) => {
     !!props.categories && props.categories.length > 0;
   const isSocialMediaSectionAvailable =
     !!props.socials && props.socials.length > 0;
+  //console.log("image path", props.imagePath);
   return (
     <div className="card card-home">
       {props.icon && props.icon}
@@ -129,7 +130,7 @@ const Card = (props: Icard) => {
       {isCategorySectionAvailable && (
         <div className="card card-section-info-row">
           {props.categories?.map((thisCategory) => {
-            console.log("Cat" + thisCategory.name);
+            //console.log("Cat" + thisCategory.name);
             return (
               <span
                 key={thisCategory.name}

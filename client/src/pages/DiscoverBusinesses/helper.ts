@@ -31,22 +31,22 @@ export function formatDays(rawOpenDays: string[] | undefined): string {
     );
   };
   rawOpenDays = rawOpenDays.sort(compareFun);
-  console.log(rawOpenDays);
+  //console.log(rawOpenDays);
   let currentGroup: string[] = [rawOpenDays[0]];
   for (let i = 1; i < rawOpenDays.length; i++) {
     let currentDay = rawOpenDays[i];
     let previousDay = rawOpenDays[i - 1];
-    console.log("prev", previousDay);
-    console.log("curr", currentDay);
+    //console.log("prev", previousDay);
+    //console.log("curr", currentDay);
     let defference = Math.abs(
       daysOfWeekArray[currentDay as keyof typeof daysOfWeekArray] -
         daysOfWeekArray[previousDay as keyof typeof daysOfWeekArray]
     );
     console.log("difference " + defference);
     if (defference === 1) {
-      console.log(" Inside prev", previousDay);
-      console.log(" Insee curr", currentDay);
-      console.log("Grp", currentGroup);
+      //console.log(" Inside prev", previousDay);
+      //console.log(" Insee curr", currentDay);
+      //console.log("Grp", currentGroup);
       currentGroup.push(currentDay);
     } else {
       if (currentGroup.length > 1) {
@@ -67,7 +67,7 @@ export function formatDays(rawOpenDays: string[] | undefined): string {
   } else {
     result.push(currentGroup.join("-"));
   }
-  console.log(result);
+  //console.log(result);
   let formatedString: string = result.join(", ");
   return formatedString;
 }

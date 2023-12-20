@@ -29,7 +29,6 @@ const Button = ({
   type,
 }: IButton) => {
   const ButtonComponent = to ? Link : "button";
-  console.log("Disabled ", disabled);
   return (
     <ButtonComponent
       className={`${className} btn btn-${variant} btn-${size}`}
