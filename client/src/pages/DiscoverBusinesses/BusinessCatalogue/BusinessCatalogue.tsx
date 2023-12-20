@@ -1,4 +1,3 @@
-import React from "react";
 import { useState } from "react";
 import { IBusinessProfile } from "types/business-profile";
 import Card from "pages/Home/components/Card/Card";

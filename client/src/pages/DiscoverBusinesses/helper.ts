@@ -1,4 +1,3 @@
-import { defineConfig } from "vite";
 interface IDaysOfWeek {
   Sunday: number;
   Monday: number;
@@ -15,7 +14,7 @@ export function formatDays(rawOpenDays: string[] | undefined): string {
   }
   rawOpenDays = rawOpenDays.map((day) => day.trim());
   let result: string[] = [];
-  let daysOfWeekArray = {
+  let daysOfWeekArray: IDaysOfWeek = {
     Sunday: 1,
     Monday: 2,
     Tuesday: 3,

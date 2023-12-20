@@ -3,7 +3,6 @@
 import { Link } from "react-router-dom";
 
 import "./Button.scss";
-import { boolean } from "yup";
 
 interface IButton {
   label: string;

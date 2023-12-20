@@ -1,9 +1,8 @@
-import React from "react";
 import { useState, useEffect } from "react";
 import { getListOfBusinsessProfile } from "api/business";
 import BusinessCatalogue from "./BusinessCatalogue/BusinessCatalogue";
 import BusinessDetails from "./BusinessDetails/BusinessDetails";
-import { IBusinessProfile, ISearch } from "types/business-profile";
+import { IBusinessProfile } from "types/business-profile";
 
 export const DiscoverBusinesses = () => {
   const [listOfBusinessProfiles, setListOfBusinessProfiles] = useState<
@@ -12,7 +11,7 @@ export const DiscoverBusinesses = () => {
   const [selectedBusinessProfile, setSelectedBusinessProfile] =
     useState<IBusinessProfile | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [searchQuery, setSearchQuery] = useState<ISearch | null>(null);
+  // const [searchQuery, setSearchQuery] = useState<ISearch | null>(null);
   const [totalPages, setTotalPages] = useState<number>(1);
   const handleSelectBusinessProfile = (
     businessProfile: IBusinessProfile | null
@@ -37,7 +36,7 @@ export const DiscoverBusinesses = () => {
         sortDirection: "asc",
         limit: 100,
       },
-      searchQuery
+      null
     )
       .then((res) => {
         //console.log(res.data);
@@ -50,7 +49,7 @@ export const DiscoverBusinesses = () => {
       .catch((err) => {
         console.error(err);
       });
-  }, [currentPage, searchQuery]);
+  }, [currentPage]);
 
   return (
     <div>
