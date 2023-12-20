@@ -1,14 +1,16 @@
 /** @format */
 
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
-import './Button.scss';
+import "./Button.scss";
+import { boolean } from "yup";
 
 interface IButton {
   label: string;
-  variant?: 'primary' | 'transparent' | 'default';
-  size?: 'md' | 'lg';
+  variant?: "primary" | "transparent" | "default";
+  size?: "md" | "lg" | "sm";
   to?: string;
+  disabled?: boolean;
   onClick?: () => void;
   icon?: JSX.Element;
   className?: string;
@@ -17,21 +19,24 @@ interface IButton {
 
 const Button = ({
   label,
-  variant = 'default',
-  size = 'md',
-  to = '',
+  disabled,
+  variant = "default",
+  size = "md",
+  to = "",
   onClick,
   icon,
   className,
-  type
+  type,
 }: IButton) => {
-  const ButtonComponent = to ? Link : 'button';
+  const ButtonComponent = to ? Link : "button";
+  console.log("Disabled ", disabled);
   return (
     <ButtonComponent
       className={`${className} btn btn-${variant} btn-${size}`}
       to={to}
       onClick={onClick}
       type={type}
+      disabled={disabled}
     >
       {icon ? icon : null}
       {label}

@@ -44,6 +44,7 @@ const Onboarding = () => {
         />
         <Pill icon={<BagIcon />} title="Existing businesses" variant="pink" />
         <Pill
+          onClick={() => navigate("/discover-businesses")}
           icon={<SearchIcon />}
           title="Discover businesses"
           variant="green"

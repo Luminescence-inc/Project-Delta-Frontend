@@ -1,0 +1,32 @@
+.business-catalogue {
+  background-color: var(--light-grey);
+  padding: 16px;
+}
+@media screen and (max-width: 500px) {
+  .business-catalogue {
+    header {
+      text-align: center;
+      margin: 64px 0;
+
+      h2 {
+        margin-bottom: 16px;
+        font-size: 32px;
+        line-height: 40px;
+        font-weight: 700;
+      }
+
+      p {
+        font-size: 16px;
+        line-height: 24px;
+      }
+    }
+    &.navigation {
+      display: flex;
+      flex-direction: row;
+      padding: 1rem;
+      .btn-adjusments {
+        margin-left: 10px;
+      }
+    }
+  }
+}

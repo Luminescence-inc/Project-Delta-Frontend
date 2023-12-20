@@ -17,6 +17,7 @@ import ViewBusiness from "pages/Home/ViewBusiness/ViewBusiness";
 import Email from "pages/Authentication/ForgotPassword/Email";
 import VerifiedEmail from "pages/Authentication/Verification/VerifiedEmail";
 import VerifiedAccount from "pages/Authentication/Verification/VerifyAccount";
+import DiscoverBusinesses from "./pages/DiscoverBusinesses/DiscoverBusinesses";
 
 function App() {
   const { pathname } = useLocation();
@@ -54,6 +55,7 @@ function App() {
           />
           <Route path="/signup/operation-info" element={<OperationInfo />} />
           <Route path="/view-your-business" element={<ViewBusiness />} />
+          <Route path="/discover-businesses" element={<DiscoverBusinesses />} />
         </Routes>
       </main>
       <Footer />

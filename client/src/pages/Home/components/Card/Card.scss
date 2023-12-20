@@ -1,26 +1,97 @@
 .card {
+  &.card-home {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background-color: var(--white-color);
+    padding: 24px 12px;
+    box-shadow: 0px 4px 4px 0px #00000040;
+    border-radius: 8px;
+    font-size: 16px;
+    margin-bottom: 32px;
 
-    &.card-home {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        background-color: var(--white-color);
-        padding: 24px 12px;
-        box-shadow: 0px 4px 4px 0px #00000040;
-        border-radius: 8px;
-        font-size: 16px;
-        margin-bottom: 32px;
-
-        h3 {
-            font-weight: 700;
-            line-height: 40px;
-        }
-
-        p {
-            font-weight: 400;
-            line-height: 24px;
-            font-family: 'Open Sans', sans-serif;
-            height: 66px;
-        }
+    h3 {
+      font-weight: 700;
+      line-height: 40px;
     }
+
+    p {
+      font-weight: 400;
+      line-height: 24px;
+      font-family: "Open Sans", sans-serif;
+      padding: auto;
+    }
+  }
+  &.card-section-info-col {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 12px;
+  }
+
+  &.card-section-info-col__contact {
+    display: flex;
+    flex-direction: row;
+
+    .card-section-info-col__contact-data {
+      display: inline-block;
+      margin-left: 10px;
+      word-wrap: break-word;
+      width: 80%;
+    }
+    .card-section-info-col__contact-icon {
+      margin-top: 3px;
+      display: inline-block;
+    }
+  }
+  &.card-section-info-col__business {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f5f5f5;
+    padding: 8px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+
+    .card-section-info-col__business-icon {
+      margin-right: 1rem; // Adjust as needed
+    }
+    .card-section-info-col__business-data {
+      display: block;
+      width: 90%;
+      word-wrap: break-word;
+    }
+  }
+
+  &.card-section-info-row {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 12px;
+
+    .card-section-info-row__category {
+      display: inline-block;
+      padding: 0.8rem 0.8rem;
+      border-radius: 24px;
+      word-wrap: break-word;
+      width: 10rem;
+      text-align: center;
+      &:not(:first-child) {
+        margin-left: 1rem;
+      }
+    }
+    &.card-section-info-row__socials {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0.5rem 0.5rem;
+      border-radius: 50%;
+
+      background-color: #0e2d52;
+      color: #fff;
+
+      &:not(:first-child) {
+        margin-left: 1rem;
+      }
+    }
+  }
 }
