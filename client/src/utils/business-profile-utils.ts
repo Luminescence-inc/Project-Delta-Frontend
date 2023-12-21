@@ -1,5 +1,7 @@
 export const FILE_TYPES = ["image/png","image/jpeg","image/jpg"];
 
+export const FILTERED_COUNTRY = ["Canada", "Germany", "United States", "United Kingdom"]
+
 export const DAYS_OF_OPERATIONS_OPTIONS = [
     {uuid: "30a2e028-7be1-422c-9425-00d375543bc7", value: "Monday"},
     {uuid: "1a91d9d3-d1c9-45ba-8022-509a4354cd9a", value: "Tuesday"},

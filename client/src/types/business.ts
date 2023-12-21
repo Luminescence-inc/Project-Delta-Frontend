@@ -1,5 +1,25 @@
 import { BaseResponseMessage } from "./auth";
 
+export type BusinessProfileFormikPropsValues = {
+    businessName: string;
+    description: string; 
+    businessCategory: string;
+    country: string;
+    stateAndProvince: string;
+    city: string;
+    street: string;
+    postalCode: string;
+    instagramUrl: string;
+    websiteUrl: string;
+    linkedinUrl: string;
+    facebookUrl: string;
+    phoneNumber: string;
+    businessEmail: string;
+    openTime: string;
+    closeTime: string;
+    daysOfOperation: [];
+}
+
 export interface BusinessCreationBody {
     name: string;
     description: string;
@@ -22,6 +42,8 @@ export interface BusinessCreationBody {
     instagramUrl: string | null;
     twitterUrl?: string | null;
     facebookUrl: string | null;
+    deleteLogo: boolean;
+    logoUrl: string | null;
 }
 
 export interface CloudinaryUploadResponse {
@@ -83,9 +105,15 @@ export interface UserBusinessList {
     }
 }
 
-export interface  UserBusinessListResponse extends BaseResponseMessage {
+export interface UserBusinessListResponse extends BaseResponseMessage {
     data: {
         businessProfiles: UserBusinessList[]
+    }
+}
+
+export interface UserBusinessDetailsResponse extends BaseResponseMessage {
+    data: {
+        details: UserBusinessList
     }
 }
 

@@ -10,6 +10,7 @@ interface ISelect {
   formik: FormikProps<any>;
   options: IOption[] | undefined;
   placeholder: string;
+  formikValue: IOption[];
 }
 
 interface IOption {
@@ -17,10 +18,10 @@ interface IOption {
   value: string;
 }
 
-const MultiSelect = ({ label, options, name, formik }: ISelect) => {
+const MultiSelect = ({ label, options, name, formik, formikValue }: ISelect) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [selectedValues, setSelectedValues] = useState<IOption[]>([]);
+  const [selectedValues, setSelectedValues] = useState<IOption[]>(formikValue || []);
 
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
@@ -41,8 +42,7 @@ const MultiSelect = ({ label, options, name, formik }: ISelect) => {
   };
 
   const updateFormikValues = (values: IOption[]) => {
-    const selectedValueStrings = values.map((val) => val.value);
-    formik.setFieldValue(name, selectedValueStrings);
+    formik.setFieldValue(name, values.map((val) => val.value));
   };
 
   const isSelected = (option: IOption) => {
@@ -75,11 +75,10 @@ const MultiSelect = ({ label, options, name, formik }: ISelect) => {
           <div className='options-list'>
             <ul>
               {options?.map((option) => (
-                <li key={option.uuid} style={{ listStyleType: 'none', display: 'flex' }}>
+                <li key={option.uuid} onClick={() => handleSelect(option)} style={{ listStyleType: 'none', display: 'flex' }}>
                   <input 
                       type='checkbox'
                       checked={isSelected(option)}
-                      onChange={() => handleSelect(option)}
                     />
                   <label className='checkbox-value'>
                     {option.value}

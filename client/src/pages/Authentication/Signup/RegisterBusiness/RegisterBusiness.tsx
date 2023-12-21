@@ -1,38 +1,24 @@
 import { useEffect, useRef, useState } from "react";
 import { JwtPayload, TOKEN_NAME } from "types/auth";
-import { allBusinessCategories, createBusinessProfile, getUploadSignature } from "api/business";
-import { BusinessCategories, BusinessCreationBody, CloudinaryUploadResponse, UploadSignature } from "types/business";
+import { createBusinessProfile, getAllBusinessCategories, getUploadSignature, getUserBusinessProfileDetail, updateUserBusinessProfileDetail } from "api/business";
+import { BusinessCategories, BusinessCreationBody, BusinessProfileFormikPropsValues, CloudinaryUploadResponse, IOption, UploadSignature, UserBusinessDetailsResponse, UserBusinessList } from "types/business";
 import { CloudinaryConfig } from "config";
 import { isAuthenticated } from "api/auth";
+import { useSearchParams } from "react-router-dom";
 import { useFormik } from "formik";
 import BusinessProfile from "./BusinessProfile";
 import OperationInfo from "./OperationInfo";
 import axios from "axios";
 import Modal from 'react-modal';
 import Button from "components/Button/Button";
+import { Country, State, City }  from 'country-state-city';
 import * as yup from "yup";
 import "./Register.scss";
+import { FILTERED_COUNTRY } from "utils/business-profile-utils";
 
 
-export type BusinessProfileFormikPropsValues = {
-    businessName: string;
-    description: string; 
-    businessCategory: string;
-    country: string;
-    stateAndProvince: string;
-    city: string;
-    street: string;
-    postalCode: string;
-    instagramUrl: string;
-    websiteUrl: string;
-    linkedinUrl: string;
-    facebookUrl: string;
-    phoneNumber: string;
-    businessEmail: string;
-    openTime: string;
-    closeTime: string;
-    daysOfOperation: any;
-}
+
+
 
 const dayOrder: { [key: string]: number } = { 
     Monday: 0,
@@ -63,17 +49,101 @@ const RegisterBusiness = ()=> {
     const [error, setError] = useState(false);
     const [successfulSubmission, setSuccessfulSubmission] = useState(false);
     const [authenticated, setAuthenticated] = useState(false);
+    const [searchParams] = useSearchParams();
+    const [logoUrl, setLogoUrl] = useState<string | null>(null);
+    const [deleteLogo, setDeleteLogo] = useState(false)
+    const [country, setCountry] = useState<IOption[]>([]);
+    const [stateAndProvince, setStateAndProvince] = useState<IOption[]>([]);
+    const [city, setCity] = useState<IOption[]>([]);
+    const businessId = searchParams.get('update');
 
     useEffect(()=>{
         isAuthenticated(authToken, parsedToken.id)
         .then(()=>{
           setAuthenticated(true);
+          if(businessId){
+            getUserBusinessProfileDetail(authToken, businessId).then((res)=>{
+                const resData: UserBusinessDetailsResponse = res.data;
+                const businessDetailsData: UserBusinessList = resData.data.details
+
+                // Set Formik Values
+                formik.setFieldValue('businessName',businessDetailsData.name)
+                formik.setFieldValue('description',formatInput(businessDetailsData.description))
+                formik.setFieldValue('businessCategory',formatInput(businessDetailsData?.businessCategory.description))
+                formik.setFieldValue('country',formatInput(businessDetailsData.country))
+                formik.setFieldValue('stateAndProvince',formatInput(businessDetailsData.stateAndProvince))
+                formik.setFieldValue('city',formatInput(businessDetailsData.city))
+                formik.setFieldValue('street',formatInput(businessDetailsData.street))
+                formik.setFieldValue('postalCode',formatInput(businessDetailsData.postalCode))
+                formik.setFieldValue('instagramUrl',formatInput(businessDetailsData.instagramUrl))
+                formik.setFieldValue('websiteUrl',formatInput(businessDetailsData.websiteUrl))
+                formik.setFieldValue('linkedinUrl',formatInput(businessDetailsData.linkedinUrl))
+                formik.setFieldValue('facebookUrl',formatInput(businessDetailsData.facebookUrl))
+                formik.setFieldValue('phoneNumber',formatInput(businessDetailsData.phoneNumber))
+                formik.setFieldValue('businessEmail',formatInput(businessDetailsData.businessEmail))
+                formik.setFieldValue('openTime',formatInput(businessDetailsData.openTime))
+                formik.setFieldValue('closeTime',formatInput(businessDetailsData.closeTime))
+                formik.setFieldValue('daysOfOperation',formatInput(businessDetailsData.daysOfOperation))
+
+
+                setLogoUrl(businessDetailsData.logoUrl)
+                setCountry(Country.getAllCountries()
+                    .map((ct)=>{return {uuid: ct.isoCode, value: ct.name}})
+                    .filter((ct)=>{
+                        return FILTERED_COUNTRY.includes(ct.value)
+                    }))
+                
+                const selectedCountry = country?.find((ct)=>{return ct.value === businessDetailsData.country })
+                const states = State.getStatesOfCountry(selectedCountry?.uuid)
+                setStateAndProvince(states.map((st)=> {return {uuid: st.isoCode, value: st.name}}))
+
+                const selectedState = stateAndProvince?.find((st)=>{return st.value === businessDetailsData.stateAndProvince})
+                const cities = City.getCitiesOfState(selectedCountry?.uuid as string, selectedState?.uuid as string)
+                setCity(cities.map((ct)=>{return {uuid: ct.name, value: ct.name}}))
+
+                
+                // Cause a Re-render and refresh the formik setFields
+                switchTab(1); setSelectedTab(false);
+                setTimeout(()=>{
+                    switchTab(0); setSelectedTab(true);
+                },0.1)
+            })
+          }else{
+            // Set Formik Values to null
+            formik.setFieldValue('businessName','')
+            formik.setFieldValue('description','')
+            formik.setFieldValue('businessCategory','')
+            formik.setFieldValue('country','')
+            formik.setFieldValue('stateAndProvince','')
+            formik.setFieldValue('city','')
+            formik.setFieldValue('street','')
+            formik.setFieldValue('postalCode','')
+            formik.setFieldValue('instagramUrl','')
+            formik.setFieldValue('websiteUrl','')
+            formik.setFieldValue('linkedinUrl','')
+            formik.setFieldValue('facebookUrl','')
+            formik.setFieldValue('phoneNumber','')
+            formik.setFieldValue('businessEmail','')
+            formik.setFieldValue('openTime','')
+            formik.setFieldValue('closeTime','')
+            formik.setFieldValue('daysOfOperation',[])
+
+            // Cause a Re-render and refresh the formik setFields
+            switchTab(1); setSelectedTab(false);
+            setTimeout(()=>{
+                switchTab(0); setSelectedTab(true);
+            },0.1)
+          }
         })
         .catch((err)=>{
           setAuthenticated(false);
           console.error(err)
         })
-    }, []);
+    }, [businessId]);
+
+    const formatInput = (value: any) => {
+        return value ? value : ""
+    }
 
     const switchTab = (tab: number) => {
         setActiveTab(tab);
@@ -101,6 +171,8 @@ const RegisterBusiness = ()=> {
         // Task2: Create spinner for submition 
         // Task3: Run error toast when submition doesn't go through
         // Task4: Check UK- Cities
+        // Task5: change social Input logo
+        // Task6: Days of operation dropdown
 
         const payload: BusinessCreationBody = {
             name: values.businessName,
@@ -123,11 +195,13 @@ const RegisterBusiness = ()=> {
             daysOfOperation: orderDays(values.daysOfOperation),
             publicId: null,
             version: null,
-            signature: null
+            signature: null,
+            deleteLogo: deleteLogo,
+            logoUrl: logoUrl
         }
 
         try{
-            const allCat: BusinessCategories = (await allBusinessCategories()).data
+            const allCat: BusinessCategories = (await getAllBusinessCategories()).data
             payload.businessCategoryUuid = allCat.data.businessCategories.find((bCat)=> bCat.description === values.businessCategory)?.uuid as string
         }catch (error){
             console.log(error)
@@ -164,7 +238,7 @@ const RegisterBusiness = ()=> {
         }
 
         // Submit to BizConnect Create API if error doesn't exsist
-        if(!error){
+        if(!error && !businessId){
             createBusinessProfile(authToken, payload).then(()=>{
                 setIsModalOpen(true);
                 setSuccessfulSubmission(true)
@@ -173,27 +247,39 @@ const RegisterBusiness = ()=> {
                 console.error(err)
             })
         }     
+
+        // Update Business details if error doesn't exsist
+        if(!error && businessId){
+            updateUserBusinessProfileDetail(authToken, businessId, payload)
+            .then(()=>{
+                setIsModalOpen(true);
+                setSuccessfulSubmission(true)
+            }).catch((err)=>{
+                alert(`There was an error submitting the form. Error: ${err}`)
+                console.error(err)
+            })
+        }
     }
 
     const formik = useFormik({
         initialValues: {
           businessName: "", 
           description: "", 
-          businessCategory: "",
-          country: "",
-          stateAndProvince: "",
-          city: "",
-          street: "",
-          postalCode: "",
-          instagramUrl: "",
-          websiteUrl: "",
-          linkedinUrl: "",
-          facebookUrl: "",
-          phoneNumber: "",
-          businessEmail: "",
-          openTime: "",
-          closeTime: "",
-          daysOfOperation:[]
+          businessCategory: "", 
+          country: "", 
+          stateAndProvince: "", 
+          city: "", 
+          street: "", 
+          postalCode: "", 
+          instagramUrl: "", 
+          websiteUrl: "", 
+          linkedinUrl: "", 
+          facebookUrl: "", 
+          phoneNumber: "", 
+          businessEmail: "", 
+          openTime: "", 
+          closeTime: "", 
+          daysOfOperation: []
         },
         validateOnBlur: true,
         onSubmit,
@@ -237,9 +323,20 @@ const RegisterBusiness = ()=> {
                     setSelectedTab={setSelectedTab} 
                     tabsRef={tabsRef}
                     setImageFile={setImageFile}
-                    imageFile={imageFile} />)}
+                    imageFile={imageFile}
+                    businessId={businessId}
+                    logoUrl={logoUrl} 
+                    deleteLogo={deleteLogo}
+                    setDeleteLogo={setDeleteLogo}
+                    country={country}
+                    setCountry={setCountry}
+                    setStateAndProvince={setStateAndProvince}
+                    stateAndProvince={stateAndProvince}
+                    city={city}
+                    setCity={setCity}
+                    />)}
             {activeTab === 1 && 
-            !successfulSubmission && (<OperationInfo formik={formik} />)}      
+            !successfulSubmission && (<OperationInfo formik={formik} businessId={businessId} />)}      
 
             <Modal
                 isOpen={isModalOpen}
@@ -248,8 +345,8 @@ const RegisterBusiness = ()=> {
                 style={customStyles}
             >
                 <div className="modal">
-                    <h2 style={{display: 'flex', justifyContent: 'center', fontSize:'16px', fontWeight:'700', marginBottom:'10px'}}>You'e in!</h2>
-                    <p style={{display: 'flex', justifyContent: 'center', fontSize:'12px', fontWeight:'400', marginBottom:'20px'}}>You have successfully created your business account.</p>
+                    <h2 style={{display: 'flex', justifyContent: 'center', fontSize:'16px', fontWeight:'700', marginBottom:'10px'}}>{businessId?'Update Succesful':"You'e in!"}</h2>
+                    <p style={{display: 'flex', justifyContent: 'center', fontSize:'12px', fontWeight:'400', marginBottom:'20px'}}>{businessId?'You have successfully updated your business account.':'You have successfully created your business account.'}</p>
                 <Button type='submit' label='Click to Continue' variant='primary' size='lg' to='/'/>
                 </div>
             </Modal>

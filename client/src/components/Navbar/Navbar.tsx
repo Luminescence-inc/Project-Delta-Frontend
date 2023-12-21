@@ -4,28 +4,31 @@ import { useEffect, useState } from "react";
 
 import { Link } from "react-router-dom";
 
-import MenuIcon from "assets/icons/menu-icon.svg?react";
-import LogoHeaderIcon from "assets/icons/logo-header-icon.svg?react";
-import CancelIcon from "assets/icons/cancel-icon.svg?react";
-import ArrowUpIcon from "assets/icons/arrow-up.svg?react";
-import EditIcon from "assets/icons/edit-icon.svg?react";
-import PlusIcon from "assets/icons/uil_plus.svg?react";
-import Button from "components/Button/Button";
-import { JwtPayload, TOKEN_NAME } from "types/auth";
-import { isAuthenticated, logOut } from "api/auth";
-import { useNavigate } from "react-router-dom";
-import "./Navbar.scss";
+import MenuIcon from 'assets/icons/menu-icon.svg?react';
+import LogoHeaderIcon from 'assets/icons/logo-header-icon.svg?react';
+import CancelIcon from 'assets/icons/cancel-icon.svg?react';
+import ArrowUpIcon from 'assets/icons/arrow-up.svg?react';
+import EditIcon from 'assets/icons/edit-icon.svg?react';
+import PlusIcon from 'assets/icons/uil_plus.svg?react';
+import Button from 'components/Button/Button';
+import { JwtPayload, TOKEN_NAME } from 'types/auth';
+import { isAuthenticated, logOut } from 'api/auth';
+import { useNavigate } from 'react-router-dom';
+import './Navbar.scss';
+import { UserBusinessList, UserBusinessListResponse } from 'types/business';
+import { getUserBusinessProfileList } from 'api/business';
 
 const Navbar = () => {
-  const [authenticated, setAuthenticated] = useState(false);
-  const [tokenData, setTokenData] = useState<JwtPayload | null>(null);
   const navigate = useNavigate();
   const authToken = localStorage.getItem(TOKEN_NAME) as string;
-  const parsedToken: JwtPayload = authToken
-    ? JSON.parse(atob(authToken?.split(".")[1]))
-    : {};
-
-  useEffect(() => {
+  const parsedToken: JwtPayload = authToken? JSON.parse(atob(authToken?.split('.')[1])) : {};
+  const [authenticated, setAuthenticated] = useState(false);
+  const [tokenData, setTokenData] = useState<JwtPayload | null>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [editProfileOpen, setEditProfileOpen] = useState(false);
+  const [userBusinessListData, setUserBusinessListData] = useState<UserBusinessList[]>([])
+  
+  useEffect(()=>{
     try {
       setTokenData(parsedToken);
 
@@ -68,7 +71,11 @@ const Navbar = () => {
     isAuthenticated(authToken, parsedToken.id)
       .then(() => {
         setAuthenticated(true);
-        setMenuOpen(true);
+        setMenuOpen(true)
+        getUserBusinessProfileList(authToken).then((res)=>{
+          const resData: UserBusinessListResponse = res.data;
+          setUserBusinessListData(resData.data.businessProfiles);
+        })
       })
       .catch((err) => {
         setAuthenticated(false);
@@ -78,9 +85,13 @@ const Navbar = () => {
       });
   };
 
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [editProfileOpen, setEditProfileOpen] = useState(false);
+  const handleEditBusinessProfile = (id: string)=> {
+    navigate(`/signup/register-business?update=${id}`);
+    setMenuOpen(false);
+  }
 
+  
+  
   // const isAuth = localStorage.getItem('isAuth');
 
   return (
@@ -141,22 +152,17 @@ const Navbar = () => {
                 </li>
                 {editProfileOpen && (
                   <>
-                    <li className="business-list-item">
-                      <p>Ngozi Cooks</p>
-                      <EditIcon width={22} height={22} />
-                    </li>
-                    <li className="business-list-item">
-                      <p>Shenmine Pudding</p>
-                      <EditIcon width={22} height={22} />
-                    </li>
-                    <li className="business-list-item">
-                      <p>Uzoma's Pudding</p>
-                      <EditIcon width={22} height={22} />
-                    </li>
-                    <li className="business-list-item">
-                      <p>Coffee and Tea Chi</p>
-                      <EditIcon width={22} height={22} />
-                    </li>
+                    {userBusinessListData?.map((data)=>{
+                      return (
+                        <li key={data.uuid} 
+                            className='business-list-item'
+                            onClick={()=>handleEditBusinessProfile(data.uuid)}
+                        >
+                          <p>{data.name}</p>
+                          <EditIcon width={22} height={22} />
+                        </li>
+                      )
+                    })}
                   </>
                 )}
 
