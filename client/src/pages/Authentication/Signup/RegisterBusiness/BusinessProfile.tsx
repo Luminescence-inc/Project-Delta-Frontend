@@ -302,7 +302,7 @@ const BusinessProfile: FC<BusinessProfileProps> =
         {!imageFile && (businessId!=null) && logoUrl && (
         <div>
           <h3 style={{paddingTop: "20px", paddingBottom: "10px"}}>Current Logo:</h3>
-          <img src={`https://res.cloudinary.com/${CloudinaryConfig.cloudName}/image/upload/w_200,h_100,c_fill,q_400/${logoUrl}.jpg`} alt="Uploaded" style={{ maxWidth: '100%' }} />
+          <img src={`https://res.cloudinary.com/${CloudinaryConfig.cloudName}/image/upload/c_fill,q_400/${logoUrl}.jpg`} alt="Uploaded" style={{ maxWidth: '100%' }} />
           <Button onClick={handleDeleteLogo} className={!deleteLogo?'deleteLogo':'reverse-delete-logo'} type='submit'  label={!deleteLogo?'Delete':'Reverse'} variant='primary' size='md' />
         </div>
         )}

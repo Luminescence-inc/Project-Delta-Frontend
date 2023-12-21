@@ -65,7 +65,7 @@ const BusinessDetails: React.FC<BusinessDetailsProps> = ({
       <Card
         title={businessProfile?.name || ""}
         description={businessProfile?.description}
-        imagePath={`https://res.cloudinary.com/${CloudinaryConfig.cloudName}/image/upload/w_200,h_100,c_fill,q_300/${businessProfile?.logoUrl}.jpg`}
+        imagePath={`https://res.cloudinary.com/${CloudinaryConfig.cloudName}/image/upload/c_fill,q_500/${businessProfile?.logoUrl}.jpg`}
         email={businessProfile?.businessEmail}
         phoneNumber={businessProfile?.phoneNumber}
         address={businessProfile?.street}

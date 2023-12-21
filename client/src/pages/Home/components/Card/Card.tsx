@@ -50,7 +50,7 @@ const Card = (props: Icard) => {
     <div className="card card-home">
       {props.icon && props.icon}
       {props.imagePath && <img src={props.imagePath} alt="businessImage" />}
-      <h3>{props.title && props.title}</h3>
+      <h3 className="title">{props.title && props.title}</h3>
       <p>{props.description && props.description}</p>
       {/* Contact info Section */}
       <h3>{isContactSectionAvailable && "Contact Info"}</h3>
