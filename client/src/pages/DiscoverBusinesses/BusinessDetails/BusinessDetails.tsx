@@ -6,8 +6,8 @@ import "./BusinessDetails.scss";
 import Button from "components/Button/Button";
 import { IBusinessProfile } from "types/business-profile";
 import { formatDays } from "../helper";
-import { getBusinsessCategories } from "api/business";
 import { IBusinessCategory } from "types/business-profile";
+import { getBusinsessCategories } from "api/business";
 
 interface BusinessDetailsProps {
   businessProfile: IBusinessProfile | null;
