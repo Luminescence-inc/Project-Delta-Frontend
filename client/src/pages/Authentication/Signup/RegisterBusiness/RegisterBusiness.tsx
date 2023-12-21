@@ -17,9 +17,6 @@ import "./Register.scss";
 import { FILTERED_COUNTRY } from "utils/business-profile-utils";
 
 
-
-
-
 const dayOrder: { [key: string]: number } = { 
     Monday: 0,
     Tuesday: 1,
@@ -173,6 +170,10 @@ const RegisterBusiness = ()=> {
         // Task4: Check UK- Cities
         // Task5: change social Input logo
         // Task6: Days of operation dropdown
+        // Task7: Double Upload issue
+        // Task8: Remove excess register business bottom space
+        // Task9: Dynamically render social media
+        // Task10: Add default image for no logo upload
 
         const payload: BusinessCreationBody = {
             name: values.businessName,

@@ -51,8 +51,7 @@ const BusinessCatalogue = (props: IBusinessCatalogue) => {
       <header>
         <h2>Business</h2>
         <p>
-          Here is a list of all business associated with your account. you can
-          update or delete your business
+        Here is a list of business based on your search criteria. Click on view to see business details.
         </p>
       </header>
       {props.listOfBusinessProfiles &&
@@ -66,15 +65,16 @@ const BusinessCatalogue = (props: IBusinessCatalogue) => {
             ")";
           thisBusinessProfile.operationInfo = operationInfo;
           return (
-            <div key={thisBusinessProfile.uuid}>
+            <div className="profiles" key={thisBusinessProfile.uuid}>
               <Card
                 title={thisBusinessProfile?.name}
                 openDays={operationInfo}
                 phoneNumber={thisBusinessProfile?.phoneNumber}
                 usedInBusinessCataloge={true}
-                imagePath={`https://res.cloudinary.com/${CloudinaryConfig.cloudName}/image/upload/w_200,h_100,c_fill,q_300/${thisBusinessProfile?.logoUrl}.jpg`}
+                imagePath={`https://res.cloudinary.com/${CloudinaryConfig.cloudName}/image/upload/c_fill,q_500/${thisBusinessProfile?.logoUrl}.jpg`}
                 action={
                   <Button
+                    className="view-button"
                     variant="primary"
                     label={`View ${thisBusinessProfile.name} Business`}
                     onClick={() => {

@@ -2,17 +2,26 @@
   &.card-home {
     display: flex;
     flex-direction: column;
-    gap: 12px;
     background-color: var(--white-color);
-    padding: 24px 12px;
+    padding: 24px 16px;
     box-shadow: 0px 4px 4px 0px #00000040;
-    border-radius: 8px;
     font-size: 16px;
     margin-bottom: 32px;
+    border-radius: 24px;
+    width: 374px;
+    max-width: 100%;
+    
+
 
     h3 {
       font-weight: 700;
       line-height: 40px;
+      font-size: 16px;
+    }
+
+    .title{
+      padding-top: 12px;
+      padding-bottom: 12px;
     }
 
     p {
@@ -23,6 +32,10 @@
     }
     img {
       max-width: 100%;
+      width: 344px;
+      height: 156px;
+      border-radius: 8px;
+
     }
   }
   &.card-section-info-col {
@@ -52,17 +65,24 @@
     align-items: center;
     justify-content: space-between;
     background-color: #f5f5f5;
-    padding: 8px;
+    padding: 1px;
     border-radius: 8px;
     margin-bottom: 12px;
 
     .card-section-info-col__business-icon {
       margin-right: 1rem; // Adjust as needed
+      padding-top: 3px;
+      padding-left: 6px;
     }
     .card-section-info-col__business-data {
       display: block;
       width: 90%;
       word-wrap: break-word;
+      font-size: 12px;
+      line-height: 40px;
+      letter-spacing: 0px;
+      text-align: left;
+      font-weight: 600;
     }
   }
 
