@@ -6,6 +6,11 @@ import axios from "axios";
 export const allBusinessCategories = () => {
   const url = `${bizConnectAPI.baseURL}/api/business_profile/categories`;
   return axios.get(url);
+}
+
+export const getAllBusinessCategories = () => {
+    const url = `${bizConnectAPI.baseURL}/api/business_profile/categories`;
+    return axios.get(url);
 };
 
 export const getUploadSignature = (token: string, folder: string) => {
@@ -57,4 +62,20 @@ export const getBusinsessCategories = () => {
   return axios.get(url);
 };
 
-// https://res.cloudinary.com/dshq6chfl/image/upload/w_200,h_100,c_fill,q_100/BizConnect/Logo/d1d5f052-f390-4876-bf14-0789cac256c5/jxsdi8hxuybbzlwgpbog.jpg
+export const getUserBusinessProfileDetail = (token: string, id: string) => {
+  const url = `${bizConnectAPI.baseURL}/api/business_profile/list/${id}`;
+  return axios.get(url, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    }
+  });
+};
+
+export const updateUserBusinessProfileDetail = (token: string, id: string, data: BusinessCreationBody) => {
+  const url = `${bizConnectAPI.baseURL}/api/business_profile/update/${id}`;
+  return axios.post(url, data, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    }
+  });
+};

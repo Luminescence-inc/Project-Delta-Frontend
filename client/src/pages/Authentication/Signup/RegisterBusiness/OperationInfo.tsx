@@ -1,6 +1,6 @@
 /** @format */
 
-import { BusinessProfileFormikPropsValues } from './RegisterBusiness';
+import { BusinessProfileFormikPropsValues } from 'types/business';
 import { FormikProps } from 'formik';
 import { FC } from 'react';
 import { DAYS_OF_OPERATIONS_OPTIONS, OPERATING_TIME_OPTIONS } from 'utils/business-profile-utils';
@@ -14,10 +14,16 @@ import '../Signup.scss';
 
 interface OperationInfoProps {
   formik: FormikProps<BusinessProfileFormikPropsValues>;
+  businessId?: string | null;
 }
 
 
-const OperationInfo: FC<OperationInfoProps> = ({formik}) => {
+const OperationInfo: FC<OperationInfoProps> = ({formik, businessId}) => {
+
+  const filterDaysOfOperation = DAYS_OF_OPERATIONS_OPTIONS.filter((days)=>{
+    const d = formik.values.daysOfOperation as Array<string>
+    return d.includes(days.value)
+  })
   
   return (
     <div className='signup'>
@@ -66,11 +72,12 @@ const OperationInfo: FC<OperationInfoProps> = ({formik}) => {
           label='Days of operation'
           placeholder={'Days of operation'}
           name='daysOfOperation'
+          formikValue={filterDaysOfOperation}
           formik={formik}
           options={DAYS_OF_OPERATIONS_OPTIONS}
         />
 
-        <Button type='submit' onClick={formik.submitForm} label='Submit Profile' variant='primary' size='lg' />
+        <Button type='submit' onClick={formik.submitForm} label={businessId?`Update Profile`:`Submit Profile`} variant='primary' size='lg' />
       </div>
     </div>
   );

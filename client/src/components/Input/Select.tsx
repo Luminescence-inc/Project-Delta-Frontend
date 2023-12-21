@@ -9,7 +9,7 @@ import { FormikProps } from 'formik';
 interface ISelect {
   label: string;
   name: string;
-  formikValue: string;
+  formikValue: string | undefined;
   formik: FormikProps<any>;
   options: IOption[] | undefined;
   placeholder: string;
@@ -20,7 +20,7 @@ interface IOption {
   value: string;
 }
 
-const Select = ({ label, options, name, formikValue, formik }: ISelect) => {
+const Select = ({ label, options, name, formikValue, formik}: ISelect) => {
 
   //Based on the values(string) find the corresponding option (object)
 
@@ -29,22 +29,10 @@ const Select = ({ label, options, name, formikValue, formik }: ISelect) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedValue, setSelectedValue] = useState<IOption | null>(null);
 
-  // useEffect(() => {
-  //   document.addEventListener('mousedown', handleClickOutside);
-  //   return () => {
-  //     document.removeEventListener('mousedown', handleClickOutside);
-  //   };
-  // }, []);
-
-  // const handleClickOutside = (event: MouseEvent) => {
-  //   if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-  //     setShowDropdown(false);
-  //   }
-  // };
-
   const handleSelect = (option: IOption) => {
     setSelectedValue(option);
     setValue(option.value)
+    setShowDropdown(false)
 
     formik.setFieldValue(`${name}`, option.value)
   };
