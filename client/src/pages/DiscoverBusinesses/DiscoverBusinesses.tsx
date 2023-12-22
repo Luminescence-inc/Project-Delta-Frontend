@@ -1,4 +1,3 @@
-import React from "react";
 import { useState, useEffect } from "react";
 import { getListOfBusinsessProfile } from "api/business";
 import BusinessCatalogue from "./BusinessCatalogue/BusinessCatalogue";
