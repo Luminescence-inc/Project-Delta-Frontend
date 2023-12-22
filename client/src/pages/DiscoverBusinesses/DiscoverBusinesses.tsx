@@ -1,8 +1,9 @@
+import React from "react";
 import { useState, useEffect } from "react";
 import { getListOfBusinsessProfile } from "api/business";
 import BusinessCatalogue from "./BusinessCatalogue/BusinessCatalogue";
 import BusinessDetails from "./BusinessDetails/BusinessDetails";
-import { IBusinessProfile } from "types/business-profile";
+import { IBusinessProfile, ISearch } from "types/business-profile";
 
 export const DiscoverBusinesses = () => {
   const [listOfBusinessProfiles, setListOfBusinessProfiles] = useState<
@@ -11,7 +12,7 @@ export const DiscoverBusinesses = () => {
   const [selectedBusinessProfile, setSelectedBusinessProfile] =
     useState<IBusinessProfile | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  // const [searchQuery, setSearchQuery] = useState<ISearch | null>(null);
+  const [searchQuery, setSearchQuery] = useState<ISearch | null>(null);
   const [totalPages, setTotalPages] = useState<number>(1);
   const handleSelectBusinessProfile = (
     businessProfile: IBusinessProfile | null
@@ -24,8 +25,12 @@ export const DiscoverBusinesses = () => {
   //   setListOfBusinessProfiles(null);
   // };
 
-  const handlePageChange = (page: number): void => {
+  const handlePageChange = (
+    page: number,
+    searchParam: ISearch | null
+  ): void => {
     setCurrentPage(page);
+    setSearchQuery(searchParam);
   };
 
   useEffect(() => {
@@ -34,22 +39,22 @@ export const DiscoverBusinesses = () => {
         page: currentPage,
         sortBy: "createdUtc",
         sortDirection: "asc",
-        limit: 100,
+        limit: 25,
       },
-      null
+      searchQuery
     )
       .then((res) => {
-        //console.log(res.data);
+        console.log(res.data);
         const { businessProfiles } = res.data?.data;
         console.log(businessProfiles);
         setListOfBusinessProfiles(businessProfiles?.data);
-        //console.log("Total Page" + businessProfiles?.totalPages);
+        console.log("Total Page" + businessProfiles?.totalPages);
         setTotalPages(businessProfiles?.totalPages);
       })
       .catch((err) => {
         console.error(err);
       });
-  }, [currentPage]);
+  }, [currentPage, searchQuery]);
 
   return (
     <div>
@@ -65,6 +70,7 @@ export const DiscoverBusinesses = () => {
           onPageChange={handlePageChange}
           currentPage={currentPage}
           totalPages={totalPages}
+          searchQuery={searchQuery}
         />
       )}
     </div>

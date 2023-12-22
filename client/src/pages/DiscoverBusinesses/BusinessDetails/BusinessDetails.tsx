@@ -8,6 +8,7 @@ import { IBusinessProfile } from "types/business-profile";
 import { formatDays } from "../helper";
 import { IBusinessCategory } from "types/business-profile";
 import { getBusinsessCategories } from "api/business";
+// import { CloudinaryConfig } from "config";
 
 interface BusinessDetailsProps {
   businessProfile: IBusinessProfile | null;
