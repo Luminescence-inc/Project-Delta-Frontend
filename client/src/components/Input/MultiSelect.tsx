@@ -10,7 +10,7 @@ interface ISelect {
   formik: FormikProps<any>;
   options: IOption[] | undefined;
   placeholder: string;
-  formikValue: IOption[];
+  formikValue?: IOption[];
 }
 
 interface IOption {

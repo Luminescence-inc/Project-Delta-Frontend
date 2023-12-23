@@ -48,5 +48,25 @@
       letter-spacing: 0px;
       text-align: center;
     }
+    .business-catalogue__filter {
+      display: flex;
+      flex-direction: column;
+      .business-catalogue__filter-icon {
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        margin-bottom: 10px;
+        span {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 10px 20px;
+          font-weight: 500;
+          color: var(--primary-color);
+          border: 1px solid #4e4c4c77;
+          border-radius: 10px;
+        }
+      }
+    }
   }
 }

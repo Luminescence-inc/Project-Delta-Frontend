@@ -1,44 +1,43 @@
 import { useState } from "react";
-import { IBusinessProfile } from "types/business-profile";
+import { IBusinessProfile, ISearch } from "types/business-profile";
 import Card from "pages/Home/components/Card/Card";
 import Button from "components/Button/Button";
 import { formatDays } from "../helper";
 import { CloudinaryConfig } from "../../../config";
 import "./BusinessCatalogue.scss";
+import FilterBusinessProfiles from "./FilterBusinessProfiles/FilterBusinessProfiles";
+import FilterIcon from "assets/icons/filter-icon.svg?react";
+
 interface IBusinessCatalogue {
   listOfBusinessProfiles: IBusinessProfile[] | null;
   onBusinessProfileSelect: (arg: IBusinessProfile) => void;
-  onPageChange: (arg: number) => void;
+  onPageChange: (arg: number, searchParam: ISearch | null) => void;
   currentPage: number;
   totalPages: number;
+  searchQuery: ISearch | null;
 }
 const BusinessCatalogue = (props: IBusinessCatalogue) => {
   const [disabledNext, setDisabledNext] = useState<boolean>(false);
   const [disabledPrevious, setDisabledPrevious] = useState<boolean>(
     props.currentPage > 1 ? false : true
   );
-  // if (props.listOfBusinessProfiles) {
-  //   //console.log("Logo Url", props.listOfBusinessProfiles[0].logoUrl);
-  //   //console.log("Cloude Name", CloudinaryConfig.cloudName);
-  // }
+  const [isFilterOpen, setIsFilterOPen] = useState<boolean>(false);
   const handlePrevious = () => {
     //console.log("Before" + props.currentPage);
     if (props.currentPage > 1) {
       setDisabledPrevious(false);
-      props.onPageChange(props.currentPage - 1);
+      props.onPageChange(props.currentPage - 1, props.searchQuery);
       if (disabledNext === true) {
         setDisabledNext(false);
       }
     } else {
-      //console.log("Here");
       setDisabledPrevious(true);
     }
-    //console.log("After" + props.currentPage);
   };
   const handleNext = () => {
     if (props.currentPage < props.totalPages) {
       setDisabledNext(false);
-      props.onPageChange(props.currentPage + 1);
+      props.onPageChange(props.currentPage + 1, props.searchQuery);
       if (disabledPrevious === true) {
         setDisabledPrevious(false);
       }
@@ -54,6 +53,25 @@ const BusinessCatalogue = (props: IBusinessCatalogue) => {
         Here is a list of business based on your search criteria. Click on view to see business details.
         </p>
       </header>
+      <div className="business-catalogue__filter">
+        <div className="business-catalogue__filter-icon">
+          {!isFilterOpen && (
+            <span onClick={() => setIsFilterOPen((prev) => !prev)}>
+              {<FilterIcon />} Filter
+            </span>
+          )}
+        </div>
+        <div className="business-catalogue__filter-body">
+          {isFilterOpen && (
+            <FilterBusinessProfiles
+              onFilter={(searchParam: ISearch) =>
+                props.onPageChange(1, searchParam)
+              }
+              onCancle={() => setIsFilterOPen((prev) => !prev)}
+            />
+          )}
+        </div>
+      </div>
       {props.listOfBusinessProfiles &&
         props.listOfBusinessProfiles.map((thisBusinessProfile) => {
           let operationInfo =
