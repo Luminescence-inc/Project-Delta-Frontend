@@ -1,4 +1,4 @@
-import { LogInData, ResetPasswordData, SignUpData } from "types/auth";
+import { LogInData, ResetPasswordData, SignUpData, updateUserData } from "types/auth";
 import { bizConnectAPI } from "../config";
 import axios from "axios";
 
@@ -47,4 +47,22 @@ export const logOut = (token: string, userId: string) => {
 export const generateVerificationEmail = (email: string) => {
   const url = `${bizConnectAPI.baseURL}/api/user/generate/forgot_password/${email}`;
   return axios.get(url);
+};
+
+export const getUserDetails = (token: string) => {
+  const url = `${bizConnectAPI.baseURL}/api/user/details`;
+  return axios.get(url, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const updateUserDetails = (token: string, data: updateUserData) => {
+  const url = `${bizConnectAPI.baseURL}/api/user/details/update`;
+  return axios.post(url, data, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 };

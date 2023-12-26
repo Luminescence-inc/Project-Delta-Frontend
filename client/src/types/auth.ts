@@ -8,6 +8,12 @@ export interface SignUpData {
     confirmPassword?: string;
 }
 
+export interface updateUserData {
+    firstName: string;
+    lastName: string;
+    password: string;
+}
+
 export interface LogInData {
     email: string;
     password?: string;
@@ -21,6 +27,19 @@ export interface ResetPasswordData {
 export interface SignUpResponse extends BaseResponseMessage {
     data: {
         token: string;
+    }
+}
+
+export interface UserDetailsResponse extends BaseResponseMessage {
+    data: {
+        userDetails: {
+            uuid: string;
+            firstName: string;
+            lastName: string;
+            email: string;
+            role: string;
+            verified: boolean;
+        }
     }
 }
 

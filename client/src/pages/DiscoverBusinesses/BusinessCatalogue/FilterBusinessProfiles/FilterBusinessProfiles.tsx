@@ -13,6 +13,7 @@ import MultiSelect from "components/Input/MultiSelect";
 import Button from "components/Button/Button";
 import { ISearch, IFilter } from "types/business-profile";
 import CancelIcon from "assets/icons/cancel-icon.svg?react";
+import { FILTERED_COUNTRY } from "utils/business-profile-utils";
 
 export type BusinessProfileSearchFormikPropsValues = {
   businessCategory: string[];
@@ -128,7 +129,9 @@ const FilterBusinessProfiles: React.FC<FilterBusinessProps> = ({
         setCountry(
           Country.getAllCountries().map((ct) => {
             return { uuid: ct.isoCode, value: ct.name };
-          })
+          }).filter((ct)=>{
+            return FILTERED_COUNTRY.includes(ct.value)
+        })
         );
       });
     } catch (error) {
