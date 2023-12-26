@@ -206,7 +206,7 @@ const Navbar = () => {
                     handleLogOut();
                   }}
                 />
-                <p className="my-account">My Account</p>
+                <p onClick={()=>{navigate("/account"); setMenuOpen(false); }} className="my-account-nav">My Account</p>
               </>
             )}
           </ul>
