@@ -7,7 +7,7 @@
     header {
       text-align: center;
       // margin: 64px 0;
-      margin: 24px ;
+      margin: 24px;
 
       h2 {
         margin-bottom: 16px;
@@ -37,7 +37,7 @@
       display: flex;
       justify-content: center;
     }
-    .view-button{
+    .view-button {
       height: 48px;
       padding: 12px, 56px, 12px, 56px;
       border-radius: 4px;
@@ -67,6 +67,8 @@
           border-radius: 10px;
         }
       }
+    }
+    .business-catalogue__nobusiness {
     }
   }
 }
