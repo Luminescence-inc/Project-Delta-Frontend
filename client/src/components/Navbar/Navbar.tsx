@@ -31,16 +31,18 @@ const Navbar = () => {
   useEffect(()=>{
     try {
       setTokenData(parsedToken);
+      if(parsedToken.id){
+          isAuthenticated(authToken, parsedToken.id)
+          .then(() => {
+            setAuthenticated(true);
+          })
+          .catch((err) => {
+            setAuthenticated(false);
+            // console.log("navbar-auth")
+            console.error(err);
+          });
+      }
 
-      isAuthenticated(authToken, parsedToken.id)
-        .then(() => {
-          setAuthenticated(true);
-        })
-        .catch((err) => {
-          setAuthenticated(false);
-          // console.log("navbar-auth")
-          console.error(err);
-        });
     } catch (error) {
       console.error("Error parsing token: ", error);
     }
