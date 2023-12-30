@@ -35,8 +35,8 @@ const Home = () => {
   useEffect(() => {
     try {
       setTokenData(parsedToken);
-
-      isAuthenticated(authToken, parsedToken.id)
+      if(parsedToken.id){
+        isAuthenticated(authToken, parsedToken.id)
         .then(() => {
           setAuthenticated(true);
         })
@@ -45,7 +45,7 @@ const Home = () => {
           console.error(err);
           // console.log("home-aut")
         });
-
+      }
       getUserBusinessProfileList(authToken).then((res) => {
         const businessListResponse: UserBusinessListResponse = res.data;
 
