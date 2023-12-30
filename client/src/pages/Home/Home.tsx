@@ -72,15 +72,18 @@ const Home = () => {
     // console.log("login: ",login)
     // console.log("typeOf: ",typeof(login))
 
-    isAuthenticated(authToken, parsedToken.id)
-      .then(() => {
-        setAuthenticated(true);
-      })
-      .catch((err) => {
-        setAuthenticated(false);
-        console.error(err);
-        // console.log("home-aut")
-      });
+    if(parsedToken.id){
+        isAuthenticated(authToken, parsedToken.id)
+        .then(() => {
+          setAuthenticated(true);
+        })
+        .catch((err) => {
+          setAuthenticated(false);
+          console.error(err);
+          // console.log("home-aut")
+        });
+    }
+
   }
 
   // console.log("authenticated: ",authenticated)
