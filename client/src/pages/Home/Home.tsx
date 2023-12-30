@@ -46,13 +46,15 @@ const Home = () => {
           // console.log("home-aut")
         });
       }
-      getUserBusinessProfileList(authToken).then((res) => {
+      if(authToken){
+        getUserBusinessProfileList(authToken).then((res) => {
         const businessListResponse: UserBusinessListResponse = res.data;
-
         setBusinessPresent(
           businessListResponse.data?.businessProfiles.length > 0 || false
         );
-      });
+        });
+      }
+
 
       // const timer = setTimeout(() => {
       //   setShowComponent(true);
