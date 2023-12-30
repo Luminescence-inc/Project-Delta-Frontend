@@ -82,10 +82,12 @@ const Navbar = () => {
       })
       .catch((err) => {
         setAuthenticated(false);
-        setMenuOpen(true);
+        
         // console.log("navbar-auth")
         console.error(err);
       });
+    }else{
+      setMenuOpen(true);
     }
 
   };
