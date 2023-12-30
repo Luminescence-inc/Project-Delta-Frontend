@@ -9,6 +9,7 @@ import svgr from 'vite-plugin-svgr';
 export default defineConfig({
   plugins: [react(), svgr(), tsconfigPaths()],
   build: {
+   minify: 'terser',
    target: 'es2015',
   },
 });
