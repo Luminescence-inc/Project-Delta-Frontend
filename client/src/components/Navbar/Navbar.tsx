@@ -70,7 +70,8 @@ const Navbar = () => {
   };
 
   const handleMenuIcon = () => {
-    isAuthenticated(authToken, parsedToken.id)
+    if(parsedToken.id){
+      isAuthenticated(authToken, parsedToken.id)
       .then(() => {
         setAuthenticated(true);
         setMenuOpen(true)
@@ -85,6 +86,8 @@ const Navbar = () => {
         // console.log("navbar-auth")
         console.error(err);
       });
+    }
+
   };
 
   const handleEditBusinessProfile = (id: string)=> {
