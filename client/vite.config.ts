@@ -12,5 +12,6 @@ export default defineConfig({
   build: {
    minify: 'terser',
    target: 'es2015',
+   polyfill: true,
   },
 });
