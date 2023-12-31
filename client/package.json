@@ -2,7 +2,7 @@
   "name": "project-delta",
   "private": true,
   "version": "0.0.0",
-  "homepage":"/",
+  "homepage":"www.bizconnect24.com",
   "type": "module",
   "scripts": {
     "dev": "vite --host",
