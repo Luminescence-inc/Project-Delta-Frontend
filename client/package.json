@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "homepage": "www.bizconnect24.com",
   "type": "module",
+  "homepage":"bizconnect24.com"
   "scripts": {
     "dev": "vite --host",
     "build": "tsc && vite build",
