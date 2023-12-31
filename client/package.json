@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage":"bizconnect24.com"
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
