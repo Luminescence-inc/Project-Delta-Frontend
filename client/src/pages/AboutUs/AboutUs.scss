@@ -1,0 +1,45 @@
+.about {
+  display: flex;
+  flex-direction: column;
+  header {
+    text-align: center;
+    // margin: 64px 0;
+    margin: 24px;
+
+    h2 {
+      margin-bottom: 16px;
+      font-size: 32px;
+      line-height: 40px;
+      font-weight: 700;
+    }
+  }
+  img {
+    width: 100%;
+    object-fit: fill;
+  }
+  p {
+    font-weight: 400;
+    line-height: 24px;
+    font-family: "Open Sans", sans-serif;
+    padding: 2rem;
+    text-align: center;
+
+    a {
+      margin: 0 5px 0 5px;
+      font-size: 16px;
+      font-weight: 600;
+      text-decoration: underline;
+      color: ⭐️ #0e2d52;
+      a:hover {
+        color: #f29b9b;
+        cursor: pointer;
+      }
+    }
+  }
+  .about_btn {
+    width: 80%;
+    align-self: center;
+    justify-self: center;
+    margin-bottom: 1rem;
+  }
+}

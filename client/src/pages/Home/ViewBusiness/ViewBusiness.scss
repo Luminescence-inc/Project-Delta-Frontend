@@ -1,68 +1,68 @@
 .view-business {
-    background-color: var(--light-grey);
-    padding: 16px;
+  background-color: var(--light-grey);
+  padding: 16px;
 }
 
-
 @media screen and (max-width: 500px) {
-    .view-business {
-        header {
-            text-align: center;
-            margin: 64px 0;
+  .view-business {
+    header {
+      text-align: center;
+      margin: 64px 0;
 
-            h2 {
-                margin-bottom: 16px;
-                font-size: 32px;
-                line-height: 40px;
-                font-weight: 700;
-            }
+      h2 {
+        margin-bottom: 16px;
+        font-size: 32px;
+        line-height: 40px;
+        font-weight: 700;
+      }
 
-            p {
-                font-size: 16px;
-                line-height: 24px;
-            }
-        }
-
-        .businesses {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-
-            h2 {
-                font-size: 16px;
-                line-height: 40px;
-            }
-
-            p {
-                font-size: 16px;
-                line-height: 24px;
-                margin-bottom: 32px;
-            }
-        }
-
-
+      p {
+        font-size: 16px;
+        line-height: 24px;
+      }
     }
 
-    .add-new-business {
-        background-color: var(--primary-color);
-        color: var(--white-color);
-        padding: 40px 23px;
-        display: flex;
-        flex-direction: column;
-        gap: 24px;
-        text-align: center;
+    .businesses {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
 
-        h4 {
-            font-weight: 700;
-        }
+      h2 {
+        font-size: 16px;
+        line-height: 40px;
+      }
 
-        p {
-            margin-bottom: 8px;
-        }
-
-        button {
-            color: var(--white-color);
-            border-color: var(--white-color);
-        }
+      p {
+        font-size: 16px;
+        line-height: 24px;
+        margin-bottom: 32px;
+      }
     }
+    .spacing {
+      margin-bottom: 10px;
+    }
+  }
+
+  .add-new-business {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    padding: 40px 23px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    text-align: center;
+
+    h4 {
+      font-weight: 700;
+    }
+
+    p {
+      margin-bottom: 8px;
+    }
+
+    button {
+      color: var(--white-color);
+      border-color: var(--white-color);
+    }
+  }
 }

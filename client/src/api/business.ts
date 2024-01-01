@@ -6,11 +6,11 @@ import axios from "axios";
 export const allBusinessCategories = () => {
   const url = `${bizConnectAPI.baseURL}/api/business_profile/categories`;
   return axios.get(url);
-}
+};
 
 export const getAllBusinessCategories = () => {
-    const url = `${bizConnectAPI.baseURL}/api/business_profile/categories`;
-    return axios.get(url);
+  const url = `${bizConnectAPI.baseURL}/api/business_profile/categories`;
+  return axios.get(url);
 };
 
 export const getUploadSignature = (token: string, folder: string) => {
@@ -67,15 +67,28 @@ export const getUserBusinessProfileDetail = (token: string, id: string) => {
   return axios.get(url, {
     headers: {
       Authorization: `Bearer ${token}`,
-    }
+    },
   });
 };
 
-export const updateUserBusinessProfileDetail = (token: string, id: string, data: BusinessCreationBody) => {
+export const updateUserBusinessProfileDetail = (
+  token: string,
+  id: string,
+  data: BusinessCreationBody
+) => {
   const url = `${bizConnectAPI.baseURL}/api/business_profile/update/${id}`;
   return axios.post(url, data, {
     headers: {
       Authorization: `Bearer ${token}`,
-    }
+    },
+  });
+};
+
+export const deleteUserBusinessProfile = (token: string, profileId: string) => {
+  const url = `${bizConnectAPI.baseURL}/api/business_profile/delete/${profileId}`;
+  return axios.delete(url, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
 };

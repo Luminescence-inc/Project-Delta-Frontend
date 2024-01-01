@@ -1,49 +1,49 @@
 import { BaseResponseMessage } from "./auth";
 
 export type BusinessProfileFormikPropsValues = {
-    businessName: string;
-    description: string; 
-    businessCategory: string;
-    country: string;
-    stateAndProvince: string;
-    city: string;
-    street: string;
-    postalCode: string;
-    instagramUrl: string;
-    websiteUrl: string;
-    linkedinUrl: string;
-    facebookUrl: string;
-    phoneNumber: string;
-    businessEmail: string;
-    openTime: string;
-    closeTime: string;
-    daysOfOperation: [];
-}
+  businessName: string;
+  description: string;
+  businessCategory: string;
+  country: string;
+  stateAndProvince: string;
+  city: string;
+  street: string;
+  postalCode: string;
+  instagramUrl: string;
+  websiteUrl: string;
+  linkedinUrl: string;
+  facebookUrl: string;
+  phoneNumber: string;
+  businessEmail: string;
+  openTime: string;
+  closeTime: string;
+  daysOfOperation: [];
+};
 
 export interface BusinessCreationBody {
-    name: string;
-    description: string;
-    businessCategoryUuid: string;
-    country: string;
-    stateAndProvince: string;
-    city: string;
-    street: string;
-    postalCode: string;
-    publicId: string | null;
-    version: number | null;
-    signature: string | null;
-    phoneNumber: string | null;
-    businessEmail: string | null;
-    openTime: string;
-    closeTime: string;
-    daysOfOperation: string[];
-    websiteUrl: string | null;
-    linkedinUrl: string | null;
-    instagramUrl: string | null;
-    twitterUrl?: string | null;
-    facebookUrl: string | null;
-    deleteLogo: boolean;
-    logoUrl: string | null;
+  name: string;
+  description: string;
+  businessCategoryUuid: string;
+  country: string;
+  stateAndProvince: string;
+  city: string;
+  street: string;
+  postalCode: string;
+  publicId: string | null;
+  version: number | null;
+  signature: string | null;
+  phoneNumber: string | null;
+  businessEmail: string | null;
+  openTime: string;
+  closeTime: string;
+  daysOfOperation: string[];
+  websiteUrl: string | null;
+  linkedinUrl: string | null;
+  instagramUrl: string | null;
+  twitterUrl?: string | null;
+  facebookUrl: string | null;
+  deleteLogo: boolean;
+  logoUrl: string | null;
 }
 
 export interface CloudinaryUploadResponse {
@@ -105,15 +105,15 @@ export interface UserBusinessList {
 }
 
 export interface UserBusinessListResponse extends BaseResponseMessage {
-    data: {
-        businessProfiles: UserBusinessList[]
-    }
+  data: {
+    businessProfiles: UserBusinessList[];
+  };
 }
 
 export interface UserBusinessDetailsResponse extends BaseResponseMessage {
-    data: {
-        details: UserBusinessList
-    }
+  data: {
+    details: UserBusinessList;
+  };
 }
 
 export interface BusinessCategories extends BaseResponseMessage {

@@ -18,6 +18,7 @@ import VerifiedAccount from "pages/Authentication/Verification/VerifyAccount";
 import DiscoverBusinesses from "./pages/DiscoverBusinesses/DiscoverBusinesses";
 import RegisterBusiness from "pages/Authentication/Signup/RegisterBusiness/RegisterBusiness";
 import MyAccount from "pages/AccountSettings/MyAccount";
+import AboutUs from "pages/AboutUs/AboutUs";
 
 function App() {
   const { pathname } = useLocation();
@@ -55,7 +56,8 @@ function App() {
             path="/signup/register-business"
             element={<RegisterBusiness />}
           />
-          <Route path="/account" element={<MyAccount/>} />
+          <Route path="/account" element={<MyAccount />} />
+          <Route path="/about-us" element={<AboutUs />} />
         </Routes>
       </main>
       <Footer />

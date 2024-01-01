@@ -7,6 +7,7 @@ import { CloudinaryConfig } from "../../../config";
 import "./BusinessCatalogue.scss";
 import FilterBusinessProfiles from "./FilterBusinessProfiles/FilterBusinessProfiles";
 import FilterIcon from "assets/icons/filter-icon.svg?react";
+import NoResultFound from "components/NoResultFound/NoResultFound";
 
 interface IBusinessCatalogue {
   listOfBusinessProfiles: IBusinessProfile[] | null;
@@ -16,17 +17,24 @@ interface IBusinessCatalogue {
   totalPages: number;
   searchQuery: ISearch | null;
 }
-const BusinessCatalogue = (props: IBusinessCatalogue) => {
+const BusinessCatalogue: React.FC<IBusinessCatalogue> = ({
+  listOfBusinessProfiles,
+  currentPage,
+  totalPages,
+  searchQuery,
+  onBusinessProfileSelect,
+  onPageChange,
+}) => {
   const [disabledNext, setDisabledNext] = useState<boolean>(false);
   const [disabledPrevious, setDisabledPrevious] = useState<boolean>(
-    props.currentPage > 1 ? false : true
+    currentPage > 1 ? false : true
   );
   const [isFilterOpen, setIsFilterOPen] = useState<boolean>(false);
   const handlePrevious = () => {
     //console.log("Before" + props.currentPage);
-    if (props.currentPage > 1) {
+    if (currentPage > 1) {
       setDisabledPrevious(false);
-      props.onPageChange(props.currentPage - 1, props.searchQuery);
+      onPageChange(currentPage - 1, searchQuery);
       if (disabledNext === true) {
         setDisabledNext(false);
       }
@@ -35,9 +43,9 @@ const BusinessCatalogue = (props: IBusinessCatalogue) => {
     }
   };
   const handleNext = () => {
-    if (props.currentPage < props.totalPages) {
+    if (currentPage < totalPages) {
       setDisabledNext(false);
-      props.onPageChange(props.currentPage + 1, props.searchQuery);
+      onPageChange(currentPage + 1, searchQuery);
       if (disabledPrevious === true) {
         setDisabledPrevious(false);
       }
@@ -50,9 +58,11 @@ const BusinessCatalogue = (props: IBusinessCatalogue) => {
       <header>
         <h2>Business</h2>
         <p>
-        Here is a list of business based on your search criteria. Click on view to see business details.
+          Here is a list of business based on your search criteria. Click on
+          view to see business details.
         </p>
       </header>
+
       <div className="business-catalogue__filter">
         <div className="business-catalogue__filter-icon">
           {!isFilterOpen && (
@@ -64,63 +74,70 @@ const BusinessCatalogue = (props: IBusinessCatalogue) => {
         <div className="business-catalogue__filter-body">
           {isFilterOpen && (
             <FilterBusinessProfiles
-              onFilter={(searchParam: ISearch) =>
-                props.onPageChange(1, searchParam)
-              }
+              onFilter={(searchParam: ISearch) => onPageChange(1, searchParam)}
               onCancle={() => setIsFilterOPen((prev) => !prev)}
             />
           )}
         </div>
       </div>
-      {props.listOfBusinessProfiles &&
-        props.listOfBusinessProfiles.map((thisBusinessProfile) => {
-          let operationInfo =
-            formatDays(thisBusinessProfile.daysOfOperation) +
-            "(" +
-            thisBusinessProfile.openTime +
-            "-" +
-            thisBusinessProfile.closeTime +
-            ")";
-          thisBusinessProfile.operationInfo = operationInfo;
-          return (
-            <div className="profiles" key={thisBusinessProfile.uuid}>
-              <Card
-                title={thisBusinessProfile?.name}
-                openDays={operationInfo}
-                phoneNumber={thisBusinessProfile?.phoneNumber}
-                usedInBusinessCataloge={true}
-                imagePath={`https://res.cloudinary.com/${CloudinaryConfig.cloudName}/image/upload/c_fill,q_500/${thisBusinessProfile?.logoUrl}.jpg`}
-                action={
-                  <Button
-                    className="view-button"
-                    variant="primary"
-                    label={`View ${thisBusinessProfile.name} Business`}
-                    onClick={() => {
-                      props.onBusinessProfileSelect(thisBusinessProfile);
-                    }}
+      {listOfBusinessProfiles?.length ? (
+        <div>
+          {listOfBusinessProfiles.length &&
+            listOfBusinessProfiles.map((thisBusinessProfile) => {
+              let operationInfo =
+                formatDays(thisBusinessProfile.daysOfOperation) +
+                "(" +
+                thisBusinessProfile.openTime +
+                "-" +
+                thisBusinessProfile.closeTime +
+                ")";
+              thisBusinessProfile.operationInfo = operationInfo;
+              return (
+                <div className="profiles" key={thisBusinessProfile.uuid}>
+                  <Card
+                    title={thisBusinessProfile?.name}
+                    openDays={operationInfo}
+                    phoneNumber={thisBusinessProfile?.phoneNumber}
+                    usedInBusinessCataloge={true}
+                    imagePath={`https://res.cloudinary.com/${CloudinaryConfig.cloudName}/image/upload/c_fill,q_500/${thisBusinessProfile?.logoUrl}.jpg`}
+                    action={
+                      <Button
+                        className="view-button"
+                        variant="primary"
+                        label={`View ${thisBusinessProfile.name} Business`}
+                        onClick={() => {
+                          onBusinessProfileSelect(thisBusinessProfile);
+                        }}
+                      />
+                    }
                   />
-                }
-              />
-            </div>
-          );
-        })}
-      <div className="business-catalogue navigation">
-        <Button
-          label="Previous"
-          size="sm"
-          variant="transparent"
-          disabled={disabledPrevious}
-          onClick={handlePrevious}
+                </div>
+              );
+            })}
+          <div className="business-catalogue navigation">
+            <Button
+              label="Previous"
+              size="sm"
+              variant="transparent"
+              disabled={disabledPrevious}
+              onClick={handlePrevious}
+            />
+            <Button
+              label="Next"
+              className="btn-adjusments"
+              size="sm"
+              variant="transparent"
+              disabled={disabledNext}
+              onClick={handleNext}
+            />
+          </div>
+        </div>
+      ) : (
+        <NoResultFound
+          message="Modify filter parameters and try again"
+          title="No Result Found!"
         />
-        <Button
-          label="Next"
-          className="btn-adjusments"
-          size="sm"
-          variant="transparent"
-          disabled={disabledNext}
-          onClick={handleNext}
-        />
-      </div>
+      )}
     </div>
   );
 };

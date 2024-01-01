@@ -37,6 +37,11 @@ a.btn {
     color: var(--white-color);
   }
 
+  &-secondary {
+    background-color: var(--secondary-color);
+    color: var(--white-color);
+  }
+
   &-transparent {
     background-color: transparent;
     border: 1px solid var(--primary-color);

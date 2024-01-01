@@ -2,6 +2,7 @@
   "name": "project-delta",
   "private": true,
   "version": "0.0.0",
+  "homepage": "/",
   "type": "module",
   "scripts": {
     "dev": "vite --host",
@@ -19,6 +20,7 @@
     "react-dom": "^18.2.0",
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.16.0",
+    "react-toastify": "^9.1.3",
     "sass": "^1.68.0",
     "vite-plugin-svgr": "^4.0.0",
     "vite-tsconfig-paths": "^4.2.1",

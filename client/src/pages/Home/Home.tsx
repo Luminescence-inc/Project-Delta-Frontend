@@ -26,6 +26,7 @@ const Home = () => {
   const login = searchParams.get("login");
 
   const authToken = localStorage.getItem(TOKEN_NAME) as string;
+
   const parsedToken: JwtPayload = authToken
     ? JSON.parse(atob(authToken?.split(".")[1]))
     : {}; //check atob
@@ -35,24 +36,25 @@ const Home = () => {
   useEffect(() => {
     try {
       setTokenData(parsedToken);
+      if (authToken) {
+        isAuthenticated(authToken, parsedToken.id)
+          .then(() => {
+            setAuthenticated(true);
+          })
+          .catch((err) => {
+            setAuthenticated(false);
+            console.error(err);
+            // console.log("home-aut")
+          });
 
-      isAuthenticated(authToken, parsedToken.id)
-        .then(() => {
-          setAuthenticated(true);
-        })
-        .catch((err) => {
-          setAuthenticated(false);
-          console.error(err);
-          // console.log("home-aut")
+        getUserBusinessProfileList(authToken).then((res) => {
+          const businessListResponse: UserBusinessListResponse = res.data;
+
+          setBusinessPresent(
+            businessListResponse.data?.businessProfiles.length > 0 || false
+          );
         });
-
-      getUserBusinessProfileList(authToken).then((res) => {
-        const businessListResponse: UserBusinessListResponse = res.data;
-
-        setBusinessPresent(
-          businessListResponse.data?.businessProfiles.length > 0 || false
-        );
-      });
+      }
 
       // const timer = setTimeout(() => {
       //   setShowComponent(true);
