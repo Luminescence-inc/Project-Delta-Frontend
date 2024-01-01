@@ -1,66 +1,35 @@
-/** @format */
-
-import { useEffect } from "react";
-import { Route, Routes, useLocation } from "react-router-dom";
-
-import Footer from "components/Footer/Footer";
-import Navbar from "components/Navbar/Navbar";
-import Home from "pages/Home/Home";
-import Onboarding from "pages/Onboarding/Onboarding";
-import Login from "pages/Authentication/Login/Login";
-import ForgotPassword from "pages/Authentication/ForgotPassword/ForgotPassword";
-import ForgotPasswordFinal from "pages/Authentication/ForgotPassword/ForgotPasswordFinal";
-import Signup from "pages/Authentication/Signup/Signup";
-import ViewBusiness from "pages/Home/ViewBusiness/ViewBusiness";
-import Email from "pages/Authentication/ForgotPassword/Email";
-import VerifiedEmail from "pages/Authentication/Verification/VerifiedEmail";
-import VerifiedAccount from "pages/Authentication/Verification/VerifyAccount";
-import DiscoverBusinesses from "./pages/DiscoverBusinesses/DiscoverBusinesses";
-import RegisterBusiness from "pages/Authentication/Signup/RegisterBusiness/RegisterBusiness";
-import MyAccount from "pages/AccountSettings/MyAccount";
+import { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
+import './App.css'
 
 function App() {
-  const { pathname } = useLocation();
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
+  const [count, setCount] = useState(0)
 
   return (
-    <div id="app-container">
-      <Navbar />
-      <main>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/onboarding" element={<Onboarding />} />
-          <Route path="/login" element={<Login />} />
-          <Route
-            path="/forgot-password/reset/:userId/:uniqueString"
-            element={<ForgotPassword />}
-          />
-          <Route
-            path="/verify-email/:userId/:uniqueString"
-            element={<VerifiedEmail />}
-          />
-          <Route path="/verify-account" element={<VerifiedAccount />} />
-          <Route path="/forgot-password/email" element={<Email />} />
-          <Route
-            path="/forgot-password-final"
-            element={<ForgotPasswordFinal />}
-          />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/view-your-business" element={<ViewBusiness />} />
-          <Route path="/discover-businesses" element={<DiscoverBusinesses />} />
-          <Route
-            path="/signup/register-business"
-            element={<RegisterBusiness />}
-          />
-          <Route path="/account" element={<MyAccount/>} />
-        </Routes>
-      </main>
-      <Footer />
-    </div>
-  );
+    <>
+      <div>
+        <a href="https://vitejs.dev" target="_blank">
+          <img src={viteLogo} className="logo" alt="Vite logo" />
+        </a>
+        <a href="https://react.dev" target="_blank">
+          <img src={reactLogo} className="logo react" alt="React logo" />
+        </a>
+      </div>
+      <h1>Vite + React</h1>
+      <div className="card">
+        <button onClick={() => setCount((count) => count + 1)}>
+          count is {count}
+        </button>
+        <p>
+          Edit <code>src/App.tsx</code> and save to test HMR
+        </p>
+      </div>
+      <p className="read-the-docs">
+        Click on the Vite and React logos to learn more
+      </p>
+    </>
+  )
 }
 
-export default App;
+export default App
