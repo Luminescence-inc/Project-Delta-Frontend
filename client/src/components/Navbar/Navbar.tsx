@@ -84,6 +84,7 @@ const Navbar = () => {
         setAuthenticated(false);
         
         // console.log("navbar-auth")
+        setMenuOpen(true);
         console.error(err);
       });
     }else{
