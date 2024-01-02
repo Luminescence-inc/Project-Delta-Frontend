@@ -24,7 +24,7 @@ const Onboarding = () => {
         .catch((err) => {
           navigate("/signup");
           console.log(err);
-          console.log("Onb-auth");
+          // console.log("Onb-auth");
         });
     } catch (error) {
       navigate("/signup");
@@ -42,7 +42,11 @@ const Onboarding = () => {
           title="New business"
           variant="red"
         />
-        <Pill icon={<BagIcon />} title="Existing businesses" variant="pink" />
+        <Pill 
+          icon={<BagIcon />} 
+          onClick={() => navigate("/login")} 
+          title="Existing businesses" 
+          variant="pink" />
         <Pill
           onClick={() => navigate("/discover-businesses")}
           icon={<SearchIcon />}
