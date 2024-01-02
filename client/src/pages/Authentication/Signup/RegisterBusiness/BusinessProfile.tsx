@@ -4,7 +4,7 @@ import { FC, useEffect, useRef, useState } from 'react';
 import { FormikProps } from 'formik';
 import { getAllBusinessCategories } from 'api/business';
 import { BusinessCategories, BusinessProfileFormikPropsValues, IOption } from 'types/business';
-import { Country, State, City }  from 'country-state-city';
+import { Country, State, City }  from '../../../../../country-sate-city';
 import { FILE_TYPES, FILTERED_COUNTRY } from 'utils/business-profile-utils';
 import ContactIcon from 'assets/icons/contact-icon.svg?react';
 import UploadIcon from 'assets/icons/upload-logo.svg?react';
