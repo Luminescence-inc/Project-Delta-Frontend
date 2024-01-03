@@ -35,16 +35,18 @@ const Navbar = () => {
   useEffect(() => {
     try {
       setTokenData(parsedToken);
+      if(parsedToken.id){
+          isAuthenticated(authToken, parsedToken.id)
+          .then(() => {
+            setAuthenticated(true);
+          })
+          .catch((err) => {
+            setAuthenticated(false);
+            // console.log("navbar-auth")
+            console.error(err);
+          });
+      }
 
-      isAuthenticated(authToken, parsedToken.id)
-        .then(() => {
-          setAuthenticated(true);
-        })
-        .catch((err) => {
-          setAuthenticated(false);
-          // console.log("navbar-auth")
-          console.error(err);
-        });
     } catch (error) {
       console.error("Error parsing token: ", error);
     }
@@ -72,7 +74,8 @@ const Navbar = () => {
   };
 
   const handleMenuIcon = () => {
-    isAuthenticated(authToken, parsedToken.id)
+    if(parsedToken.id){
+      isAuthenticated(authToken, parsedToken.id)
       .then(() => {
         setAuthenticated(true);
         setMenuOpen(true);
@@ -83,10 +86,15 @@ const Navbar = () => {
       })
       .catch((err) => {
         setAuthenticated(false);
-        setMenuOpen(true);
+        
         // console.log("navbar-auth")
+        setMenuOpen(true);
         console.error(err);
       });
+    }else{
+      setMenuOpen(true);
+    }
+
   };
 
   const handleEditBusinessProfile = (id: string) => {

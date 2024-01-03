@@ -41,7 +41,7 @@ export function formatDays(rawOpenDays: string[] | undefined): string {
       daysOfWeekArray[currentDay as keyof typeof daysOfWeekArray] -
         daysOfWeekArray[previousDay as keyof typeof daysOfWeekArray]
     );
-    console.log("difference " + defference);
+    // console.log("difference " + defference);
     if (defference === 1) {
       //console.log(" Inside prev", previousDay);
       //console.log(" Insee curr", currentDay);

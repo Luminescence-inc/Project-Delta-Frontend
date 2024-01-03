@@ -36,25 +36,26 @@ const Home = () => {
   useEffect(() => {
     try {
       setTokenData(parsedToken);
-      if (authToken) {
+      if(parsedToken.id){
         isAuthenticated(authToken, parsedToken.id)
-          .then(() => {
-            setAuthenticated(true);
-          })
-          .catch((err) => {
-            setAuthenticated(false);
-            console.error(err);
-            // console.log("home-aut")
-          });
-
-        getUserBusinessProfileList(authToken).then((res) => {
-          const businessListResponse: UserBusinessListResponse = res.data;
-
-          setBusinessPresent(
-            businessListResponse.data?.businessProfiles.length > 0 || false
-          );
+        .then(() => {
+          setAuthenticated(true);
+        })
+        .catch((err) => {
+          setAuthenticated(false);
+          console.error(err);
+          // console.log("home-aut")
         });
       }
+      if(authToken){
+        getUserBusinessProfileList(authToken).then((res) => {
+        const businessListResponse: UserBusinessListResponse = res.data;
+        setBusinessPresent(
+          businessListResponse.data?.businessProfiles.length > 0 || false
+        );
+        });
+      }
+
 
       // const timer = setTimeout(() => {
       //   setShowComponent(true);
@@ -74,15 +75,18 @@ const Home = () => {
     // console.log("login: ",login)
     // console.log("typeOf: ",typeof(login))
 
-    isAuthenticated(authToken, parsedToken.id)
-      .then(() => {
-        setAuthenticated(true);
-      })
-      .catch((err) => {
-        setAuthenticated(false);
-        console.error(err);
-        // console.log("home-aut")
-      });
+    if(parsedToken.id){
+        isAuthenticated(authToken, parsedToken.id)
+        .then(() => {
+          setAuthenticated(true);
+        })
+        .catch((err) => {
+          setAuthenticated(false);
+          console.error(err);
+          // console.log("home-aut")
+        });
+    }
+
   }
 
   // console.log("authenticated: ",authenticated)

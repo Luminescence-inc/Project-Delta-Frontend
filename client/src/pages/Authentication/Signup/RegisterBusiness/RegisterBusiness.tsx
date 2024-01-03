@@ -11,7 +11,7 @@ import OperationInfo from "./OperationInfo";
 import axios from "axios";
 import Modal from 'react-modal';
 import Button from "components/Button/Button";
-import { Country, State, City }  from 'country-state-city';
+import { Country, State, City }  from '../../../../../country-sate-city';
 import * as yup from "yup";
 import "./Register.scss";
 import { FILTERED_COUNTRY } from "utils/business-profile-utils";
