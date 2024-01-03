@@ -5,7 +5,7 @@ import "./ViewBusiness.scss";
 import { JwtPayload, TOKEN_NAME } from "types/auth";
 import { useState, useEffect } from "react";
 import { isAuthenticated } from "api/auth";
-import { toast } from "react-toastify";
+import Modal from "react-modal";
 import {
   getUserBusinessProfileList,
   deleteUserBusinessProfile,
@@ -18,60 +18,57 @@ import { CloudinaryConfig } from "config";
 
 const ViewBusiness = () => {
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const authToken = localStorage.getItem(TOKEN_NAME) as string;
   const [authenticated, setAuthenticated] = useState(false);
   const [userListOfBusinessProfile, setUserListOfBusinessProfile] = useState<
     UserBusinessList[] | []
   >([]);
+
   const parsedToken: JwtPayload = authToken
     ? JSON.parse(atob(authToken?.split(".")[1]))
     : {};
 
-  const notifySucess = (message: string) =>
-    toast.success(message, {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
-  const notifyFailure = (message: string) =>
-    toast.error(message, {
-      position: "top-center",
-      autoClose: 1000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+  const customStyles = {
+    content: {
+      top: "35%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-90%",
+      transform: "translate(-50%, -50%)",
+      maxWidth: "90%",
+      maxHeight: "80vh",
+      overflow: "auto",
+    },
+    overlay: { backgroundColor: "rgba(0, 0, 0, 0.5)" },
+  };
   const handleDeleteBusinessProfile = (businessProfileID: string) => {
-    isAuthenticated(authToken, parsedToken.id)
-      .then(() => {
-        setAuthenticated(true);
-      })
-      .catch((err) => {
-        console.error(err);
-        navigate("/login");
+    if (parsedToken.id) {
+      isAuthenticated(authToken, parsedToken.id)
+        .then(() => {
+          setAuthenticated(true);
+        })
+        .catch((err) => {
+          console.error(err);
+          navigate("/login");
+        });
+      deleteUserBusinessProfile(authToken, businessProfileID).then((res) => {
+        const deletedResponse: BaseResponseMessage = res.data;
+        if (deletedResponse?.success) {
+          let updatedUserListOfBusinessProfile =
+            userListOfBusinessProfile?.filter(
+              (thisBusinessProfile) =>
+                thisBusinessProfile.uuid !== businessProfileID
+            );
+          setUserListOfBusinessProfile(updatedUserListOfBusinessProfile);
+          setIsModalOpen(true);
+        }
       });
-    deleteUserBusinessProfile(authToken, businessProfileID).then((res) => {
-      const deletedResponse: BaseResponseMessage = res.data;
-      if (deletedResponse?.success) {
-        let updatedUserListOfBusinessProfile =
-          userListOfBusinessProfile?.filter(
-            (thisBusinessProfile) =>
-              thisBusinessProfile.uuid !== businessProfileID
-          );
-        setUserListOfBusinessProfile(updatedUserListOfBusinessProfile);
-        notifySucess("Successfully deleted business");
-      } else {
-        notifyFailure("Error occured while deleting business");
-      }
-    });
+    }
   };
   useEffect(() => {
     isAuthenticated(authToken, parsedToken.id)
@@ -140,6 +137,44 @@ const ViewBusiness = () => {
             })}
           </div>
         )}
+        <Modal
+          isOpen={isModalOpen}
+          onRequestClose={closeModal}
+          contentLabel="Success Modal"
+          style={customStyles}
+        >
+          <div className="modal">
+            <h2
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                fontSize: "16px",
+                fontWeight: "700",
+                marginBottom: "10px",
+              }}
+            >
+              Delete Succesful
+            </h2>
+            <p
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                fontSize: "12px",
+                fontWeight: "400",
+                marginBottom: "20px",
+              }}
+            >
+              You have successfully deleted your business profile
+            </p>
+            <Button
+              type="submit"
+              label="Click to Continue"
+              variant="primary"
+              size="lg"
+              to="/view-your-business"
+            />
+          </div>
+        </Modal>
       </div>
 
       <div className="add-new-business">
