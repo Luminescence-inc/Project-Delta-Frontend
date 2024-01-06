@@ -25,7 +25,9 @@ const BusinessCatalogue: React.FC<IBusinessCatalogue> = ({
   onBusinessProfileSelect,
   onPageChange,
 }) => {
-  const [disabledNext, setDisabledNext] = useState<boolean>(false);
+  const [disabledNext, setDisabledNext] = useState<boolean>(
+    currentPage < totalPages ? false : true
+  );
   const [disabledPrevious, setDisabledPrevious] = useState<boolean>(
     currentPage > 1 ? false : true
   );
