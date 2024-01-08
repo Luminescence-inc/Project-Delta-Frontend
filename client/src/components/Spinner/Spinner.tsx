@@ -1,8 +1,9 @@
 import './Spinner.scss';
+import Loader from "assets/icons/loader-icon.svg?react";
 
 const Spinner = () => {
   return (
-    <div className="spinner">Loading...</div>
+    <Loader className="spinner" />
   );
 };
 

@@ -11,14 +11,16 @@ import Button from 'components/Button/Button';
 import Select from 'components/Input/Select';
 import MultiSelect from 'components/Input/MultiSelect';
 import '../Signup.scss';
+import Spinner from 'components/Spinner/Spinner';
 
 interface OperationInfoProps {
   formik: FormikProps<BusinessProfileFormikPropsValues>;
   businessId?: string | null;
+  isLoading: boolean;
 }
 
 
-const OperationInfo: FC<OperationInfoProps> = ({formik, businessId}) => {
+const OperationInfo: FC<OperationInfoProps> = ({formik, businessId, isLoading}) => {
 
   const filterDaysOfOperation = DAYS_OF_OPERATIONS_OPTIONS.filter((days)=>{
     const d = formik.values.daysOfOperation as Array<string>
@@ -77,7 +79,9 @@ const OperationInfo: FC<OperationInfoProps> = ({formik, businessId}) => {
           options={DAYS_OF_OPERATIONS_OPTIONS}
         />
 
-        <Button type='submit' onClick={formik.submitForm} label={businessId?`Update Profile`:`Submit Profile`} variant='primary' size='lg' />
+        {!isLoading && <Button type='submit' onClick={formik.submitForm} label={businessId?`Update Profile`:`Submit Profile`} variant='primary' size='lg' />}
+        {isLoading && <Button type='submit'  label={Spinner()} variant='primary' size='lg' disabled={true} />}
+
       </div>
     </div>
   );

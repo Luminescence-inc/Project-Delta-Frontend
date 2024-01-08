@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 import "./Button.scss";
 
 interface IButton {
-  label: string;
-  variant?: "primary" | "transparent" | "secondary" | "default";
+  label: React.ReactNode;
+  variant?: "primary" | "transparent" | "secondary" | "default" | "cancel";
   size?: "md" | "lg" | "sm";
   to?: string;
   disabled?: boolean;

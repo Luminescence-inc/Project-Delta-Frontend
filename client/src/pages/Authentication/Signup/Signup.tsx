@@ -14,6 +14,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Signup.scss';
 import * as yup from "yup";
+import Spinner from 'components/Spinner/Spinner';
 
 const validationSchema = yup.object({
   firstName: yup.string().min(1, "Enter valid First Name").required("First Name is required!"),
@@ -30,9 +31,11 @@ const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConirmPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState<String | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = async (values: SignUpData) => {
     const {confirmPassword, ...data} = values;
+    setIsLoading(true);
     try {
       const res = await registerUser(data)
       .catch((err)=>{
@@ -47,12 +50,14 @@ const Signup = () => {
         }
         setError(true);
         console.error(err);
+        setIsLoading(false);
       });
       const resData: SignUpResponse = res?.data;
 
       if(res && resData?.success){
         // setToken
         localStorage.setItem(TOKEN_NAME, resData.data.token.split(' ')[1]);
+        setIsLoading(false);
 
         // route to verify-account
         navigate('/verify-account');
@@ -61,9 +66,11 @@ const Signup = () => {
       }else{
         // Set error message
         setError(true);
+        setIsLoading(false);
       }
 
     } catch (err) {
+      setIsLoading(false);
       setError(true);
       console.error(err);
       setErrorMessage("error occured while login");
@@ -188,14 +195,13 @@ const Signup = () => {
             </p>
           </div>
 
-          <Button
+          {!isLoading && <Button
             type='submit'
             label='Submit'
             variant='primary'
             size='lg'
-            // to='/signup/business-profile'
-            // to='/signup/register-business'
-          />
+          />}
+          {isLoading && <Button type='submit'  label={Spinner()} variant='primary' size='lg' disabled={true} />}
         </form>
 
         <p className='no-account'>

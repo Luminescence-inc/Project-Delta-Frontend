@@ -7,16 +7,18 @@ import { LogInData, LogInResponse } from "types/auth";
 import { generateVerificationEmail } from "api/auth";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import Spinner from "components/Spinner/Spinner";
 
 const Email = () => {
   const navigate = useNavigate();
   const [sentEmail, setSentEmail] = useState<boolean>(false);
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState<String | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = async (values: LogInData) => {
-    generateVerificationEmail;
-
+    // generateVerificationEmail;
+    setIsLoading(true);
     try {
       const res = await generateVerificationEmail(values.email).catch((err) => {
         // const errorResponse: LogInResponse = err.response.data;
@@ -30,6 +32,7 @@ const Email = () => {
         // }
         // setError(true);
 
+        setIsLoading(false);
         setErrorMessage("Error occured while reseting link");
 
         console.error(err);
@@ -49,11 +52,12 @@ const Email = () => {
 
         // setError(false);
         // window.location.reload();
-
+        setIsLoading(false);
         setSentEmail(true);
       }
     } catch (error) {
       console.error(error);
+      setIsLoading(false);
       setError(true);
       setErrorMessage("Error occured while reseting link");
     }
@@ -89,12 +93,13 @@ const Email = () => {
                 placeholder="Enter Email Address"
               />
 
-              <Button
+              {!isLoading && <Button
                 type="submit"
                 label="Verify Email"
                 variant="primary"
                 size="lg"
-              />
+              />}
+              {isLoading && <Button type='submit'  label={Spinner()} variant='primary' size='lg' disabled={true} />}
             </div>
           </div>
         </form>

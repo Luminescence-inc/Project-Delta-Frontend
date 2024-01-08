@@ -52,6 +52,7 @@ const RegisterBusiness = ()=> {
     const [country, setCountry] = useState<IOption[]>([]);
     const [stateAndProvince, setStateAndProvince] = useState<IOption[]>([]);
     const [city, setCity] = useState<IOption[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
     const businessId = searchParams.get('update');
 
     useEffect(()=>{
@@ -163,6 +164,7 @@ const RegisterBusiness = ()=> {
 
     const onSubmit = async (values: BusinessProfileFormikPropsValues) => {
         const folderPath = `BizConnect/Logo/${parsedToken.id}`;
+        setIsLoading(true);
 
         // Task1: Check required field and run error toast if not provided
         // Task2: Create spinner for submition 
@@ -242,10 +244,12 @@ const RegisterBusiness = ()=> {
         if(!error && !businessId){
             createBusinessProfile(authToken, payload).then(()=>{
                 setIsModalOpen(true);
-                setSuccessfulSubmission(true)
+                setSuccessfulSubmission(true);
+                setIsLoading(false);
             }).catch((err)=>{
                 alert(`There was an error submitting the form. Error: ${err}`)
-                console.error(err)
+                console.error(err);
+                setIsLoading(false);
             })
         }     
 
@@ -254,10 +258,12 @@ const RegisterBusiness = ()=> {
             updateUserBusinessProfileDetail(authToken, businessId, payload)
             .then(()=>{
                 setIsModalOpen(true);
-                setSuccessfulSubmission(true)
+                setSuccessfulSubmission(true);
+                setIsLoading(false);
             }).catch((err)=>{
                 alert(`There was an error submitting the form. Error: ${err}`)
-                console.error(err)
+                console.error(err);
+                setIsLoading(false);
             })
         }
     }
@@ -337,7 +343,7 @@ const RegisterBusiness = ()=> {
                     setCity={setCity}
                     />)}
             {activeTab === 1 && 
-            !successfulSubmission && (<OperationInfo formik={formik} businessId={businessId} />)}      
+            !successfulSubmission && (<OperationInfo formik={formik} businessId={businessId} isLoading={isLoading} />)}      
 
             <Modal
                 isOpen={isModalOpen}
