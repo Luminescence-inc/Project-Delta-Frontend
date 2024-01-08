@@ -12,6 +12,7 @@ import { getUserDetails, isAuthenticated, updateUserDetails } from 'api/auth';
 import { useEffect, useState } from 'react';
 import './MyAccount.scss';
 import * as yup from "yup";
+import Spinner from 'components/Spinner/Spinner';
 
 const validationSchema = yup.object({
   firstName: yup.string().min(1, "Enter valid First Name").required("First Name is required!"),
@@ -30,6 +31,7 @@ const MyAccount = () => {
   const [showConfirmPassword, setShowConirmPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState<String | null>(null);
   const [authenticated, setAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(()=>{
     isAuthenticated(authToken, parsedToken.id)
@@ -53,6 +55,7 @@ const MyAccount = () => {
 
   const onSubmit = async (values: SignUpData) => {
     const {confirmPassword, email, ...data} = values;
+    setIsLoading(true);
 
     let updateProfile = false;
     setSuccess(false)
@@ -72,17 +75,21 @@ const MyAccount = () => {
         try {
             const res: BaseResponseMessage = (await updateUserDetails(authToken, data)).data
             if(res.success){
-              setSuccess(true)
+              setSuccess(true);
+              setIsLoading(false);
             }else{
+              setIsLoading(false);
               setError(true);
               setErrorMessage("error occured while updating profile");
             }
           } catch (err) {
+            setIsLoading(false);
             setError(true);
             console.error(err);
             setErrorMessage("error occured while updating profile");
           }
     }else{
+        setIsLoading(false);
         setError(true);
         setErrorMessage("password doesn't match");
     }
@@ -206,12 +213,13 @@ const MyAccount = () => {
                     placeholder='Enter Password'
                 />
                 <div style={{marginTop:"40px"}}>
-                    <Button
+                    {!isLoading && <Button
                         type='submit'
                         label='Update profile'
                         variant='primary'
                         size='lg'
-                    />
+                    />}
+                    {isLoading && <Button type='submit'  label={Spinner()} variant='primary' size='lg' disabled={true} />}
                 </div>
                 </form>
             </div>

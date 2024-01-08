@@ -12,18 +12,21 @@ import {
 } from "api/business";
 import { UserBusinessList, UserBusinessListResponse } from "types/business";
 import { BaseResponseMessage } from "types/auth";
-
 import { useNavigate } from "react-router-dom";
 import { CloudinaryConfig } from "config";
+import Spinner from "components/Spinner/Spinner";
+import defaultImage from "assets/images/noimage-icon.png"
 
 const ViewBusiness = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const authToken = localStorage.getItem(TOKEN_NAME) as string;
   const [authenticated, setAuthenticated] = useState(false);
-  const [userListOfBusinessProfile, setUserListOfBusinessProfile] = useState<
-    UserBusinessList[] | []
-  >([]);
+  const [userListOfBusinessProfile, setUserListOfBusinessProfile] = useState<UserBusinessList[] | []>([]);
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [businessName, setBusinessName] = useState('');
+  const [businessUuid, setBusinessUuid] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const parsedToken: JwtPayload = authToken
     ? JSON.parse(atob(authToken?.split(".")[1]))
@@ -46,7 +49,15 @@ const ViewBusiness = () => {
     },
     overlay: { backgroundColor: "rgba(0, 0, 0, 0.5)" },
   };
+
+  const handleDeleteButton = (name: string, uuid: string)=>{
+    setIsModalOpen(true);
+    setConfirmDelete(true);
+    setBusinessName(name);
+    setBusinessUuid(uuid)
+  }
   const handleDeleteBusinessProfile = (businessProfileID: string) => {
+    setIsLoading(true);
     if (parsedToken.id) {
       isAuthenticated(authToken, parsedToken.id)
         .then(() => {
@@ -55,6 +66,9 @@ const ViewBusiness = () => {
         .catch((err) => {
           console.error(err);
           navigate("/login");
+          setConfirmDelete(false);
+          setIsLoading(false);
+          setIsModalOpen(false);
         });
       deleteUserBusinessProfile(authToken, businessProfileID).then((res) => {
         const deletedResponse: BaseResponseMessage = res.data;
@@ -65,8 +79,12 @@ const ViewBusiness = () => {
                 thisBusinessProfile.uuid !== businessProfileID
             );
           setUserListOfBusinessProfile(updatedUserListOfBusinessProfile);
-          setIsModalOpen(true);
+          setConfirmDelete(false);
+          setIsLoading(false);
         }
+      }).catch((err)=>{
+        setIsLoading(false);
+        console.error(err)
       });
     }
   };
@@ -106,7 +124,9 @@ const ViewBusiness = () => {
               return (
                 <div className="card card-home card-business">
                   <img
-                    src={`https://res.cloudinary.com/${CloudinaryConfig.cloudName}/image/upload/c_fill,q_500/${thisBusinessProfile?.logoUrl}.jpg`}
+                    src={thisBusinessProfile?.logoUrl ? 
+                      `https://res.cloudinary.com/${CloudinaryConfig.cloudName}/image/upload/c_fill,q_500/${thisBusinessProfile?.logoUrl}.jpg`
+                    : defaultImage}
                     alt="businessImage"
                   />
                   <h3>{thisBusinessProfile.name}</h3>
@@ -128,9 +148,7 @@ const ViewBusiness = () => {
                     label="Delete Business"
                     variant="secondary"
                     size="lg"
-                    onClick={() => {
-                      handleDeleteBusinessProfile(thisBusinessProfile.uuid);
-                    }}
+                    onClick={()=>handleDeleteButton(thisBusinessProfile.name, thisBusinessProfile.uuid)}
                   />
                 </div>
               );
@@ -153,7 +171,7 @@ const ViewBusiness = () => {
                 marginBottom: "10px",
               }}
             >
-              Delete Succesful
+             {confirmDelete? 'Are you sure?' : 'Delete Succesful'}
             </h2>
             <p
               style={{
@@ -164,15 +182,38 @@ const ViewBusiness = () => {
                 marginBottom: "20px",
               }}
             >
-              You have successfully deleted your business profile
+             {confirmDelete? `You’re deleting your (${businessName}),  you can’t undo this request.` : 'You have successfully deleted your business profile'}
             </p>
-            <Button
+            {confirmDelete && (
+              <>
+              <div style={{marginBottom: "20px"}}>
+                <Button
+                type="submit"
+                label="Cancel"
+                variant="cancel"
+                size="lg"
+                onClick={()=>{setIsModalOpen(false); setConfirmDelete(false);}}
+                />
+              </div>
+              <div>
+               {!isLoading && <Button
+                type="submit"
+                label="Yes, delete business"
+                variant="primary"
+                size="lg"
+                onClick={()=>{handleDeleteBusinessProfile(businessUuid);}}
+                />}
+                {isLoading && <Button type='submit'  label={Spinner()} variant='primary' size='lg' disabled={true} /> }
+              </div>
+              </>
+            )}
+            {!confirmDelete && <Button
               type="submit"
               label="Click to Continue"
               variant="primary"
               size="lg"
-              to="/view-your-business"
-            />
+              onClick={()=> setIsModalOpen(false)}
+            />}
           </div>
         </Modal>
       </div>

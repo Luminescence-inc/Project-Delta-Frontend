@@ -11,6 +11,7 @@ import { loginUser } from 'api/auth';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.scss';
+import Spinner from 'components/Spinner/Spinner';
 import * as yup from "yup";
 
 const validationSchema = yup.object({
@@ -23,9 +24,11 @@ const Login = () => {
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState<String | null>(null);
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = async (values: LogInData) => {
     const {...data} = values;
+    setIsLoading(true);
     try {
       const res = await loginUser(data)
       .catch((err)=>{
@@ -40,6 +43,7 @@ const Login = () => {
         }
         setError(true);
         console.error(err);
+        setIsLoading(false);
       });
 
       const resData: LogInResponse = res?.data;
@@ -48,6 +52,7 @@ const Login = () => {
         // Set token in local Storage
         const tokenString = resData.data.token.split(' ')[1]
         localStorage.setItem(TOKEN_NAME, tokenString);
+        setIsLoading(false);
 
         // const authToken = localStorage.getItem(TOKEN_NAME) as string;
         const parsedToken: JwtPayload = tokenString? JSON.parse(atob(tokenString?.split('.')[1])) : {}; //check atob
@@ -57,7 +62,7 @@ const Login = () => {
         if(parsedToken.verified){
           // window.location.reload();
 
-          //add spinner
+          //add spinner - todo
           navigate('/?login=true');
           // window.location.reload();
         }else{
@@ -71,6 +76,7 @@ const Login = () => {
       }
 
     } catch (err) {
+      setIsLoading(false);
       setError(true);
       setErrorMessage("error occured while login")
     }
@@ -137,7 +143,8 @@ const Login = () => {
             placeholder='Enter Password'
           />
           
-          <Button label='Submit' variant='primary' size='lg' type='submit' />
+          {!isLoading && <Button label='Submit' variant='primary' size='lg' type='submit' />}
+          {isLoading && <Button type='submit'  label={Spinner()} variant='primary' size='lg' disabled={true} />}
         </form>
 
         <Link className='forgot' to='/forgot-password/email'>
