@@ -24,12 +24,14 @@ export type BusinessProfileSearchFormikPropsValues = {
 
 interface FilterBusinessProps {
   onFilter: (payload: ISearch) => void;
-  onCancle: () => void;
+  onCancle?: () => void;
+  searchParam: ISearch | null;
 }
 
 const FilterBusinessProfiles: React.FC<FilterBusinessProps> = ({
   onFilter,
   onCancle,
+  searchParam,
 }) => {
   const [country, setCountry] = useState<IOption[]>();
   const [stateAndProvince, setStateAndProvince] = useState<IOption[]>();
@@ -104,6 +106,61 @@ const FilterBusinessProfiles: React.FC<FilterBusinessProps> = ({
       onFilter(payload);
     }
   };
+
+  const getResult = (
+    searchParam: ISearch | null,
+    filterTag: String
+  ): string | undefined => {
+    if (searchParam && searchParam.filters) {
+      let data = searchParam.filters.find(
+        (thisFilter) => thisFilter.targetFieldName === filterTag
+      )?.values[0];
+      return data;
+    }
+  };
+  const formatInput = (value: any) => {
+    return value ? value : "Hi";
+  };
+  useEffect(() => {
+    try {
+      console.log("SearchParams ", searchParam);
+      let country = getResult(searchParam, "country");
+      if (country) {
+        console.log(country);
+        formik.setFieldValue("country", formatInput(country));
+      }
+      let stateAndProvince = getResult(searchParam, "stateAndProvince");
+      if (stateAndProvince) {
+        formik.setFieldValue("stateAndProvince", stateAndProvince);
+      }
+      let city = getResult(searchParam, "city");
+      if (city) {
+        formik.setFieldValue("city", city);
+      }
+      let category: { [uuid: string]: string } = {};
+      if (businessCategory && businessCategory.length > 0) {
+        businessCategory.forEach((thisBusinessCategory) => {
+          category[thisBusinessCategory.uuid] = thisBusinessCategory.value;
+        });
+      }
+      let businessCategoriesUUIDs: string[] | undefined;
+      if (searchParam && searchParam.filters) {
+        businessCategoriesUUIDs = searchParam.filters.find(
+          (thisFilter) => thisFilter.targetFieldName === "businessCategoryUuid"
+        )?.values;
+      }
+      let businessCategories;
+      if (businessCategoriesUUIDs && category) {
+        businessCategories = businessCategoriesUUIDs.map((thisUUID) => {
+          return category[thisUUID];
+        });
+      }
+      if (businessCategories) {
+        console.log(businessCategories);
+        formik.setFieldValue("businessCategory", businessCategories);
+      }
+    } catch (err) {}
+  }, []);
   const formik = useFormik({
     initialValues: {
       businessCategory: [],
@@ -114,7 +171,6 @@ const FilterBusinessProfiles: React.FC<FilterBusinessProps> = ({
     validateOnBlur: true,
     onSubmit,
   });
-
   useEffect(() => {
     try {
       allBusinessCategories().then((res) => {
@@ -127,11 +183,13 @@ const FilterBusinessProfiles: React.FC<FilterBusinessProps> = ({
         );
 
         setCountry(
-          Country.getAllCountries().map((ct) => {
-            return { uuid: ct.isoCode, value: ct.name };
-          }).filter((ct)=>{
-            return FILTERED_COUNTRY.includes(ct.value)
-        })
+          Country.getAllCountries()
+            .map((ct) => {
+              return { uuid: ct.isoCode, value: ct.name };
+            })
+            .filter((ct) => {
+              return FILTERED_COUNTRY.includes(ct.value);
+            })
         );
       });
     } catch (error) {
@@ -184,7 +242,7 @@ const FilterBusinessProfiles: React.FC<FilterBusinessProps> = ({
     <div className="filterForm">
       <div className="card">
         <div className="card__cancle">
-          <span onClick={() => onCancle()}>{<CancelIcon />}</span>
+          {onCancle && <span onClick={() => onCancle()}>{<CancelIcon />}</span>}
         </div>
         <Select
           label="Select Country"
@@ -219,7 +277,12 @@ const FilterBusinessProfiles: React.FC<FilterBusinessProps> = ({
         />
         <Button
           type="submit"
-          onClick={formik.submitForm}
+          onClick={() => {
+            formik.submitForm();
+            {
+              onCancle && onCancle();
+            }
+          }}
           label="Show me businesses"
           variant="primary"
           size="lg"

@@ -35,8 +35,8 @@ const Navbar = () => {
   useEffect(() => {
     try {
       setTokenData(parsedToken);
-      if(parsedToken.id){
-          isAuthenticated(authToken, parsedToken.id)
+      if (parsedToken.id) {
+        isAuthenticated(authToken, parsedToken.id)
           .then(() => {
             setAuthenticated(true);
           })
@@ -46,7 +46,6 @@ const Navbar = () => {
             console.error(err);
           });
       }
-
     } catch (error) {
       console.error("Error parsing token: ", error);
     }
@@ -74,27 +73,26 @@ const Navbar = () => {
   };
 
   const handleMenuIcon = () => {
-    if(parsedToken.id){
+    if (parsedToken.id) {
       isAuthenticated(authToken, parsedToken.id)
-      .then(() => {
-        setAuthenticated(true);
-        setMenuOpen(true);
-        getUserBusinessProfileList(authToken).then((res) => {
-          const resData: UserBusinessListResponse = res.data;
-          setUserBusinessListData(resData.data.businessProfiles);
+        .then(() => {
+          setAuthenticated(true);
+          setMenuOpen(true);
+          getUserBusinessProfileList(authToken).then((res) => {
+            const resData: UserBusinessListResponse = res.data;
+            setUserBusinessListData(resData.data.businessProfiles);
+          });
+        })
+        .catch((err) => {
+          setAuthenticated(false);
+
+          // console.log("navbar-auth")
+          setMenuOpen(true);
+          console.error(err);
         });
-      })
-      .catch((err) => {
-        setAuthenticated(false);
-        
-        // console.log("navbar-auth")
-        setMenuOpen(true);
-        console.error(err);
-      });
-    }else{
+    } else {
       setMenuOpen(true);
     }
-
   };
 
   const handleEditBusinessProfile = (id: string) => {
@@ -109,7 +107,7 @@ const Navbar = () => {
       className="navbar"
       onClick={(e) => {
         e.stopPropagation();
-        console.log("NAva");
+        // console.log("NAva");
       }}
     >
       {!menuOpen && (

@@ -78,6 +78,7 @@ const BusinessCatalogue: React.FC<IBusinessCatalogue> = ({
             <FilterBusinessProfiles
               onFilter={(searchParam: ISearch) => onPageChange(1, searchParam)}
               onCancle={() => setIsFilterOPen((prev) => !prev)}
+              searchParam={searchQuery}
             />
           )}
         </div>

@@ -1,6 +1,6 @@
 /** @format */
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import ArrowUpIcon from "assets/icons/arrow-up.svg?react";
 import CancelIcon from "assets/icons/cancel-select-icon.svg?react";
 import "./Input.scss";
@@ -22,16 +22,22 @@ interface IOption {
 
 const Select = ({ label, options, name, formikValue, formik }: ISelect) => {
   //Based on the values(string) find the corresponding option (object)
-
+  console.log("Here is the formik value " + formikValue);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [value, setValue] = useState(formikValue || "");
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedValue, setSelectedValue] = useState<IOption | null>(null);
 
+  useEffect(() => {
+    if (formikValue) {
+      setValue(formikValue);
+    }
+  }, [formikValue]);
+
   const handleSelect = (option: IOption) => {
     setSelectedValue(option);
-    setValue(option.value)
-    setShowDropdown(false)
+    setValue(option.value);
+    setShowDropdown(false);
 
     formik.setFieldValue(`${name}`, option.value);
   };

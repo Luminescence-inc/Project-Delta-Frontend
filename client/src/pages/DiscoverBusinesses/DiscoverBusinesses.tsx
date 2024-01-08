@@ -3,6 +3,7 @@ import { getListOfBusinsessProfile } from "api/business";
 import BusinessCatalogue from "./BusinessCatalogue/BusinessCatalogue";
 import BusinessDetails from "./BusinessDetails/BusinessDetails";
 import { IBusinessProfile, ISearch } from "types/business-profile";
+import FilterBusinessProfiles from "./BusinessCatalogue/FilterBusinessProfiles/FilterBusinessProfiles";
 
 export const DiscoverBusinesses = () => {
   const [listOfBusinessProfiles, setListOfBusinessProfiles] = useState<
@@ -57,20 +58,33 @@ export const DiscoverBusinesses = () => {
 
   return (
     <div>
-      {selectedBusinessProfile ? (
-        <BusinessDetails
-          businessProfile={selectedBusinessProfile}
-          onClickReturnToBusinessCatalogue={handleSelectBusinessProfile}
-        />
+      {!searchQuery ? (
+        <div>
+          <FilterBusinessProfiles
+            onFilter={(searchParam: ISearch) =>
+              handlePageChange(1, searchParam)
+            }
+            searchParam={searchQuery}
+          />
+        </div>
       ) : (
-        <BusinessCatalogue
-          listOfBusinessProfiles={listOfBusinessProfiles}
-          onBusinessProfileSelect={handleSelectBusinessProfile}
-          onPageChange={handlePageChange}
-          currentPage={currentPage}
-          totalPages={totalPages}
-          searchQuery={searchQuery}
-        />
+        <div>
+          {selectedBusinessProfile ? (
+            <BusinessDetails
+              businessProfile={selectedBusinessProfile}
+              onClickReturnToBusinessCatalogue={handleSelectBusinessProfile}
+            />
+          ) : (
+            <BusinessCatalogue
+              listOfBusinessProfiles={listOfBusinessProfiles}
+              onBusinessProfileSelect={handleSelectBusinessProfile}
+              onPageChange={handlePageChange}
+              currentPage={currentPage}
+              totalPages={totalPages}
+              searchQuery={searchQuery}
+            />
+          )}
+        </div>
       )}
     </div>
   );
