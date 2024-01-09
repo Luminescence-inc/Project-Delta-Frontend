@@ -168,12 +168,12 @@ const FilterBusinessProfiles: React.FC<FilterBusinessProps> = ({
       if (businessCategoriesUUIDs && category) {
         businessCategories = businessCategoriesUUIDs.map((thisUUID) => {
           if (thisUUID) {
-            return { uuid: thisUUID, value: category[thisUUID] };
+            return { uuid: thisUUID, value: category[thisUUID] } as IOption;
           }
-        });
+        }) as IOption[];
       }
 
-      if (businessCategories) {
+      if (businessCategories && businessCategories.length > 0) {
         setSelectedBusinessCategory(businessCategories);
         // formik.setFieldValue("businessCategory", businessCategories);
       }
