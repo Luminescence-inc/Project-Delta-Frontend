@@ -26,18 +26,21 @@ interface FilterBusinessProps {
   onFilter: (payload: ISearch) => void;
   onCancle?: () => void;
   searchParam: ISearch | null;
+  businessCategory: IOption[] | undefined;
 }
 
 const FilterBusinessProfiles: React.FC<FilterBusinessProps> = ({
   onFilter,
   onCancle,
   searchParam,
+  businessCategory,
 }) => {
   const [country, setCountry] = useState<IOption[]>();
   const [stateAndProvince, setStateAndProvince] = useState<IOption[]>();
   const [city, setCity] = useState<IOption[]>();
+  const [selectedBusinessCategory, setSelectedBusinessCategory] =
+    useState<IOption[]>();
   const [error, setError] = useState<Boolean>(false);
-  const [businessCategory, setBusinessCategory] = useState<IOption[]>();
   const onSubmit = async (values: BusinessProfileSearchFormikPropsValues) => {
     let countryFilter: IFilter;
     let stateAndProvinceFilter: IFilter;
@@ -107,6 +110,22 @@ const FilterBusinessProfiles: React.FC<FilterBusinessProps> = ({
     }
   };
 
+  useEffect(() => {
+    try {
+      setCountry(
+        Country.getAllCountries()
+          .map((ct) => {
+            return { uuid: ct.isoCode, value: ct.name };
+          })
+          .filter((ct) => {
+            return FILTERED_COUNTRY.includes(ct.value);
+          })
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
   const getResult = (
     searchParam: ISearch | null,
     filterTag: String
@@ -118,16 +137,12 @@ const FilterBusinessProfiles: React.FC<FilterBusinessProps> = ({
       return data;
     }
   };
-  const formatInput = (value: any) => {
-    return value ? value : "Hi";
-  };
+
   useEffect(() => {
     try {
-      console.log("SearchParams ", searchParam);
       let country = getResult(searchParam, "country");
       if (country) {
-        console.log(country);
-        formik.setFieldValue("country", formatInput(country));
+        formik.setFieldValue("country", country);
       }
       let stateAndProvince = getResult(searchParam, "stateAndProvince");
       if (stateAndProvince) {
@@ -149,15 +164,18 @@ const FilterBusinessProfiles: React.FC<FilterBusinessProps> = ({
           (thisFilter) => thisFilter.targetFieldName === "businessCategoryUuid"
         )?.values;
       }
-      let businessCategories;
+      let businessCategories: IOption[] = [];
       if (businessCategoriesUUIDs && category) {
         businessCategories = businessCategoriesUUIDs.map((thisUUID) => {
-          return category[thisUUID];
+          if (thisUUID) {
+            return { uuid: thisUUID, value: category[thisUUID] };
+          }
         });
       }
+
       if (businessCategories) {
-        console.log(businessCategories);
-        formik.setFieldValue("businessCategory", businessCategories);
+        setSelectedBusinessCategory(businessCategories);
+        // formik.setFieldValue("businessCategory", businessCategories);
       }
     } catch (err) {}
   }, []);
@@ -171,31 +189,7 @@ const FilterBusinessProfiles: React.FC<FilterBusinessProps> = ({
     validateOnBlur: true,
     onSubmit,
   });
-  useEffect(() => {
-    try {
-      allBusinessCategories().then((res) => {
-        const resData: BusinessCategories = res.data;
 
-        setBusinessCategory(
-          resData.data.businessCategories.map((businessCat) => {
-            return { uuid: businessCat.uuid, value: businessCat.description };
-          })
-        );
-
-        setCountry(
-          Country.getAllCountries()
-            .map((ct) => {
-              return { uuid: ct.isoCode, value: ct.name };
-            })
-            .filter((ct) => {
-              return FILTERED_COUNTRY.includes(ct.value);
-            })
-        );
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
   useEffect(() => {
     if (formik.values.country != "") {
       const selectedCountry = country?.find((ct) => {
@@ -272,6 +266,7 @@ const FilterBusinessProfiles: React.FC<FilterBusinessProps> = ({
           label="Category"
           placeholder={"Select Categories"}
           name="businessCategory"
+          formikValue={selectedBusinessCategory}
           formik={formik}
           options={businessCategory}
         />

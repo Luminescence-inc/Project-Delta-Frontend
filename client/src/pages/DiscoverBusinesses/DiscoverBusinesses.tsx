@@ -4,6 +4,8 @@ import BusinessCatalogue from "./BusinessCatalogue/BusinessCatalogue";
 import BusinessDetails from "./BusinessDetails/BusinessDetails";
 import { IBusinessProfile, ISearch } from "types/business-profile";
 import FilterBusinessProfiles from "./BusinessCatalogue/FilterBusinessProfiles/FilterBusinessProfiles";
+import { allBusinessCategories } from "api/business";
+import { BusinessCategories, IOption } from "types/business";
 
 export const DiscoverBusinesses = () => {
   const [listOfBusinessProfiles, setListOfBusinessProfiles] = useState<
@@ -20,10 +22,24 @@ export const DiscoverBusinesses = () => {
     // Set the selected item
     setSelectedBusinessProfile(businessProfile);
   };
+  const [businessCategory, setBusinessCategory] = useState<IOption[]>();
 
   // const handleBackToBusinessCatalogue = () => {
   //   setListOfBusinessProfiles(null);
   // };
+
+  useEffect(() => {
+    try {
+      allBusinessCategories().then((res) => {
+        const resData: BusinessCategories = res.data;
+        setBusinessCategory(
+          resData.data.businessCategories.map((businessCat) => {
+            return { uuid: businessCat.uuid, value: businessCat.description };
+          })
+        );
+      });
+    } catch (err) {}
+  }, []);
 
   const handlePageChange = (
     page: number,
@@ -65,6 +81,7 @@ export const DiscoverBusinesses = () => {
               handlePageChange(1, searchParam)
             }
             searchParam={searchQuery}
+            businessCategory={businessCategory}
           />
         </div>
       ) : (
@@ -82,6 +99,7 @@ export const DiscoverBusinesses = () => {
               currentPage={currentPage}
               totalPages={totalPages}
               searchQuery={searchQuery}
+              businessCategory={businessCategory}
             />
           )}
         </div>

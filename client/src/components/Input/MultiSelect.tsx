@@ -1,8 +1,8 @@
-import { useRef, useState } from 'react';
-import ArrowUpIcon from 'assets/icons/arrow-up.svg?react';
-import { FormikProps } from 'formik';
-import Button from 'components/Button/Button';
-import './Input.scss';
+import { useRef, useState, useEffect } from "react";
+import ArrowUpIcon from "assets/icons/arrow-up.svg?react";
+import { FormikProps } from "formik";
+import Button from "components/Button/Button";
+import "./Input.scss";
 
 interface ISelect {
   label: string;
@@ -18,10 +18,22 @@ interface IOption {
   value: string;
 }
 
-const MultiSelect = ({ label, options, name, formik, formikValue }: ISelect) => {
+const MultiSelect = ({
+  label,
+  options,
+  name,
+  formik,
+  formikValue,
+}: ISelect) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [selectedValues, setSelectedValues] = useState<IOption[]>(formikValue || []);
+  const [selectedValues, setSelectedValues] = useState<IOption[]>(
+    formikValue || []
+  );
+
+  useEffect(() => {
+    setSelectedValues(formikValue || []);
+  }, [formikValue]);
 
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
@@ -42,7 +54,10 @@ const MultiSelect = ({ label, options, name, formik, formikValue }: ISelect) => 
   };
 
   const updateFormikValues = (values: IOption[]) => {
-    formik.setFieldValue(name, values.map((val) => val.value));
+    formik.setFieldValue(
+      name,
+      values.map((val) => val.value)
+    );
   };
 
   const isSelected = (option: IOption) => {
@@ -55,40 +70,52 @@ const MultiSelect = ({ label, options, name, formik, formikValue }: ISelect) => 
 
   return (
     <>
-      <div className='form-group'>
-        <label htmlFor=''>{label}</label>
-        <div className='input-wrapper'>
+      <div className="form-group">
+        <label htmlFor="">{label}</label>
+        <div className="input-wrapper">
           <input
-            className='select'
-            type='text'
+            className="select"
+            type="text"
             name={name}
             placeholder={label}
             onClick={toggleDropdown}
             readOnly
           />
-          <ArrowUpIcon className='arrow-down input-icon' width={14} height={14} />
+          <ArrowUpIcon
+            className="arrow-down input-icon"
+            width={14}
+            height={14}
+          />
         </div>
       </div>
 
       {showDropdown && (
-        <div ref={dropdownRef} className='dropdown-container'>
-          <div className='options-list'>
+        <div ref={dropdownRef} className="dropdown-container">
+          <div className="options-list">
             <ul>
               {options?.map((option) => (
-                <li key={option.uuid} onClick={() => handleSelect(option)} style={{ listStyleType: 'none', display: 'flex' }}>
-                  <input 
-                      type='checkbox'
-                      checked={isSelected(option)}
-                    />
-                  <label className='checkbox-value'>
-                    {option.value}
-                  </label>
+                <li
+                  key={option.uuid}
+                  onClick={() => handleSelect(option)}
+                  style={{ listStyleType: "none", display: "flex" }}
+                >
+                  <input
+                    type="checkbox"
+                    checked={isSelected(option)}
+                    onChange={() => {}}
+                  />
+                  <label className="checkbox-value">{option.value}</label>
                 </li>
               ))}
-            </ul>    
+            </ul>
           </div>
-          <div style={{paddingTop: "10px"}}>
-          <Button onClick={handleSave} label='Save' variant='primary' size='md' />
+          <div style={{ paddingTop: "10px" }}>
+            <Button
+              onClick={handleSave}
+              label="Save"
+              variant="primary"
+              size="md"
+            />
           </div>
         </div>
       )}

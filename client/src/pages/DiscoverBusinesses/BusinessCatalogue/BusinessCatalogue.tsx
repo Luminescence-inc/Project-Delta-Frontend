@@ -8,6 +8,7 @@ import "./BusinessCatalogue.scss";
 import FilterBusinessProfiles from "./FilterBusinessProfiles/FilterBusinessProfiles";
 import FilterIcon from "assets/icons/filter-icon.svg?react";
 import NoResultFound from "components/NoResultFound/NoResultFound";
+import { IOption } from "types/business";
 
 interface IBusinessCatalogue {
   listOfBusinessProfiles: IBusinessProfile[] | null;
@@ -16,6 +17,7 @@ interface IBusinessCatalogue {
   currentPage: number;
   totalPages: number;
   searchQuery: ISearch | null;
+  businessCategory: IOption[] | undefined;
 }
 const BusinessCatalogue: React.FC<IBusinessCatalogue> = ({
   listOfBusinessProfiles,
@@ -24,6 +26,7 @@ const BusinessCatalogue: React.FC<IBusinessCatalogue> = ({
   searchQuery,
   onBusinessProfileSelect,
   onPageChange,
+  businessCategory,
 }) => {
   const [disabledNext, setDisabledNext] = useState<boolean>(
     currentPage < totalPages ? false : true
@@ -79,6 +82,7 @@ const BusinessCatalogue: React.FC<IBusinessCatalogue> = ({
               onFilter={(searchParam: ISearch) => onPageChange(1, searchParam)}
               onCancle={() => setIsFilterOPen((prev) => !prev)}
               searchParam={searchQuery}
+              businessCategory={businessCategory}
             />
           )}
         </div>

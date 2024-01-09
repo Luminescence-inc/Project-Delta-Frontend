@@ -22,7 +22,6 @@ interface IOption {
 
 const Select = ({ label, options, name, formikValue, formik }: ISelect) => {
   //Based on the values(string) find the corresponding option (object)
-  console.log("Here is the formik value " + formikValue);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [value, setValue] = useState(formikValue || "");
   const [showDropdown, setShowDropdown] = useState(false);
