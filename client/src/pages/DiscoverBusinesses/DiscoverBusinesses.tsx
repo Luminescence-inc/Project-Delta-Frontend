@@ -30,12 +30,12 @@ export const DiscoverBusinesses = () => {
   };
   const [businessCategory, setBusinessCategory] = useState<IOption[]>();
 
-  const handleReturnToBusinessCatalogue = (
-    businessProfile: IBusinessProfile | null
-  ): void => {
-    // Set the selected item
-    setSelectedBusinessProfile(businessProfile);
-  };
+  // const handleReturnToBusinessCatalogue = (
+  //   businessProfile: IBusinessProfile | null
+  // ): void => {
+  //   // Set the selected item
+  //   setSelectedBusinessProfile(businessProfile);
+  // };
 
   // const handleBackToBusinessCatalogue = () => {
   //   setListOfBusinessProfiles(null);
