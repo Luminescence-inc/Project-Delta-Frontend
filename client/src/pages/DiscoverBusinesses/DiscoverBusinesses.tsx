@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { getListOfBusinsessProfile } from "api/business";
 import BusinessCatalogue from "./BusinessCatalogue/BusinessCatalogue";
 import BusinessDetails from "./BusinessDetails/BusinessDetails";
@@ -16,13 +16,26 @@ export const DiscoverBusinesses = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [searchQuery, setSearchQuery] = useState<ISearch | null>(null);
   const [totalPages, setTotalPages] = useState<number>(1);
+  const detailRef = useRef<HTMLDivElement>(null);
+
   const handleSelectBusinessProfile = (
     businessProfile: IBusinessProfile | null
   ): void => {
     // Set the selected item
     setSelectedBusinessProfile(businessProfile);
+
+    if (detailRef.current) {
+      detailRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
   };
   const [businessCategory, setBusinessCategory] = useState<IOption[]>();
+
+  const handleReturnToBusinessCatalogue = (
+    businessProfile: IBusinessProfile | null
+  ): void => {
+    // Set the selected item
+    setSelectedBusinessProfile(businessProfile);
+  };
 
   // const handleBackToBusinessCatalogue = () => {
   //   setListOfBusinessProfiles(null);
@@ -73,7 +86,7 @@ export const DiscoverBusinesses = () => {
   }, [currentPage, searchQuery]);
 
   return (
-    <div>
+    <div ref={detailRef}>
       {!searchQuery ? (
         <div>
           <FilterBusinessProfiles

@@ -11,6 +11,7 @@ import { useFormik } from 'formik';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useState } from 'react';
 import { resetUserPassword } from 'api/auth';
+import Spinner from 'components/Spinner/Spinner';
 
 const validationSchema = yup.object({
   password: yup.string().required("Please Enter your password"),
@@ -25,13 +26,16 @@ const ForgotPassword = () => {
   const [errorMessage, setErrorMessage] = useState<String | null>(null);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConirmPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = async (values: ResetPasswordData) => {
     // to='/forgot-password-final'
+    setIsLoading(true);
     try {
       const res = await resetUserPassword(userId as string, uniqueString as string, values)
       .catch((err)=>{
         const errorResponse: BaseResponseMessage = err.response.data;
+        setIsLoading(false);
 
         // Set error message
         const errorCode = errorResponse?.message.code; 
@@ -51,10 +55,12 @@ const ForgotPassword = () => {
         navigate('/forgot-password-final');
         setError(false);
         // window.location.reload();
+        setIsLoading(false);
 
       }
 
     } catch (error) {
+      setIsLoading(false);
       setError(true);
       setErrorMessage("error occured while resetting password")
     }
@@ -109,12 +115,13 @@ const ForgotPassword = () => {
               : ""}
           </span>
 
-          <Button
+          {!isLoading && <Button
            type='submit'
             label='Confirm Password'
             variant='primary'
             size='lg'
-          />
+          />}
+          {isLoading && <Button type='submit'  label={Spinner()} variant='primary' size='lg' disabled={true} />}
         </form>
         
       </div>

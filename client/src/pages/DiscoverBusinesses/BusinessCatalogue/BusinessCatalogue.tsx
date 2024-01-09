@@ -9,6 +9,7 @@ import FilterBusinessProfiles from "./FilterBusinessProfiles/FilterBusinessProfi
 import FilterIcon from "assets/icons/filter-icon.svg?react";
 import NoResultFound from "components/NoResultFound/NoResultFound";
 import { IOption } from "types/business";
+import defaultImage from "assets/images/noimage-icon.png";
 
 interface IBusinessCatalogue {
   listOfBusinessProfiles: IBusinessProfile[] | null;
@@ -106,7 +107,11 @@ const BusinessCatalogue: React.FC<IBusinessCatalogue> = ({
                     openDays={operationInfo}
                     phoneNumber={thisBusinessProfile?.phoneNumber}
                     usedInBusinessCataloge={true}
-                    imagePath={`https://res.cloudinary.com/${CloudinaryConfig.cloudName}/image/upload/c_fill,q_500/${thisBusinessProfile?.logoUrl}.jpg`}
+                    imagePath={
+                      thisBusinessProfile?.logoUrl
+                        ? `https://res.cloudinary.com/${CloudinaryConfig.cloudName}/image/upload/c_fill,q_500/${thisBusinessProfile?.logoUrl}.jpg`
+                        : defaultImage
+                    }
                     action={
                       <Button
                         className="view-button"
