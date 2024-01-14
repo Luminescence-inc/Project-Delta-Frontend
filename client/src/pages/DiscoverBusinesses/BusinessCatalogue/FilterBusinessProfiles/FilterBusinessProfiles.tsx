@@ -41,18 +41,24 @@ const FilterBusinessProfiles: React.FC<FilterBusinessProps> = ({
   const [selectedBusinessCategory, setSelectedBusinessCategory] =
     useState<IOption[]>();
   const [error, setError] = useState<Boolean>(false);
+  const [countryError, setCountryError] = useState<Boolean>(false);
   const onSubmit = async (values: BusinessProfileSearchFormikPropsValues) => {
     let countryFilter: IFilter;
     let stateAndProvinceFilter: IFilter;
     let cityFilter: IFilter;
+    let countrySelected = false;
 
     let searchFilters: IFilter[] = [];
     if (values.country) {
+      countrySelected=true;
+      setCountryError(false);
       countryFilter = {
         targetFieldName: "country",
         values: [values.country],
       };
       searchFilters.push(countryFilter);
+    }else{
+      setCountryError(true);
     }
 
     if (values.stateAndProvince) {
@@ -105,7 +111,7 @@ const FilterBusinessProfiles: React.FC<FilterBusinessProps> = ({
     const payload: ISearch = {
       filters: searchFilters,
     };
-    if (!error) {
+    if (!error && countrySelected) {
       onFilter(payload);
     }
   };
@@ -232,12 +238,20 @@ const FilterBusinessProfiles: React.FC<FilterBusinessProps> = ({
     }
   }, [formik.values.stateAndProvince]);
 
+  // Custom Styles
+  const errorMessageStyle = {
+    color: 'red',
+    display: 'flex',
+    fontSize: '13px'
+  }
+
   return (
     <div className="filterForm">
       <div className="card">
         <div className="card__cancle">
           {onCancle && <span onClick={() => onCancle()}>{<CancelIcon />}</span>}
         </div>
+        {countryError && (<span style={errorMessageStyle}>Please select a country</span>)}
         <Select
           label="Select Country"
           name="country"
