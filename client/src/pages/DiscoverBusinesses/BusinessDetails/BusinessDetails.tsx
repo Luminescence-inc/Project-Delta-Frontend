@@ -8,7 +8,7 @@ import { IBusinessProfile } from "types/business-profile";
 import { formatDays } from "../helper";
 import { IBusinessCategory } from "types/business-profile";
 import { getBusinsessCategories } from "api/business";
-import defaultImage from "assets/images/noimage-icon.png"
+import defaultImage from "assets/images/noimage-icon.png";
 // import { CloudinaryConfig } from "config";
 
 interface BusinessDetailsProps {
@@ -27,7 +27,7 @@ const BusinessDetails: React.FC<BusinessDetailsProps> = ({
     "Wednesday",
     "Thursday",
     "Friday",
-    "Satutrday",
+    "Saturday",
   ];
   const [businessCategoryName, setBusinessCategoryName] = useState<
     string | undefined
@@ -40,7 +40,7 @@ const BusinessDetails: React.FC<BusinessDetailsProps> = ({
     }
   }
   let closeDays = formatDays(closeDates);
-  
+
   useEffect(() => {
     getBusinsessCategories()
       .then((res) => {
@@ -68,7 +68,11 @@ const BusinessDetails: React.FC<BusinessDetailsProps> = ({
       <Card
         title={businessProfile?.name || ""}
         description={businessProfile?.description}
-        imagePath={businessProfile?.logoUrl?`https://res.cloudinary.com/${CloudinaryConfig.cloudName}/image/upload/c_fill,q_500/${businessProfile?.logoUrl}.jpg`:defaultImage}
+        imagePath={
+          businessProfile?.logoUrl
+            ? `https://res.cloudinary.com/${CloudinaryConfig.cloudName}/image/upload/c_fill,q_500/${businessProfile?.logoUrl}.jpg`
+            : defaultImage
+        }
         email={businessProfile?.businessEmail}
         phoneNumber={businessProfile?.phoneNumber}
         address={businessProfile?.street}
