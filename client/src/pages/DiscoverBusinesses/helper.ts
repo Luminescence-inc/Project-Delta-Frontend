@@ -15,7 +15,6 @@ export function formatDays(rawOpenDays: string[] | undefined): string {
   const sorted_days = rawOpenDays.sort(
     (a, b) => days_in_order.indexOf(a) - days_in_order.indexOf(b)
   );
-  console.log(sorted_days);
   const consecutiveDays = [];
   let currentRange = [sorted_days[0]];
 
@@ -34,7 +33,6 @@ export function formatDays(rawOpenDays: string[] | undefined): string {
     }
   }
   consecutiveDays.push(currentRange);
-  console.log(consecutiveDays);
   let formatedResult = consecutiveDays
     .map((range) => {
       if (range.length > 1) {
