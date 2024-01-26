@@ -50,3 +50,41 @@ footer.footer {
     }
   }
 }
+
+
+// Define the breakpoints for laptop and mobile views
+$breakpoint-laptop: 501px;
+$breakpoint-mobile: 500px;
+
+// Apply styles based on the screen size
+.responsive-content {
+  .laptop-view {
+    display: none; // Hide by default
+  }
+
+  .mobile-view {
+    display: none; // Hide by default
+  }
+
+  // Media query for laptop view
+  @media only screen and (min-width: $breakpoint-laptop) {
+    .laptop-view {
+      display: block; // Show on laptop view
+    }
+
+    .mobile-view {
+      display: none; // Hide on laptop view
+    }
+  }
+
+  // Media query for mobile view
+  @media only screen and (max-width: $breakpoint-mobile) {
+    .laptop-view {
+      display: none; // Hide on mobile view
+    }
+
+    .mobile-view {
+      display: block; // Show on mobile view
+    }
+  }
+}

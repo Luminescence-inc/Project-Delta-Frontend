@@ -16,6 +16,7 @@ import { isAuthenticated } from "api/auth";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { getUserBusinessProfileList } from "api/business";
 import { UserBusinessListResponse } from "types/business";
+import DefaultWebView from "components/DefaultWebView/DefaultWebView";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -92,7 +93,8 @@ const Home = () => {
   // console.log("authenticated: ",authenticated)
 
   return (
-    <div className="home">
+    <div className="responsive-content">
+      <div className="home mobile-view">
       <img src={homeBgImage} alt={homeBgImage} />
       <header>
         <h2>Welcome to Bizconnect</h2>
@@ -149,6 +151,10 @@ const Home = () => {
           description="Transact with connected businesses..."
         />
       </section>
+      </div>
+      <div>
+        <DefaultWebView className={"laptop-view"} />
+      </div>
     </div>
   );
 };
