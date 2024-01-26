@@ -8,6 +8,7 @@ import { JwtPayload, TOKEN_NAME } from "types/auth";
 import { isAuthenticated } from "api/auth";
 import { useNavigate } from "react-router-dom";
 import "./Onboarding.scss";
+import DefaultWebView from "components/DefaultWebView/DefaultWebView";
 
 const Onboarding = () => {
   const navigate = useNavigate();
@@ -32,7 +33,8 @@ const Onboarding = () => {
     }
   };
   return (
-    <div className="onboarding">
+    <div className="responsive-content">
+      <div className="onboarding mobile-view">
       <div className="card">
         <h4>Select the option that suits you</h4>
 
@@ -54,6 +56,10 @@ const Onboarding = () => {
           variant="green"
         />
       </div>
+    </div>
+    <div>
+     <DefaultWebView className={"laptop-view"} />
+    </div>
     </div>
   );
 };

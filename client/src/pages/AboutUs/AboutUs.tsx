@@ -1,12 +1,14 @@
 import "./AboutUs.scss";
 import aboutImg from "assets/images/about-page-image.png";
 import Button from "components/Button/Button";
+import DefaultWebView from "components/DefaultWebView/DefaultWebView";
 import { useNavigate } from "react-router-dom";
 
 const AboutUs = () => {
   const navigate = useNavigate();
   return (
-    <div className="about">
+    <div className="responsive-content">
+      <div className="about mobile-view">
       <header>
         <h2>About Us </h2>
       </header>
@@ -31,6 +33,10 @@ const AboutUs = () => {
           navigate("/discover-businesses");
         }}
       />
+    </div>
+    <div>
+      <DefaultWebView className={"laptop-view"} />
+    </div>
     </div>
   );
 };
