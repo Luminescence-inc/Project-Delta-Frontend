@@ -37,21 +37,26 @@ const Footer = () => {
         </div>
       </div>
       <div className="footer-about">
-        <Link to="/about-us">
-          <p
-            onClick={() => {
-              navigate("/about-us");
-            }}
-          >
-            About Us
-          </p>
-        </Link>
+        <p
+          onClick={() => {
+            navigate("/about-us");
+          }}
+        >
+          About Us
+        </p>
         <p
           onClick={() => {
             navigate("/discover-businesses");
           }}
         >
           Search for Business
+        </p>
+        <p
+          onClick={() => {
+            navigate("/contact-support");
+          }}
+        >
+          Contact Support
         </p>
       </div>
 

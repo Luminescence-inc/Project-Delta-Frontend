@@ -133,3 +133,15 @@ export interface IOption {
   uuid: string;
   value: string;
 }
+
+export interface ContactSupportDataSchema {
+  personName: string;
+  email: string;
+  phoneNumber: string;
+  problemDescription: string;
+}
+export interface ContactSupportResponse extends BaseResponseMessage {
+  data: {
+    message: string;
+  };
+}

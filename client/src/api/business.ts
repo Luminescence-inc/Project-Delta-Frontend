@@ -1,4 +1,4 @@
-import { BusinessCreationBody } from "types/business";
+import { BusinessCreationBody, ContactSupportDataSchema } from "types/business";
 import { bizConnectAPI } from "../config";
 import { IPaging, ISearch } from "types/business-profile";
 import axios from "axios";
@@ -91,4 +91,9 @@ export const deleteUserBusinessProfile = (token: string, profileId: string) => {
       Authorization: `Bearer ${token}`,
     },
   });
+};
+
+export const submitContactRequest = (data: ContactSupportDataSchema) => {
+  const url = `${bizConnectAPI.baseURL}/api/business_profile/contact/`;
+  return axios.post(url, data);
 };
