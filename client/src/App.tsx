@@ -19,6 +19,7 @@ import DiscoverBusinesses from "./pages/DiscoverBusinesses/DiscoverBusinesses";
 import RegisterBusiness from "pages/Authentication/Signup/RegisterBusiness/RegisterBusiness";
 import MyAccount from "pages/AccountSettings/MyAccount";
 import AboutUs from "pages/AboutUs/AboutUs";
+import ContactSupport from "pages/ContactSupport/ContactSupport";
 
 function App() {
   const { pathname } = useLocation();
@@ -58,6 +59,7 @@ function App() {
           />
           <Route path="/account" element={<MyAccount />} />
           <Route path="/about-us" element={<AboutUs />} />
+          <Route path="/contact-support" element={<ContactSupport />} />
         </Routes>
       </main>
       <Footer />
