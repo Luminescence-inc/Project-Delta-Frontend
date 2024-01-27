@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import './Login.scss';
 import Spinner from 'components/Spinner/Spinner';
 import * as yup from "yup";
+import DefaultWebView from 'components/DefaultWebView/DefaultWebView';
 
 const validationSchema = yup.object({
   email: yup.string().email("Enter valid email").required(),
@@ -105,7 +106,8 @@ const Login = () => {
   }
 
   return (
-    <div className='login'>
+    <div className="responsive-content">
+    <div className='login mobile-view'>
       <div className='card'>
         <h4>Sign in</h4>
 
@@ -158,6 +160,10 @@ const Login = () => {
           </Link>
         </p>
       </div>
+    </div>
+    <div>
+      <DefaultWebView className={"laptop-view"} />
+    </div>
     </div>
   );
 };

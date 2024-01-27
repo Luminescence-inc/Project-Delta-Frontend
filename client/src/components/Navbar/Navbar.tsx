@@ -103,8 +103,9 @@ const Navbar = () => {
   // const isAuth = localStorage.getItem('isAuth');
 
   return (
-    <div
-      className="navbar"
+    <div className=" responsive-content">
+      <div
+      className="navbar mobile-view"
       onClick={(e) => {
         e.stopPropagation();
         // console.log("NAva");
@@ -235,6 +236,7 @@ const Navbar = () => {
           </ul>
         </div>
       )}
+      </div>
     </div>
   );
 };

@@ -6,6 +6,7 @@ import { IBusinessProfile, ISearch } from "types/business-profile";
 import FilterBusinessProfiles from "./BusinessCatalogue/FilterBusinessProfiles/FilterBusinessProfiles";
 import { allBusinessCategories } from "api/business";
 import { BusinessCategories, IOption } from "types/business";
+import DefaultWebView from "components/DefaultWebView/DefaultWebView";
 
 export const DiscoverBusinesses = () => {
   const [listOfBusinessProfiles, setListOfBusinessProfiles] = useState<
@@ -86,7 +87,8 @@ export const DiscoverBusinesses = () => {
   }, [currentPage, searchQuery]);
 
   return (
-    <div ref={detailRef}>
+    <div className="responsive-content">
+      <div className="mobile-view" ref={detailRef}>
       {!searchQuery ? (
         <div>
           <FilterBusinessProfiles
@@ -117,6 +119,10 @@ export const DiscoverBusinesses = () => {
           )}
         </div>
       )}
+    </div>
+    <div>
+      <DefaultWebView className={"laptop-view"} />
+    </div>
     </div>
   );
 };

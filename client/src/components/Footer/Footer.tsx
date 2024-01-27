@@ -11,8 +11,9 @@ import "./Footer.scss";
 const Footer = () => {
   const navigate = useNavigate();
   return (
-    <footer
-      className="footer"
+    <div className="responsive-content">
+      <footer
+      className="footer mobile-view"
       onClick={(e) => {
         e.stopPropagation();
         console.log("Footer");
@@ -61,7 +62,8 @@ const Footer = () => {
       </div>
 
       <h5 className="copyright">2023 Bizconnect. All right reserved</h5>
-    </footer>
+      </footer>
+    </div>
   );
 };
 

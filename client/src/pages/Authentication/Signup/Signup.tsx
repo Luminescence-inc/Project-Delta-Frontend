@@ -15,6 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import './Signup.scss';
 import * as yup from "yup";
 import Spinner from 'components/Spinner/Spinner';
+import DefaultWebView from 'components/DefaultWebView/DefaultWebView';
 
 const validationSchema = yup.object({
   firstName: yup.string().min(1, "Enter valid First Name").required("First Name is required!"),
@@ -103,7 +104,8 @@ const Signup = () => {
   }
 
   return (
-    <div className='signup'>
+    <div className="responsive-content">
+      <div className='signup mobile-view'>
       <div className='card'>
         <h4>Quick write about signing up</h4>
         
@@ -162,7 +164,7 @@ const Signup = () => {
           </span>
           <Input
             type={!showPassword? 'password': 'text'}
-            label='Email Password'
+            label='Password'
             name='password'
             value={formik.values.password}
             onChange={formik.handleChange}
@@ -211,6 +213,10 @@ const Signup = () => {
           </Link>
         </p>
       </div>
+    </div>
+    <div>
+      <DefaultWebView className={"laptop-view"} />
+    </div>
     </div>
   );
 };
