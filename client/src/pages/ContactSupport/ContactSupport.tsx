@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import ContactSupportIcon from "assets/icons/contact-support-icon.svg?react";
 import Spinner from "components/Spinner/Spinner";
 import Modal from "react-modal";
