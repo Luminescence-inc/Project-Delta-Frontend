@@ -118,8 +118,8 @@ const ContactSupport = () => {
         <h2>Contact Support</h2>
       </header>
 
-      <div className="card">
-        <div className="card__contact-support-icon-container">
+      <div className="card_board">
+        <div className="card_board__contact-support-icon-container">
           <div className="contact-support-icon-border">
             <ContactSupportIcon />
           </div>

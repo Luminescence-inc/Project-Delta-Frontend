@@ -73,7 +73,7 @@ const BusinessCatalogue: React.FC<IBusinessCatalogue> = ({
         <div className="business-catalogue__filter-icon">
           {!isFilterOpen && (
             <span onClick={() => setIsFilterOPen((prev) => !prev)}>
-              {<FilterIcon />} Filter
+              {<FilterIcon />} Filter Businesses
             </span>
           )}
         </div>
