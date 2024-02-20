@@ -54,6 +54,7 @@ const Signup = () => {
       const res = await registerUser(data).catch((err) => {
         const errorResponse: LogInResponse = err.response.data;
         console.log(err.response.data);
+        console.log("Information " + errorResponse?.message.code);
         // Set error message
         const errorCode = errorResponse?.message.code;
         if (errorCode == 409) {
