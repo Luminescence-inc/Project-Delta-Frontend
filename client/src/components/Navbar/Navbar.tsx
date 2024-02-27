@@ -1,9 +1,7 @@
 /** @format */
 
 import { useEffect, useState } from "react";
-
 import { Link } from "react-router-dom";
-
 import MenuIcon from "assets/icons/menu-icon.svg?react";
 import LogoHeaderIcon from "assets/icons/logo-header-icon.svg?react";
 import CancelIcon from "assets/icons/cancel-icon.svg?react";
@@ -14,9 +12,9 @@ import Button from "components/Button/Button";
 import { JwtPayload, TOKEN_NAME } from "types/auth";
 import { isAuthenticated, logOut } from "api/auth";
 import { useNavigate } from "react-router-dom";
-import "./Navbar.scss";
 import { UserBusinessList, UserBusinessListResponse } from "types/business";
 import { getUserBusinessProfileList } from "api/business";
+import "./Navbar.scss";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -42,7 +40,6 @@ const Navbar = () => {
           })
           .catch((err) => {
             setAuthenticated(false);
-            // console.log("navbar-auth")
             console.error(err);
           });
       }
@@ -53,19 +50,13 @@ const Navbar = () => {
 
   const handleLogOut = () => {
     const authToken = localStorage.getItem(TOKEN_NAME) as string;
+    console.log("token-id: ",tokenData?.id)
     logOut(authToken, tokenData?.id || "")
       .then(() => {
         localStorage.removeItem(TOKEN_NAME);
         setAuthenticated(false);
         navigate("/?login=false");
         setMenuOpen(false);
-        // window.location.reload();
-        // navigate('/');
-
-        // setTimeout(() => {
-        //   // setMenuOpen(false);
-        //   navigate('/?login=false');
-        // }, 1000);
       })
       .catch((err) => {
         console.error(err);
@@ -85,8 +76,6 @@ const Navbar = () => {
         })
         .catch((err) => {
           setAuthenticated(false);
-
-          // console.log("navbar-auth")
           setMenuOpen(true);
           console.error(err);
         });
@@ -100,17 +89,14 @@ const Navbar = () => {
     setMenuOpen(false);
   };
 
-  // const isAuth = localStorage.getItem('isAuth');
-
   return (
     <div className=" responsive-content">
-      <div
-      className="navbar mobile-view"
+      <div className="navbar-main mobile-view">
+      <div  
+      className="navbar"
       onClick={(e) => {
         e.stopPropagation();
-        // console.log("NAva");
-      }}
-    >
+      }}>
       {!menuOpen && (
         <nav>
           <Link to="/">
@@ -126,6 +112,7 @@ const Navbar = () => {
       )}
       {menuOpen && (
         <div className="nav-content">
+          <LogoHeaderIcon />
           <CancelIcon
             className="icon-cancel"
             onClick={() => setMenuOpen(false)}
@@ -135,11 +122,22 @@ const Navbar = () => {
             <li>
               <p
                 onClick={() => {
+                  navigate("/");
+                  setMenuOpen(false);
+                }}
+                style={{color:"#17BEBB"}}
+              >
+                Home
+              </p>
+            </li>
+            <li>
+              <p
+                onClick={() => {
                   navigate("/about-us");
                   setMenuOpen(false);
                 }}
               >
-                About us
+                About
               </p>
             </li>
             <li>
@@ -150,6 +148,16 @@ const Navbar = () => {
                 }}
               >
                 Discover Businesses
+              </p>
+            </li>
+            <li>
+              <p
+                onClick={() => {
+                  navigate("/contact-support");
+                  setMenuOpen(false);
+                }}
+              >
+                Support
               </p>
             </li>
             {authenticated && (
@@ -193,30 +201,33 @@ const Navbar = () => {
                 />
               </>
             )}
-            <hr />
             {!authenticated && (
               <>
-                <Button
-                  label="Sign up"
-                  className="mb-4"
-                  variant="primary"
-                  to="/signup"
-                  onClick={() => setMenuOpen(false)}
-                />
-                <Button
-                  label="Login"
-                  variant="transparent"
-                  to="/login"
-                  onClick={() => {
-                    setMenuOpen(false);
-                  }}
-                />
+                <div className="cta">
+                  <Button
+                    label="Sign up"
+                    className="signup"
+                    variant="primary"
+                    to="/signup"
+                    onClick={() => setMenuOpen(false)}
+                  />
+                  <Button
+                    label="Log In"
+                    className="login"
+                    variant="transparent"
+                    to="/login"
+                    onClick={() => {
+                      setMenuOpen(false);
+                    }}
+                  />
+                </div>
               </>
             )}
             {authenticated && (
               <>
                 <Button
                   label="Log out"
+                  className="logout"
                   variant="transparent"
                   onClick={() => {
                     handleLogOut();
@@ -236,6 +247,7 @@ const Navbar = () => {
           </ul>
         </div>
       )}
+      </div>
       </div>
     </div>
   );

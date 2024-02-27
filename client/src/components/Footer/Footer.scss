@@ -1,6 +1,7 @@
 footer.footer {
-  padding: 64px 16px;
-  background-color: var(--black-color);
+  padding: 35px 30px;
+  // background-color: var(--black-color);
+  background-color: #F4F9FF;
   //   z-index: -1; --- Please can someone explain to me why the z-index of footer is -1
 }
 
@@ -18,9 +19,12 @@ footer.footer {
           }
 
           p {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 400;
             font-family: "Open Sans", sans-serif;
+            padding: 20px 0px;
+            color: #0E2D52;
+            padding-bottom: 30px;
           }
         }
 
@@ -37,16 +41,29 @@ footer.footer {
           font-size: 18px;
           font-weight: 600;
           margin-bottom: 8px;
+
+          font-family: Helvetica Neue;
+          font-size: 14px;
+          font-weight: 500;
+          line-height: 14px;
+          letter-spacing: 0em;
+          text-align: left;
+          color: #828297;
+          padding-bottom: 20px;
+
         }
       }
     }
 
     .copyright {
-      font-size: 14px;
+      margin-top: 60px;
+      font-family: Helvetica Neue;
+      font-size: 12px;
       font-weight: 400;
-      font-family: "Open Sans", sans-serif;
+      line-height: 14px;
+      letter-spacing: 0px;
       text-align: center;
-      margin-top: 96px;
+      color:  #9090A7;
     }
   }
 }
