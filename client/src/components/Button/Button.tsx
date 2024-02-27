@@ -12,6 +12,7 @@ interface IButton {
   disabled?: boolean;
   onClick?: () => void;
   icon?: JSX.Element;
+  iconRight?: JSX.Element;
   className?: string;
   type?: "button" | "submit" | "reset" | undefined;
 }
@@ -24,6 +25,7 @@ const Button = ({
   to = "",
   onClick,
   icon,
+  iconRight,
   className,
   type,
 }: IButton) => {
@@ -38,6 +40,7 @@ const Button = ({
     >
       {icon ? icon : null}
       {label}
+      {iconRight ? iconRight : null}
     </ButtonComponent>
   );
 };

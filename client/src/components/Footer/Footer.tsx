@@ -1,9 +1,9 @@
 /** @format */
-import { useNavigate } from "react-router-dom";
-import Logo from "assets/images/logo_img.png";
-import FacebookIcon from "assets/icons/facebook-icon.svg?react";
-import LinkedinIcon from "assets/icons/linkedin-icon.svg?react";
-import InstagramIcon from "assets/icons/instagram-icon.svg?react";
+import { Link, useNavigate } from "react-router-dom";
+import LogoHeaderIcon from "assets/icons/logo-header-icon.svg?react";
+import FacebookIcon from "assets/icons/new-facebook-icon.svg?react";
+import InstagramIcon from "assets/icons/new-insta-icon.svg?react";
+import TwitterIcon from "assets/icons/new-twitter-icon.svg?react";
 
 import "./Footer.scss";
 
@@ -20,47 +20,54 @@ const Footer = () => {
       >
         <div className="footer-main">
           <div className="top">
-            {/* <LogoFooterIcon /> */}
-            <img
-              style={{ height: "59px", width: "132px" }}
-              src={Logo}
-              alt={Logo}
-            />
+            <Link to="/">
+              <LogoHeaderIcon />
+            </Link>
             <p>
-              Connecting Global small and medium Businesses with their customers
+              Connecting Immigrant Business Owners with their Customers
             </p>
           </div>
-          <div className="bottom">
-            <LinkedinIcon />
-            <InstagramIcon />
-            <FacebookIcon />
-          </div>
+          
         </div>
-        <div className="footer-about">
+        <div className="footer-about" style={{paddingLeft:"7px"}}>
+          <p
+            onClick={() => {
+              navigate("/");
+            }}
+            style={{color:"#17BEBB"}}
+          >
+           Home
+          </p>
           <p
             onClick={() => {
               navigate("/about-us");
             }}
           >
-            About Us
+            About
           </p>
           <p
             onClick={() => {
               navigate("/discover-businesses");
             }}
           >
-            Search for Business
+            Discover Businesses
           </p>
           <p
             onClick={() => {
               navigate("/contact-support");
             }}
           >
-            Contact Support
+            Support
           </p>
         </div>
 
-        <h5 className="copyright">2023 Bizconnect. All right reserved</h5>
+        <div className="bottom" style={{paddingLeft:"7px"}}>
+            <span style={{marginRight:"15px"}}><InstagramIcon /></span> 
+            <span style={{marginRight:"15px"}}><FacebookIcon /></span>
+            <span><TwitterIcon /></span>
+        </div>
+
+        <h5 className="copyright">2024 Bizconnect24. All right reserved</h5>
       </footer>
     </div>
   );

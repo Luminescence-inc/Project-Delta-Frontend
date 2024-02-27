@@ -1,22 +1,28 @@
 /** @format */
-
-import homeBgImage from "assets/images/homebg-img.png";
-import BulbIcon from "assets/icons/bulb-icon.svg?react";
-import HandshakeIcon from "assets/icons/handshake-icon.svg?react";
-import MoneybagIcon from "assets/icons/moneybag-icon.svg?react";
+import CtaArrow from "assets/icons/cta-btn-arrow.svg?react";
+import WorldMap from "assets/icons/world-map.svg?react";
 import SearchIcon from "assets/icons/mag-glass.svg?react";
 import PlusIcon from "assets/icons/uil_plus.svg?react";
+import VisibilityIcon from "assets/icons/visibility-icon.svg?react";
+import AudienceIcon from "assets/icons/audience-icon.svg?react";
+import GrowthIcon from "assets/icons/growth-icon.svg?react";
+import CustomerBgImage from "assets/images/customer-homebg.png";
+import ChoiceIcon from "assets/icons/choice-icon.svg?react";
+import ConvenienceIcon from "assets/icons/convenience-icon.svg?react";
+import CummunityIcon from "assets/icons/community-icon.svg?react";
 import Button from "components/Button/Button";
-import Card from "./components/Card/Card";
-
-import "./Home.scss";
+import DefaultWebView from "components/DefaultWebView/DefaultWebView";
+import TitleCard from "./components/TitleCard/TitleCard";
+import BusinessCard from "./components/BusinessCard/BusinessCard";
+import CustomerCard from "./components/CustomerCard/CustomerCard";
 import { useEffect, useState } from "react";
 import { JwtPayload, TOKEN_NAME } from "types/auth";
 import { isAuthenticated } from "api/auth";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { getUserBusinessProfileList } from "api/business";
 import { UserBusinessListResponse } from "types/business";
-import DefaultWebView from "components/DefaultWebView/DefaultWebView";
+import "./Home.scss";
+
 
 const Home = () => {
   const navigate = useNavigate();
@@ -30,9 +36,8 @@ const Home = () => {
 
   const parsedToken: JwtPayload = authToken
     ? JSON.parse(atob(authToken?.split(".")[1]))
-    : {}; //check atob
+    : {};
 
-  // window.location.reload();
 
   useEffect(() => {
     try {
@@ -45,7 +50,6 @@ const Home = () => {
         .catch((err) => {
           setAuthenticated(false);
           console.error(err);
-          // console.log("home-aut")
         });
       }
       if(authToken){
@@ -57,12 +61,6 @@ const Home = () => {
         });
       }
 
-
-      // const timer = setTimeout(() => {
-      //   setShowComponent(true);
-      // }, 1000); // Delay for 2 seconds
-
-      // return () => clearTimeout(timer);
     } catch (error) {
       console.error("Error parsing token: ", error);
     }
@@ -73,9 +71,6 @@ const Home = () => {
   }
 
   if (login === "true" || login === "false") {
-    // console.log("login: ",login)
-    // console.log("typeOf: ",typeof(login))
-
     if(parsedToken.id){
         isAuthenticated(authToken, parsedToken.id)
         .then(() => {
@@ -84,30 +79,28 @@ const Home = () => {
         .catch((err) => {
           setAuthenticated(false);
           console.error(err);
-          // console.log("home-aut")
         });
     }
 
   }
 
-  // console.log("authenticated: ",authenticated)
-
   return (
     <div className="responsive-content">
       <div className="home mobile-view">
-      <img src={homeBgImage} alt={homeBgImage} />
-      <header>
-        <h2>Welcome to Bizconnect</h2>
-        <p>
-          Connecting Global small and medium Businesses with their customers
-        </p>
+      <header className="header-content">
+        <div className="home-content-container header-content-text">
+          <h1>Connecting Immigrant Business Owners With Their Customers</h1>
+          <p>
+          Seamlessly do business within your area and on the go
+          </p>
+        </div>
 
         {!authenticated && (
-          <Button label="Get Started" variant="primary" to="/onboarding" />
+          <div className="home-content-container"><Button className="cta-btn"  label="Get Started" variant="primary" to="/onboarding"  iconRight={<CtaArrow />}/></div>
         )}
 
         {authenticated && (
-          <div className="button-wrapper">
+          <div className="button-wrapper home-content-container">
             {businessPresent && (
               <Button
                 label="View your business"
@@ -126,37 +119,100 @@ const Home = () => {
             />
           </div>
         )}
+
+        <div ><WorldMap /></div>
       </header>
 
-      <section className="section-why">
-        <h2>Why BizConnect?</h2>
+      <section className="body-content">
+        <TitleCard 
+          className={"title-card"} 
+          title={"FOR BUSINESS OWNERS"} 
+          header={"Unlock Boundless Opportunities"} 
+          subTitle={"We've built a platform to help immigrant businesses showcase their products and services to consumers, addressing the challenges of navigating unfamiliar territories."}
+        />
 
-        <Card
-          icon={<BulbIcon />}
-          usedInBusinessCataloge={false}
-          title="Discover Businesses"
-          description="Shinning the spotlight on Immigrant businesses in your neighbourhood
-      with ease."
-        />
-        <Card
-          icon={<HandshakeIcon />}
-          usedInBusinessCataloge={false}
-          title="Connect with Businesses"
-          description="BizConnect brings the best of local services to your fingertips, engage with businesses"
-        />
-        <Card
-          icon={<MoneybagIcon />}
-          usedInBusinessCataloge={false}
-          title="Transact with Businesses"
-          description="Transact with connected businesses..."
-        />
+        <div style={{marginTop:"20px"}}>
+          <BusinessCard 
+            className={"business-card"} 
+            icon={<VisibilityIcon />} 
+            header={"Increased Visibility"} 
+            subTitle={"With Bizconnect24, immigrant business owners can showcase their products and services to a wider audience"} 
+          />
+          <BusinessCard 
+            className={"business-card"} 
+            icon={<AudienceIcon />} 
+            header={"Access to Targeted Audience"} 
+            subTitle={"Bizconnect24 caters specifically to immigrant communities, allowing business owners to connect with a highly targeted audience that is actively seeking their products or services"} 
+          />
+          <BusinessCard 
+            className={"business-card"} 
+            icon={<GrowthIcon />} 
+            header={"Business Growth"} 
+            subTitle={"With access to a larger customer base and tools to expand their reach, immigrant business owners can experience accelerated growth and increased revenue opportunities."} 
+          />
+        </div>
+
+        <div style={{marginTop:"55px"}}>
+          <TitleCard 
+            className={"title-card"} 
+            title={"FOR CUSTOMERS"} 
+            header={"Discover Businesses"} 
+            subTitle={"Bizconnect24 brings the best of local services to your fingertips, engage with businesses as a customer"}
+          />
+        </div>
+        <div style={{marginTop:"35px", marginLeft:"25px", marginRight:"25px"}}>
+          <img width={349} height={357} src={CustomerBgImage} alt={CustomerBgImage} />
+        </div>
+
+        <div style={{marginTop:"35px"}}>
+          <CustomerCard 
+            className={"customer-card"} 
+            icon={<ChoiceIcon />} 
+            header={"Choice"}
+            subTitle={"With Bizconnect24, customers have a myriad of options at their fingertips, empowering them to explore diverse businesses and find the perfect fit for their needs and preferences"} 
+          />
+
+          <CustomerCard 
+            className={"customer-card"} 
+            icon={<ConvenienceIcon />} 
+            header={"Convenience"}
+            subTitle={"Through the diverse options Bizconnect24 offers, customers are also effortlessly able to discover and engage with immigrant businesses closest to them"} 
+          />
+
+          <CustomerCard 
+            className={"customer-card"} 
+            icon={<CummunityIcon />} 
+            header={"Community"}
+            subTitle={"Through Bizconnect24, customers become part of a vibrant and supportive community, connecting with fellow enthusiasts who share a passion for diversity, entrepreneurship, and cultural exchange"} 
+          />
+        </div>
+        
+        <div style={{display:"flex",justifyContent:"center"}}>
+          <Button className="cta-btn-explore"  label="Explore Businesses" variant="primary" to="/discover-businesses"  iconRight={<CtaArrow />}/>
+        </div>
+
+        <div className="network" style={{marginTop:"35px"}}>
+          <div>
+            <div style={{display:"flex",justifyContent:"center", paddingBottom:"20px"}}><h1>Join Our Growing Network</h1></div>
+            <p>Join immigrant entrepreneurs leveraging Bizconnect24 to unlock your business potential. Sign up now for greater visibility, trust, and prosperity</p>
+          
+            <div style={{display:"flex", justifyContent:"center", paddingTop:"40px"}}>
+             <Button className="ctn-btn-sign-up"  label="Sign Up" variant="primary" to="/signup"/>
+            </div>
+            <div style={{display:"flex", justifyContent:"center", paddingTop:"30px"}}>
+            <Button className="cta-btn-explore-second"  label="Explore Businesses" variant="primary" to="/discover-businesses"  iconRight={<CtaArrow />}/>
+            </div>
+          </div>
+        </div>
       </section>
+
       </div>
       <div>
         <DefaultWebView className={"laptop-view"} />
       </div>
     </div>
   );
+
 };
 
 export default Home;
