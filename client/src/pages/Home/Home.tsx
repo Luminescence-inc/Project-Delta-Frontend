@@ -89,7 +89,7 @@ const Home = () => {
       <div className="home mobile-view">
       <header className="header-content">
         <div className="home-content-container header-content-text">
-          <h1>Connecting Immigrant Business Owners With Their Customers</h1>
+          <h1>Connecting Immigrant & Local Business Owners With Their Customers</h1>
           <p>
           Seamlessly do business within your area and on the go
           </p>
