@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: Dev
-      url: https://ca-central-1.console.aws.amazon.com/ecs/v2/clusters/devBizConnect/services?region=ca-central-1
+      url: https://s3.console.aws.amazon.com/s3/buckets/devmain.bizconnect24.com?region=ca-central-1&bucketType=general&tab=objects
     strategy:
       matrix:
         node-version: [16.15.1]
