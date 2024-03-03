@@ -41,18 +41,18 @@ const Onboarding = () => {
         <Pill
           onClick={handleNewBusiness}
           icon={<PlusIcon />}
-          title="New business"
+          title="New Business? Signup"
           variant="red"
         />
         <Pill 
           icon={<BagIcon />} 
           onClick={() => navigate("/login")} 
-          title="Existing businesses" 
+          title="Existing Business? Login" 
           variant="pink" />
         <Pill
           onClick={() => navigate("/discover-businesses")}
           icon={<SearchIcon />}
-          title="Discover businesses"
+          title="Discover Business"
           variant="green"
         />
       </div>

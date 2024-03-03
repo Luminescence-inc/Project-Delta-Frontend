@@ -24,7 +24,7 @@ const Footer = () => {
               <LogoHeaderIcon />
             </Link>
             <p>
-              Connecting Immigrant Business Owners with their Customers
+              Connecting Immigrant and Local Business Owners with their Customers
             </p>
           </div>
           

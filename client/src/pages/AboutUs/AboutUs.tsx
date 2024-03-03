@@ -14,25 +14,26 @@ const AboutUs = () => {
       </header>
       <img src={aboutImg} alt={aboutImg} />
       <p>
-        BizConnect is powered by
+        BizConnect24 is powered by
         <a href="https://www.luminescencegrp.com/" target="_blank">
           Luminescence
         </a>
-        and is the number 1 service that connects African and Caribbean business
-        owners abroad with their customers. It is a service that currently
-        operates in the United States, Canada, Germany and Uk. If you know
-        anyone who is African or Caribbean and has a business, tell them to get
-        registered on BizConnect and start improving their business numbers.
+         Technologies Limited and is the number 1
+        service connecting Immigrant and Local business owners with their customers. If
+        you know anyone who currently operates a business abroad and wants to boost
+        their sales numbers, BizConnect24 is for them.
       </p>
 
-      <Button
-        label="Search for business"
-        variant="primary"
-        className="about_btn"
-        onClick={() => {
-          navigate("/discover-businesses");
-        }}
-      />
+      <div className="disc-btn">
+        <Button
+          label="Search for business"
+          variant="primary"
+          className="about_btn"
+          onClick={() => {
+            navigate("/discover-businesses");
+          }}
+        />
+      </div>
     </div>
     <div>
       <DefaultWebView className={"laptop-view"} />
