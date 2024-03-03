@@ -128,7 +128,7 @@ const Home = () => {
           className={"title-card"} 
           title={"FOR BUSINESS OWNERS"} 
           header={"Unlock Boundless Opportunities"} 
-          subTitle={"We've built a platform to help immigrant businesses showcase their products and services to consumers, addressing the challenges of navigating unfamiliar territories."}
+          subTitle={"We've built a platform to help immigrant & Local businesses showcase their products and services to consumers, addressing the challenges of navigating unfamiliar territories."}
         />
 
         <div style={{marginTop:"20px"}}>
@@ -136,19 +136,19 @@ const Home = () => {
             className={"business-card"} 
             icon={<VisibilityIcon />} 
             header={"Increased Visibility"} 
-            subTitle={"With Bizconnect24, immigrant business owners can showcase their products and services to a wider audience"} 
+            subTitle={"With Bizconnect24, immigrant & Local business owners can showcase their products and services to a wider audience"} 
           />
           <BusinessCard 
             className={"business-card"} 
             icon={<AudienceIcon />} 
             header={"Access to Targeted Audience"} 
-            subTitle={"Bizconnect24 caters specifically to immigrant communities, allowing business owners to connect with a highly targeted audience that is actively seeking their products or services"} 
+            subTitle={"Bizconnect24 caters specifically to immigrant & Local communities, allowing business owners to connect with a highly targeted audience that is actively seeking their products or services"} 
           />
           <BusinessCard 
             className={"business-card"} 
             icon={<GrowthIcon />} 
             header={"Business Growth"} 
-            subTitle={"With access to a larger customer base and tools to expand their reach, immigrant business owners can experience accelerated growth and increased revenue opportunities."} 
+            subTitle={"With access to a larger customer base and tools to expand their reach, immigrant & Local business owners can experience accelerated growth and increased revenue opportunities."} 
           />
         </div>
 
@@ -194,7 +194,7 @@ const Home = () => {
         <div className="network" style={{marginTop:"35px"}}>
           <div>
             <div style={{display:"flex",justifyContent:"center", paddingBottom:"20px"}}><h1>Join Our Growing Network</h1></div>
-            <p>Join immigrant entrepreneurs leveraging Bizconnect24 to unlock your business potential. Sign up now for greater visibility, trust, and prosperity</p>
+            <p>Join immigrant entrepreneurs leveraging BizConnect24 to unlock your business growth. Sign up now for greater visibility and experience record breaking earnings</p>
           
             <div style={{display:"flex", justifyContent:"center", paddingTop:"40px"}}>
              <Button className="ctn-btn-sign-up"  label="Sign Up" variant="primary" to="/signup"/>
