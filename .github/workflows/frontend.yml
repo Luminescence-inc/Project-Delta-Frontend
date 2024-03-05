@@ -2,7 +2,7 @@ name: React CI
 
 on:
   push:
-    branches: ["dev"]
+    branches: ["main"]
   # pull_request:
   #   branches: [dev]
 
@@ -35,4 +35,4 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
           aws-region: us-east-1
       - name: Deploy static site to S3 bucket
-        run: aws s3 sync ./client/dist s3://devmain.bizconnect24.com
+        run: aws s3 sync ./client/dist s3://www.bizconnect24.com
