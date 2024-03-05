@@ -1,55 +1,107 @@
 footer.footer {
-    padding: 64px 16px;
-    background-color: var(--black-color);
-    z-index: -1;
+  padding: 35px 30px;
+  // background-color: var(--black-color);
+  background-color: #F4F9FF;
+  //   z-index: -1; --- Please can someone explain to me why the z-index of footer is -1
+}
+
+@media screen and (max-width: 500px) {
+  footer.footer {
+    color: var(--white-color);
+
+    .footer {
+      &-main {
+        .top {
+          h2 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+          }
+
+          p {
+            font-size: 14px;
+            font-weight: 400;
+            font-family: "Open Sans", sans-serif;
+            padding: 20px 0px;
+            color: #0E2D52;
+            padding-bottom: 30px;
+          }
+        }
+
+        .bottom {
+          display: flex;
+          align-items: center;
+          gap: 16px;
+          margin: 16px 0 32px;
+        }
+      }
+
+      &-about {
+        p {
+          font-size: 18px;
+          font-weight: 600;
+          margin-bottom: 8px;
+
+          font-family: Helvetica Neue;
+          font-size: 14px;
+          font-weight: 500;
+          line-height: 14px;
+          letter-spacing: 0em;
+          text-align: left;
+          color: #828297;
+          padding-bottom: 20px;
+
+        }
+      }
+    }
+
+    .copyright {
+      margin-top: 60px;
+      font-family: Helvetica Neue;
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 14px;
+      letter-spacing: 0px;
+      text-align: center;
+      color:  #9090A7;
+    }
+  }
 }
 
 
-@media screen and (max-width: 500px) {
-    footer.footer {
-        color: var(--white-color);
+// Define the breakpoints for laptop and mobile views
+$breakpoint-laptop: 501px;
+$breakpoint-mobile: 500px;
 
-        .footer {
+// Apply styles based on the screen size
+.responsive-content {
+  .laptop-view {
+    display: none; // Hide by default
+  }
 
-            &-main {
-                .top {
-                    h2 {
-                        font-size: 18px;
-                        font-weight: 600;
-                        margin-bottom: 12px;
-                    }
+  .mobile-view {
+    display: none; // Hide by default
+  }
 
-                    p {
-                        font-size: 16px;
-                        font-weight: 400;
-                        font-family: 'Open Sans', sans-serif;
-                    }
-                }
-
-                .bottom {
-                    display: flex;
-                    align-items: center;
-                    gap: 16px;
-                    margin: 16px 0 32px;
-                }
-            }
-
-            &-about {
-                p {
-                    font-size: 18px;
-                    font-weight: 600;
-                    margin-bottom: 8px;
-                }
-            }
-
-        }
-
-        .copyright {
-            font-size: 14px;
-            font-weight: 400;
-            font-family: 'Open Sans', sans-serif;
-            text-align: center;
-            margin-top: 96px;
-        }
+  // Media query for laptop view
+  @media only screen and (min-width: $breakpoint-laptop) {
+    .laptop-view {
+      display: block; // Show on laptop view
     }
+
+    .mobile-view {
+      display: none; // Hide on laptop view
+    }
+  }
+
+  // Media query for mobile view
+  @media only screen and (max-width: $breakpoint-mobile) {
+    .laptop-view {
+      display: none; // Hide on mobile view
+    }
+
+    .mobile-view {
+      display: block; // Show on mobile view
+    }
+  }
 }

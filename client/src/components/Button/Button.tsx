@@ -1,32 +1,46 @@
 /** @format */
 
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
-import './Button.scss';
+import "./Button.scss";
 
 interface IButton {
-  label: string;
-  variant?: 'primary' | 'transparent' | 'default';
-  size?: 'md' | 'lg';
+  label: React.ReactNode;
+  variant?: "primary" | "transparent" | "secondary" | "default" | "cancel";
+  size?: "md" | "lg" | "sm";
   to?: string;
+  disabled?: boolean;
   onClick?: () => void;
+  icon?: JSX.Element;
+  iconRight?: JSX.Element;
+  className?: string;
+  type?: "button" | "submit" | "reset" | undefined;
 }
 
 const Button = ({
   label,
-  variant = 'default',
-  size = 'md',
-  to = '',
+  disabled,
+  variant = "default",
+  size = "md",
+  to = "",
   onClick,
+  icon,
+  iconRight,
+  className,
+  type,
 }: IButton) => {
-  const ButtonComponent = to ? Link : 'button';
+  const ButtonComponent = to ? Link : "button";
   return (
     <ButtonComponent
-      className={`btn btn-${variant} btn-${size}`}
+      className={`${className} btn btn-${variant} btn-${size}`}
       to={to}
       onClick={onClick}
+      type={type}
+      disabled={disabled}
     >
+      {icon ? icon : null}
       {label}
+      {iconRight ? iconRight : null}
     </ButtonComponent>
   );
 };
