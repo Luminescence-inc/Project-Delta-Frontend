@@ -10,8 +10,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     environment:
-      name: Dev
-      url: https://s3.console.aws.amazon.com/s3/buckets/devmain.bizconnect24.com?region=ca-central-1&bucketType=general&tab=objects
+      name: Production
+      url: https://s3.console.aws.amazon.com/s3/buckets/www.bizconnect24.com?region=ca-central-1&bucketType=general&tab=objects
     strategy:
       matrix:
         node-version: [16.15.1]
