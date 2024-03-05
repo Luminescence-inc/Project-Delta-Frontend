@@ -2,7 +2,7 @@ name: React CI
 
 on:
   push:
-    branches: ["main"]
+    branches: ["dev"]
   # pull_request:
   #   branches: [dev]
 
@@ -10,8 +10,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     environment:
-      name: Production
-      url: https://s3.console.aws.amazon.com/s3/buckets/www.bizconnect24.com?region=ca-central-1&bucketType=general&tab=objects
+      name: Dev
+      url: https://s3.console.aws.amazon.com/s3/buckets/devmain.bizconnect24.com?region=ca-central-1&bucketType=general&tab=objects
     strategy:
       matrix:
         node-version: [16.15.1]
@@ -35,4 +35,4 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
           aws-region: us-east-1
       - name: Deploy static site to S3 bucket
-        run: aws s3 sync ./client/dist s3://www.bizconnect24.com
+        run: aws s3 sync ./client/dist s3://devmain.bizconnect24.com
