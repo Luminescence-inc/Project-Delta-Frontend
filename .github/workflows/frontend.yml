@@ -3,8 +3,8 @@ name: React CI
 on:
   push:
     branches: ["main"]
-  pull_request:
-    branches: [main]
+  # pull_request:
+  #   branches: [dev]
 
 jobs:
   build:
