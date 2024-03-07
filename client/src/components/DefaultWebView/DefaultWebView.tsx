@@ -22,7 +22,7 @@ const DefaultWebView = ({className}: IDefaultWebViewProps) => {
                         <h2 className="title-text">Web View Notification</h2>      
                     </div>
                     <div className="body-style" style={{padding: "10px", display: "flex", justifyContent: "center"}}>
-                        <p className="body-text">BizConnect Website view is currently under development. Please Check out our website on your mobile device, thanks.</p>
+                        <p className="body-text">For an awesome experience, please switch to your mobile phone. Thank you</p>
                     </div>
                 </div>
             </div>
