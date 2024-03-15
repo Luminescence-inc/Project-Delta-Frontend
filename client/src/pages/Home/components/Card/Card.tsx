@@ -36,9 +36,8 @@ interface Icard {
 
 const Card = (props: Icard) => {
   const [showTooltip, setShowTooltip] = useState(false);
-  
-  const isContactSectionAvailable =
-    !props.usedInBusinessCataloge;
+
+  const isContactSectionAvailable = !props.usedInBusinessCataloge;
   const isBusinessSectionAvailable =
     !!props.openDays && !!props.closeDays && !props.usedInBusinessCataloge;
   const isCategorySectionAvailable =
@@ -46,14 +45,14 @@ const Card = (props: Icard) => {
   const isSocialMediaSectionAvailable =
     !!props.socials && props.socials.length > 0;
 
-    const handleSocialClick = (url: string) => {
-      if (url) {
-        window.location.href = url;
-      } else {
-        setShowTooltip(true);
-      }
-    };
-  
+  const handleSocialClick = (url: string) => {
+    if (url) {
+      window.location.href = url;
+    } else {
+      setShowTooltip(true);
+    }
+  };
+
   return (
     <div className="card card-home">
       {props.icon && props.icon}
@@ -154,7 +153,7 @@ const Card = (props: Icard) => {
       <h3>{isSocialMediaSectionAvailable && "Follow our social media"}</h3>
       {isSocialMediaSectionAvailable && (
         <div className="card card-section-info-row">
-        {props.socials?.map((thisSocials) => {
+          {props.socials?.map((thisSocials) => {
             return (
               <div
                 key={thisSocials.name}
@@ -167,13 +166,15 @@ const Card = (props: Icard) => {
                   <InstagramIcon />
                 ) : (
                   <FacebookIcon />
-                )} 
+                )}
               </div>
             );
           })}
-      </div>
+        </div>
       )}
-      {showTooltip && (<div style={{marginBottom: "20px"}}>No social media found</div>)}
+      {showTooltip && (
+        <div style={{ marginBottom: "20px" }}>No social media found</div>
+      )}
       {props.action && props.action}
     </div>
   );
