@@ -8,7 +8,7 @@ import { IBusinessProfile } from "types/business-profile";
 import { formatDays } from "../helper";
 import { IBusinessCategory } from "types/business-profile";
 import { getBusinsessCategories } from "api/business";
-import defaultImage from "assets/images/noimage-icon.png";
+import defaultImage from "assets/images/default-icon.jpeg";
 // import { CloudinaryConfig } from "config";
 
 interface BusinessDetailsProps {
@@ -39,7 +39,7 @@ const BusinessDetails: React.FC<BusinessDetailsProps> = ({
       closeDates.push(day);
     }
   }
-  let closeDays = formatDays(closeDates);
+  let closeDays = closeDates.length!=0? formatDays(closeDates): null;
 
   useEffect(() => {
     getBusinsessCategories()
@@ -87,7 +87,7 @@ const BusinessDetails: React.FC<BusinessDetailsProps> = ({
         ]}
         action={
           <Button
-            label="Go back to Business Catalogue"
+            label="Go back to Business Listings"
             variant="primary"
             onClick={() => {
               onClickReturnToBusinessCatalogue(null);
