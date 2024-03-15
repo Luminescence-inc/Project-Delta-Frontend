@@ -15,7 +15,7 @@ import { BaseResponseMessage } from "types/auth";
 import { useNavigate } from "react-router-dom";
 import { CloudinaryConfig } from "config";
 import Spinner from "components/Spinner/Spinner";
-import defaultImage from "assets/images/noimage-icon.png"
+import defaultImage from "assets/images/default-icon.jpeg";
 
 const ViewBusiness = () => {
   const navigate = useNavigate();
@@ -161,7 +161,7 @@ const ViewBusiness = () => {
           contentLabel="Success Modal"
           style={customStyles}
         >
-          <div className="modal">
+          <div className="modal" style={{display:"block", textAlign: 'center' }}>
             <h2
               style={{
                 display: "flex",

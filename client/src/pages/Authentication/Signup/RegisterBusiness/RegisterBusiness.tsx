@@ -166,17 +166,6 @@ const RegisterBusiness = ()=> {
         const folderPath = `BizConnect/Logo/${parsedToken.id}`;
         setIsLoading(true);
 
-        // Task1: Check required field and run error toast if not provided
-        // Task2: Create spinner for submition 
-        // Task3: Run error toast when submition doesn't go through
-        // Task4: Check UK- Cities
-        // Task5: change social Input logo
-        // Task6: Days of operation dropdown
-        // Task7: Double Upload issue
-        // Task8: Remove excess register business bottom space
-        // Task9: Dynamically render social media
-        // Task10: Add default image for no logo upload
-
         const payload: BusinessCreationBody = {
             name: values.businessName,
             description: values.description,
@@ -345,18 +334,18 @@ const RegisterBusiness = ()=> {
             {activeTab === 1 && 
             !successfulSubmission && (<OperationInfo formik={formik} businessId={businessId} isLoading={isLoading} />)}      
 
-            <Modal
-                isOpen={isModalOpen}
-                onRequestClose={closeModal}
-                contentLabel="Success Modal"
-                style={customStyles}
-            >
-                <div className="modal">
-                    <h2 style={{display: 'flex', justifyContent: 'center', fontSize:'16px', fontWeight:'700', marginBottom:'10px'}}>{businessId?'Update Succesful':"You'e in!"}</h2>
-                    <p style={{display: 'flex', justifyContent: 'center', fontSize:'12px', fontWeight:'400', marginBottom:'20px'}}>{businessId?'You have successfully updated your business account.':'You have successfully created your business account.'}</p>
-                <Button type='submit' label='Click to Continue' variant='primary' size='lg' to='/'/>
-                </div>
-            </Modal>
+    <Modal
+        isOpen={isModalOpen}
+        onRequestClose={closeModal}
+        contentLabel="Success Modal"
+        style={customStyles}
+    >
+        <div className="modal" style={{display:"block", textAlign: 'center' }}>
+            <h2 style={{ fontSize: '16px', fontWeight: '700', marginBottom: '10px' }}>{businessId ? 'Update Succesful' : "You're in!"}</h2>
+            <p style={{ fontSize: '12px', fontWeight: '400', marginBottom: '20px' }}>{businessId ? 'You have successfully updated your business account.' : 'You have successfully created your business account.'}</p>
+            <Button type='submit' label='Click to Continue' variant='primary' size='lg' to='/' />
+        </div>
+    </Modal>
         </div>
         )
     )
