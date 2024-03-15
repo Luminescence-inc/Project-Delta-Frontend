@@ -275,7 +275,10 @@ const BusinessProfile: FC<BusinessProfileProps> =
               {imageFile ? imageFile.name : "Upload Your Logo (jpg/jpeg/png)"}
               <UploadIcon
                 className="upload-arrow"
-                onClick={() => fileInputRef.current?.click()}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  fileInputRef.current?.click();
+                }}
               />
             </span>
             <input

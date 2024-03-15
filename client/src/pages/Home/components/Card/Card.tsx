@@ -7,7 +7,8 @@ import AddressIcon from "assets/icons/address-icon.svg?react";
 import ClockIcon from "assets/icons/clock-icon.svg?react";
 import LinkedInIcon from "assets/icons/linkedIn-icon-business-details.svg?react";
 import InstagramIcon from "assets/icons/instagram-icon-business-details.svg?react";
-import FaccebookIcon from "assets/icons/facebook-icon-business-details.svg?react";
+import FacebookIcon from "assets/icons/facebook-icon-business-details.svg?react";
+import { useState } from "react";
 
 interface ICategory {
   name: string | undefined;
@@ -26,7 +27,7 @@ interface Icard {
   phoneNumber?: string;
   address?: string;
   openDays?: string;
-  closeDays?: string;
+  closeDays?: string | null;
   categories?: ICategory[];
   socials?: ISocials[];
   action?: React.ReactNode;
@@ -34,6 +35,8 @@ interface Icard {
 }
 
 const Card = (props: Icard) => {
+  const [showTooltip, setShowTooltip] = useState(false);
+  
   const isContactSectionAvailable =
     !!props.email &&
     !!props.phoneNumber &&
@@ -45,7 +48,15 @@ const Card = (props: Icard) => {
     !!props.categories && props.categories.length > 0;
   const isSocialMediaSectionAvailable =
     !!props.socials && props.socials.length > 0;
-  //console.log("image path", props.imagePath);
+
+    const handleSocialClick = (url: string) => {
+      if (url) {
+        window.location.href = url;
+      } else {
+        setShowTooltip(showTooltip);
+      }
+    };
+  
   return (
     <div className="card card-home">
       {props.icon && props.icon}
@@ -146,25 +157,26 @@ const Card = (props: Icard) => {
       <h3>{isSocialMediaSectionAvailable && "Follow our social media"}</h3>
       {isSocialMediaSectionAvailable && (
         <div className="card card-section-info-row">
-          {props.socials?.map((thisSocials) => {
+        {props.socials?.map((thisSocials) => {
             return (
-              <a
-                href={thisSocials.url}
+              <div
                 key={thisSocials.name}
                 className="card card-section-info-row card-section-info-row__socials"
+                onClick={() => handleSocialClick(thisSocials.url)}
               >
-                {thisSocials.name == "linkedIn" ? (
+                {thisSocials.name === "linkedIn" ? (
                   <LinkedInIcon />
-                ) : thisSocials.name == "instagram" ? (
+                ) : thisSocials.name === "instagram" ? (
                   <InstagramIcon />
                 ) : (
-                  <FaccebookIcon />
-                )}
-              </a>
+                  <FacebookIcon />
+                )} 
+              </div>
             );
           })}
-        </div>
+      </div>
       )}
+      {showTooltip && (<div style={{marginBottom: "20px"}}>No social media found</div>)}
       {props.action && props.action}
     </div>
   );
