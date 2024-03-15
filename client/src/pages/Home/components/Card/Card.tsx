@@ -53,7 +53,7 @@ const Card = (props: Icard) => {
       if (url) {
         window.location.href = url;
       } else {
-        setShowTooltip(!showTooltip);
+        setShowTooltip(showTooltip);
       }
     };
   
