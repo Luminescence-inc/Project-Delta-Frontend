@@ -9,7 +9,7 @@ import FilterBusinessProfiles from "./FilterBusinessProfiles/FilterBusinessProfi
 import FilterIcon from "assets/icons/filter-icon.svg?react";
 import NoResultFound from "components/NoResultFound/NoResultFound";
 import { IOption } from "types/business";
-import defaultImage from "assets/images/noimage-icon.png";
+import defaultImage from "assets/images/default-icon.jpeg";
 
 interface IBusinessCatalogue {
   listOfBusinessProfiles: IBusinessProfile[] | null;
