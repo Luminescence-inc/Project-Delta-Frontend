@@ -118,7 +118,7 @@ const Signup = () => {
     <div className="responsive-content">
       <div className="signup mobile-view">
         <div className="card">
-          <h4>Quick write about signing up</h4>
+          <h4>Create An Account</h4>
 
           {/* Display Error message */}
           {error && <span style={submitErrorMessageStyle}>{errorMessage}</span>}

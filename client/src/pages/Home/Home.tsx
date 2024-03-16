@@ -101,26 +101,29 @@ const Home = () => {
 
         {authenticated && (
           <div className="button-wrapper home-content-container">
-            {businessPresent && (
+              <div style={{marginTop: "60px"}}>
+              {businessPresent && (
+                <Button
+                  label="View your business"
+                  variant="primary"
+                  size="lg"
+                  to="/view-your-business"
+                  icon={<SearchIcon />}
+                />
+              )}
               <Button
-                label="View your business"
-                variant="primary"
+                className={authenticated ? 'auth-btn' : ''}
+                label="Add a new business"
+                variant="transparent"
                 size="lg"
-                to="/view-your-business"
-                icon={<SearchIcon />}
+                to="/signup/register-business"
+                icon={<PlusIcon />}
               />
-            )}
-            <Button
-              label="Add a new business"
-              variant="transparent"
-              size="lg"
-              to="/signup/register-business"
-              icon={<PlusIcon />}
-            />
+            </div>
           </div>
         )}
 
-        <div ><WorldMap /></div>
+        <div style={authenticated? {marginTop:"60px"}: {}}><WorldMap /></div>
       </header>
 
       <section className="body-content">
