@@ -38,9 +38,6 @@ const Card = (props: Icard) => {
   const [showTooltip, setShowTooltip] = useState(false);
   
   const isContactSectionAvailable =
-    !!props.email &&
-    !!props.phoneNumber &&
-    !!props.address &&
     !props.usedInBusinessCataloge;
   const isBusinessSectionAvailable =
     !!props.openDays && !!props.closeDays && !props.usedInBusinessCataloge;
