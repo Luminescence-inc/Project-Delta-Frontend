@@ -69,8 +69,6 @@ const MultiSelect = ({
     setShowDropdown(false);
   };
 
-  console.log("selectedValues", selectedValues);
-
   return (
     <>
       <div className="form-group">
