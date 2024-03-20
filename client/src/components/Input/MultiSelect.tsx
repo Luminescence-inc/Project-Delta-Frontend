@@ -101,7 +101,7 @@ const MultiSelect = ({
             setSelectedValues(updatedValues);
             updateFormikValues(updatedValues);
           }}
-          visible={!showDropdown}
+          visible={showDropdown}
           type="day"
         />
       </div>
