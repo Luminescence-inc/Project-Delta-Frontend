@@ -3,6 +3,8 @@ import ArrowUpIcon from "assets/icons/arrow-up.svg?react";
 import { FormikProps } from "formik";
 import Button from "components/Button/Button";
 import "./Input.scss";
+import { X } from "lucide-react";
+import SelectedPlaceholder from "components/SelectedPlaceholder/selectedPlaceholder";
 
 interface ISelect {
   label: string;
@@ -68,6 +70,8 @@ const MultiSelect = ({
     setShowDropdown(false);
   };
 
+  console.log("selectedValues", selectedValues);
+
   return (
     <>
       <div className="form-group">
@@ -87,6 +91,19 @@ const MultiSelect = ({
             height={14}
           />
         </div>
+        {/* Days of operation placeholders */}
+        <SelectedPlaceholder
+          selectedValues={selectedValues}
+          getSelectedHoler={(id: string) => {
+            const updatedValues = selectedValues.filter(
+              (val) => val.uuid !== id
+            );
+            setSelectedValues(updatedValues);
+            updateFormikValues(updatedValues);
+          }}
+          visible={!showDropdown}
+          type="day"
+        />
       </div>
 
       {showDropdown && (
