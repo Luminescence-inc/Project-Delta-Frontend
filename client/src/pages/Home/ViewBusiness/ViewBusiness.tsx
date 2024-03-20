@@ -15,7 +15,7 @@ import { BaseResponseMessage } from "types/auth";
 import { useNavigate } from "react-router-dom";
 import { CloudinaryConfig } from "config";
 import Spinner from "components/Spinner/Spinner";
-import defaultImage from "assets/images/default-icon.jpeg";
+import defaultImage from "assets/images/default-img.jpeg";
 
 const ViewBusiness = () => {
   const navigate = useNavigate();
