@@ -39,7 +39,7 @@ const BusinessDetails: React.FC<BusinessDetailsProps> = ({
       closeDates.push(day);
     }
   }
-  let closeDays = closeDates.length!=0? formatDays(closeDates): null;
+  let closeDays = closeDates.length != 0 ? formatDays(closeDates) : null;
 
   useEffect(() => {
     getBusinsessCategories()
@@ -84,6 +84,8 @@ const BusinessDetails: React.FC<BusinessDetailsProps> = ({
           { name: "facebook", url: businessProfile?.facebookUrl || "" },
           { name: "instagram", url: businessProfile?.instagramUrl || "" },
           { name: "linkedIn", url: businessProfile?.linkedinUrl || "" },
+          { name: "twitter", url: businessProfile?.twitterUrl || "" },
+          { name: "website", url: businessProfile?.websiteUrl || "" },
         ]}
         action={
           <Button
