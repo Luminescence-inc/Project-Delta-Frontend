@@ -9,6 +9,7 @@ import LinkedInIcon from "assets/icons/linkedIn-icon-business-details.svg?react"
 import InstagramIcon from "assets/icons/instagram-icon-business-details.svg?react";
 import FacebookIcon from "assets/icons/facebook-icon-business-details.svg?react";
 import { useState } from "react";
+import { Facebook, Globe, Instagram, Linkedin, Twitter } from "lucide-react";
 
 interface ICategory {
   name: string | undefined;
@@ -155,19 +156,25 @@ const Card = (props: Icard) => {
         <div className="card card-section-info-row">
           {props.socials?.map((thisSocials) => {
             return (
-              <div
+              <a
+                href={thisSocials.url}
+                target="_blank"
                 key={thisSocials.name}
                 className="card card-section-info-row card-section-info-row__socials"
                 onClick={() => handleSocialClick(thisSocials.url)}
               >
                 {thisSocials.name === "linkedIn" ? (
-                  <LinkedInIcon />
+                  <Linkedin className="icon" />
                 ) : thisSocials.name === "instagram" ? (
-                  <InstagramIcon />
-                ) : (
-                  <FacebookIcon />
-                )}
-              </div>
+                  <Instagram className="icon" />
+                ) : thisSocials.name === "facebook" ? (
+                  <Facebook className="icon" />
+                ) : thisSocials.name === "twitter" ? (
+                  <Twitter className="icon" />
+                ) : thisSocials.name === "website" ? (
+                  <Globe className="icon" />
+                ) : null}
+              </a>
             );
           })}
         </div>
