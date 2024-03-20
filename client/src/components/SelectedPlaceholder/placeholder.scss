@@ -17,42 +17,43 @@
     justify-content: flex-start;
     border: none;
     outline: none;
-    padding: 12px 15px;
+    padding: 7px 7px 7px 10px;
     border-radius: 30px;
-    gap: 0px;
-    box-shadow: 0px 1px 1px 0px #00000012;
+    gap: 1px;
     transition: all 0.1s ease-in-out;
     background-color: #eaeaea;
 
     span {
-      font-size: 12px;
-      font-weight: bold;
+      font-size: 11px;
       letter-spacing: 2px;
-      color: var(--primary-color);
+      line-height: 13px;
+      font-weight: 400;
+      color: #292d32;
+      font-family: "Halvetical", sans-serif;
+      margin-left: 5px;
     }
 
-    .close-btn {
+    button.close-btn {
       display: flex;
       align-items: center;
       justify-items: flex-start;
       border: none;
       outline: none;
-      transform: scale(0.9);
       cursor: pointer;
       transition: all 0.1s ease-in-out;
       background: none;
       padding: 0px;
 
       .icon {
-        font-size: 20px;
-        color: #777;
+        font-size: 5px;
+        color: #a0aec0;
+        transform: scale(0.6);
       }
 
       &:hover {
         transform: scale(0.9);
       }
 
-      //   why does &:active transform not working
       &:active {
         transform: scale(0.8);
       }
