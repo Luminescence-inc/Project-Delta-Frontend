@@ -58,7 +58,9 @@ const Signup = () => {
         // Set error message
         const errorCode = errorResponse?.message.code;
         if (errorCode == 409) {
-          setErrorMessage(errorResponse?.message.desc);
+          setErrorMessage(
+            `User with email ${data.email} already exists, please login.`
+          );
         } else {
           setErrorMessage("error occured while login");
         }
