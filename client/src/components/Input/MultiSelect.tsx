@@ -3,8 +3,7 @@ import ArrowUpIcon from "assets/icons/arrow-up.svg?react";
 import { FormikProps } from "formik";
 import Button from "components/Button/Button";
 import "./Input.scss";
-import { X } from "lucide-react";
-import SelectedPlaceholder from "components/SelectedPlaceholder/selectedPlaceholder";
+import SelectedPlaceholder from "components/SelectedPlaceholder";
 
 interface ISelect {
   label: string;
@@ -102,7 +101,7 @@ const MultiSelect = ({
             updateFormikValues(updatedValues);
           }}
           visible={showDropdown}
-          type="day"
+          type={name}
         />
       </div>
 

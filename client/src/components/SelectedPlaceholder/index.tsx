@@ -8,7 +8,7 @@ type Props = {
   }[];
   visible: boolean;
   getSelectedHoler: (id: string) => void;
-  type: "category" | "day";
+  type: "daysOfOperation" | "businessCategory" | string;
 };
 
 export default function SelectedPlaceholder({
@@ -25,7 +25,9 @@ export default function SelectedPlaceholder({
         <div className="days-of-operation-container">
           {selectedValues.map((d) => (
             <div key={d.uuid} className="dop-placeholder">
-              <span>{type === "day" ? d.value.slice(0, 3) : d.value}</span>
+              <span>
+                {type === "daysOfOperation" ? d.value.slice(0, 3) : d.value}
+              </span>
               <button
                 className="close-btn"
                 onClick={() => {
