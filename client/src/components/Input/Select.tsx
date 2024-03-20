@@ -23,12 +23,6 @@ interface IOption {
 const Select = ({ label, options, name, formikValue, formik }: ISelect) => {
   //Based on the values(string) find the corresponding option (object)
   const dropdownRef = useRef<HTMLDivElement>(null);
-  // const [searchParams, setSearchParams] = useState({
-  //   businessCategory: "",
-  //   country: "",
-  //   stateAndProvince: "",
-  //   city: "",
-  // });
   const [value, setValue] = useState(formikValue || "");
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedValue, setSelectedValue] = useState<IOption | null>(null);
@@ -80,7 +74,6 @@ const Select = ({ label, options, name, formikValue, formik }: ISelect) => {
             onChange={(e) => {
               setValue(e.target.value);
             }}
-            // readOnly
           />
           <ArrowUpIcon
             className="arrow-down input-icon"
