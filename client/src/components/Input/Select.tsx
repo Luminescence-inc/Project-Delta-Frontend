@@ -23,6 +23,12 @@ interface IOption {
 const Select = ({ label, options, name, formikValue, formik }: ISelect) => {
   //Based on the values(string) find the corresponding option (object)
   const dropdownRef = useRef<HTMLDivElement>(null);
+  // const [searchParams, setSearchParams] = useState({
+  //   businessCategory: "",
+  //   country: "",
+  //   stateAndProvince: "",
+  //   city: "",
+  // });
   const [value, setValue] = useState(formikValue || "");
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedValue, setSelectedValue] = useState<IOption | null>(null);
@@ -71,7 +77,10 @@ const Select = ({ label, options, name, formikValue, formik }: ISelect) => {
             placeholder={label}
             value={value}
             onClick={toggleDropdown}
-            readOnly
+            onChange={(e) => {
+              setValue(e.target.value);
+            }}
+            // readOnly
           />
           <ArrowUpIcon
             className="arrow-down input-icon"
@@ -100,17 +109,33 @@ const Select = ({ label, options, name, formikValue, formik }: ISelect) => {
           </div>
           <div className="options-list">
             <ul>
-              {options?.map((option) => (
-                <li
-                  key={option.uuid}
-                  onClick={() => handleSelect(option)}
-                  style={
-                    selectedValue?.uuid == option.uuid ? selectedStyle : {}
-                  }
-                >
-                  {option.value}
-                </li>
-              ))}
+              {value.length > 0
+                ? options?.map((option) =>
+                    option.value.toLowerCase().includes(value.toLowerCase()) ? (
+                      <li
+                        key={option.uuid}
+                        onClick={() => handleSelect(option)}
+                        style={
+                          selectedValue?.uuid == option.uuid
+                            ? selectedStyle
+                            : {}
+                        }
+                      >
+                        {option.value}
+                      </li>
+                    ) : null
+                  )
+                : options?.map((option) => (
+                    <li
+                      key={option.uuid}
+                      onClick={() => handleSelect(option)}
+                      style={
+                        selectedValue?.uuid == option.uuid ? selectedStyle : {}
+                      }
+                    >
+                      {option.value}
+                    </li>
+                  ))}
             </ul>
           </div>
         </div>
