@@ -185,4 +185,19 @@
   .checkbox-value {
     padding-left: 10px;
   }
+
+  // search input
+  .multiselect-search-inp {
+    width: 100%;
+    height: auto;
+    padding: 10px;
+    border-top: 1px solid transparent;
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
+    border-bottom: 1px solid #ccc;
+
+    &:focus {
+      outline: none;
+    }
+  }
 }
