@@ -22,10 +22,12 @@ const ViewBusiness = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const authToken = localStorage.getItem(TOKEN_NAME) as string;
   const [authenticated, setAuthenticated] = useState(false);
-  const [userListOfBusinessProfile, setUserListOfBusinessProfile] = useState<UserBusinessList[] | []>([]);
+  const [userListOfBusinessProfile, setUserListOfBusinessProfile] = useState<
+    UserBusinessList[] | []
+  >([]);
   const [confirmDelete, setConfirmDelete] = useState(false);
-  const [businessName, setBusinessName] = useState('');
-  const [businessUuid, setBusinessUuid] = useState('');
+  const [businessName, setBusinessName] = useState("");
+  const [businessUuid, setBusinessUuid] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const parsedToken: JwtPayload = authToken
@@ -50,12 +52,12 @@ const ViewBusiness = () => {
     overlay: { backgroundColor: "rgba(0, 0, 0, 0.5)" },
   };
 
-  const handleDeleteButton = (name: string, uuid: string)=>{
+  const handleDeleteButton = (name: string, uuid: string) => {
     setIsModalOpen(true);
     setConfirmDelete(true);
     setBusinessName(name);
-    setBusinessUuid(uuid)
-  }
+    setBusinessUuid(uuid);
+  };
   const handleDeleteBusinessProfile = (businessProfileID: string) => {
     setIsLoading(true);
     if (parsedToken.id) {
@@ -70,22 +72,24 @@ const ViewBusiness = () => {
           setIsLoading(false);
           setIsModalOpen(false);
         });
-      deleteUserBusinessProfile(authToken, businessProfileID).then((res) => {
-        const deletedResponse: BaseResponseMessage = res.data;
-        if (deletedResponse?.success) {
-          let updatedUserListOfBusinessProfile =
-            userListOfBusinessProfile?.filter(
-              (thisBusinessProfile) =>
-                thisBusinessProfile.uuid !== businessProfileID
-            );
-          setUserListOfBusinessProfile(updatedUserListOfBusinessProfile);
-          setConfirmDelete(false);
+      deleteUserBusinessProfile(authToken, businessProfileID)
+        .then((res) => {
+          const deletedResponse: BaseResponseMessage = res.data;
+          if (deletedResponse?.success) {
+            let updatedUserListOfBusinessProfile =
+              userListOfBusinessProfile?.filter(
+                (thisBusinessProfile) =>
+                  thisBusinessProfile.uuid !== businessProfileID
+              );
+            setUserListOfBusinessProfile(updatedUserListOfBusinessProfile);
+            setConfirmDelete(false);
+            setIsLoading(false);
+          }
+        })
+        .catch((err) => {
           setIsLoading(false);
-        }
-      }).catch((err)=>{
-        setIsLoading(false);
-        console.error(err)
-      });
+          console.error(err);
+        });
     }
   };
   useEffect(() => {
@@ -124,9 +128,11 @@ const ViewBusiness = () => {
               return (
                 <div className="card card-home card-business">
                   <img
-                    src={thisBusinessProfile?.logoUrl ? 
-                      `https://res.cloudinary.com/${CloudinaryConfig.cloudName}/image/upload/c_fill,q_500/${thisBusinessProfile?.logoUrl}.jpg`
-                    : defaultImage}
+                    src={
+                      thisBusinessProfile?.logoUrl
+                        ? `https://res.cloudinary.com/${CloudinaryConfig.cloudName}/image/upload/c_fill,q_500/${thisBusinessProfile?.logoUrl}.jpg`
+                        : defaultImage
+                    }
                     alt="businessImage"
                   />
                   <h3>{thisBusinessProfile.name}</h3>
@@ -148,7 +154,12 @@ const ViewBusiness = () => {
                     label="Delete Business"
                     variant="secondary"
                     size="lg"
-                    onClick={()=>handleDeleteButton(thisBusinessProfile.name, thisBusinessProfile.uuid)}
+                    onClick={() =>
+                      handleDeleteButton(
+                        thisBusinessProfile.name,
+                        thisBusinessProfile.uuid
+                      )
+                    }
                   />
                 </div>
               );
@@ -161,7 +172,10 @@ const ViewBusiness = () => {
           contentLabel="Success Modal"
           style={customStyles}
         >
-          <div className="modal" style={{display:"block", textAlign: 'center' }}>
+          <div
+            className="modal"
+            style={{ display: "block", textAlign: "center" }}
+          >
             <h2
               style={{
                 display: "flex",
@@ -171,7 +185,7 @@ const ViewBusiness = () => {
                 marginBottom: "10px",
               }}
             >
-             {confirmDelete? 'Are you sure?' : 'Delete Succesful'}
+              {confirmDelete ? "Are you sure?" : "Delete Succesful"}
             </h2>
             <p
               style={{
@@ -182,38 +196,57 @@ const ViewBusiness = () => {
                 marginBottom: "20px",
               }}
             >
-             {confirmDelete? `You’re deleting your (${businessName}),  you can’t undo this request.` : 'You have successfully deleted your business profile'}
+              {confirmDelete
+                ? `You’re deleting your (${businessName}),  you can’t undo this request.`
+                : "You have successfully deleted your business profile"}
             </p>
             {confirmDelete && (
               <>
-              <div style={{marginBottom: "20px"}}>
-                <Button
-                type="submit"
-                label="Cancel"
-                variant="cancel"
-                size="lg"
-                onClick={()=>{setIsModalOpen(false); setConfirmDelete(false);}}
-                />
-              </div>
-              <div>
-               {!isLoading && <Button
-                type="submit"
-                label="Yes, delete business"
-                variant="primary"
-                size="lg"
-                onClick={()=>{handleDeleteBusinessProfile(businessUuid);}}
-                />}
-                {isLoading && <Button type='submit'  label={Spinner()} variant='primary' size='lg' disabled={true} /> }
-              </div>
+                <div style={{ marginBottom: "20px" }}>
+                  <Button
+                    type="submit"
+                    label="Cancel"
+                    variant="cancel"
+                    size="lg"
+                    onClick={() => {
+                      setIsModalOpen(false);
+                      setConfirmDelete(false);
+                    }}
+                  />
+                </div>
+                <div>
+                  {!isLoading && (
+                    <Button
+                      type="submit"
+                      label="Yes, delete business"
+                      variant="primary"
+                      size="lg"
+                      onClick={() => {
+                        handleDeleteBusinessProfile(businessUuid);
+                      }}
+                    />
+                  )}
+                  {isLoading && (
+                    <Button
+                      type="submit"
+                      label={Spinner()}
+                      variant="primary"
+                      size="lg"
+                      disabled={true}
+                    />
+                  )}
+                </div>
               </>
             )}
-            {!confirmDelete && <Button
-              type="submit"
-              label="Click to Continue"
-              variant="primary"
-              size="lg"
-              onClick={()=> setIsModalOpen(false)}
-            />}
+            {!confirmDelete && (
+              <Button
+                type="submit"
+                label="Click to Continue"
+                variant="primary"
+                size="lg"
+                onClick={() => setIsModalOpen(false)}
+              />
+            )}
           </div>
         </Modal>
       </div>
@@ -224,7 +257,7 @@ const ViewBusiness = () => {
           You can add as many businesses as you wish. Click on the button below.
         </p>
         <Button
-          label="Add a new business"
+          label="Create a new business profile"
           variant="transparent"
           size="lg"
           onClick={() => navigate("/signup/register-business")}
