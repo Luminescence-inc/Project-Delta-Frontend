@@ -1,28 +1,32 @@
 /** @format */
 
-import { FC, useEffect, useRef, useState } from 'react';
-import { FormikProps } from 'formik';
-import { getAllBusinessCategories } from 'api/business';
-import { BusinessCategories, BusinessProfileFormikPropsValues, IOption } from 'types/business';
-import { Country, State, City }  from '../../../../../country-sate-city';
-import { FILE_TYPES, FILTERED_COUNTRY } from 'utils/business-profile-utils';
-import ContactIcon from 'assets/icons/contact-icon.svg?react';
-import UploadIcon from 'assets/icons/upload-logo.svg?react';
-import CancelIcon from 'assets/icons/cancel-select-icon.svg?react';
-import InstagramIcon from 'assets/icons/instagram-icon.svg?react';
-import LinkedinIcon from 'assets/icons/linkedin-icon.svg?react';
-import FaceBookIcon from 'assets/icons/facebook-icon.svg?react';
-import WebIcon from 'assets/icons/web-icon.svg?react';
-import Input from 'components/Input/Input';
-import Button from 'components/Button/Button';
-import Select from 'components/Input/Select';
+import { FC, useEffect, useRef, useState } from "react";
+import { FormikProps } from "formik";
+import { getAllBusinessCategories } from "api/business";
+import {
+  BusinessCategories,
+  BusinessProfileFormikPropsValues,
+  IOption,
+} from "types/business";
+import { Country, State, City } from "../../../../../country-sate-city";
+import { FILE_TYPES, FILTERED_COUNTRY } from "utils/business-profile-utils";
+import ContactIcon from "assets/icons/contact-icon.svg?react";
+import UploadIcon from "assets/icons/upload-logo.svg?react";
+import CancelIcon from "assets/icons/cancel-select-icon.svg?react";
+import InstagramIcon from "assets/icons/instagram-icon.svg?react";
+import LinkedinIcon from "assets/icons/linkedin-icon.svg?react";
+import FaceBookIcon from "assets/icons/facebook-icon.svg?react";
+import WebIcon from "assets/icons/web-icon.svg?react";
+import Input from "components/Input/Input";
+import Button from "components/Button/Button";
+import Select from "components/Input/Select";
 import { CloudinaryConfig } from "config";
-import '../Signup.scss';
+import "../Signup.scss";
 
 interface BusinessProfileProps {
   setActiveTab: React.Dispatch<React.SetStateAction<number>>;
   setSelectedTab: React.Dispatch<React.SetStateAction<boolean>>;
-  setImageFile:  React.Dispatch<React.SetStateAction<File | null | undefined>>;
+  setImageFile: React.Dispatch<React.SetStateAction<File | null | undefined>>;
   setDeleteLogo: React.Dispatch<React.SetStateAction<boolean>>;
   deleteLogo: boolean;
   imageFile: File | null | undefined;
@@ -31,20 +35,20 @@ interface BusinessProfileProps {
   businessId?: string | null;
   logoUrl?: string | null;
   country: IOption[];
-  setCountry:  React.Dispatch<React.SetStateAction<IOption[]>>;
+  setCountry: React.Dispatch<React.SetStateAction<IOption[]>>;
   stateAndProvince: IOption[];
   setStateAndProvince: React.Dispatch<React.SetStateAction<IOption[]>>;
   city: IOption[];
   setCity: React.Dispatch<React.SetStateAction<IOption[]>>;
 }
 
-const BusinessProfile: FC<BusinessProfileProps> = 
-({setActiveTab, 
-  setSelectedTab, 
-  setImageFile, 
+const BusinessProfile: FC<BusinessProfileProps> = ({
+  setActiveTab,
+  setSelectedTab,
+  setImageFile,
   setDeleteLogo,
-  imageFile, 
-  tabsRef, 
+  imageFile,
+  tabsRef,
   formik,
   businessId,
   logoUrl,
@@ -54,28 +58,35 @@ const BusinessProfile: FC<BusinessProfileProps> =
   setStateAndProvince,
   stateAndProvince,
   city,
-  setCity
-  }) => {
+  setCity,
+}) => {
   const [businessCategory, setBusinessCategory] = useState<IOption[]>();
   const [error, setError] = useState<Boolean>(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  useEffect(()=>{
-    try{
-      getAllBusinessCategories().then(async (res)=>{
-        const resData:BusinessCategories = res.data;
-        
-        setBusinessCategory(resData.data.businessCategories
-          .map((businessCat)=>{return {uuid: businessCat.uuid, value: businessCat.description}}))
+  useEffect(() => {
+    try {
+      getAllBusinessCategories().then(async (res) => {
+        const resData: BusinessCategories = res.data;
 
-        setCountry(Country.getAllCountries()
-          .map((ct)=>{return {uuid: ct.isoCode, value: ct.name}})
-          .filter((ct)=>{
-            return FILTERED_COUNTRY.includes(ct.value)
-        })) 
-      })
-    }catch (error){
-      console.log(error)
+        setBusinessCategory(
+          resData.data.businessCategories.map((businessCat) => {
+            return { uuid: businessCat.uuid, value: businessCat.description };
+          })
+        );
+
+        setCountry(
+          Country.getAllCountries()
+            .map((ct) => {
+              return { uuid: ct.isoCode, value: ct.name };
+            })
+            .filter((ct) => {
+              return FILTERED_COUNTRY.includes(ct.value);
+            })
+        );
+      });
+    } catch (error) {
+      console.log(error);
     }
   }, []);
 
@@ -94,9 +105,9 @@ const BusinessProfile: FC<BusinessProfileProps> =
       //reset state and city
       // formik.setFieldValue('stateAndProvince', '')
       // formik.setFieldValue('city', '')
-      setCity([])
+      setCity([]);
     }
-  },[formik.values.country, businessId])
+  }, [formik.values.country, businessId]);
 
   useEffect(() => {
     if (formik.values.country != "" && formik.values.stateAndProvince != "") {
@@ -119,7 +130,7 @@ const BusinessProfile: FC<BusinessProfileProps> =
       //reset city
       // formik.setFieldValue('city', '')
     }
-  },[formik.values.stateAndProvince, businessId])
+  }, [formik.values.stateAndProvince, businessId]);
 
   const handleNextButton = () => {
     if (tabsRef.current) {
@@ -153,7 +164,7 @@ const BusinessProfile: FC<BusinessProfileProps> =
 
   const handleDeleteLogo = () => {
     setDeleteLogo(!deleteLogo);
-  }
+  };
 
   // Custom Styles
   const errorMessageStyle = {
@@ -266,9 +277,17 @@ const BusinessProfile: FC<BusinessProfileProps> =
           placeholder="Enter Postal Code"
         />
 
-        {error && (<span style={errorMessageStyle}>File Type not Supported</span>)}
-        {error && (<span style={errorMessageStyle}>Supported format: jpg/jpeg/png</span>)}
-        {imageFile && (businessId!=null) && logoUrl && (<span style={errorMessageStyle}>NB: Uploading a new logo will override the previous Logo</span>)}
+        {error && (
+          <span style={errorMessageStyle}>File Type not Supported</span>
+        )}
+        {error && (
+          <span style={errorMessageStyle}>Supported format: jpg/jpeg/png</span>
+        )}
+        {imageFile && businessId != null && logoUrl && (
+          <span style={errorMessageStyle}>
+            NB: Uploading a new logo will override the previous Logo
+          </span>
+        )}
         <div className="file-upload">
           <label className="file-upload-label">
             <span className="placeholder-text">
@@ -297,17 +316,36 @@ const BusinessProfile: FC<BusinessProfileProps> =
           </label>
         </div>
         {imageFile && (
-        <div>
-          <h3 style={{paddingTop: "20px", paddingBottom: "10px"}}>Selected Logo:</h3>
-          <img src={URL.createObjectURL(imageFile)} alt="Uploaded" style={{ maxWidth: '100%' }} />
-        </div>
+          <div>
+            <h3 style={{ paddingTop: "20px", paddingBottom: "10px" }}>
+              Selected Logo:
+            </h3>
+            <img
+              src={URL.createObjectURL(imageFile)}
+              alt="Uploaded"
+              style={{ maxWidth: "100%", width: "342px", height: "152px" }}
+            />
+          </div>
         )}
-        {!imageFile && (businessId!=null) && logoUrl && (
-        <div>
-          <h3 style={{paddingTop: "20px", paddingBottom: "10px"}}>Current Logo:</h3>
-          <img src={`https://res.cloudinary.com/${CloudinaryConfig.cloudName}/image/upload/c_fill,q_400/${logoUrl}.jpg`} alt="Uploaded" style={{ maxWidth: '100%' }} />
-          <Button onClick={handleDeleteLogo} className={!deleteLogo?'deleteLogo':'reverse-delete-logo'} type='submit'  label={!deleteLogo?'Delete':'Reverse'} variant='primary' size='md' />
-        </div>
+        {!imageFile && businessId != null && logoUrl && (
+          <div>
+            <h3 style={{ paddingTop: "20px", paddingBottom: "10px" }}>
+              Current Logo:
+            </h3>
+            <img
+              src={`https://res.cloudinary.com/${CloudinaryConfig.cloudName}/image/upload/c_fill,q_400/${logoUrl}.jpg`}
+              alt="Uploaded"
+              style={{ maxWidth: "100%" }}
+            />
+            <Button
+              onClick={handleDeleteLogo}
+              className={!deleteLogo ? "deleteLogo" : "reverse-delete-logo"}
+              type="submit"
+              label={!deleteLogo ? "Delete" : "Reverse"}
+              variant="primary"
+              size="md"
+            />
+          </div>
         )}
 
         <h4 style={{ paddingTop: "40px" }}>Upload social media links</h4>

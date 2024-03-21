@@ -10,8 +10,6 @@
     border-radius: 24px;
     width: 374px;
     max-width: 100%;
-    
-
 
     h3 {
       font-weight: 700;
@@ -19,7 +17,7 @@
       font-size: 16px;
     }
 
-    .title{
+    .title {
       padding-top: 12px;
       padding-bottom: 12px;
     }
@@ -35,7 +33,6 @@
       width: 344px;
       height: 156px;
       border-radius: 8px;
-
     }
   }
   &.card-section-info-col {
@@ -103,18 +100,22 @@
       }
     }
     &.card-section-info-row__socials {
+      width: 34px;
+      height: 34px;
       display: flex;
       justify-content: center;
       align-items: center;
       padding: 0.5rem 0.5rem;
       border-radius: 50%;
-
       background-color: #0e2d52;
       color: #fff;
 
       &:not(:first-child) {
         margin-left: 1rem;
       }
+    }
+    .card-section-info-row__socials > .icon {
+      width: 12px;
     }
   }
 }

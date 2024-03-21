@@ -71,7 +71,9 @@ const Select = ({ label, options, name, formikValue, formik }: ISelect) => {
             placeholder={label}
             value={value}
             onClick={toggleDropdown}
-            readOnly
+            onChange={(e) => {
+              setValue(e.target.value);
+            }}
           />
           <ArrowUpIcon
             className="arrow-down input-icon"
@@ -100,17 +102,24 @@ const Select = ({ label, options, name, formikValue, formik }: ISelect) => {
           </div>
           <div className="options-list">
             <ul>
-              {options?.map((option) => (
-                <li
-                  key={option.uuid}
-                  onClick={() => handleSelect(option)}
-                  style={
-                    selectedValue?.uuid == option.uuid ? selectedStyle : {}
-                  }
-                >
-                  {option.value}
-                </li>
-              ))}
+              {options?.map((option) => {
+                const isSelected = selectedValue?.uuid === option.uuid;
+                const isMatchingValue = value.length > 0 && option.value.toLowerCase().includes(value.toLowerCase());
+
+                if (value.length === 0 || isMatchingValue) {
+                  return (
+                    <li
+                      key={option.uuid}
+                      onClick={() => handleSelect(option)}
+                      style={isSelected ? selectedStyle : {}}
+                    >
+                      {option.value}
+                    </li>
+                  );
+                }
+
+                return null;
+              })}
             </ul>
           </div>
         </div>

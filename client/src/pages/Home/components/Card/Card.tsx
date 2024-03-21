@@ -5,10 +5,8 @@ import MailIcon from "assets/icons/mail-icon.svg?react";
 import PhoneIcon from "assets/icons/phone-icon.svg?react";
 import AddressIcon from "assets/icons/address-icon.svg?react";
 import ClockIcon from "assets/icons/clock-icon.svg?react";
-import LinkedInIcon from "assets/icons/linkedIn-icon-business-details.svg?react";
-import InstagramIcon from "assets/icons/instagram-icon-business-details.svg?react";
-import FacebookIcon from "assets/icons/facebook-icon-business-details.svg?react";
 import { useState } from "react";
+import { Facebook, Globe, Instagram, Linkedin, Twitter } from "lucide-react";
 
 interface ICategory {
   name: string | undefined;
@@ -36,9 +34,8 @@ interface Icard {
 
 const Card = (props: Icard) => {
   const [showTooltip, setShowTooltip] = useState(false);
-  
-  const isContactSectionAvailable =
-    !props.usedInBusinessCataloge;
+
+  const isContactSectionAvailable = !props.usedInBusinessCataloge;
   const isBusinessSectionAvailable =
     !!props.openDays && !!props.closeDays && !props.usedInBusinessCataloge;
   const isCategorySectionAvailable =
@@ -46,14 +43,14 @@ const Card = (props: Icard) => {
   const isSocialMediaSectionAvailable =
     !!props.socials && props.socials.length > 0;
 
-    const handleSocialClick = (url: string) => {
-      if (url) {
-        window.location.href = url;
-      } else {
-        setShowTooltip(true);
-      }
-    };
-  
+  const handleSocialClick = (url: string) => {
+    if (url) {
+      window.location.href = url;
+    } else {
+      setShowTooltip(true);
+    }
+  };
+
   return (
     <div className="card card-home">
       {props.icon && props.icon}
@@ -138,7 +135,7 @@ const Card = (props: Icard) => {
       {isCategorySectionAvailable && (
         <div className="card card-section-info-row">
           {props.categories?.map((thisCategory) => {
-            //console.log("Cat" + thisCategory.name);
+
             return (
               <span
                 key={thisCategory.name}
@@ -154,7 +151,7 @@ const Card = (props: Icard) => {
       <h3>{isSocialMediaSectionAvailable && "Follow our social media"}</h3>
       {isSocialMediaSectionAvailable && (
         <div className="card card-section-info-row">
-        {props.socials?.map((thisSocials) => {
+          {props.socials?.map((thisSocials) => {
             return (
               <div
                 key={thisSocials.name}
@@ -162,18 +159,24 @@ const Card = (props: Icard) => {
                 onClick={() => handleSocialClick(thisSocials.url)}
               >
                 {thisSocials.name === "linkedIn" ? (
-                  <LinkedInIcon />
+                  <Linkedin className="icon" />
                 ) : thisSocials.name === "instagram" ? (
-                  <InstagramIcon />
-                ) : (
-                  <FacebookIcon />
-                )} 
+                  <Instagram className="icon" />
+                ) : thisSocials.name === "facebook" ? (
+                  <Facebook className="icon" />
+                ) : thisSocials.name === "twitter" ? (
+                  <Twitter className="icon" />
+                ) : thisSocials.name === "website" ? (
+                  <Globe className="icon" />
+                ) : null}
               </div>
             );
           })}
-      </div>
+        </div>
       )}
-      {showTooltip && (<div style={{marginBottom: "20px"}}>No social media found</div>)}
+      {showTooltip && (
+        <div style={{ marginBottom: "20px" }}>No social media found</div>
+      )}
       {props.action && props.action}
     </div>
   );

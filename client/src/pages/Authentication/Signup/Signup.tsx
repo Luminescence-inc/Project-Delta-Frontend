@@ -58,7 +58,9 @@ const Signup = () => {
         // Set error message
         const errorCode = errorResponse?.message.code;
         if (errorCode == 409) {
-          setErrorMessage(errorResponse?.message.desc);
+          setErrorMessage(
+            `User with email ${data.email} already exists, please login.`
+          );
         } else {
           setErrorMessage("error occured while login");
         }
@@ -232,8 +234,19 @@ const Signup = () => {
               <input type="checkbox" />
               <p>
                 By clicking Sign Up you agree to our{" "}
-                <span>Terms and Conditions</span> and that you have read our{" "}
-                <span>Privacy Policy</span>
+                <a
+                  target="_blank"
+                  href="/docs/BizConnect24-Terms-of-Agreement.pdf" // pointing to the public dir
+                >
+                  Terms and Conditions
+                </a>{" "}
+                and that you have read our
+                <a
+                  target="_blank"
+                  href="/docs/BizConnect24-Terms-of-Agreement.pdf" // pointing to the public dir
+                >
+                  Privacy Policy
+                </a>
               </p>
             </div>
 

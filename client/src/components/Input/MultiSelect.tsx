@@ -3,6 +3,7 @@ import ArrowUpIcon from "assets/icons/arrow-up.svg?react";
 import { FormikProps } from "formik";
 import Button from "components/Button/Button";
 import "./Input.scss";
+import SelectedPlaceholder from "components/SelectedPlaceholder";
 
 interface ISelect {
   label: string;
@@ -30,6 +31,7 @@ const MultiSelect = ({
   const [selectedValues, setSelectedValues] = useState<IOption[]>(
     formikValue || []
   );
+  const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
     setSelectedValues(formikValue || []);
@@ -87,26 +89,48 @@ const MultiSelect = ({
             height={14}
           />
         </div>
+        {/* Days of operation placeholders */}
+        <SelectedPlaceholder
+          selectedValues={selectedValues}
+          getSelectedHoler={(id: string) => {
+            const updatedValues = selectedValues.filter(
+              (val) => val.uuid !== id
+            );
+            setSelectedValues(updatedValues);
+            updateFormikValues(updatedValues);
+          }}
+          visible={showDropdown}
+          type={name}
+        />
       </div>
 
       {showDropdown && (
         <div ref={dropdownRef} className="dropdown-container">
+          <input
+            type="text"
+            className="multiselect-search-inp"
+            placeholder="Search..."
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+          />
           <div className="options-list">
             <ul>
-              {options?.map((option) => (
-                <li
-                  key={option.uuid}
-                  onClick={() => handleSelect(option)}
-                  style={{ listStyleType: "none", display: "flex" }}
-                >
-                  <input
-                    type="checkbox"
-                    checked={isSelected(option)}
-                    onChange={() => {}}
+              {options
+                ?.filter(
+                  (option) =>
+                    searchValue.length === 0 ||
+                    option.value
+                      .toLowerCase()
+                      .includes(searchValue.toLowerCase())
+                )
+                .map((option) => (
+                  <ListComponent
+                    key={option.uuid}
+                    option={option}
+                    isSelected={isSelected}
+                    handleSelect={handleSelect}
                   />
-                  <label className="checkbox-value">{option.value}</label>
-                </li>
-              ))}
+                ))}
             </ul>
           </div>
           <div style={{ paddingTop: "10px" }}>
@@ -124,3 +148,29 @@ const MultiSelect = ({
 };
 
 export default MultiSelect;
+
+type ListComponentProps = {
+  option: {
+    uuid: string;
+    value: string;
+  };
+  handleSelect: (option: any) => void;
+  isSelected: (option: any) => boolean;
+};
+
+function ListComponent({
+  option,
+  isSelected,
+  handleSelect,
+}: ListComponentProps) {
+  return (
+    <li
+      key={option.uuid}
+      onClick={() => handleSelect(option)}
+      style={{ listStyleType: "none", display: "flex" }}
+    >
+      <input type="checkbox" checked={isSelected(option)} onChange={() => {}} />
+      <label className="checkbox-value">{option.value}</label>
+    </li>
+  );
+}
