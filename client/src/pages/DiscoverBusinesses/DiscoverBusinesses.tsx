@@ -71,7 +71,7 @@ export const DiscoverBusinesses = () => {
         page: currentPage,
         sortBy: "createdUtc",
         sortDirection: "asc",
-        limit: 25,
+        limit: 5,
       },
       searchQuery
     )
