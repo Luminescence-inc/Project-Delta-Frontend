@@ -9,7 +9,7 @@ import FilterBusinessProfiles from "./FilterBusinessProfiles/FilterBusinessProfi
 import FilterIcon from "assets/icons/filter-icon.svg?react";
 import NoResultFound from "components/NoResultFound/NoResultFound";
 import { IOption } from "types/business";
-import defaultImage from "assets/images/default-icon.jpeg";
+import defaultImage from "assets/images/default-img.jpeg";
 
 interface IBusinessCatalogue {
   listOfBusinessProfiles: IBusinessProfile[] | null;
@@ -37,7 +37,6 @@ const BusinessCatalogue: React.FC<IBusinessCatalogue> = ({
   );
   const [isFilterOpen, setIsFilterOPen] = useState<boolean>(false);
   const handlePrevious = () => {
-    //console.log("Before" + props.currentPage);
     if (currentPage > 1) {
       setDisabledPrevious(false);
       onPageChange(currentPage - 1, searchQuery);
@@ -80,9 +79,10 @@ const BusinessCatalogue: React.FC<IBusinessCatalogue> = ({
         <div className="business-catalogue__filter-body">
           {isFilterOpen && (
             <FilterBusinessProfiles
-              onFilter={(searchParam: ISearch) => onPageChange(1, searchParam)}
+              onFilter={(searchParam: ISearch) => {
+                onPageChange(1, searchParam);
+              }}
               onCancle={() => setIsFilterOPen((prev) => !prev)}
-              searchParam={searchQuery}
               businessCategory={businessCategory}
             />
           )}

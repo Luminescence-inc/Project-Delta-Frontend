@@ -1,12 +1,7 @@
 import { Country, State, City } from "../../../../../country-sate-city";
 import { useFormik } from "formik";
-import {
-  BusinessCategories,
-  IOption,
-  businessCategories,
-} from "types/business";
+import { IOption } from "types/business";
 import { useEffect, useState } from "react";
-import { allBusinessCategories } from "api/business";
 import "./FilterBusinessProfiles.scss";
 import Select from "components/Input/Select";
 import MultiSelect from "components/Input/MultiSelect";
@@ -14,6 +9,7 @@ import Button from "components/Button/Button";
 import { ISearch, IFilter } from "types/business-profile";
 import CancelIcon from "assets/icons/cancel-icon.svg?react";
 import { FILTERED_COUNTRY } from "utils/business-profile-utils";
+import { useBusinessCtx } from "context/BusinessCtx";
 
 export type BusinessProfileSearchFormikPropsValues = {
   businessCategory: string[];
@@ -25,16 +21,15 @@ export type BusinessProfileSearchFormikPropsValues = {
 interface FilterBusinessProps {
   onFilter: (payload: ISearch) => void;
   onCancle?: () => void;
-  searchParam: ISearch | null;
   businessCategory: IOption[] | undefined;
 }
 
 const FilterBusinessProfiles: React.FC<FilterBusinessProps> = ({
   onFilter,
   onCancle,
-  searchParam,
   businessCategory,
 }) => {
+  const { searchQuery } = useBusinessCtx();
   const [country, setCountry] = useState<IOption[]>();
   const [stateAndProvince, setStateAndProvince] = useState<IOption[]>();
   const [city, setCity] = useState<IOption[]>();
@@ -50,14 +45,14 @@ const FilterBusinessProfiles: React.FC<FilterBusinessProps> = ({
 
     let searchFilters: IFilter[] = [];
     if (values.country) {
-      countrySelected=true;
+      countrySelected = true;
       setCountryError(false);
       countryFilter = {
         targetFieldName: "country",
         values: [values.country],
       };
       searchFilters.push(countryFilter);
-    }else{
+    } else {
       setCountryError(true);
     }
 
@@ -75,38 +70,57 @@ const FilterBusinessProfiles: React.FC<FilterBusinessProps> = ({
       };
       searchFilters.push(cityFilter);
     }
+    if (values.businessCategory) {
+      let businessCategoryMap: { [key: string]: string } = {};
 
-    try {
-      const allCat: BusinessCategories = (await allBusinessCategories()).data;
-      if (allCat && allCat?.data?.businessCategories.length > 0) {
-        let businessCategoryMap: { [description: string]: string } = {};
-        let businessCategoryUUIDs: string[] = [];
-        for (let i = 0; i < allCat?.data?.businessCategories.length; i++) {
-          let thisCategory: businessCategories =
-            allCat?.data?.businessCategories[i];
-          businessCategoryMap[thisCategory.description] = thisCategory.uuid;
+      values.businessCategory?.forEach((thisBusinessCategory) => {
+        const thisBusinessCategoryOption = businessCategory?.find(
+          (thisOption) => thisOption.value === thisBusinessCategory
+        );
+        if (thisBusinessCategoryOption) {
+          businessCategoryMap[thisBusinessCategoryOption.uuid] =
+            thisBusinessCategoryOption.value;
         }
-        if (values.businessCategory && values.businessCategory.length > 0) {
-          for (let j = 0; j < values.businessCategory.length; j++) {
-            let thisBusinessCategory = values.businessCategory[j];
-            businessCategoryUUIDs.push(
-              businessCategoryMap[thisBusinessCategory]
-            );
-          }
+      });
 
-          searchFilters.push({
-            targetFieldName: "businessCategoryUuid",
-            values: businessCategoryUUIDs,
-          });
-        }
-      }
-    } catch (error) {
-      console.log(error);
-      setError(true);
-      alert(
-        "There was an error submitting the form. Please Check your Business Categories option Please try again."
-      );
+      searchFilters.push({
+        targetFieldName: "businessCategoryUuid",
+        values: Object.keys(businessCategoryMap),
+      });
     }
+
+    // try {
+    //   const allCat: BusinessCategories = (await allBusinessCategories()).data;
+    //   if (allCat && allCat?.data?.businessCategories.length > 0) {
+    //     let businessCategoryMap: { [description: string]: string } = {};
+    //     let businessCategoryUUIDs: string[] = [];
+    //     for (let i = 0; i < allCat?.data?.businessCategories.length; i++) {
+    //       let thisCategory: businessCategories =
+    //         allCat?.data?.businessCategories[i];
+    //       businessCategoryMap[thisCategory.description] = thisCategory.uuid;
+    //     }
+    //     if (values.businessCategory && values.businessCategory.length > 0) {
+    //       for (let j = 0; j < values.businessCategory.length; j++) {
+    //         let thisBusinessCategory = values.businessCategory[j];
+    //         console.log("thisBusinessCategory", thisBusinessCategory);
+    //         businessCategoryUUIDs.push(
+    //           businessCategoryMap[thisBusinessCategory]
+    //         );
+    //       }
+
+    //       searchFilters.push({
+    //         targetFieldName: "businessCategoryUuid",
+    //         values: businessCategoryUUIDs,
+    //       });
+    //     }
+    //   }
+    // } catch (error) {
+    //   console.log(error);
+    //   setError(true);
+    //   alert(
+    //     "There was an error submitting the form. Please Check your Business Categories option Please try again."
+    //   );
+    // }
 
     const payload: ISearch = {
       filters: searchFilters,
@@ -138,39 +152,74 @@ const FilterBusinessProfiles: React.FC<FilterBusinessProps> = ({
   ): string | undefined => {
     if (searchParam && searchParam.filters) {
       let data = searchParam.filters.find(
-        (thisFilter) => thisFilter.targetFieldName === filterTag
+        (thisFilter) =>
+          thisFilter.targetFieldName.toLowerCase() === filterTag.toLowerCase()
       )?.values[0];
       return data;
     }
   };
 
+  const getStateFormData = (country: string) => {
+    const countryCode = Country.getAllCountries().find(
+      (c) => c.name.toLowerCase() === country?.toLowerCase()
+    )?.isoCode;
+    const states = State.getStatesOfCountry(countryCode);
+    return { states, countryCode };
+  };
+
+  const getCityFormData = (countryCode: string, state: string) => {
+    const cities = City.getCitiesOfState(countryCode, state);
+    return { cities };
+  };
+
   useEffect(() => {
+    // Let try optimizing this
     try {
-      let country = getResult(searchParam, "country");
+      console.log("searchQuery", searchQuery);
+      let country = getResult(searchQuery, "country");
+      let stateAndProvince = getResult(searchQuery, "stateAndProvince");
+      let city = getResult(searchQuery, "city");
+      let category: { [uuid: string]: string } = {};
+      let businessCategoriesUUIDs: string[] | undefined;
+      let businessCategories: IOption[] = [];
+
+      // prefill the stateAndProvinces form field back when filter is applied or not
+      if (country) {
+        const { states } = getStateFormData(country!);
+
+        setStateAndProvince(
+          states.map((st) => {
+            return { uuid: st.isoCode, value: st.name };
+          })
+        );
+      }
+
       if (country) {
         formik.setFieldValue("country", country);
       }
-      let stateAndProvince = getResult(searchParam, "stateAndProvince");
       if (stateAndProvince) {
         formik.setFieldValue("stateAndProvince", stateAndProvince);
       }
-      let city = getResult(searchParam, "city");
+
       if (city) {
         formik.setFieldValue("city", city);
+        const { countryCode } = getStateFormData(country!);
+        const { cities } = getCityFormData(countryCode!, stateAndProvince!);
+        console.log("cities", cities);
       }
-      let category: { [uuid: string]: string } = {};
+
       if (businessCategory && businessCategory.length > 0) {
         businessCategory.forEach((thisBusinessCategory) => {
           category[thisBusinessCategory.uuid] = thisBusinessCategory.value;
         });
       }
-      let businessCategoriesUUIDs: string[] | undefined;
-      if (searchParam && searchParam.filters) {
-        businessCategoriesUUIDs = searchParam.filters.find(
+
+      if (searchQuery && searchQuery.filters) {
+        businessCategoriesUUIDs = searchQuery.filters.find(
           (thisFilter) => thisFilter.targetFieldName === "businessCategoryUuid"
         )?.values;
       }
-      let businessCategories: IOption[] = [];
+
       if (businessCategoriesUUIDs && category) {
         businessCategories = businessCategoriesUUIDs.map((thisUUID) => {
           if (thisUUID) {
@@ -178,13 +227,13 @@ const FilterBusinessProfiles: React.FC<FilterBusinessProps> = ({
           }
         }) as IOption[];
       }
-
       if (businessCategories && businessCategories.length > 0) {
         setSelectedBusinessCategory(businessCategories);
-        // formik.setFieldValue("businessCategory", businessCategories);
+        formik.setFieldValue("businessCategory", businessCategories);
       }
     } catch (err) {}
-  }, []);
+  }, [searchQuery, country]);
+
   const formik = useFormik({
     initialValues: {
       businessCategory: [],
@@ -240,10 +289,10 @@ const FilterBusinessProfiles: React.FC<FilterBusinessProps> = ({
 
   // Custom Styles
   const errorMessageStyle = {
-    color: 'red',
-    display: 'flex',
-    fontSize: '13px'
-  }
+    color: "red",
+    display: "flex",
+    fontSize: "13px",
+  };
 
   return (
     <div className="filterForm">
@@ -251,7 +300,9 @@ const FilterBusinessProfiles: React.FC<FilterBusinessProps> = ({
         <div className="card__cancle">
           {onCancle && <span onClick={() => onCancle()}>{<CancelIcon />}</span>}
         </div>
-        {countryError && (<span style={errorMessageStyle}>Please select a country</span>)}
+        {countryError && (
+          <span style={errorMessageStyle}>Please select a country</span>
+        )}
         <Select
           label="Select Country"
           name="country"
