@@ -108,9 +108,11 @@ const BusinessCatalogue: React.FC<IBusinessCatalogue> = ({
                     phoneNumber={thisBusinessProfile?.phoneNumber}
                     usedInBusinessCataloge={true}
                     imagePath={
-                      thisBusinessProfile?.logoUrl
-                        ? `https://res.cloudinary.com/${CloudinaryConfig.cloudName}/image/upload/c_fill,q_500/${thisBusinessProfile?.logoUrl}.jpg`
-                        : defaultImage
+                      thisBusinessProfile?.logoUrl?.includes("dicebears")
+                        ? thisBusinessProfile?.logoUrl
+                          ? `https://res.cloudinary.com/${CloudinaryConfig.cloudName}/image/upload/c_fill,q_500/${thisBusinessProfile?.logoUrl}.jpg`
+                          : defaultImage
+                        : thisBusinessProfile?.logoUrl
                     }
                     action={
                       <Button
