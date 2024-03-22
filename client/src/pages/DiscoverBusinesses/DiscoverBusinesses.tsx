@@ -17,7 +17,6 @@ export const DiscoverBusinesses = () => {
     useState<IBusinessProfile | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const { searchQuery, setSearchQuery } = useBusinessCtx();
-  // const [searchQuery, setSearchQuery] = useState<ISearch | null>(null);
   const [totalPages, setTotalPages] = useState<number>(1);
   const detailRef = useRef<HTMLDivElement>(null);
 
