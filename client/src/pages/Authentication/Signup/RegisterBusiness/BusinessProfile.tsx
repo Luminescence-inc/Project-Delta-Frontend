@@ -333,7 +333,11 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
               Current Logo:
             </h3>
             <img
-              src={`https://res.cloudinary.com/${CloudinaryConfig.cloudName}/image/upload/c_fill,q_400/${logoUrl}.jpg`}
+              src={
+                logoUrl.includes("dicebears")
+                  ? logoUrl
+                  : `https://res.cloudinary.com/${CloudinaryConfig.cloudName}/image/upload/c_fill,q_400/${logoUrl}.jpg`
+              }
               alt="Uploaded"
               style={{ maxWidth: "100%" }}
             />
