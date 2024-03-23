@@ -75,11 +75,8 @@ export const DiscoverBusinesses = () => {
       searchQuery
     )
       .then((res) => {
-        // console.log(res.data);
         const { businessProfiles } = res.data?.data;
-        // console.log(businessProfiles);
         setListOfBusinessProfiles(businessProfiles?.data);
-        // console.log("Total Page" + businessProfiles?.totalPages);
         setTotalPages(businessProfiles?.totalPages);
       })
       .catch((err) => {

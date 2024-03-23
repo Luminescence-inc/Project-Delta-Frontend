@@ -89,39 +89,6 @@ const FilterBusinessProfiles: React.FC<FilterBusinessProps> = ({
       });
     }
 
-    // try {
-    //   const allCat: BusinessCategories = (await allBusinessCategories()).data;
-    //   if (allCat && allCat?.data?.businessCategories.length > 0) {
-    //     let businessCategoryMap: { [description: string]: string } = {};
-    //     let businessCategoryUUIDs: string[] = [];
-    //     for (let i = 0; i < allCat?.data?.businessCategories.length; i++) {
-    //       let thisCategory: businessCategories =
-    //         allCat?.data?.businessCategories[i];
-    //       businessCategoryMap[thisCategory.description] = thisCategory.uuid;
-    //     }
-    //     if (values.businessCategory && values.businessCategory.length > 0) {
-    //       for (let j = 0; j < values.businessCategory.length; j++) {
-    //         let thisBusinessCategory = values.businessCategory[j];
-    //         console.log("thisBusinessCategory", thisBusinessCategory);
-    //         businessCategoryUUIDs.push(
-    //           businessCategoryMap[thisBusinessCategory]
-    //         );
-    //       }
-
-    //       searchFilters.push({
-    //         targetFieldName: "businessCategoryUuid",
-    //         values: businessCategoryUUIDs,
-    //       });
-    //     }
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    //   setError(true);
-    //   alert(
-    //     "There was an error submitting the form. Please Check your Business Categories option Please try again."
-    //   );
-    // }
-
     const payload: ISearch = {
       filters: searchFilters,
     };
@@ -173,9 +140,7 @@ const FilterBusinessProfiles: React.FC<FilterBusinessProps> = ({
   };
 
   useEffect(() => {
-    // Let try optimizing this
     try {
-      console.log("searchQuery", searchQuery);
       let country = getResult(searchQuery, "country");
       let stateAndProvince = getResult(searchQuery, "stateAndProvince");
       let city = getResult(searchQuery, "city");
@@ -203,9 +168,6 @@ const FilterBusinessProfiles: React.FC<FilterBusinessProps> = ({
 
       if (city) {
         formik.setFieldValue("city", city);
-        const { countryCode } = getStateFormData(country!);
-        const { cities } = getCityFormData(countryCode!, stateAndProvince!);
-        console.log("cities", cities);
       }
 
       if (businessCategory && businessCategory.length > 0) {
