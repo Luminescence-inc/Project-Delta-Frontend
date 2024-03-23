@@ -7,6 +7,7 @@ import FilterBusinessProfiles from "./BusinessCatalogue/FilterBusinessProfiles/F
 import { allBusinessCategories } from "api/business";
 import { BusinessCategories, IOption } from "types/business";
 import DefaultWebView from "components/DefaultWebView/DefaultWebView";
+import { useBusinessCtx } from "context/BusinessCtx";
 
 export const DiscoverBusinesses = () => {
   const [listOfBusinessProfiles, setListOfBusinessProfiles] = useState<
@@ -15,7 +16,7 @@ export const DiscoverBusinesses = () => {
   const [selectedBusinessProfile, setSelectedBusinessProfile] =
     useState<IBusinessProfile | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [searchQuery, setSearchQuery] = useState<ISearch | null>(null);
+  const { searchQuery, setSearchQuery } = useBusinessCtx();
   const [totalPages, setTotalPages] = useState<number>(1);
   const detailRef = useRef<HTMLDivElement>(null);
 
@@ -69,16 +70,13 @@ export const DiscoverBusinesses = () => {
         page: currentPage,
         sortBy: "createdUtc",
         sortDirection: "asc",
-        limit: 25,
+        limit: 5,
       },
       searchQuery
     )
       .then((res) => {
-        // console.log(res.data);
         const { businessProfiles } = res.data?.data;
-        // console.log(businessProfiles);
         setListOfBusinessProfiles(businessProfiles?.data);
-        // console.log("Total Page" + businessProfiles?.totalPages);
         setTotalPages(businessProfiles?.totalPages);
       })
       .catch((err) => {
@@ -89,40 +87,41 @@ export const DiscoverBusinesses = () => {
   return (
     <div className="responsive-content">
       <div className="mobile-view" ref={detailRef}>
-      {!searchQuery ? (
-        <div>
-          <FilterBusinessProfiles
-            onFilter={(searchParam: ISearch) =>
-              handlePageChange(1, searchParam)
-            }
-            searchParam={searchQuery}
-            businessCategory={businessCategory}
-          />
-        </div>
-      ) : (
-        <div>
-          {selectedBusinessProfile ? (
-            <BusinessDetails
-              businessProfile={selectedBusinessProfile}
-              onClickReturnToBusinessCatalogue={handleSelectBusinessProfile}
-            />
-          ) : (
-            <BusinessCatalogue
-              listOfBusinessProfiles={listOfBusinessProfiles}
-              onBusinessProfileSelect={handleSelectBusinessProfile}
-              onPageChange={handlePageChange}
-              currentPage={currentPage}
-              totalPages={totalPages}
-              searchQuery={searchQuery}
+        {!searchQuery ? (
+          <div>
+            <FilterBusinessProfiles
+              onFilter={(searchParam: ISearch) => {
+                // handlePageChange(1, searchParam)
+                setSearchQuery(searchParam);
+              }}
+              // searchParam={searchQuery}
               businessCategory={businessCategory}
             />
-          )}
-        </div>
-      )}
-    </div>
-    <div>
-      <DefaultWebView className={"laptop-view"} />
-    </div>
+          </div>
+        ) : (
+          <div>
+            {selectedBusinessProfile ? (
+              <BusinessDetails
+                businessProfile={selectedBusinessProfile}
+                onClickReturnToBusinessCatalogue={handleSelectBusinessProfile}
+              />
+            ) : (
+              <BusinessCatalogue
+                listOfBusinessProfiles={listOfBusinessProfiles}
+                onBusinessProfileSelect={handleSelectBusinessProfile}
+                onPageChange={handlePageChange}
+                currentPage={currentPage}
+                totalPages={totalPages}
+                searchQuery={searchQuery}
+                businessCategory={businessCategory}
+              />
+            )}
+          </div>
+        )}
+      </div>
+      <div>
+        <DefaultWebView className={"laptop-view"} />
+      </div>
     </div>
   );
 };

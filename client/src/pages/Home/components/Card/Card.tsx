@@ -153,7 +153,9 @@ const Card = (props: Icard) => {
         <div className="card card-section-info-row">
           {props.socials?.map((thisSocials) => {
             return (
-              <div
+              <a
+                href={thisSocials.url}
+                target="_blank"
                 key={thisSocials.name}
                 className="card card-section-info-row card-section-info-row__socials"
                 onClick={() => handleSocialClick(thisSocials.url)}
@@ -169,7 +171,7 @@ const Card = (props: Icard) => {
                 ) : thisSocials.name === "website" ? (
                   <Globe className="icon" />
                 ) : null}
-              </div>
+              </a>
             );
           })}
         </div>

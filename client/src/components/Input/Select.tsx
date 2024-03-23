@@ -102,6 +102,7 @@ const Select = ({ label, options, name, formikValue, formik }: ISelect) => {
           </div>
           <div className="options-list">
             <ul>
+
               {options?.map((option) => {
                 const isSelected = selectedValue?.uuid === option.uuid;
                 const isMatchingValue = value.length > 0 && option.value.toLowerCase().includes(value.toLowerCase());

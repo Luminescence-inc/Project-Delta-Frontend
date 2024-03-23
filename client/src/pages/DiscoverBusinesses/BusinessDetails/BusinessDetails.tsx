@@ -10,6 +10,7 @@ import { IBusinessCategory } from "types/business-profile";
 import { getBusinsessCategories } from "api/business";
 import defaultImage from "assets/images/default-img.jpeg";
 
+
 interface BusinessDetailsProps {
   businessProfile: IBusinessProfile | null;
   onClickReturnToBusinessCatalogue: (item: IBusinessProfile | null) => void;
