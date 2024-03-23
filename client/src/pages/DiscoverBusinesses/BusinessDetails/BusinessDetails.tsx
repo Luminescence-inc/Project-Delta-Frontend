@@ -9,7 +9,7 @@ import { formatDays } from "../helper";
 import { IBusinessCategory } from "types/business-profile";
 import { getBusinsessCategories } from "api/business";
 import defaultImage from "assets/images/default-img.jpeg";
-// import { CloudinaryConfig } from "config";
+
 
 interface BusinessDetailsProps {
   businessProfile: IBusinessProfile | null;

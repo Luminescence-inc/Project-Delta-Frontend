@@ -5,9 +5,6 @@ import MailIcon from "assets/icons/mail-icon.svg?react";
 import PhoneIcon from "assets/icons/phone-icon.svg?react";
 import AddressIcon from "assets/icons/address-icon.svg?react";
 import ClockIcon from "assets/icons/clock-icon.svg?react";
-import LinkedInIcon from "assets/icons/linkedIn-icon-business-details.svg?react";
-import InstagramIcon from "assets/icons/instagram-icon-business-details.svg?react";
-import FacebookIcon from "assets/icons/facebook-icon-business-details.svg?react";
 import { useState } from "react";
 import { Facebook, Globe, Instagram, Linkedin, Twitter } from "lucide-react";
 
@@ -138,7 +135,7 @@ const Card = (props: Icard) => {
       {isCategorySectionAvailable && (
         <div className="card card-section-info-row">
           {props.categories?.map((thisCategory) => {
-            //console.log("Cat" + thisCategory.name);
+
             return (
               <span
                 key={thisCategory.name}

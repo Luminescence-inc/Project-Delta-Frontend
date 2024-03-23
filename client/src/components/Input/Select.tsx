@@ -102,33 +102,25 @@ const Select = ({ label, options, name, formikValue, formik }: ISelect) => {
           </div>
           <div className="options-list">
             <ul>
-              {value.length > 0
-                ? options?.map((option) =>
-                    option.value.toLowerCase().includes(value.toLowerCase()) ? (
-                      <li
-                        key={option.uuid}
-                        onClick={() => handleSelect(option)}
-                        style={
-                          selectedValue?.uuid == option.uuid
-                            ? selectedStyle
-                            : {}
-                        }
-                      >
-                        {option.value}
-                      </li>
-                    ) : null
-                  )
-                : options?.map((option) => (
+
+              {options?.map((option) => {
+                const isSelected = selectedValue?.uuid === option.uuid;
+                const isMatchingValue = value.length > 0 && option.value.toLowerCase().includes(value.toLowerCase());
+
+                if (value.length === 0 || isMatchingValue) {
+                  return (
                     <li
                       key={option.uuid}
                       onClick={() => handleSelect(option)}
-                      style={
-                        selectedValue?.uuid == option.uuid ? selectedStyle : {}
-                      }
+                      style={isSelected ? selectedStyle : {}}
                     >
                       {option.value}
                     </li>
-                  ))}
+                  );
+                }
+
+                return null;
+              })}
             </ul>
           </div>
         </div>

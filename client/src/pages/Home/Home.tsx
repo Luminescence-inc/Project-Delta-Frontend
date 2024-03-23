@@ -117,7 +117,7 @@ const Home = () => {
                 )}
                 <Button
                   className={authenticated ? "auth-btn" : ""}
-                  label="Create a new business profile"
+                  label={businessPresent ? "Create a new business profile" : "Create your first business profile"}
                   variant="transparent"
                   size="lg"
                   to="/signup/register-business"
