@@ -7,11 +7,14 @@ import {
   FlexRowStartBtw,
   FlexRowStartCenter,
 } from "components/Flex";
-import React from "react";
+import React, { useState } from "react";
 import "./style.scss";
-import { LayoutPanelLeft, SearchIcon } from "lucide-react";
+import { LayoutPanelLeft, LayoutPanelTop, SearchIcon } from "lucide-react";
+import BusinessCardContainer from "./components/BusinessCard";
 
 export default function ExploreBusiness() {
+  const [layout, setLayout] = useState<"row" | "col">("col");
+
   return (
     <div className="ntw w-full h-full">
       <FlexColStart className="w-full px-30 mt-20">
@@ -35,12 +38,23 @@ export default function ExploreBusiness() {
             </p>
           </FlexRowStartCenter>
         </button>
-        <button className="ntw border-none outline-none layout-switch p-10 rounded-5 cursor-pointer">
+        <button
+          onClick={() => setLayout(layout === "col" ? "row" : "col")}
+          className="ntw border-none outline-none layout-switch p-10 rounded-5 cursor-pointer"
+        >
           <FlexColCenter>
-            <LayoutPanelLeft size={20} fill="#130F26" />
+            {layout === "col" ? (
+              <LayoutPanelLeft size={20} fill="#130F26" />
+            ) : (
+              <LayoutPanelTop size={20} fill="#130F26" />
+            )}
           </FlexColCenter>
         </button>
       </FlexRowCenterBtw>
+      <br />
+
+      {/* business card lists */}
+      <BusinessCardContainer layout={layout} />
     </div>
   );
 }
