@@ -2,7 +2,6 @@
 
 import { useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
-
 import Footer from "components/Footer/Footer";
 import Navbar from "components/Navbar/Navbar";
 import Home from "pages/Home/Home";
@@ -21,6 +20,8 @@ import MyAccount from "pages/AccountSettings/MyAccount";
 import AboutUs from "pages/AboutUs/AboutUs";
 import ContactSupport from "pages/ContactSupport/ContactSupport";
 import BusinessContextProvider from "context/BusinessCtx";
+import ExploreBusiness from "pages/ExploreBusiness";
+import "./index.css";
 
 function App() {
   const { pathname } = useLocation();
@@ -58,6 +59,7 @@ function App() {
               path="/discover-businesses"
               element={<DiscoverBusinesses />}
             />
+            <Route path="/explore-businesses" element={<ExploreBusiness />} />
             <Route
               path="/signup/register-business"
               element={<RegisterBusiness />}
