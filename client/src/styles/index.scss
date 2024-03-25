@@ -23,6 +23,7 @@ body {
   font-family: "Inter", sans-serif;
   font-weight: 400;
   line-height: 24px;
+  background-color: #f6f8fa;
 }
 
 a {
@@ -57,6 +58,270 @@ img {
 
     & > path {
       fill: var(--primary-color);
+    }
+  }
+}
+
+.ntw {
+  &.flex {
+    display: flex;
+  }
+
+  &.flex-col {
+    @extend .flex;
+    flex-direction: column;
+  }
+
+  &.flex-row {
+    @extend .flex;
+    flex-direction: row;
+  }
+
+  &.justify-center {
+    @extend .flex;
+    justify-content: center;
+  }
+
+  &.items-center {
+    @extend .flex;
+    align-items: center;
+  }
+
+  &.items-start {
+    @extend .flex;
+    align-items: flex-start;
+  }
+
+  &.justify-start {
+    @extend .flex;
+    justify-content: flex-start;
+  }
+
+  &.justify-between {
+    @extend .flex;
+    justify-content: space-between;
+  }
+
+  &.justify-around {
+    @extend .flex;
+    justify-content: space-around;
+  }
+
+  &.justify-evenly {
+    @extend .flex;
+    justify-content: space-evenly;
+  }
+
+  &.justify-end {
+    @extend .flex;
+    justify-content: flex-end;
+  }
+
+  // dynamic gap
+  $gap-values: (
+    1: 0.25rem,
+    2: 0.5rem,
+    3: 0.75rem,
+    4: 1rem,
+    5: 1.25rem,
+    6: 1.5rem,
+    7: 1.75rem,
+    8: 2rem,
+    9: 2.25rem,
+    10: 2.5rem,
+    11: 2.75rem,
+    12: 3rem,
+  );
+
+  @each $key, $value in $gap-values {
+    &.gap-#{$key} {
+      gap: $value;
+    }
+  }
+
+  // custom dynamic width
+  &.w-auto {
+    width: auto;
+  }
+  &.w-full {
+    width: 100%;
+  }
+  & .w-50 {
+    width: 50%;
+  }
+  &.w-25 {
+    width: 25%;
+  }
+
+  // custom dynamic height
+  &.h-auto {
+    height: auto;
+  }
+  &.h-full {
+    height: 100%;
+  }
+  &.h-50 {
+    height: 50%;
+  }
+  &.h-25 {
+    height: 25%;
+  }
+
+  // text-[size] like tailwindcss text-[size]
+  // allow for passing in custom values for eg text-[4px] or text-[2em]
+  @for $i from 1 through 30 {
+    &.text-#{$i} {
+      font-size: $i + px;
+    }
+  }
+
+  // dynamic stylesm like tailwindcss px-[number] or py-[number]
+  @for $i from 1 through 100 {
+    &.px-#{$i} {
+      padding-left: $i + px;
+      padding-right: $i + px;
+    }
+
+    &.py-#{$i} {
+      padding-top: $i + px;
+      padding-bottom: $i + px;
+    }
+
+    &.pt-#{$i} {
+      padding-top: $i + px;
+    }
+
+    &.pb-#{$i} {
+      padding-bottom: $i + px;
+    }
+
+    // margin
+    &.mx-#{$i} {
+      margin-left: $i + px;
+      margin-right: $i + px;
+    }
+
+    &.my-#{$i} {
+      margin-top: $i + px;
+      margin-bottom: $i + px;
+    }
+
+    &.mt-#{$i} {
+      margin-top: $i + px;
+    }
+
+    &.mb-#{$i} {
+      margin-bottom: $i + px;
+    }
+
+    &.ml-#{$i} {
+      margin-left: $i + px;
+    }
+  }
+
+  // for font-weight like tailwindcss font-bold/normal/light/medium/semibold/bold/extrabold
+
+  $font-weights: (
+    normal: 400,
+    light: 100,
+    medium: 500,
+    semibold: 600,
+    bold: 700,
+    extrabold: 800,
+  );
+
+  @each $key, $value in $font-weights {
+    &.font-#{$key} {
+      font-weight: $value;
+    }
+  }
+
+  &.underline {
+    text-decoration: underline;
+  }
+
+  &.uppercase {
+    text-transform: uppercase;
+  }
+
+  &.lowercase {
+    text-transform: lowercase;
+  }
+
+  &.capitalize {
+    text-transform: capitalize;
+  }
+
+  &.text-center {
+    text-align: center;
+  }
+
+  &.text-left {
+    text-align: left;
+  }
+
+  &.text-right {
+    text-align: right;
+  }
+
+  &.text-justify {
+    text-align: justify;
+  }
+
+  &.text-white {
+    color: var(--white-color);
+  }
+
+  &.text-black {
+    color: var(--black-color);
+  }
+
+  &.bg-white {
+    background-color: var(--white-color);
+  }
+
+  &.bg-black {
+    background-color: var(--black-color);
+  }
+
+  &.bg-primary {
+    background-color: var(--primary-color);
+  }
+
+  // fonts
+  &.font-sans {
+    font-family: "Inter", sans-serif;
+  }
+  &.font-helvetical {
+    font-family: "Helvetical", sans-serif;
+  }
+
+  // rounded corners
+  @for $i from 1 through 1000 {
+    &.rounded-#{$i} {
+      border-radius: $i + px;
+    }
+  }
+
+  // borders / outlines
+  &.border-none {
+    border: none;
+  }
+  &.outline-none {
+    outline: none;
+  }
+
+  // cursors
+  $cursors: (
+    pointer: pointer,
+    not-allowed: not-allowed,
+    grab: grab,
+    grabbing: grabbing,
+  );
+
+  @each $key, $value in $cursors {
+    &.cursor-#{$key} {
+      cursor: $value;
     }
   }
 }
