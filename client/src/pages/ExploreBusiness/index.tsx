@@ -1,13 +1,15 @@
 import {
+  FlexColCenter,
   FlexColStart,
   FlexColStartCenter,
+  FlexRowCenterBtw,
   FlexRowStart,
   FlexRowStartBtw,
   FlexRowStartCenter,
 } from "components/Flex";
 import React from "react";
 import "./style.scss";
-import { SearchIcon } from "lucide-react";
+import { LayoutPanelLeft, SearchIcon } from "lucide-react";
 
 export default function ExploreBusiness() {
   return (
@@ -24,7 +26,7 @@ export default function ExploreBusiness() {
         </p>
       </FlexColStart>
       {/* search component */}
-      <FlexRowStartBtw className="w-full px-20 mt-10">
+      <FlexRowCenterBtw className="w-full px-20 mt-10">
         <button className="ntw w-full bg-white px-15 py-15 rounded-10 border-none cursor-pointer font-helvetical">
           <FlexRowStartCenter className="w-full">
             <SearchIcon size={20} color="#9090A7" />
@@ -33,7 +35,12 @@ export default function ExploreBusiness() {
             </p>
           </FlexRowStartCenter>
         </button>
-      </FlexRowStartBtw>
+        <button className="ntw border-none outline-none layout-switch p-10 rounded-5 cursor-pointer">
+          <FlexColCenter>
+            <LayoutPanelLeft size={20} fill="#130F26" />
+          </FlexColCenter>
+        </button>
+      </FlexRowCenterBtw>
     </div>
   );
 }

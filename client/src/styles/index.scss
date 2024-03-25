@@ -177,6 +177,10 @@ img {
 
   // dynamic stylesm like tailwindcss px-[number] or py-[number]
   @for $i from 1 through 100 {
+    &.p-#{$i} {
+      padding: $i + px;
+    }
+
     &.px-#{$i} {
       padding-left: $i + px;
       padding-right: $i + px;
