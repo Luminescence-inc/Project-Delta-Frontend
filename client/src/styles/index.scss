@@ -227,7 +227,7 @@ img {
 
   $font-weights: (
     normal: 400,
-    light: 100,
+    light: 300,
     medium: 500,
     semibold: 600,
     bold: 700,
@@ -326,6 +326,13 @@ img {
   @each $key, $value in $cursors {
     &.cursor-#{$key} {
       cursor: $value;
+    }
+  }
+
+  // scales
+  @for $i from 1 through 100 {
+    &.scale-#{$i} {
+      transform: scale($i / 10);
     }
   }
 }
