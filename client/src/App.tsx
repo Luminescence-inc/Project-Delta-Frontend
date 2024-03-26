@@ -21,6 +21,7 @@ import MyAccount from "pages/AccountSettings/MyAccount";
 import AboutUs from "pages/AboutUs/AboutUs";
 import ContactSupport from "pages/ContactSupport/ContactSupport";
 import BusinessContextProvider from "context/BusinessCtx";
+import BusinessesFilterComponent from "components/BusinessFilter";
 
 function App() {
   const { pathname } = useLocation();
@@ -57,6 +58,10 @@ function App() {
             <Route
               path="/discover-businesses"
               element={<DiscoverBusinesses />}
+            />
+            <Route
+              path="/filter-comp"
+              element={<BusinessesFilterComponent />}
             />
             <Route
               path="/signup/register-business"

@@ -9,4 +9,50 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 999;
+  background: #fff;
+
+  &.filter-card {
+    width: 100%;
+    height: auto;
+    background: #fff;
+
+    &.body {
+    }
+  }
+
+  .close-btn {
+    background: none;
+  }
+}
+
+.multisearch-comp {
+  .trigger {
+    border: 0.5px solid #ccc;
+    background: none;
+    cursor: pointer;
+
+    input {
+      background: none;
+
+      &::placeholder {
+        color: #00000047;
+      }
+    }
+  }
+
+  .floating-panel {
+    // background: red;
+    box-shadow: 0px 4px 4px 0px #00000013;
+    background: #fff;
+
+    input {
+      border-bottom: 1px solid #cccccc7e;
+    }
+
+    .single-list.active {
+      background: #000;
+      color: #fff;
+    }
+  }
 }
