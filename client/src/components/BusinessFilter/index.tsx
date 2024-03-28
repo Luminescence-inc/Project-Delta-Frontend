@@ -6,14 +6,6 @@ import { FILTERED_COUNTRY } from "utils/business-profile-utils";
 import { Country, State, City } from "../../../country-sate-city";
 import { FilterData, useBusinessCtx } from "context/BusinessCtx";
 
-const listsData = [
-  { uuid: "1", value: "Agriculture" },
-  { uuid: "2", value: "Tech" },
-  { uuid: "3", value: "Fashion" },
-  { uuid: "4", value: "Health" },
-  { uuid: "5", value: "Education" },
-];
-
 type OnfilterDataProps = {
   uuid?: string | undefined;
   value?: string | undefined;
@@ -23,11 +15,13 @@ type OnfilterDataProps = {
 type Props = {
   getfilterData: (filterData: FilterData) => void;
   closeFilter: () => void;
+  businessesCategories: { uuid: string; value: string }[] | null | undefined;
 };
 
 export default function BusinessesFilterComponent({
   getfilterData,
   closeFilter,
+  businessesCategories,
 }: Props) {
   //   control the filter opened panel
   const [errorMsg, setErrorMsg] = React.useState<string>("");
@@ -51,7 +45,7 @@ export default function BusinessesFilterComponent({
     });
   };
 
-  const onFilter = ({ uuid, type }: OnfilterDataProps) => {
+  const onFilter = ({ uuid, value, type }: OnfilterDataProps) => {
     if (type === "businessCategory") {
       const valueExists = filterData.businessCategory?.find(
         (item) => item.uuid === uuid
@@ -68,8 +62,8 @@ export default function BusinessesFilterComponent({
       } else {
         // add the value
         const updatedValue = filterData.businessCategory
-          ? [...filterData.businessCategory, { uuid: uuid! }]
-          : [{ uuid: uuid! }];
+          ? [...filterData.businessCategory, { uuid: uuid!, value }]
+          : [{ uuid: uuid!, value }];
         setFilterData({
           ...filterData,
           businessCategory: updatedValue,
@@ -244,8 +238,7 @@ export default function BusinessesFilterComponent({
             <MultiSearch
               label="Business Category"
               type={"multi"}
-              listsData={listsData}
-              //   @ts-expect-error
+              listsData={businessesCategories}
               selectedListData={filterData?.businessCategory}
               dataType="businessCategory"
               onChange={({ type, uuid, value }) =>
@@ -259,7 +252,10 @@ export default function BusinessesFilterComponent({
             {filterData.businessCategory && (
               <div className="ntw flex flex-row flex-wrap items-start justify-start mt-20 filter-placeholders gap-3">
                 {filterData.businessCategory?.map((it) => (
-                  <div className="ntw px-12 py-5 rounded-30 flex flex-row items-center justify-start placeholder gap-2">
+                  <div
+                    key={it.uuid}
+                    className="ntw px-12 py-5 rounded-30 flex flex-row items-center justify-start placeholder gap-2"
+                  >
                     <span className="ntw text-12 font-normal">
                       {/* @ts-ignore */}
                       {it?.value ?? "CATEGORY"}

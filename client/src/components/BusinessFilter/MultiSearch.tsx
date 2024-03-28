@@ -10,10 +10,12 @@ type Props = {
   leftIcon?: React.ReactNode;
   label?: string;
   type?: "multi" | "single";
-  listsData?: { uuid: string; value: string }[];
+  listsData?: { uuid: string; value: string }[] | undefined | null;
   selectedListData?:
     | { uuid?: string | undefined; value?: string | undefined }
-    | undefined;
+    | { uuid?: string | undefined; value?: string | undefined }[]
+    | undefined
+    | null;
   onChange?: (props: { uuid?: string; value?: string; type?: string }) => void;
   dataType?: string;
   disableTrigger?: boolean;
@@ -49,9 +51,21 @@ export default function MultiSearch({
   includeRightIcon = true;
   rightIcon = <ChevronDown size={25} color="#777" />;
 
-  const getActiveList = (uuid: string) => {
-    return selectedListData?.uuid === uuid ? selectedListData : null;
-  };
+  const getActiveList = React.useCallback(
+    (uuid: string, type: string) => {
+      if (type === "businessCategory") {
+        return Array.isArray(selectedListData)
+          ? selectedListData.find((data) => data.uuid === uuid)?.uuid
+          : null;
+      }
+      return !Array.isArray(selectedListData)
+        ? selectedListData?.uuid === uuid
+          ? selectedListData.uuid
+          : null
+        : null;
+    },
+    [selectedListData]
+  );
 
   React.useEffect(() => {
     if (searchValue.length > 0) {
@@ -70,6 +84,11 @@ export default function MultiSearch({
 
   // array of allowed dataType that need to be shown on select input
   const allowedDataType = ["country", "stateAndProvince", "city"];
+
+  const activeSelectedItem =
+    selectedListData && !Array.isArray(selectedListData)
+      ? selectedListData
+      : null;
 
   return (
     <div className="ntw w-full multisearch-comp flex flex-col items-start justify-start gap-2 relative">
@@ -90,11 +109,11 @@ export default function MultiSearch({
           <span
             className={cn(
               "ntw text-15 py-4 placeholder",
-              selectedListData!?.uuid ? "value" : ""
+              typeof activeSelectedItem?.uuid !== "undefined" ? "value" : ""
             )}
           >
             {allowedDataType.includes(dataType!) && selectedListData
-              ? selectedListData!?.uuid
+              ? activeSelectedItem?.uuid
               : placeholder ?? "Search for businesses"}
           </span>
         </div>
@@ -136,7 +155,7 @@ export default function MultiSearch({
                       id=""
                       value={l.uuid}
                       checked={
-                        getActiveList(l?.uuid!)?.uuid === l.uuid ?? false
+                        getActiveList(l?.uuid!, dataType!) === l.uuid ?? false
                       }
                       onChange={() => {
                         onChange?.({
@@ -156,7 +175,7 @@ export default function MultiSearch({
                   key={l.uuid}
                   className={cn(
                     "ntw single-list w-full flex items-center justify-start gap-2 border-none outline-none px-10 py-5 rounded-5 cursor-pointer",
-                    getActiveList(l.uuid!)?.uuid === l.uuid ? "active" : ""
+                    getActiveList(l.uuid!, dataType!) === l.uuid ? "active" : ""
                   )}
                   onClick={() => {
                     // close panel
