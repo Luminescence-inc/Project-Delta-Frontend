@@ -269,7 +269,20 @@ export default function BusinessesFilterComponent({
                       {/* @ts-ignore */}
                       {it?.value ?? "CATEGORY"}
                     </span>
-                    <button className="ntw cursor-pointer border-none outline-none mt-4 close-btn">
+                    <button
+                      className="ntw cursor-pointer border-none outline-none mt-4 close-btn"
+                      onClick={() => {
+                        //  remove the selected category from filter
+                        const updatedFilter =
+                          filterData.businessCategoryUuid?.filter(
+                            (c) => c.uuid !== it.uuid
+                          );
+                        setFilterData({
+                          ...filterData,
+                          businessCategoryUuid: updatedFilter,
+                        });
+                      }}
+                    >
                       <X size={15} />
                     </button>
                   </div>

@@ -51,7 +51,6 @@ export default function ExploreBusiness() {
 
   // fetch all businesses initially with or without a filter
   useEffect(() => {
-    console.log("searchQuery", searchQuery);
     getBusinesses(1, searchQuery ? true : false);
   }, [searchQuery]);
 
@@ -94,21 +93,17 @@ export default function ExploreBusiness() {
 
     // remove any duplicates
     if (!filterApplied) {
-      console.log("no query applied");
       const comb = [...businesses, ...data?.data];
       const unique = comb.filter(
         (v, i, a) => a.findIndex((t) => t.uuid === v.uuid) === i
       );
       setBusinesses(unique);
     } else {
-      console.log("query applied");
       setBusinesses(data.data);
     }
 
     setTotalPages(data?.totalPages || 1);
     setCurrPage(currPage);
-
-    console.log("businesses", data);
   }
 
   return (

@@ -166,7 +166,7 @@ function ColLayoutCard({
           height: "137px",
         }}
       ></div>
-      <FlexColStart className="w-full px-4 py-10 gap-0">
+      <FlexColStart className="w-full px-4 py-2 gap-0">
         <h2 className="ntw text-18 business-name font-helvetical">{name}</h2>
 
         {/* categories */}
@@ -194,7 +194,7 @@ function ColLayoutCard({
         </FlexRowCenterBtw>
 
         {/* location */}
-        <FlexRowStartCenter className="w-auto gap-2 mt-5">
+        <FlexRowStartCenter className="w-auto gap-2 mt-3">
           <MapPin size={16} color="#9090A7" />
           <span className="ntw text-13 font-medium location-text">
             {location}
@@ -202,7 +202,7 @@ function ColLayoutCard({
         </FlexRowStartCenter>
 
         {/* opening time */}
-        <FlexRowCenterBtw className="w-full gap-2 mt-10">
+        <FlexRowCenterBtw className="w-full gap-0 mt-0">
           <FlexRowCenter className="w-auto gap-2">
             {hasBusinessClosed && hasBusinessClosed.isOpened ? (
               <>
@@ -320,7 +320,7 @@ function RowLayoutCard({
           </FlexRowStartCenter>
 
           {/* opening time */}
-          <FlexRowCenterBtw className="w-full gap-2">
+          <FlexRowCenterBtw className="w-full gap-1">
             <FlexRowCenter className="w-auto gap-2">
               {hasBusinessClosed && hasBusinessClosed.isOpened ? (
                 <>
