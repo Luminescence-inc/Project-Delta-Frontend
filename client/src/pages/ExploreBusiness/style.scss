@@ -2,10 +2,9 @@
   background-color: #e2efff;
 }
 
-button.filter-trigger {
-  background: red;
-  .disabled {
-    background: #f5f5f5;
+.filter-trigger {
+  &.disabled {
+    background: #cccccc48;
     cursor: not-allowed;
   }
 }
@@ -26,8 +25,8 @@ button.filter-trigger {
 
 .loadmore-btn {
   cursor: pointer;
-  background: #ccc;
-  transition: all 0.3s ease;
+  background: #e2efff;
+  transition: all 0.1s ease;
 
   &:active {
     transform: scale(0.9);

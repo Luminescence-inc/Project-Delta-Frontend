@@ -128,8 +128,8 @@ export default function ExploreBusiness() {
       <FlexRowCenterBtw className="w-full px-20 mt-10">
         <button
           className={cn(
-            "ntw w-full bg-white px-15 py-15 rounded-10 border-none cursor-pointer font-helvetical filter-trigger",
-            loading ? "disabled" : ""
+            "ntw w-full px-15 py-15 rounded-10 border-none font-helvetical filter-trigger",
+            loading ? "disabled" : "cursor-pointer bg-white"
           )}
           onClick={() => setShowFilter(true)}
           disabled={loading}
