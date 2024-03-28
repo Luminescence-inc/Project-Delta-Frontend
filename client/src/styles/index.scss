@@ -80,6 +80,11 @@ img {
     display: flex;
   }
 
+  &.flex-wrap {
+    @extend .flex;
+    flex-wrap: wrap;
+  }
+
   &.flex-col {
     @extend .flex;
     flex-direction: column;

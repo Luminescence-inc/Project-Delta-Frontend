@@ -11,9 +11,15 @@ type Props = {
   label?: string;
   type?: "multi" | "single";
   listsData?: { uuid: string; value: string }[];
-  selectedListData?: { uuid: string; value?: string }[] | null;
+  selectedListData?:
+    | { uuid?: string | undefined; value?: string | undefined }
+    | undefined;
   onChange?: (props: { uuid?: string; value?: string; type?: string }) => void;
   dataType?: string;
+  disableTrigger?: boolean;
+  activePanel: string;
+  setActivePanel: (panel: string) => void;
+  placeholder?: string;
 };
 
 export default function MultiSearch({
@@ -27,8 +33,13 @@ export default function MultiSearch({
   selectedListData,
   onChange,
   dataType,
+  disableTrigger,
+  activePanel,
+  setActivePanel,
+  placeholder,
 }: Props) {
-  const [openPanel, setOpenPanel] = React.useState(false);
+  //   const [updatedSelectedListData, setUpdatedSelectedListsData] =
+  // React.useState<typeof selectedListData>();
   const [searchValue, setSearchValue] = React.useState("");
   const [filterData, setFilterData] = React.useState<
     { uuid?: string; value?: string }[]
@@ -39,7 +50,7 @@ export default function MultiSearch({
   rightIcon = <ChevronDown size={25} color="#777" />;
 
   const getActiveList = (uuid: string) => {
-    return selectedListData?.find((list) => list.uuid === uuid);
+    return selectedListData?.uuid === uuid ? selectedListData : null;
   };
 
   React.useEffect(() => {
@@ -53,20 +64,40 @@ export default function MultiSearch({
     }
   }, [searchValue]);
 
+  React.useEffect(() => {
+    setFilterData(listsData!);
+  }, [listsData]);
+
+  // array of allowed dataType that need to be shown on select input
+  const allowedDataType = ["country", "stateAndProvince", "city"];
+
   return (
     <div className="ntw w-full multisearch-comp flex flex-col items-start justify-start gap-2 relative">
       <label className="ntw text-15 font-normal">{label}</label>
       <button
-        className="ntw trigger  w-full flex flex-row items-start justify-start px-15 py-12 rounded-5 cursor-pointer gap-2"
-        onClick={() => setOpenPanel(!openPanel)}
+        className={cn(
+          "ntw trigger  w-full flex flex-row items-start justify-start px-15 py-12 rounded-5 cursor-pointer gap-2",
+          disableTrigger ? "disabled" : ""
+        )}
+        onClick={() =>
+          setActivePanel &&
+          setActivePanel(activePanel.length > 0 ? "" : dataType!)
+        }
+        disabled={disableTrigger}
       >
         {includeLeftIcon && (leftIcon ?? null)}
-        <input
-          type="text"
-          className="ntw w-full cursor-pointer px-3 py-2 outline-none border-none text-15"
-          readOnly={true}
-          placeholder="Search for businesses"
-        />
+        <div className="ntw w-full flex items-start justify-start">
+          <span
+            className={cn(
+              "ntw text-15 py-4 placeholder",
+              selectedListData!?.uuid ? "value" : ""
+            )}
+          >
+            {allowedDataType.includes(dataType!) && selectedListData
+              ? selectedListData!?.uuid
+              : placeholder ?? "Search for businesses"}
+          </span>
+        </div>
         {includeRightIcon && (rightIcon ?? null)}
       </button>
 
@@ -74,12 +105,12 @@ export default function MultiSearch({
       <div
         className={cn(
           "ntw w-full h-auto floating-panel flex flex-col items-start justify-start absolute top-90 rounded-10",
-          openPanel ? "py-20 px-20" : ""
+          activePanel === dataType ? "py-20 px-20" : ""
         )}
         style={{
           maxHeight: "250px",
           overflowY: "auto",
-          height: openPanel ? "auto" : "0px",
+          height: activePanel === dataType ? "auto" : "0px",
         }}
       >
         <input
@@ -128,11 +159,13 @@ export default function MultiSearch({
                     getActiveList(l.uuid!)?.uuid === l.uuid ? "active" : ""
                   )}
                   onClick={() => {
+                    // close panel
                     onChange?.({
                       uuid: l.uuid,
                       value: l.value,
                       type: dataType,
                     });
+                    setActivePanel("");
                   }}
                 >
                   <span className="ntw text-15 font-normal">{l.value}</span>

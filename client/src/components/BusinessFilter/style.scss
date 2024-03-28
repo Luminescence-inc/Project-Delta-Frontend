@@ -21,16 +21,85 @@
     }
   }
 
+  .error-cont {
+    min-height: 50px;
+    span {
+      color: #ff4741;
+    }
+  }
+
   .close-btn {
     background: none;
+  }
+
+  //   search and reset button
+  .filter-controls {
+    button {
+      width: 120px;
+      height: 55px;
+      border: none;
+      outline: none;
+      background: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:active {
+        transform: scale(0.9);
+      }
+
+      &:target {
+        transform: scale(1);
+      }
+
+      &.search-btn {
+        background: #0e2d52;
+        color: #fff;
+        cursor: pointer;
+      }
+
+      &.reset-btn {
+        background: #f5f5f5;
+        color: #000;
+        cursor: pointer;
+      }
+    }
+  }
+
+  //   placeholders
+  .filter-placeholders {
+    .placeholder {
+      background: #eaeaea;
+
+      .close-btn {
+        background: none;
+      }
+    }
   }
 }
 
 .multisearch-comp {
   .trigger {
-    border: 0.5px solid #ccc;
+    border: 1px solid #ccc;
     background: none;
     cursor: pointer;
+
+    &:focus,
+    &:target {
+      border: 1px solid #000;
+    }
+
+    &.disabled {
+      background: #f5f5f5;
+      cursor: not-allowed;
+    }
+
+    .placeholder {
+      color: #00000047;
+
+      &.value {
+        color: #000;
+      }
+    }
 
     input {
       background: none;
@@ -43,11 +112,16 @@
 
   .floating-panel {
     // background: red;
-    box-shadow: 0px 4px 4px 0px #00000013;
+    box-shadow: 0px 4px 4px 0px #00000044;
     background: #fff;
+    z-index: 999;
 
     input {
       border-bottom: 1px solid #cccccc7e;
+    }
+
+    .single-list {
+      background: none;
     }
 
     .single-list.active {
