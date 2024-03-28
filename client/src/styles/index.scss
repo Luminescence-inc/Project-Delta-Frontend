@@ -63,8 +63,26 @@ img {
 }
 
 .ntw {
+  // positioning
+  &.relative {
+    position: relative;
+  }
+  &.absolute {
+    position: absolute;
+  }
+
+  &.fixed {
+    position: fixed;
+  }
+
+  // flex box
   &.flex {
     display: flex;
+  }
+
+  &.flex-wrap {
+    @extend .flex;
+    flex-wrap: wrap;
   }
 
   &.flex-col {
@@ -220,6 +238,20 @@ img {
 
     &.ml-#{$i} {
       margin-left: $i + px;
+    }
+
+    // positioning
+    &.top-#{$i} {
+      top: $i + px;
+    }
+    &.left-#{$i} {
+      left: $i + px;
+    }
+    &.right-#{$i} {
+      right: $i + px;
+    }
+    &.bottom-#{$i} {
+      bottom: $i + px;
     }
   }
 

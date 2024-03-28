@@ -22,6 +22,7 @@ import ContactSupport from "pages/ContactSupport/ContactSupport";
 import BusinessContextProvider from "context/BusinessCtx";
 import ExploreBusiness from "pages/ExploreBusiness";
 import "./index.css";
+import BusinessesFilterComponent from "components/BusinessFilter";
 
 function App() {
   const { pathname } = useLocation();
@@ -60,6 +61,10 @@ function App() {
               element={<DiscoverBusinesses />}
             />
             <Route path="/explore-businesses" element={<ExploreBusiness />} />
+            <Route
+              path="/filter-comp"
+              element={<BusinessesFilterComponent />}
+            />
             <Route
               path="/signup/register-business"
               element={<RegisterBusiness />}
