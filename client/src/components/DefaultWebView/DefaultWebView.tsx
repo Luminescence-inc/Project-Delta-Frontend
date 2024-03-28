@@ -1,4 +1,4 @@
-import Logo from "assets/images/dark-logo-img.png";
+import LogoHeaderIcon from "assets/icons/logo-header-icon.svg?react";
 
 interface IDefaultWebViewProps {
   className: string;
@@ -16,11 +16,7 @@ const DefaultWebView = ({ className }: IDefaultWebViewProps) => {
             className="body-style"
             style={{ display: "flex", justifyContent: "center" }}
           >
-            <img
-              style={{ height: "59px", width: "132px" }}
-              src={Logo}
-              alt={Logo}
-            />
+            <LogoHeaderIcon />
           </div>
           <div
             className="body-style"
