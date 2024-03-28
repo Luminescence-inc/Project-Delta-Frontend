@@ -47,26 +47,27 @@ export default function BusinessesFilterComponent({
 
   const onFilter = ({ uuid, value, type }: OnfilterDataProps) => {
     if (type === "businessCategory") {
-      const valueExists = filterData.businessCategory?.find(
+      const valueExists = filterData.businessCategoryUuid?.find(
         (item) => item.uuid === uuid
       );
       if (valueExists) {
         // remove the value
-        const updatedValue = filterData.businessCategory?.filter(
+        const updatedValue = filterData.businessCategoryUuid?.filter(
           (item) => item.uuid !== uuid
         );
         setFilterData({
           ...filterData,
-          businessCategory: updatedValue!.length > 0 ? updatedValue : undefined,
+          businessCategoryUuid:
+            updatedValue!.length > 0 ? updatedValue : undefined,
         });
       } else {
         // add the value
-        const updatedValue = filterData.businessCategory
-          ? [...filterData.businessCategory, { uuid: uuid!, value }]
+        const updatedValue = filterData.businessCategoryUuid
+          ? [...filterData.businessCategoryUuid, { uuid: uuid!, value }]
           : [{ uuid: uuid!, value }];
         setFilterData({
           ...filterData,
-          businessCategory: updatedValue,
+          businessCategoryUuid: updatedValue,
         });
       }
     }
@@ -168,6 +169,12 @@ export default function BusinessesFilterComponent({
           ...prevFilterData,
           stateAndProvince: undefined,
         }));
+
+        // @ts-expect-error
+        setFilterData((prevFilterData) => ({
+          ...prevFilterData,
+          city: undefined,
+        }));
       }
     }
   }, [filterData.country]);
@@ -194,7 +201,7 @@ export default function BusinessesFilterComponent({
 
   const resetFilter = () => {
     setFilterData({
-      businessCategory: undefined,
+      businessCategoryUuid: undefined,
       stateAndProvince: undefined,
       city: undefined,
       country: undefined,
@@ -211,11 +218,13 @@ export default function BusinessesFilterComponent({
 
     // apply the filter
     getfilterData(filterData);
+    // hide the filter
+    closeFilter();
   };
 
   return (
     <div className="ntw filter-container">
-      <div className="ntw w-full h-auto flex flex-col items-start justify-start px-20 py-20 filter-card">
+      <div className="ntw mt-10 w-full h-auto flex flex-col items-start justify-start px-20 py-20 filter-card">
         <div className="ntw w-full header flex flex-row items-center justify-between ">
           <h2 className="ntw text-30 font-bold">Search</h2>
           <button
@@ -239,7 +248,7 @@ export default function BusinessesFilterComponent({
               label="Business Category"
               type={"multi"}
               listsData={businessesCategories}
-              selectedListData={filterData?.businessCategory}
+              selectedListData={filterData?.businessCategoryUuid}
               dataType="businessCategory"
               onChange={({ type, uuid, value }) =>
                 onFilter({ type, uuid, value })
@@ -249,9 +258,9 @@ export default function BusinessesFilterComponent({
             />
 
             {/* categories placeholders */}
-            {filterData.businessCategory && (
+            {filterData.businessCategoryUuid && (
               <div className="ntw flex flex-row flex-wrap items-start justify-start mt-20 filter-placeholders gap-3">
-                {filterData.businessCategory?.map((it) => (
+                {filterData.businessCategoryUuid?.map((it) => (
                   <div
                     key={it.uuid}
                     className="ntw px-12 py-5 rounded-30 flex flex-row items-center justify-start placeholder gap-2"

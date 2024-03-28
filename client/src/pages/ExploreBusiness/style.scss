@@ -2,6 +2,51 @@
   background-color: #e2efff;
 }
 
+button.filter-trigger {
+  background: red;
+  .disabled {
+    background: #f5f5f5;
+    cursor: not-allowed;
+  }
+}
+
+.loader {
+  transition: all 0.3s ease;
+  animation: spin 0.5s linear infinite;
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+}
+
+.loadmore-btn {
+  cursor: pointer;
+  background: #ccc;
+  transition: all 0.3s ease;
+
+  &:active {
+    transform: scale(0.9);
+  }
+
+  &:target {
+    transform: scale(1);
+  }
+
+  &.disabled {
+    background: #f5f5f5;
+    cursor: not-allowed;
+  }
+
+  span {
+    color: #000;
+  }
+}
+
 // Business Card Styles
 .business-card-container {
   .business-name {

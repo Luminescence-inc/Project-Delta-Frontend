@@ -9,7 +9,7 @@ type FilterOption = {
 };
 
 export type FilterData = {
-  businessCategory: { uuid?: string; value?: string }[] | undefined;
+  businessCategoryUuid: { uuid?: string; value?: string }[] | undefined;
   stateAndProvince: { uuid: string } | undefined;
   city: { uuid: string } | undefined;
   country: { uuid: string } | undefined;
@@ -39,7 +39,7 @@ export default function BusinessContextProvider({
   const [filteredCities, setFilteredCities] = React.useState<any>([]);
   const [filteredStates, setFilteredStates] = React.useState<any>([]);
   const [filterData, setFilterData] = React.useState<FilterData>({
-    businessCategory: undefined,
+    businessCategoryUuid: undefined,
     stateAndProvince: undefined,
     city: undefined,
     country: undefined,
