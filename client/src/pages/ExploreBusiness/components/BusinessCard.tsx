@@ -386,7 +386,7 @@ type CWProps = {
 function CardWrapper({ children, style, ...props }: CWProps) {
   return (
     <div
-      className="ntw w-full h-auto rounded-10 px-15 py-10"
+      className="ntw w-full h-346 rounded-10 px-15 "
       style={{
         background: "#FFFFFF",
         ...style,
