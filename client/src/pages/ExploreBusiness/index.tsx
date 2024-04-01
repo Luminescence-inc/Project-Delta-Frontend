@@ -11,11 +11,11 @@ import React, { useEffect, useState } from "react";
 import "./style.scss";
 import {
   HeartIcon,
-  LayoutPanelLeft,
-  LayoutPanelTop,
   LoaderCircle,
-  SearchIcon,
 } from "lucide-react";
+import SearchIcon from 'assets/icons/Search-business.svg?react';
+import LayoutPanelTop from 'assets/icons/layout-panel-top.svg?react';
+import LayoutPanelLeft from 'assets/icons/layout-panel-left.svg?react';
 import BusinessCardContainer from "./components/BusinessCard";
 import BusinessesFilterComponent from "components/BusinessFilter";
 import { allBusinessCategories, getListOfBusinsessProfile } from "api/business";
@@ -108,10 +108,10 @@ export default function ExploreBusiness() {
 
   return (
     <div className="ntw w-full h-full">
-      <FlexColStart className="w-full px-30 mt-20">
-        <h1 className="text-30">Explore Businesses</h1>
+      <FlexColStart className="w-full px-30 mt-10">
+        <h1 className="ntw text-30 font-bold">Explore Businesses</h1>
         <p
-          className="text-1 font-light"
+          className="ntw text-15 font-medium"
           style={{
             color: "#9090A7",
           }}
@@ -130,26 +130,25 @@ export default function ExploreBusiness() {
           disabled={loading}
         >
           <FlexRowStartCenter className="w-full">
-            <SearchIcon size={20} color="#9090A7" />
-            <p className="ntw text-15" style={{ color: "#9090A7" }}>
+            <SearchIcon />
+            <p className="ntw text-12 font-normal" style={{ color: "#9090A7" }}>
               Search business
             </p>
           </FlexRowStartCenter>
         </button>
         <button
           onClick={() => setLayout(layout === "col" ? "row" : "col")}
-          className="ntw border-none outline-none layout-switch p-10 rounded-5 cursor-pointer"
+          className="ntw border-none outline-none cursor-pointer"
         >
           <FlexColCenter>
             {layout === "col" ? (
-              <LayoutPanelLeft size={20} fill="#130F26" />
+              <LayoutPanelTop fill="#130F26" />
             ) : (
-              <LayoutPanelTop size={20} fill="#130F26" />
+              <LayoutPanelLeft fill="#130F26" />
             )}
           </FlexColCenter>
         </button>
       </FlexRowCenterBtw>
-      <br />
 
       <div
         className="ntw w-full flex flex-col items-center justify-center"
