@@ -135,7 +135,6 @@ const Card = (props: Icard) => {
       {isCategorySectionAvailable && (
         <div className="card card-section-info-row">
           {props.categories?.map((thisCategory) => {
-
             return (
               <span
                 key={thisCategory.name}
@@ -153,9 +152,9 @@ const Card = (props: Icard) => {
         <div className="card card-section-info-row">
           {props.socials?.map((thisSocials) => {
             return (
-              <a
-                href={thisSocials.url}
-                target="_blank"
+              <div
+                // href={thisSocials.url}
+                // target="_blank"
                 key={thisSocials.name}
                 className="card card-section-info-row card-section-info-row__socials"
                 onClick={() => handleSocialClick(thisSocials.url)}
@@ -171,7 +170,7 @@ const Card = (props: Icard) => {
                 ) : thisSocials.name === "website" ? (
                   <Globe className="icon" />
                 ) : null}
-              </a>
+              </div>
             );
           })}
         </div>

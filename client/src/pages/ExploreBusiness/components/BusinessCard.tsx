@@ -275,7 +275,7 @@ function RowLayoutCard({
         <div
           className="ntw business-card-image w-full h-full rounded-10"
           style={{
-            width: "64px",
+            width: "100px",
             background: "#e2efff",
             backgroundImage: `url(${image ?? defaultBgImg})`,
             backgroundSize: "cover",
