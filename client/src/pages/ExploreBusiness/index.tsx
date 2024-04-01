@@ -120,7 +120,7 @@ export default function ExploreBusiness() {
         </p>
       </FlexColStart>
       {/* search component */}
-      <FlexRowCenterBtw className="w-full px-20 mt-10">
+      <FlexRowCenterBtw className="w-full px-20 mt-5">
         <button
           className={cn(
             "ntw w-full px-15 py-15 rounded-10 border-none font-helvetical filter-trigger",

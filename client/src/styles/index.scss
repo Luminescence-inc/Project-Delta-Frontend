@@ -185,6 +185,16 @@ img {
     height: 25%;
   }
 
+  @for $i from 0 through 1000 {
+    &.h-#{$i} {
+      height: $i + px;
+    }
+
+    &.w-#{$i} {
+      width: $i + px;
+    }
+  }
+
   // text-[size] like tailwindcss text-[size]
   // allow for passing in custom values for eg text-[4px] or text-[2em]
   @for $i from 1 through 30 {
