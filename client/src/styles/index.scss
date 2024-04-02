@@ -295,6 +295,13 @@ img {
     }
   }
 
+  // Letter spacing
+  @for $i from 1 through 100 {
+    &.tracking-#{$i} {
+      letter-spacing: $i + px;
+    }
+  }
+
   &.underline {
     text-decoration: underline;
   }

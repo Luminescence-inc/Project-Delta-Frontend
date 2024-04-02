@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./style.scss";
-import { X } from "lucide-react";
+import CloseIcon from "assets/icons/close-icon.svg?react";
+import SearchIcon from "assets/icons/search-icon-2.svg?react";
 import MultiSearch from "./MultiSearch";
 import { FILTERED_COUNTRY } from "utils/business-profile-utils";
 import { Country, State, City } from "../../../country-sate-city";
@@ -199,6 +200,15 @@ export default function BusinessesFilterComponent({
     }
   }, [filterData.stateAndProvince]);
 
+  // clear err msg
+  useEffect(() => {
+    if (errorMsg) {
+      setTimeout(() => {
+        setErrorMsg("");
+      }, 3000);
+    }
+  }, [errorMsg]);
+
   const resetFilter = () => {
     setFilterData({
       businessCategoryUuid: undefined,
@@ -224,27 +234,28 @@ export default function BusinessesFilterComponent({
 
   return (
     <div className="ntw filter-container">
-      <div className="ntw mt-10 w-full h-auto flex flex-col items-start justify-start px-20 py-20 filter-card">
+      <div className="ntw w-full h-auto flex flex-col items-start justify-start px-20 filter-card">
         <div className="ntw w-full header flex flex-row items-center justify-between ">
-          <h2 className="ntw text-30 font-bold">Search</h2>
+          <h2 className="ntw text-30 font-bold leading-42">Search</h2>
           <button
             className="ntw close-btn border-none outline-none"
             onClick={closeFilter}
           >
-            <X size={25} />
+            <CloseIcon />
           </button>
         </div>
 
         {/* error msg */}
-        <div className="ntw mt-2 w-full flex flex-col items-start justify-start error-cont">
+        <div className="ntw w-full pb-9 flex flex-col items-start justify-start error-cont">
           <span className="ntw text-12 py-10 font-normal">{errorMsg}</span>
         </div>
 
         {/* body */}
-        <div className="ntw flex flex-col w-full h-auto mt-20 body gap-5">
+        <div className="ntw flex flex-col w-full h-auto gap-5">
           {/* SELECT BUSINESS CATEGORY */}
           <div className="ntw w-full flex flex-col items-start flex-start">
             <MultiSearch
+              leftIcon={<SearchIcon fill="#fff" />}
               label="Business Category"
               type={"multi"}
               listsData={businessesCategories}
@@ -317,6 +328,12 @@ export default function BusinessesFilterComponent({
             onChange={({ type, uuid, value }) =>
               onFilter({ type, uuid, value })
             }
+            onClick={() => {
+              if (filterData?.country === undefined) {
+                setErrorMsg("Please select a country first");
+                return;
+              }
+            }}
             disableTrigger={typeof filterData?.country === "undefined"}
             activePanel={activePanel}
             setActivePanel={setActivePanel}
@@ -333,6 +350,12 @@ export default function BusinessesFilterComponent({
             onChange={({ type, uuid, value }) =>
               onFilter({ type, uuid, value })
             }
+            onClick={() => {
+              if (filterData?.country === undefined) {
+                setErrorMsg("Please select state and province first");
+                return;
+              }
+            }}
             disableTrigger={typeof filterData?.stateAndProvince === "undefined"}
             activePanel={activePanel}
             setActivePanel={setActivePanel}
@@ -341,16 +364,20 @@ export default function BusinessesFilterComponent({
           {/* CONTROL BUTTON */}
           <div className="ntw w-full flex items-center justify-between mt-20 filter-controls">
             <button
-              className="ntw reset-btn px-30 py-20 rounded-5 text-14"
+              className="ntw reset-btn w-120 h-55 rounded-6"
               onClick={resetFilter}
             >
-              Reset
+              <span className="ntw text-14 leading-15 font-medium font-hn-medium">
+                Reset
+              </span>
             </button>
             <button
-              className="ntw search-btn px-40 py-20 rounded-5 text-14"
+              className="ntw search-btn w-120 h-55 rounded-6"
               onClick={applyFilter}
             >
-              Search
+              <span className="ntw text-14 leading-15 font-medium font-hn-medium">
+                Search
+              </span>
             </button>
           </div>
         </div>

@@ -1,12 +1,10 @@
 import React from "react";
 import "./style.scss";
-import { ChevronDown, Search } from "lucide-react";
+import ChevronDown from "assets/icons/chevron-down.svg?react";
 import { cn } from "utils";
 
 type Props = {
   rightIcon?: React.ReactNode;
-  includeRightIcon?: boolean;
-  includeLeftIcon?: boolean;
   leftIcon?: React.ReactNode;
   label?: string;
   type?: "multi" | "single";
@@ -17,6 +15,7 @@ type Props = {
     | undefined
     | null;
   onChange?: (props: { uuid?: string; value?: string; type?: string }) => void;
+  onClick?: () => void;
   dataType?: string;
   disableTrigger?: boolean;
   activePanel: string;
@@ -26,8 +25,6 @@ type Props = {
 
 export default function MultiSearch({
   rightIcon,
-  includeLeftIcon,
-  includeRightIcon,
   leftIcon,
   label,
   type,
@@ -39,6 +36,7 @@ export default function MultiSearch({
   activePanel,
   setActivePanel,
   placeholder,
+  onClick,
 }: Props) {
   //   const [updatedSelectedListData, setUpdatedSelectedListsData] =
   // React.useState<typeof selectedListData>();
@@ -48,8 +46,7 @@ export default function MultiSearch({
   >(listsData!);
 
   label = label ?? "Label here..";
-  includeRightIcon = true;
-  rightIcon = <ChevronDown size={25} color="#777" />;
+  rightIcon = <ChevronDown />;
 
   const getActiveList = React.useCallback(
     (uuid: string, type: string) => {
@@ -92,23 +89,26 @@ export default function MultiSearch({
 
   return (
     <div className="ntw w-full multisearch-comp flex flex-col items-start justify-start gap-2 relative">
-      <label className="ntw text-15 font-normal">{label}</label>
+      <label className="ntw text-14 font-normal font-hn-light leading-19">
+        {label}
+      </label>
       <button
         className={cn(
-          "ntw trigger  w-full flex flex-row items-start justify-start px-15 py-12 rounded-5 cursor-pointer gap-2",
+          "ntw trigger w-full h-46 flex flex-row items-center justify-start p-16 rounded-5 cursor-pointer gap-10",
           disableTrigger ? "disabled" : ""
         )}
-        onClick={() =>
+        onClick={() => {
           setActivePanel &&
-          setActivePanel(activePanel.length > 0 ? "" : dataType!)
-        }
-        disabled={disableTrigger}
+            setActivePanel(activePanel.length > 0 ? "" : dataType!);
+          onClick && onClick();
+        }}
+        // disabled={disableTrigger}
       >
-        {includeLeftIcon && (leftIcon ?? null)}
+        {leftIcon ?? null}
         <div className="ntw w-full flex items-start justify-start">
           <span
             className={cn(
-              "ntw text-15 py-4 placeholder",
+              "ntw text-10 leading-11 font-normal font-hn-light tracking-2 placeholder",
               typeof activeSelectedItem?.uuid !== "undefined" ? "value" : ""
             )}
           >
@@ -117,82 +117,86 @@ export default function MultiSearch({
               : placeholder ?? "Search for businesses"}
           </span>
         </div>
-        {includeRightIcon && (rightIcon ?? null)}
+        {rightIcon ?? null}
       </button>
 
       {/* floating panel */}
-      <div
-        className={cn(
-          "ntw w-full h-auto floating-panel flex flex-col items-start justify-start absolute top-90 rounded-10",
-          activePanel === dataType ? "py-20 px-20" : ""
-        )}
-        style={{
-          maxHeight: "250px",
-          overflowY: "auto",
-          height: activePanel === dataType ? "auto" : "0px",
-        }}
-      >
-        <input
-          type="text"
-          className="ntw w-full px-3 py-2 outline-none border-none text-15"
-          placeholder="Search for businesses"
-          value={searchValue}
-          onChange={(e) => setSearchValue(e.target.value)}
-        />
-        <br />
-        {/* lists */}
-        <div className="ntw w-full flex flex-col items-start justify-start gap-2">
-          {type === "multi"
-            ? filterData && filterData.length > 0
+      {!disableTrigger && (
+        <div
+          className={cn(
+            "ntw w-full h-auto floating-panel flex flex-col items-start justify-start absolute top-90 rounded-10",
+            activePanel === dataType ? "py-20 px-20" : ""
+          )}
+          style={{
+            maxHeight: "250px",
+            overflowY: "auto",
+            height: activePanel === dataType ? "auto" : "0px",
+          }}
+        >
+          <input
+            type="text"
+            className="ntw w-full px-3 py-2 outline-none border-none text-15"
+            placeholder="Search for businesses"
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+          />
+          <br />
+          {/* lists */}
+          <div className="ntw w-full flex flex-col items-start justify-start gap-2">
+            {type === "multi"
+              ? filterData && filterData.length > 0
+                ? filterData.map((l) => (
+                    <li
+                      className="ntw flex items-center justify-start gap-2"
+                      key={l.uuid}
+                    >
+                      <input
+                        type="checkbox"
+                        name=""
+                        id=""
+                        value={l.uuid}
+                        checked={
+                          getActiveList(l?.uuid!, dataType!) === l.uuid ?? false
+                        }
+                        onChange={() => {
+                          onChange?.({
+                            uuid: l.uuid,
+                            value: l.value,
+                            type: dataType,
+                          });
+                        }}
+                      />
+                      <span className="ntw text-15 font-normal">{l.value}</span>
+                    </li>
+                  ))
+                : null
+              : filterData && filterData.length > 0
               ? filterData.map((l) => (
-                  <li
-                    className="ntw flex items-center justify-start gap-2"
+                  <button
                     key={l.uuid}
+                    className={cn(
+                      "ntw single-list w-full flex items-center justify-start gap-2 border-none outline-none px-10 py-5 rounded-5 cursor-pointer",
+                      getActiveList(l.uuid!, dataType!) === l.uuid
+                        ? "active"
+                        : ""
+                    )}
+                    onClick={() => {
+                      // close panel
+                      onChange?.({
+                        uuid: l.uuid,
+                        value: l.value,
+                        type: dataType,
+                      });
+                      setActivePanel("");
+                    }}
                   >
-                    <input
-                      type="checkbox"
-                      name=""
-                      id=""
-                      value={l.uuid}
-                      checked={
-                        getActiveList(l?.uuid!, dataType!) === l.uuid ?? false
-                      }
-                      onChange={() => {
-                        onChange?.({
-                          uuid: l.uuid,
-                          value: l.value,
-                          type: dataType,
-                        });
-                      }}
-                    />
                     <span className="ntw text-15 font-normal">{l.value}</span>
-                  </li>
+                  </button>
                 ))
-              : null
-            : filterData && filterData.length > 0
-            ? filterData.map((l) => (
-                <button
-                  key={l.uuid}
-                  className={cn(
-                    "ntw single-list w-full flex items-center justify-start gap-2 border-none outline-none px-10 py-5 rounded-5 cursor-pointer",
-                    getActiveList(l.uuid!, dataType!) === l.uuid ? "active" : ""
-                  )}
-                  onClick={() => {
-                    // close panel
-                    onChange?.({
-                      uuid: l.uuid,
-                      value: l.value,
-                      type: dataType,
-                    });
-                    setActivePanel("");
-                  }}
-                >
-                  <span className="ntw text-15 font-normal">{l.value}</span>
-                </button>
-              ))
-            : null}
+              : null}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
