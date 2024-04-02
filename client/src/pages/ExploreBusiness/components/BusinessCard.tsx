@@ -4,13 +4,16 @@ import {
   FlexColStart,
   FlexRowCenter,
   FlexRowCenterBtw,
+  FlexRowEnd,
   FlexRowStart,
   FlexRowStartCenter,
 } from "components/Flex";
 import defaultBgImg from "assets/images/default-img.jpeg";
-import { MapPin, Phone } from "lucide-react";
+import MapPin from "assets/icons/location-marker.svg?react";
+import Phone from "assets/icons/phone.svg?react";
 import { IOption, UserBusinessList } from "types/business";
 import { CloudinaryConfig } from "config";
+import { cn } from "utils";
 
 type DaysOfOperation = {
   day: string | null;
@@ -154,7 +157,11 @@ function ColLayoutCard({
   const hasBusinessClosed = daysOfOps ? isOpened(daysOfOps) : null;
 
   return (
-    <CardWrapper key={_key}>
+    <CardWrapper
+      key={_key}
+      style={{ maxHeight: "250px" }}
+      className="px-5 py-5"
+    >
       <div
         className="ntw business-card-image w-full h-auto rounded-10"
         style={{
@@ -167,7 +174,9 @@ function ColLayoutCard({
         }}
       ></div>
       <FlexColStart className="w-full px-4 py-2 gap-0">
-        <h2 className="ntw text-18 business-name font-helvetical">{name}</h2>
+        <h2 className="ntw text-15 font-bold business-name font-helvetical leading-18">
+          {name.length > 20 ? name.slice(0, 20) + "..." : name}
+        </h2>
 
         {/* categories */}
         <FlexRowCenterBtw className="w-auto gap-2">
@@ -175,7 +184,7 @@ function ColLayoutCard({
             categories.map((c) => {
               return (
                 <FlexRowCenter className="gap-2" key={c}>
-                  <span className="ntw text-12 font-light category-name">
+                  <span className="ntw text-11 leading-13 font-normal category-name">
                     {c}
                   </span>
                   {categories[categories.length - 1] !== c && (
@@ -194,20 +203,20 @@ function ColLayoutCard({
         </FlexRowCenterBtw>
 
         {/* location */}
-        <FlexRowStartCenter className="w-auto gap-2 mt-3">
-          <MapPin size={16} color="#9090A7" />
-          <span className="ntw text-13 font-medium location-text">
+        <FlexRowStartCenter className="w-auto gap-5 h-16 py-15">
+          <MapPin />
+          <span className="ntw text-13 font-normal location-text leading-15">
             {location}
           </span>
         </FlexRowStartCenter>
 
         {/* opening time */}
-        <FlexRowCenterBtw className="w-full gap-0 mt-0">
-          <FlexRowCenter className="w-auto gap-2">
+        <FlexRowCenterBtw className="w-full">
+          <FlexRowCenter className="w-auto gap-10">
             {hasBusinessClosed && hasBusinessClosed.isOpened ? (
               <>
                 <span
-                  className="ntw text-11 font-medium category-name"
+                  className="ntw text-11 font-normal leading-13 category-name"
                   style={{
                     color: "#17BEBB",
                   }}
@@ -224,7 +233,7 @@ function ColLayoutCard({
                 </span>
 
                 <span
-                  className="ntw text-11 font-normal category-name"
+                  className="ntw text-11 font-normal leading-13 category-name"
                   style={{
                     color: "#000",
                   }}
@@ -234,9 +243,9 @@ function ColLayoutCard({
               </>
             ) : (
               <span
-                className="ntw text-11 font-medium category-name"
+                className="ntw text-11 font-normal leading-13 category-name"
                 style={{
-                  color: "#ef0a0a",
+                  color: "#FF9F9F",
                 }}
               >
                 Closed
@@ -244,13 +253,17 @@ function ColLayoutCard({
             )}
           </FlexRowCenter>
 
-          <a
-            href={`tel:${phone}`}
-            className="ntw scale-8 w-auto px-15 py-9 rounded-30 border-none outline-none businesss-call-line"
-          >
-            <FlexRowCenter className="w-full">
-              <Phone size={15} />
-              <span className="text-11 font-medium">Call me</span>
+          <a href={`tel:${phone}`} className="ntw">
+            <FlexRowCenter
+              className=" businesss-call-line w-auto w-81 h-25 px-5 py-10 rounded-100 gap-5"
+              style={{
+                borderRadius: "100px",
+              }}
+            >
+              <Phone />
+              <span className="ntw text-12 font-normal leading-14">
+                Call me
+              </span>
             </FlexRowCenter>
           </a>
         </FlexRowCenterBtw>
@@ -270,22 +283,30 @@ function RowLayoutCard({
 }: BusinessCardProps) {
   const hasBusinessClosed = daysOfOps ? isOpened(daysOfOps) : null;
   return (
-    <CardWrapper key={_key}>
-      <FlexRowStart className="w-full">
+    <CardWrapper
+      key={_key}
+      style={{
+        maxHeight: "108px",
+      }}
+    >
+      <FlexRowStart className="w-full px-5 py-5">
         <div
-          className="ntw business-card-image w-full h-full rounded-10"
+          className="ntw w-full business-card-image rounded-10"
           style={{
-            width: "100px",
+            width: "64px",
+            maxWidth: "64px",
             background: "#e2efff",
             backgroundImage: `url(${image ?? defaultBgImg})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
-            height: "120px",
+            height: "95px",
           }}
         ></div>
-        <FlexColStart className="w-full px-4 py-10 gap-0">
-          <h2 className="ntw text-18 business-name font-helvetical">{name}</h2>
+        <FlexColStart className=" px-5 gap-0">
+          <h2 className="ntw text-15 font-bold business-name font-helvetical leading-18">
+            {name.length > 20 ? name.slice(0, 20) + "..." : name}
+          </h2>
 
           {/* categories */}
           <FlexRowCenterBtw className="w-auto gap-2">
@@ -293,7 +314,7 @@ function RowLayoutCard({
               categories.map((c) => {
                 return (
                   <FlexRowCenter className="gap-2" key={c}>
-                    <span className="ntw text-12 font-light category-name">
+                    <span className="ntw text-11 leading-13 font-normal category-name">
                       {c}
                     </span>
                     {categories[categories.length - 1] !== c && (
@@ -312,20 +333,20 @@ function RowLayoutCard({
           </FlexRowCenterBtw>
 
           {/* location */}
-          <FlexRowStartCenter className="w-auto gap-2">
-            <MapPin size={16} color="#9090A7" />
-            <span className="ntw text-13 font-medium location-text">
+          <FlexRowStartCenter className="w-auto gap-5 h-16 mt-4">
+            <MapPin />
+            <span className="ntw text-13 font-normal location-text leading-15">
               {location}
             </span>
           </FlexRowStartCenter>
 
           {/* opening time */}
-          <FlexRowCenterBtw className="w-full gap-1">
-            <FlexRowCenter className="w-auto gap-2">
+          <FlexRowCenterBtw className="w-270">
+            <FlexRowCenter className="w-auto gap-10">
               {hasBusinessClosed && hasBusinessClosed.isOpened ? (
                 <>
                   <span
-                    className="ntw text-11 font-medium category-name"
+                    className="ntw text-11 font-normal leading-13 category-name"
                     style={{
                       color: "#17BEBB",
                     }}
@@ -342,7 +363,7 @@ function RowLayoutCard({
                   </span>
 
                   <span
-                    className="ntw text-11 font-normal category-name"
+                    className="ntw text-11 font-normal leading-13 category-name"
                     style={{
                       color: "#000",
                     }}
@@ -352,9 +373,9 @@ function RowLayoutCard({
                 </>
               ) : (
                 <span
-                  className="ntw text-11 font-medium category-name"
+                  className="ntw text-11 font-normal leading-13 category-name"
                   style={{
-                    color: "#ef0a0a",
+                    color: "#FF9F9F",
                   }}
                 >
                   Closed
@@ -362,15 +383,18 @@ function RowLayoutCard({
               )}
             </FlexRowCenter>
 
-            <a
-              href={`tel:${phone}`}
-              className="ntw scale-8 w-auto px-15 py-9 rounded-30 border-none outline-none businesss-call-line"
-            >
-              <FlexRowCenter className="w-full">
-                <Phone size={15} />
-                <span className="text-11 font-medium">Call me</span>
-              </FlexRowCenter>
-            </a>
+            <FlexRowEnd className="w-auto">
+              <a href={`tel:${phone}`} className="ntw">
+                <FlexRowCenter
+                  className=" businesss-call-line w-auto w-35 h-25 px-5 py-10 rounded-100 gap-5"
+                  style={{
+                    borderRadius: "100px",
+                  }}
+                >
+                  <Phone />
+                </FlexRowCenter>
+              </a>
+            </FlexRowEnd>
           </FlexRowCenterBtw>
         </FlexColStart>
       </FlexRowStart>
@@ -381,12 +405,13 @@ function RowLayoutCard({
 type CWProps = {
   children: React.ReactNode;
   style?: React.CSSProperties;
+  className?: React.ComponentProps<"div">["className"];
 };
 
-function CardWrapper({ children, style, ...props }: CWProps) {
+function CardWrapper({ children, style, className, ...props }: CWProps) {
   return (
     <div
-      className="ntw w-full h-346 rounded-10 px-15 "
+      className={cn("ntw w-full rounded-10 ", className)}
       style={{
         background: "#FFFFFF",
         ...style,

@@ -136,24 +136,9 @@ img {
   }
 
   // dynamic gap
-  $gap-values: (
-    1: 0.25rem,
-    2: 0.5rem,
-    3: 0.75rem,
-    4: 1rem,
-    5: 1.25rem,
-    6: 1.5rem,
-    7: 1.75rem,
-    8: 2rem,
-    9: 2.25rem,
-    10: 2.5rem,
-    11: 2.75rem,
-    12: 3rem,
-  );
-
-  @each $key, $value in $gap-values {
-    &.gap-#{$key} {
-      gap: $value;
+  @for $i from 0 through 100 {
+    &.gap-#{$i} {
+      gap: $i + px;
     }
   }
 
@@ -320,6 +305,13 @@ img {
 
   &.text-black {
     color: var(--black-color);
+  }
+
+  // Lineheight
+  @for $i from 1 through 100 {
+    &.leading-#{$i} {
+      line-height: $i / 10;
+    }
   }
 
   &.bg-white {
