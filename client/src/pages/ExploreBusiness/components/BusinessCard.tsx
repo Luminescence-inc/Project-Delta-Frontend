@@ -174,7 +174,7 @@ function ColLayoutCard({
         }}
       ></div>
       <FlexColStart className="w-full px-4 py-2 gap-0">
-        <h2 className="ntw text-15 font-bold business-name font-helvetical leading-18">
+        <h2 className="ntw text-15 font-bold font-hn-bold business-name leading-18">
           {name.length > 20 ? name.slice(0, 20) + "..." : name}
         </h2>
 
@@ -184,7 +184,7 @@ function ColLayoutCard({
             categories.map((c) => {
               return (
                 <FlexRowCenter className="gap-2" key={c}>
-                  <span className="ntw text-11 leading-13 font-normal category-name">
+                  <span className="ntw text-11 leading-13 font-normal font-hn-light category-name">
                     {c}
                   </span>
                   {categories[categories.length - 1] !== c && (
@@ -205,7 +205,7 @@ function ColLayoutCard({
         {/* location */}
         <FlexRowStartCenter className="w-auto gap-5 h-16 py-15">
           <MapPin />
-          <span className="ntw text-13 font-normal location-text leading-15">
+          <span className="ntw text-13 font-normal font-hn-light location-text leading-15">
             {location}
           </span>
         </FlexRowStartCenter>
@@ -216,7 +216,7 @@ function ColLayoutCard({
             {hasBusinessClosed && hasBusinessClosed.isOpened ? (
               <>
                 <span
-                  className="ntw text-11 font-normal leading-13 category-name"
+                  className="ntw text-11 font-normal font-hn-light leading-13 category-name"
                   style={{
                     color: "#17BEBB",
                   }}
@@ -243,7 +243,7 @@ function ColLayoutCard({
               </>
             ) : (
               <span
-                className="ntw text-11 font-normal leading-13 category-name"
+                className="ntw text-11 font-normal font-hn-light leading-13 category-name"
                 style={{
                   color: "#FF9F9F",
                 }}
@@ -261,7 +261,7 @@ function ColLayoutCard({
               }}
             >
               <Phone />
-              <span className="ntw text-12 font-normal leading-14">
+              <span className="ntw text-12 font-normal font-hn-light leading-14">
                 Call me
               </span>
             </FlexRowCenter>
@@ -304,7 +304,7 @@ function RowLayoutCard({
           }}
         ></div>
         <FlexColStart className=" px-5 gap-0">
-          <h2 className="ntw text-15 font-bold business-name font-helvetical leading-18">
+          <h2 className="ntw text-15 font-bold font-hn-bold business-name leading-18">
             {name.length > 20 ? name.slice(0, 20) + "..." : name}
           </h2>
 
@@ -314,7 +314,7 @@ function RowLayoutCard({
               categories.map((c) => {
                 return (
                   <FlexRowCenter className="gap-2" key={c}>
-                    <span className="ntw text-11 leading-13 font-normal category-name">
+                    <span className="ntw text-11 leading-13 font-normal font-hn-light category-name">
                       {c}
                     </span>
                     {categories[categories.length - 1] !== c && (
@@ -335,7 +335,7 @@ function RowLayoutCard({
           {/* location */}
           <FlexRowStartCenter className="w-auto gap-5 h-16 mt-4">
             <MapPin />
-            <span className="ntw text-13 font-normal location-text leading-15">
+            <span className="ntw text-13 font-normal font-hn-light location-text leading-15">
               {location}
             </span>
           </FlexRowStartCenter>
@@ -346,7 +346,7 @@ function RowLayoutCard({
               {hasBusinessClosed && hasBusinessClosed.isOpened ? (
                 <>
                   <span
-                    className="ntw text-11 font-normal leading-13 category-name"
+                    className="ntw text-11 font-normal font-hn-light leading-13 category-name"
                     style={{
                       color: "#17BEBB",
                     }}
@@ -363,7 +363,7 @@ function RowLayoutCard({
                   </span>
 
                   <span
-                    className="ntw text-11 font-normal leading-13 category-name"
+                    className="ntw text-11 font-normal font-hn-light leading-13 category-name"
                     style={{
                       color: "#000",
                     }}
@@ -373,7 +373,7 @@ function RowLayoutCard({
                 </>
               ) : (
                 <span
-                  className="ntw text-11 font-normal leading-13 category-name"
+                  className="ntw text-11 font-normal font-hn-light leading-13 category-name"
                   style={{
                     color: "#FF9F9F",
                   }}

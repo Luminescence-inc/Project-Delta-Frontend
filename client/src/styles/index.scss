@@ -12,6 +12,21 @@
   --light-grey: #f9f9f9;
 }
 
+@font-face {
+  font-family: "HelveticaNeue-Bold";
+  src: url("../assets/fonts/HelveticaNeueBold.otf");
+}
+
+@font-face {
+  font-family: "HelveticaNeue-Light";
+  src: url("../assets/fonts/HelveticaNeueLight.otf");
+}
+
+@font-face {
+  font-family: "HelveticaNeue-Medium";
+  src: url("../assets/fonts/HelveticaNeueMedium.otf");
+}
+
 #app-container {
   display: flex;
   flex-direction: column;
@@ -264,6 +279,19 @@ img {
   @each $key, $value in $font-weights {
     &.font-#{$key} {
       font-weight: $value;
+    }
+  }
+
+  // Custom Local Fonts families
+  $font-families: (
+    hn-bold: "HelveticaNeue-Bold",
+    hn-light: "HelveticaNeue-Light",
+    hn-medium: "HelveticaNeue-Medium",
+  );
+
+  @each $key, $value in $font-families {
+    &.font-#{$key} {
+      font-family: $value;
     }
   }
 
