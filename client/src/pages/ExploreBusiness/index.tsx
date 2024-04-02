@@ -9,13 +9,10 @@ import {
 } from "components/Flex";
 import React, { useEffect, useState } from "react";
 import "./style.scss";
-import {
-  HeartIcon,
-  LoaderCircle,
-} from "lucide-react";
-import SearchIcon from 'assets/icons/Search-business.svg?react';
-import LayoutPanelTop from 'assets/icons/layout-panel-top.svg?react';
-import LayoutPanelLeft from 'assets/icons/layout-panel-left.svg?react';
+import { HeartIcon, LoaderCircle } from "lucide-react";
+import SearchIcon from "assets/icons/Search-business.svg?react";
+import LayoutPanelTop from "assets/icons/layout-panel-top.svg?react";
+import LayoutPanelLeft from "assets/icons/layout-panel-left.svg?react";
 import BusinessCardContainer from "./components/BusinessCard";
 import BusinessesFilterComponent from "components/BusinessFilter";
 import { allBusinessCategories, getListOfBusinsessProfile } from "api/business";
@@ -88,7 +85,6 @@ export default function ExploreBusiness() {
     );
     const data = result.data?.data.businessProfiles;
 
-    await sleep(1);
     setLoading(false);
 
     // remove any duplicates
