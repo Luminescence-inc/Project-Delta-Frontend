@@ -85,7 +85,7 @@ export default function BusinessCardContainer({
   };
 
   return (
-    <FlexColStart className="w-full px-20 business-card-container">
+    <FlexColStart className="w-full px-20 business-card-container gap-20">
       {data?.length > 0
         ? data.map((bd) => {
             const daysOfOperation = constructDOP(
