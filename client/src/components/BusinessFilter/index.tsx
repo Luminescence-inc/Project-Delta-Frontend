@@ -234,7 +234,7 @@ export default function BusinessesFilterComponent({
 
   return (
     <div className="ntw filter-container">
-      <div className="ntw w-full h-auto flex flex-col items-start justify-start px-20 filter-card">
+      <div className="ntw w-full flex flex-col items-start justify-start px-20 filter-card">
         <div className="ntw w-full header flex flex-row items-center justify-between ">
           <h2 className="ntw text-30 font-bold leading-42">Search</h2>
           <button
@@ -294,7 +294,7 @@ export default function BusinessesFilterComponent({
                         });
                       }}
                     >
-                      <X size={15} />
+                      <CloseIcon />
                     </button>
                   </div>
                 ))}
