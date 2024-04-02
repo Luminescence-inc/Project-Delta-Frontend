@@ -294,7 +294,7 @@ function RowLayoutCard({
           className="ntw w-full business-card-image rounded-10"
           style={{
             width: "64px",
-            maxWidth: "64px",
+            minWidth: "64px",
             background: "#e2efff",
             backgroundImage: `url(${image ?? defaultBgImg})`,
             backgroundSize: "cover",
@@ -303,7 +303,7 @@ function RowLayoutCard({
             height: "95px",
           }}
         ></div>
-        <FlexColStart className=" px-5 gap-0">
+        <FlexColStart className="w-full px-5 gap-0">
           <h2 className="ntw text-15 font-bold font-hn-bold business-name leading-18">
             {name.length > 20 ? name.slice(0, 20) + "..." : name}
           </h2>
@@ -341,7 +341,7 @@ function RowLayoutCard({
           </FlexRowStartCenter>
 
           {/* opening time */}
-          <FlexRowCenterBtw className="w-270">
+          <FlexRowCenterBtw className="w-full">
             <FlexRowCenter className="w-auto gap-10">
               {hasBusinessClosed && hasBusinessClosed.isOpened ? (
                 <>
