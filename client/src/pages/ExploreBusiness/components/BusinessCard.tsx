@@ -255,13 +255,13 @@ function ColLayoutCard({
 
           <a href={`tel:${phone}`} className="ntw">
             <FlexRowCenter
-              className=" businesss-call-line w-auto w-81 h-25 px-5 py-10 rounded-100 gap-5"
+              className=" businesss-call-line w-auto w-81 h-25 px-5 rounded-100 gap-5"
               style={{
                 borderRadius: "100px",
               }}
             >
               <Phone />
-              <span className="ntw text-12 font-normal font-hn-light leading-14">
+              <span className="ntw text-12 font-bold font-hn-light leading-14 mt-1">
                 Call me
               </span>
             </FlexRowCenter>
