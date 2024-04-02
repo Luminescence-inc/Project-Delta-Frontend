@@ -23,6 +23,7 @@ import BusinessContextProvider from "context/BusinessCtx";
 import ExploreBusiness from "pages/ExploreBusiness";
 import "./index.css";
 import BusinessesFilterComponent from "components/BusinessFilter";
+import BusinessDetails from "pages/BusinessDetails";
 
 function App() {
   const { pathname } = useLocation();
@@ -61,6 +62,10 @@ function App() {
               element={<DiscoverBusinesses />}
             />
             <Route path="/explore-businesses" element={<ExploreBusiness />} />
+            <Route
+              path="/business-details/:business_id"
+              element={<BusinessDetails />}
+            />
             <Route
               path="/filter-comp"
               element={<BusinessesFilterComponent />}
