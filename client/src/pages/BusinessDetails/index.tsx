@@ -3,19 +3,71 @@ import {
   FlexColStart,
   FlexRowCenter,
   FlexRowCenterBtw,
+  FlexRowEnd,
   FlexRowStart,
+  FlexRowStartBtw,
   FlexRowStartCenter,
 } from "components/Flex";
 import ChevronLeftIcon from "assets/icons/chevron-left.svg?react";
+import ChevronDownIcon from "assets/icons/chevron-down-2.svg?react";
 import LocationMarkerIcon from "assets/icons/location-marker-2.svg?react";
 import PhoneIcon from "assets/icons/phone.svg?react";
 import MailBoxIcon from "assets/icons/mailbox.svg?react";
+import CalendarIcon from "assets/icons/calendar.svg?react";
 import defaultImg from "assets/images/default-img.jpeg";
 import "./details.scss";
+import { cn, determineBusOpTime } from "utils";
 
 const categories = ["Food", "Groceries", "Fashion"];
+const daysOfWeek = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
+const daysOfOps = [
+  {
+    day: "Monday",
+    ot: "8:00",
+    ct: "6:00",
+  },
+  {
+    day: "Wednesday",
+    ot: "8:00",
+    ct: "10:00",
+  },
+];
 
 export default function BusinessDetails() {
+  const [calendarOpened, setCalendarOpened] = React.useState(false);
+  const hasBusinessClosed = daysOfOps ? determineBusOpTime(daysOfOps) : null;
+
+  const prefixWithZero = (time: string) => {
+    return time.split(":")[0].length > 1 ? time : "0" + time;
+  };
+
+  const getOpeningHours = () => {
+    const calendar: { day: string; ot: string; ct: string }[] = [];
+    daysOfWeek.forEach((d) => {
+      const day = daysOfOps.find(
+        (day) => day.day.toLowerCase() === d.toLowerCase()
+      );
+      if (day) {
+        calendar.push({
+          day: d,
+          ot: prefixWithZero(day.ot) + " AM",
+          ct: prefixWithZero(day.ct) + " PM",
+        });
+      }
+    });
+    return calendar;
+  };
+  const openingHoursCalendar = getOpeningHours();
+  const getCurrentDay = daysOfWeek[new Date().getDay()];
+
   return (
     <FlexColStart className="w-full h-screen px-28 business-details-container">
       {/* breadcrumb */}
@@ -106,6 +158,116 @@ export default function BusinessDetails() {
             icon={<MailBoxIcon />}
           />
         </FlexColStart>
+      </FlexColStart>
+
+      {/* opening and closing time */}
+      <FlexRowCenter className="w-auto gap-5 mt-10">
+        {hasBusinessClosed && hasBusinessClosed.isOpened ? (
+          <>
+            <span
+              className="ntw text-11 font-normal font-hn-light leading-13 category-name"
+              style={{
+                color: "#17BEBB",
+              }}
+            >
+              Open
+            </span>
+            <span
+              className="ntw text-6"
+              style={{
+                color: "#000",
+              }}
+            >
+              ⏺
+            </span>
+
+            <span
+              className="ntw text-11 font-normal font-hn-light leading-13"
+              style={{
+                color: "#000",
+              }}
+            >
+              Closes {hasBusinessClosed.closingTime}pm
+            </span>
+          </>
+        ) : (
+          <span
+            className="ntw text-11 font-normal font-hn-light leading-13 category-name"
+            style={{
+              color: "#FF9F9F",
+            }}
+          >
+            Closed
+          </span>
+        )}
+      </FlexRowCenter>
+
+      {/* opening hours dropdown */}
+      <FlexColStart className="w-full mt-10 opening-hours-dd rounded-5 max-h-271">
+        <button
+          className="ntw w-full h-37 outline-none border-none rounded-5 opening-hours-dd-trigger flex items-center justify-between px-20 bg-none"
+          onClick={() => {
+            setCalendarOpened(!calendarOpened);
+          }}
+        >
+          <FlexRowStartCenter className="w-auto">
+            <CalendarIcon />
+            <span className="ntw text-11 font-bold font-hn-medium leading-10">
+              View opening hours
+            </span>
+          </FlexRowStartCenter>
+          <ChevronDownIcon
+            style={{
+              transform: calendarOpened ? "rotate(180deg)" : "rotate(0deg)",
+            }}
+          />
+        </button>
+        {/* grid */}
+        <div
+          className={cn(
+            "ntw w-full calendar-grid overflow-hidden",
+            calendarOpened ? "px-20 py-10" : "h-0"
+          )}
+        >
+          {openingHoursCalendar.map((day) => {
+            return (
+              <>
+                <div className="ntw w-full daysOfWeek">
+                  <FlexRowStartBtw className="w-full">
+                    <span
+                      className="ntw text-12 font-bold font-hn-light leading-14"
+                      style={{
+                        color: getCurrentDay === day.day ? "#17BEBB" : "#000",
+                      }}
+                    >
+                      {day.day}
+                    </span>
+                    <span
+                      className="ntw text-6"
+                      style={{
+                        color: "#17BEBB",
+                      }}
+                    >
+                      ⏺
+                    </span>
+                  </FlexRowStartBtw>
+                </div>
+                <div className="ntw w-full time">
+                  <FlexRowEnd className="w-full">
+                    <span
+                      className="ntw text-12 font-bold font-hn-light leading-14 mt-4"
+                      style={{
+                        color: getCurrentDay === day.day ? "#17BEBB" : "#000",
+                      }}
+                    >
+                      {day.ot} - {day.ct}
+                    </span>
+                  </FlexRowEnd>
+                </div>
+              </>
+            );
+          })}
+        </div>
       </FlexColStart>
     </FlexColStart>
   );

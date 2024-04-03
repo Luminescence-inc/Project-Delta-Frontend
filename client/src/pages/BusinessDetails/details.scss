@@ -6,4 +6,22 @@
   .readmore-trigger {
     color: #17bebb;
   }
+
+  .opening-hours-dd {
+    background: #fff;
+  }
+
+  //   calendar grid
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 10px;
+
+    .daysOfWeek {
+      grid-column: span 2;
+    }
+    .time {
+      grid-column: span 2;
+    }
+  }
 }

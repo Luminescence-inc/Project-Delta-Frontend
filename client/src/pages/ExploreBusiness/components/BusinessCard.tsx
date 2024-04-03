@@ -13,47 +13,7 @@ import MapPin from "assets/icons/location-marker.svg?react";
 import Phone from "assets/icons/phone.svg?react";
 import { IOption, UserBusinessList } from "types/business";
 import { CloudinaryConfig } from "config";
-import { cn } from "utils";
-
-type DaysOfOperation = {
-  day: string | null;
-  ot: string | null; // open time
-  ct: string | null; // closing time
-};
-
-// determine whether a business is opened or close.
-// if it open, return true and closing time for that day,
-// otherwise false and null for that day
-
-const isOpened = (daysOfOperation: DaysOfOperation[]) => {
-  const daysOfWeeks = [
-    "sunday",
-    "monday",
-    "tuesday",
-    "wednesday",
-    "thursday",
-    "friday",
-    "saturday",
-  ];
-  const today = new Date().getDay();
-  const day = daysOfOperation.find(
-    (d) => d.day!.toLowerCase() === daysOfWeeks[today]
-  );
-  if (day) {
-    const currentTime = Math.abs(new Date().getHours() - 12);
-    const closingTime = parseInt(day.ct!.split(":")[0]);
-    return currentTime < closingTime
-      ? {
-          isOpened: true,
-          closingTime: day.ct,
-        }
-      : {
-          isOpened: false,
-          closingTime: null,
-        };
-  }
-  return { isOpened: false, closingTime: null };
-};
+import { cn, determineBusOpTime } from "utils";
 
 type Props = {
   layout: "col" | "row";
@@ -154,7 +114,7 @@ function ColLayoutCard({
   id,
   _key,
 }: BusinessCardProps) {
-  const hasBusinessClosed = daysOfOps ? isOpened(daysOfOps) : null;
+  const hasBusinessClosed = daysOfOps ? determineBusOpTime(daysOfOps) : null;
 
   return (
     <CardWrapper
@@ -281,7 +241,7 @@ function RowLayoutCard({
   _key,
   image,
 }: BusinessCardProps) {
-  const hasBusinessClosed = daysOfOps ? isOpened(daysOfOps) : null;
+  const hasBusinessClosed = daysOfOps ? determineBusOpTime(daysOfOps) : null;
   return (
     <CardWrapper
       key={_key}
