@@ -7,7 +7,8 @@ import {
   FlexRowStartCenter,
 } from "components/Flex";
 import ChevronLeftIcon from "assets/icons/chevron-left.svg?react";
-import LocationMarkerIcon from "assets/icons/location-marker.svg?react";
+import LocationMarkerIcon from "assets/icons/location-marker-2.svg?react";
+import PhoneIcon from "assets/icons/phone.svg?react";
 import MailBoxIcon from "assets/icons/mailbox.svg?react";
 import defaultImg from "assets/images/default-img.jpeg";
 import "./details.scss";
@@ -16,7 +17,7 @@ const categories = ["Food", "Groceries", "Fashion"];
 
 export default function BusinessDetails() {
   return (
-    <FlexColStart className="w-full h-full px-28 business-details-container">
+    <FlexColStart className="w-full h-screen px-28 business-details-container">
       {/* breadcrumb */}
       <FlexRowStart className="w-auto gap-15">
         <ChevronLeftIcon />
@@ -88,7 +89,23 @@ export default function BusinessDetails() {
           Contact Info
         </span>
 
-        <ContactCard />
+        <FlexColStart className="gap-10">
+          <ContactCard
+            title="Address"
+            tagline="440 South Avenue, Suite 48, Toronto, Ontario"
+            icon={<LocationMarkerIcon />}
+          />
+          <ContactCard
+            title="Mobile"
+            tagline="08012345678"
+            icon={<PhoneIcon />}
+          />
+          <ContactCard
+            title="Email"
+            tagline="johndoe@mail.com"
+            icon={<MailBoxIcon />}
+          />
+        </FlexColStart>
       </FlexColStart>
     </FlexColStart>
   );
@@ -124,15 +141,19 @@ function ReadMoreText({ text }: ReadMoreProps) {
   );
 }
 
-function ContactCard() {
+type ContactCardProps = {
+  title: string;
+  tagline: string;
+  icon: React.ReactNode;
+};
+
+function ContactCard({ title, tagline, icon }: ContactCardProps) {
   return (
     <FlexRowStartCenter className="w-full mt-10 gap-10">
-      <div className="ntw w-17 h-18">
-        <MailBoxIcon />
-      </div>
+      <div className="ntw w-17 h-18">{icon}</div>
       <FlexColStart className="w-auto gap-1">
         <h3 className="ntw text-11 leading-15 font-normal font-hn-light category-name">
-          Address
+          {title}
         </h3>
         <h3
           className="ntw text-13 leading-13 font-normal font-hn-light category-name"
@@ -140,7 +161,7 @@ function ContactCard() {
             color: "#67A2F1",
           }}
         >
-          440 South Avenue, Suite 48, Toronto, Ontario
+          {tagline}
         </h3>
       </FlexColStart>
     </FlexRowStartCenter>

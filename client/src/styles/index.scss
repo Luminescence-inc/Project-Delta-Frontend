@@ -164,6 +164,9 @@ img {
   &.w-full {
     width: 100%;
   }
+  &.w-screen {
+    width: 100vw;
+  }
   & .w-50 {
     width: 50%;
   }
@@ -177,6 +180,9 @@ img {
   }
   &.h-full {
     height: 100%;
+  }
+  &.h-screen {
+    height: 100vh;
   }
   &.h-50 {
     height: 50%;
