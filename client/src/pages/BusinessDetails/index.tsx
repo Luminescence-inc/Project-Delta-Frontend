@@ -37,7 +37,9 @@ export default function BusinessDetails() {
         />
       </FlexRowStart>
 
+      {/* categories and business name */}
       <FlexColStart className="h-44 mt-20">
+        {/* business name */}
         <h2 className="ntw text-20 font-bold font-hn-bold business-name leading-10">
           {"Mama's Kitchen"}
         </h2>
@@ -66,6 +68,53 @@ export default function BusinessDetails() {
             })}
         </FlexRowCenterBtw>
       </FlexColStart>
+
+      {/* description */}
+      <FlexColStart className=" mt-10">
+        <span className="ntw text-11 leading-13 font-normal font-hn-light category-name">
+          Description
+        </span>
+
+        {/*  readmore */}
+        <ReadMoreText text="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corporis omnis sint magni praesentium in dignissimos quo, magnam reiciendis veritatis, sapiente adipisci, fugiat eum. Quia natus optio nisi nostrum expedita quis!" />
+      </FlexColStart>
+
+      {/* contact info */}
+      <FlexColStart className=" mt-15">
+        <span className="ntw text-11 leading-13 font-normal font-hn-light category-name">
+          Contact Info
+        </span>
+      </FlexColStart>
     </FlexColStart>
+  );
+}
+
+type ReadMoreProps = {
+  text?: string;
+};
+
+function ReadMoreText({ text }: ReadMoreProps) {
+  const [isReadmore, setIsReadmore] = React.useState(false);
+  const TEXT_CONSTRAINT = 156;
+  const formattedText =
+    text && text?.length > TEXT_CONSTRAINT
+      ? text.slice(0, TEXT_CONSTRAINT) + "..."
+      : text;
+  const showReadmore = text && text?.length > TEXT_CONSTRAINT;
+
+  return (
+    <FlexRowStart className="w-auto flex-wrap">
+      <span className="ntw text-12 font-normal leading-18 font-hn-light">
+        {isReadmore ? text : formattedText}
+        {showReadmore && (
+          <button
+            className="ntw text-12 font-hn-light font-bold cursor-pointer readmore-trigger ml-5 border-none outline-none bg-none"
+            onClick={() => setIsReadmore(!isReadmore)}
+          >
+            {isReadmore ? "Read less" : "Read more"}
+          </button>
+        )}
+      </span>
+    </FlexRowStart>
   );
 }

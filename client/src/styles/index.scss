@@ -193,6 +193,22 @@ img {
     &.w-#{$i} {
       width: $i + px;
     }
+
+    &.min-h-#{$i} {
+      min-height: $i + px;
+    }
+
+    &.min-w-#{$i} {
+      min-width: $i + px;
+    }
+
+    &.max-h-#{$i} {
+      max-height: $i + px;
+    }
+
+    &.max-w-#{$i} {
+      max-width: $i + px;
+    }
   }
 
   // text-[size] like tailwindcss text-[size]
@@ -359,6 +375,10 @@ img {
 
   &.bg-primary {
     background-color: var(--primary-color);
+  }
+
+  &.bg-none {
+    background: none;
   }
 
   // fonts
