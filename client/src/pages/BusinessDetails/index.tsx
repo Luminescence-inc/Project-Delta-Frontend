@@ -4,8 +4,11 @@ import {
   FlexRowCenter,
   FlexRowCenterBtw,
   FlexRowStart,
+  FlexRowStartCenter,
 } from "components/Flex";
 import ChevronLeftIcon from "assets/icons/chevron-left.svg?react";
+import LocationMarkerIcon from "assets/icons/location-marker.svg?react";
+import MailBoxIcon from "assets/icons/mailbox.svg?react";
 import defaultImg from "assets/images/default-img.jpeg";
 import "./details.scss";
 
@@ -84,6 +87,8 @@ export default function BusinessDetails() {
         <span className="ntw text-11 leading-13 font-normal font-hn-light category-name">
           Contact Info
         </span>
+
+        <ContactCard />
       </FlexColStart>
     </FlexColStart>
   );
@@ -116,5 +121,28 @@ function ReadMoreText({ text }: ReadMoreProps) {
         )}
       </span>
     </FlexRowStart>
+  );
+}
+
+function ContactCard() {
+  return (
+    <FlexRowStartCenter className="w-full mt-10 gap-10">
+      <div className="ntw w-17 h-18">
+        <MailBoxIcon />
+      </div>
+      <FlexColStart className="w-auto gap-1">
+        <h3 className="ntw text-11 leading-15 font-normal font-hn-light category-name">
+          Address
+        </h3>
+        <h3
+          className="ntw text-13 leading-13 font-normal font-hn-light category-name"
+          style={{
+            color: "#67A2F1",
+          }}
+        >
+          440 South Avenue, Suite 48, Toronto, Ontario
+        </h3>
+      </FlexColStart>
+    </FlexRowStartCenter>
   );
 }
