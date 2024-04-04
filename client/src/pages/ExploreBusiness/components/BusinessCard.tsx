@@ -171,12 +171,12 @@ const ColLayoutCard = ({
         </FlexRowCenterBtw>
 
         {/* location */}
-        <FlexRowStartCenter className="w-auto gap-5 h-16 py-15">
+        <div className="ntw w-auto flex flex-row items-center gap-5 h-16 py-15">
           <MapPin />
-          <span className="ntw text-13 font-normal font-hn-light location-text leading-15">
+          <span className="ntw text-13 font-normal font-hn-light location-text leading-15 relative top-2 ">
             {location}
           </span>
-        </FlexRowStartCenter>
+        </div>
 
         {/* opening time */}
         <FlexRowCenterBtw className="w-full">
@@ -206,7 +206,11 @@ const ColLayoutCard = ({
                     color: "#000",
                   }}
                 >
-                  Closes {hasBusinessClosed.closingTime}pm
+                  Closes{" "}
+                  {hasBusinessClosed.closingTime
+                    ?.replace("PM", "")
+                    ?.replace("pm", "")}
+                  pm
                 </span>
               </>
             ) : (
@@ -301,12 +305,12 @@ const RowLayoutCard = ({
           </FlexRowCenterBtw>
 
           {/* location */}
-          <FlexRowStartCenter className="w-auto gap-5 h-16 mt-4">
+          <div className="ntw w-auto flex flex-row items-center gap-5 h-16 py-15">
             <MapPin />
-            <span className="ntw text-13 font-normal font-hn-light location-text leading-15">
+            <span className="ntw text-13 font-normal font-hn-light location-text leading-15 relative top-2 ">
               {location}
             </span>
-          </FlexRowStartCenter>
+          </div>
 
           {/* opening time */}
           <FlexRowCenterBtw className="w-full">
