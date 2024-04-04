@@ -1,27 +1,32 @@
-import React from "react";
+import { useCallback, useEffect, useState } from "react";
 import "./style.scss";
 import ChevronDown from "assets/icons/chevron-down.svg?react";
 import { cn } from "utils";
+import { BusinessFilterType, MultiSearchType } from "types/business";
 
-type Props = {
+interface MultiSearchProps {
   rightIcon?: React.ReactNode;
   leftIcon?: React.ReactNode;
   label?: string;
-  type?: "multi" | "single";
+  type?: MultiSearchType;
   listsData?: { uuid: string; value: string }[] | undefined | null;
   selectedListData?:
     | { uuid?: string | undefined; value?: string | undefined }
     | { uuid?: string | undefined; value?: string | undefined }[]
     | undefined
     | null;
-  onChange?: (props: { uuid?: string; value?: string; type?: string }) => void;
+  onChange?: (props: {
+    uuid?: string;
+    value?: string;
+    type?: BusinessFilterType;
+  }) => void;
   onClick?: () => void;
   dataType?: string;
   disableTrigger?: boolean;
   activePanel: string;
   setActivePanel: (panel: string) => void;
   placeholder?: string;
-};
+}
 
 export default function MultiSearch({
   rightIcon,
@@ -37,18 +42,16 @@ export default function MultiSearch({
   setActivePanel,
   placeholder,
   onClick,
-}: Props) {
-  //   const [updatedSelectedListData, setUpdatedSelectedListsData] =
-  // React.useState<typeof selectedListData>();
-  const [searchValue, setSearchValue] = React.useState("");
-  const [filterData, setFilterData] = React.useState<
+}: MultiSearchProps) {
+  const [searchValue, setSearchValue] = useState("");
+  const [filterData, setFilterData] = useState<
     { uuid?: string; value?: string }[]
   >(listsData!);
 
   label = label ?? "Label here..";
   rightIcon = <ChevronDown />;
 
-  const getActiveList = React.useCallback(
+  const getActiveList = useCallback(
     (uuid: string, type: string) => {
       if (type === "businessCategory") {
         return Array.isArray(selectedListData)
@@ -64,7 +67,7 @@ export default function MultiSearch({
     [selectedListData]
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (searchValue.length > 0) {
       const searchResult = listsData?.filter((data) =>
         data.value.toLowerCase().includes(searchValue.toLowerCase())
@@ -75,7 +78,7 @@ export default function MultiSearch({
     }
   }, [searchValue]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setFilterData(listsData!);
   }, [listsData]);
 
@@ -145,52 +148,57 @@ export default function MultiSearch({
           <div className="ntw w-full flex flex-col items-start justify-start gap-2">
             {type === "multi"
               ? filterData && filterData.length > 0
-                ? filterData.map((l) => (
+                ? filterData.map((listData) => (
                     <li
                       className="ntw flex items-center justify-start gap-2"
-                      key={l.uuid}
+                      key={listData.uuid}
                     >
                       <input
                         type="checkbox"
                         name=""
                         id=""
-                        value={l.uuid}
+                        value={listData.uuid}
                         checked={
-                          getActiveList(l?.uuid!, dataType!) === l.uuid ?? false
+                          getActiveList(listData?.uuid!, dataType!) ===
+                            listData.uuid ?? false
                         }
                         onChange={() => {
                           onChange?.({
-                            uuid: l.uuid,
-                            value: l.value,
-                            type: dataType,
+                            uuid: listData.uuid,
+                            value: listData.value,
+                            type: dataType as BusinessFilterType,
                           });
                         }}
                       />
-                      <span className="ntw text-15 font-normal">{l.value}</span>
+                      <span className="ntw text-15 font-normal">
+                        {listData.value}
+                      </span>
                     </li>
                   ))
                 : null
               : filterData && filterData.length > 0
-              ? filterData.map((l) => (
+              ? filterData.map((listData) => (
                   <button
-                    key={l.uuid}
+                    key={listData.uuid}
                     className={cn(
                       "ntw single-list w-full flex items-center justify-start gap-2 border-none outline-none px-10 py-5 rounded-5 cursor-pointer",
-                      getActiveList(l.uuid!, dataType!) === l.uuid
+                      getActiveList(listData.uuid!, dataType!) === listData.uuid
                         ? "active"
                         : ""
                     )}
                     onClick={() => {
                       // close panel
                       onChange?.({
-                        uuid: l.uuid,
-                        value: l.value,
-                        type: dataType,
+                        uuid: listData.uuid,
+                        value: listData.value,
+                        type: dataType as BusinessFilterType,
                       });
                       setActivePanel("");
                     }}
                   >
-                    <span className="ntw text-15 font-normal">{l.value}</span>
+                    <span className="ntw text-15 font-normal">
+                      {listData.value}
+                    </span>
                   </button>
                 ))
               : null}

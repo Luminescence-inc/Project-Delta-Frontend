@@ -14,7 +14,6 @@ import ViewBusiness from "pages/Home/ViewBusiness/ViewBusiness";
 import Email from "pages/Authentication/ForgotPassword/Email";
 import VerifiedEmail from "pages/Authentication/Verification/VerifiedEmail";
 import VerifiedAccount from "pages/Authentication/Verification/VerifyAccount";
-import DiscoverBusinesses from "./pages/DiscoverBusinesses/DiscoverBusinesses";
 import RegisterBusiness from "pages/Authentication/Signup/RegisterBusiness/RegisterBusiness";
 import MyAccount from "pages/AccountSettings/MyAccount";
 import AboutUs from "pages/AboutUs/AboutUs";
@@ -22,8 +21,6 @@ import ContactSupport from "pages/ContactSupport/ContactSupport";
 import BusinessContextProvider from "context/BusinessCtx";
 import ExploreBusiness from "pages/ExploreBusiness";
 import "./index.css";
-import BusinessesFilterComponent from "components/BusinessFilter";
-import BusinessDetails from "pages/BusinessDetails";
 
 function App() {
   const { pathname } = useLocation();
@@ -57,19 +54,7 @@ function App() {
             />
             <Route path="/signup" element={<Signup />} />
             <Route path="/view-your-business" element={<ViewBusiness />} />
-            <Route
-              path="/discover-businesses"
-              element={<DiscoverBusinesses />}
-            />
             <Route path="/explore-businesses" element={<ExploreBusiness />} />
-            <Route
-              path="/business-details/:business_id"
-              element={<BusinessDetails />}
-            />
-            <Route
-              path="/filter-comp"
-              element={<BusinessesFilterComponent />}
-            />
             <Route
               path="/signup/register-business"
               element={<RegisterBusiness />}

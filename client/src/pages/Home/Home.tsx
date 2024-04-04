@@ -117,7 +117,11 @@ const Home = () => {
                 )}
                 <Button
                   className={authenticated ? "auth-btn" : ""}
-                  label={businessPresent ? "Create a new business profile" : "Create your first business profile"}
+                  label={
+                    businessPresent
+                      ? "Create a new business profile"
+                      : "Create your first business profile"
+                  }
                   variant="transparent"
                   size="lg"
                   to="/signup/register-business"
@@ -228,7 +232,7 @@ const Home = () => {
               className="cta-btn-explore"
               label="Explore Businesses"
               variant="primary"
-              to="/discover-businesses"
+              to="/explore-businesses"
               iconRight={<CtaArrow />}
             />
           </div>
@@ -275,7 +279,7 @@ const Home = () => {
                   className="cta-btn-explore-second"
                   label="Explore Businesses"
                   variant="primary"
-                  to="/discover-businesses"
+                  to="/explore-businesses"
                   iconRight={<CtaArrow />}
                 />
               </div>

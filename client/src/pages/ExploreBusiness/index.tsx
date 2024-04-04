@@ -3,29 +3,30 @@ import {
   FlexColStart,
   FlexColStartCenter,
   FlexRowCenterBtw,
-  FlexRowStart,
-  FlexRowStartBtw,
   FlexRowStartCenter,
 } from "components/Flex";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./style.scss";
-import { HeartIcon, LoaderCircle } from "lucide-react";
-import SearchIcon from "assets/icons/Search-business.svg?react";
+import { LoaderCircle } from "lucide-react";
+import SearchIcon from "assets/icons/search-business.svg?react";
 import LayoutPanelTop from "assets/icons/layout-panel-top.svg?react";
 import LayoutPanelLeft from "assets/icons/layout-panel-left.svg?react";
 import BusinessCardContainer from "./components/BusinessCard";
 import BusinessesFilterComponent from "components/BusinessFilter";
 import { allBusinessCategories, getListOfBusinsessProfile } from "api/business";
-import { BusinessCategories, IOption } from "types/business";
+import {
+  BusinessCategories,
+  BusinessListingLayouts,
+  IOption,
+  UserBusinessList,
+} from "types/business";
 import { FilterData } from "context/BusinessCtx";
-import { IFilter, ISearch } from "types/business-profile";
-import { cn, sleep } from "utils";
+import { IBusinessProfile, IFilter, ISearch } from "types/business-profile";
+import { cn } from "utils";
 
-type IBusinessProfile = {};
-
-export default function ExploreBusiness() {
-  const [layout, setLayout] = useState<"row" | "col">("col");
-  const [showFilter, setShowFilter] = useState<boolean>(false);
+const ExploreBusiness = () => {
+  const [layout, setLayout] = useState<BusinessListingLayouts>("col");
+  const [showFilter, setShowFilter] = useState<boolean>(true);
   const [businessCategory, setBusinessCategory] = useState<IOption[]>();
   const [currPage, setCurrPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
@@ -72,7 +73,7 @@ export default function ExploreBusiness() {
     });
   };
 
-  async function getBusinesses(currPage: number, filterApplied: boolean) {
+  const getBusinesses = async (currPage: number, filterApplied: boolean) => {
     setLoading(true);
     const result = await getListOfBusinsessProfile(
       {
@@ -100,11 +101,11 @@ export default function ExploreBusiness() {
 
     setTotalPages(data?.totalPages || 1);
     setCurrPage(currPage);
-  }
+  };
 
   return (
     <div className="ntw w-full h-full">
-      <FlexColStart className="w-full px-30 mt-10">
+      <FlexColStart className="w-full px-20 mt-10">
         <h1 className="ntw text-30 font-bold">Explore Businesses</h1>
         <p
           className="ntw text-15 font-medium"
@@ -116,7 +117,7 @@ export default function ExploreBusiness() {
         </p>
       </FlexColStart>
       {/* search component */}
-      <FlexRowCenterBtw className="w-full px-20 mt-5">
+      <FlexRowCenterBtw className="w-full px-20 mt-5 gap-20">
         <button
           className={cn(
             "ntw w-full px-15 py-15 rounded-10 border-none font-helvetical filter-trigger",
@@ -134,7 +135,7 @@ export default function ExploreBusiness() {
         </button>
         <button
           onClick={() => setLayout(layout === "col" ? "row" : "col")}
-          className="ntw border-none outline-none cursor-pointer"
+          className="ntw border-none outline-none cursor-pointer rounded-10"
         >
           <FlexColCenter>
             {layout === "col" ? (
@@ -167,7 +168,7 @@ export default function ExploreBusiness() {
       {/* business card lists */}
       <BusinessCardContainer
         layout={layout}
-        data={businesses as any}
+        data={businesses as UserBusinessList[]}
         businessCategories={businessCategory}
       />
 
@@ -207,4 +208,5 @@ export default function ExploreBusiness() {
       )}
     </div>
   );
-}
+};
+export default ExploreBusiness;

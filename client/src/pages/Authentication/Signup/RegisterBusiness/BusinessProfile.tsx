@@ -21,6 +21,7 @@ import Input from "components/Input/Input";
 import Button from "components/Button/Button";
 import Select from "components/Input/Select";
 import { CloudinaryConfig } from "config";
+import defaultImg from "assets/images/default-img.jpeg";
 import "../Signup.scss";
 
 interface BusinessProfileProps {
@@ -101,10 +102,6 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
           return { uuid: st.isoCode, value: st.name };
         })
       );
-
-      //reset state and city
-      // formik.setFieldValue('stateAndProvince', '')
-      // formik.setFieldValue('city', '')
       setCity([]);
     }
   }, [formik.values.country, businessId]);
@@ -126,9 +123,6 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
           return { uuid: ct.name, value: ct.name };
         })
       );
-
-      //reset city
-      // formik.setFieldValue('city', '')
     }
   }, [formik.values.stateAndProvince, businessId]);
 
@@ -334,9 +328,8 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
             </h3>
             <img
               src={
-                logoUrl.includes("dicebears")
-                  ? logoUrl
-                  : `https://res.cloudinary.com/${CloudinaryConfig.cloudName}/image/upload/c_fill,q_400/${logoUrl}.jpg`
+                defaultImg ??
+                `https://res.cloudinary.com/${CloudinaryConfig.cloudName}/image/upload/c_fill,q_400/${logoUrl}.jpg`
               }
               alt="Uploaded"
               style={{ maxWidth: "100%" }}
