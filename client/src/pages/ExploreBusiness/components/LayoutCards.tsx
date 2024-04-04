@@ -10,8 +10,9 @@ import defaultBgImg from "assets/images/default-img.jpeg";
 import MapPin from "assets/icons/location-marker.svg?react";
 import Phone from "assets/icons/phone.svg?react";
 import { cn, determineBusOpTime } from "utils";
+import "../style.scss";
 
-type BusinessCardProps = {
+interface BusinessCardProps {
   name: string;
   categories: string[] | undefined;
   location: string;
@@ -26,9 +27,9 @@ type BusinessCardProps = {
   id: string;
   image: string;
   _key: string;
-};
+}
 
-export function ColLayoutCard({
+export const ColLayoutCard = ({
   name,
   categories,
   location,
@@ -37,13 +38,13 @@ export function ColLayoutCard({
   image,
   id,
   _key,
-}: BusinessCardProps) {
+}: BusinessCardProps) => {
   const hasBusinessClosed = daysOfOps ? determineBusOpTime(daysOfOps) : null;
 
   return (
     <CardWrapper
       key={_key}
-      style={{ maxHeight: "250px" }}
+      style={{ maxHeight: "260px" }}
       className="px-5 py-5"
     >
       <div
@@ -154,9 +155,9 @@ export function ColLayoutCard({
       </FlexColStart>
     </CardWrapper>
   );
-}
+};
 
-export function RowLayoutCard({
+export const RowLayoutCard = ({
   name,
   categories,
   location,
@@ -164,7 +165,7 @@ export function RowLayoutCard({
   phone,
   _key,
   image,
-}: BusinessCardProps) {
+}: BusinessCardProps) => {
   const hasBusinessClosed = daysOfOps ? determineBusOpTime(daysOfOps) : null;
   return (
     <CardWrapper
@@ -284,15 +285,15 @@ export function RowLayoutCard({
       </FlexRowStart>
     </CardWrapper>
   );
-}
+};
 
-type CWProps = {
+interface CWProps {
   children: React.ReactNode;
   style?: React.CSSProperties;
   className?: React.ComponentProps<"div">["className"];
-};
+}
 
-function CardWrapper({ children, style, className, ...props }: CWProps) {
+const CardWrapper = ({ children, style, className, ...props }: CWProps) => {
   return (
     <div
       className={cn("ntw w-full rounded-10 ", className)}
@@ -305,4 +306,4 @@ function CardWrapper({ children, style, className, ...props }: CWProps) {
       {children}
     </div>
   );
-}
+};

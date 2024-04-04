@@ -21,6 +21,7 @@ import ContactSupport from "pages/ContactSupport/ContactSupport";
 import BusinessContextProvider from "context/BusinessCtx";
 import ExploreBusiness from "pages/ExploreBusiness";
 import "./index.css";
+import BusinessDetails from "pages/BusinessDetails";
 
 function App() {
   const { pathname } = useLocation();
@@ -55,6 +56,10 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/view-your-business" element={<ViewBusiness />} />
             <Route path="/explore-businesses" element={<ExploreBusiness />} />
+            <Route
+              path="/business-details/:business_id"
+              element={<BusinessDetails />}
+            />
             <Route
               path="/signup/register-business"
               element={<RegisterBusiness />}

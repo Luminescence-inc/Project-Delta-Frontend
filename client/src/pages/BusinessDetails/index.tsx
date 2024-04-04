@@ -18,8 +18,9 @@ import MailBoxIcon from "assets/icons/mailbox.svg?react";
 import CalendarIcon from "assets/icons/calendar.svg?react";
 import defaultImg from "assets/images/default-img.jpeg";
 import "./details.scss";
-import { cn, determineBusOpTime } from "utils";
+import { cn, determineBusOpTime, isImgUrlValid } from "utils";
 import RenderSocialLinks from "./components/RenderSocialLinks";
+import { ColLayoutCard } from "pages/ExploreBusiness/components/LayoutCards";
 
 const categories = ["Food", "Groceries", "Fashion"];
 const daysOfWeek = [
@@ -90,7 +91,7 @@ export default function BusinessDetails() {
   const getCurrentDay = daysOfWeek[new Date().getDay()];
 
   return (
-    <FlexColStart className="w-full h-screen px-28 business-details-container">
+    <FlexColStart className="w-full h-auto px-28 business-details-container">
       {/* breadcrumb */}
       <FlexRowStart className="w-auto gap-15">
         <ChevronLeftIcon />
@@ -247,13 +248,13 @@ export default function BusinessDetails() {
         <div
           className={cn(
             "ntw w-full calendar-grid overflow-hidden",
-            calendarOpened ? "px-20 py-10" : "h-0"
+            calendarOpened ? "h-auto" : "h-0"
           )}
         >
           {openingHoursCalendar.map((day) => {
             return (
               <>
-                <div className="ntw w-full daysOfWeek">
+                <div className="ntw w-full daysOfWeek px-20 ">
                   <FlexRowStartBtw className="w-full">
                     <span
                       className="ntw text-12 font-bold font-hn-light leading-14"
@@ -274,7 +275,7 @@ export default function BusinessDetails() {
                     </span>
                   </FlexRowStartBtw>
                 </div>
-                <div className="ntw w-full time">
+                <div className="ntw w-full time px-20">
                   <FlexRowEnd className="w-full">
                     <span
                       className="ntw text-12 font-bold font-hn-light leading-14 mt-4"
@@ -318,15 +319,28 @@ export default function BusinessDetails() {
       ></div>
 
       {/* Similar businesses */}
-      <FlexColStart className="w-full mt-10">
+      <FlexColStart className="w-full mt-10 h-auto">
         <h3
           className="ntw text-15 leading-18 font-bold font-hn-bold"
           style={{
             color: "#0E2D52",
           }}
         >
-          Similar businesses
+          Similar Businesses
         </h3>
+
+        <FlexColStart className="w-full mt-20">
+          <ColLayoutCard
+            name={"Mama's Kitchen"}
+            categories={categories}
+            location={"Ontario, Canada"}
+            daysOfOps={undefined}
+            phone={""}
+            image={!isImgUrlValid("") ? defaultImg : "url"}
+            _key={"scsdc"}
+            id="sdcdsc"
+          />
+        </FlexColStart>
       </FlexColStart>
     </FlexColStart>
   );
