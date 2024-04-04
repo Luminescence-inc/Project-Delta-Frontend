@@ -53,7 +53,7 @@ function App() {
               element={<ForgotPasswordFinal />}
             />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/view-your-business" element={<ViewBusiness />} />
+            {/* <Route path="/view-your-business" element={<ViewBusiness />} /> */}
             <Route path="/explore-businesses" element={<ExploreBusiness />} />
             <Route
               path="/signup/register-business"
