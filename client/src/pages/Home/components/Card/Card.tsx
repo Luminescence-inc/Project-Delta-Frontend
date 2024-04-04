@@ -6,7 +6,11 @@ import PhoneIcon from "assets/icons/phone-icon.svg?react";
 import AddressIcon from "assets/icons/address-icon.svg?react";
 import ClockIcon from "assets/icons/clock-icon.svg?react";
 import { useState } from "react";
-import { Facebook, Globe, Instagram, Linkedin, Twitter } from "lucide-react";
+import TwitterIcon from "assets/icons/twitter-icon.svg?react";
+import InstagramIcon from "assets/icons/instagram-icon.svg?react";
+import FacebookIcon from "assets/icons/facebook-icon.svg?react";
+import LinkedinIcon from "assets/icons/linkedin-icon.svg?react";
+import GlobeIcon from "assets/icons/web-icon.svg?react";
 
 interface ICategory {
   name: string | undefined;
@@ -135,7 +139,6 @@ const Card = (props: Icard) => {
       {isCategorySectionAvailable && (
         <div className="card card-section-info-row">
           {props.categories?.map((thisCategory) => {
-
             return (
               <span
                 key={thisCategory.name}
@@ -159,15 +162,15 @@ const Card = (props: Icard) => {
                 onClick={() => handleSocialClick(thisSocials.url)}
               >
                 {thisSocials.name === "linkedIn" ? (
-                  <Linkedin className="icon" />
+                  <LinkedinIcon className="icon" />
                 ) : thisSocials.name === "instagram" ? (
-                  <Instagram className="icon" />
+                  <InstagramIcon className="icon" />
                 ) : thisSocials.name === "facebook" ? (
-                  <Facebook className="icon" />
+                  <FacebookIcon className="icon" />
                 ) : thisSocials.name === "twitter" ? (
-                  <Twitter className="icon" />
+                  <TwitterIcon className="icon" />
                 ) : thisSocials.name === "website" ? (
-                  <Globe className="icon" />
+                  <GlobeIcon className="icon" />
                 ) : null}
               </div>
             );
