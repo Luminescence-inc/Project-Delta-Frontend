@@ -17,13 +17,10 @@ type SocialMediaProps = {
 };
 
 export default function RenderSocialLinks({ url, name }: SocialMediaProps) {
-  const { valid, obj } = isUrlValid(url);
+  const { valid } = isUrlValid(url);
 
-  if (!valid) {
-    return null;
-  }
+  if (!valid) return null;
 
-  const hostname = obj?.hostname.split(".")[0];
   let icon = null;
 
   switch (name) {
