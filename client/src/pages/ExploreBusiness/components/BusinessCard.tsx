@@ -180,7 +180,7 @@ const ColLayoutCard = ({
 
         {/* opening time */}
         <FlexRowCenterBtw className="w-full">
-          <FlexRowCenter className="w-auto gap-10">
+          <FlexRowCenter className="w-auto gap-5">
             {hasBusinessClosed && hasBusinessClosed.isOpened ? (
               <>
                 <span
@@ -314,11 +314,11 @@ const RowLayoutCard = ({
 
           {/* opening time */}
           <FlexRowCenterBtw className="w-full">
-            <FlexRowCenter className="w-auto gap-10">
+            <FlexRowCenter className="w-auto gap-5">
               {hasBusinessClosed && hasBusinessClosed.isOpened ? (
                 <>
                   <span
-                    className="ntw text-11 font-normal font-hn-light leading-13 category-name"
+                    className="ntw text-11 font-bold font-hn-light leading-13 category-name"
                     style={{
                       color: "#17BEBB",
                     }}
@@ -335,7 +335,7 @@ const RowLayoutCard = ({
                   </span>
 
                   <span
-                    className="ntw text-11 font-normal font-hn-light leading-13 category-name"
+                    className="ntw text-11 font-bold font-hn-light leading-13 category-name"
                     style={{
                       color: "#000",
                     }}
@@ -345,7 +345,7 @@ const RowLayoutCard = ({
                 </>
               ) : (
                 <span
-                  className="ntw text-11 font-normal font-hn-light leading-13 category-name"
+                  className="ntw text-11 font-bold font-hn-light leading-13 category-name"
                   style={{
                     color: "#FF9F9F",
                   }}
