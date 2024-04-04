@@ -11,61 +11,25 @@ import {
 import defaultBgImg from "assets/images/default-img.jpeg";
 import MapPin from "assets/icons/location-marker.svg?react";
 import Phone from "assets/icons/phone.svg?react";
-import { IOption, UserBusinessList } from "types/business";
+import {
+  BusinessListingLayouts,
+  IOption,
+  UserBusinessList,
+} from "types/business";
 import { CloudinaryConfig } from "config";
-import { cn } from "utils";
+import { cn, determineBusOpTime } from "utils";
 
-type DaysOfOperation = {
-  day: string | null;
-  ot: string | null; // open time
-  ct: string | null; // closing time
-};
-
-// determine whether a business is opened or close.
-// if it open, return true and closing time for that day,
-// otherwise false and null for that day
-
-const isOpened = (daysOfOperation: DaysOfOperation[]) => {
-  const daysOfWeeks = [
-    "sunday",
-    "monday",
-    "tuesday",
-    "wednesday",
-    "thursday",
-    "friday",
-    "saturday",
-  ];
-  const today = new Date().getDay();
-  const day = daysOfOperation.find(
-    (d) => d.day!.toLowerCase() === daysOfWeeks[today]
-  );
-  if (day) {
-    const currentTime = Math.abs(new Date().getHours() - 12);
-    const closingTime = parseInt(day.ct!.split(":")[0]);
-    return currentTime < closingTime
-      ? {
-          isOpened: true,
-          closingTime: day.ct,
-        }
-      : {
-          isOpened: false,
-          closingTime: null,
-        };
-  }
-  return { isOpened: false, closingTime: null };
-};
-
-type Props = {
-  layout: "col" | "row";
+interface BusinessCardContainerProps {
+  layout: BusinessListingLayouts;
   data: UserBusinessList[];
   businessCategories: IOption[] | undefined;
-};
+}
 
-export default function BusinessCardContainer({
+const BusinessCardContainer = ({
   layout,
   data,
   businessCategories,
-}: Props) {
+}: BusinessCardContainerProps) => {
   const constructDOP = (
     daysOfWeek: string[] | null,
     openTime: string | null,
@@ -81,7 +45,9 @@ export default function BusinessCardContainer({
   };
 
   const constructLogoUrl = (url: string | null) => {
-    return `https://res.cloudinary.com/${CloudinaryConfig.cloudName}/image/upload/c_fill,q_500/${url}.jpg`;
+    return !url
+      ? defaultBgImg
+      : `https://res.cloudinary.com/${CloudinaryConfig.cloudName}/image/upload/c_fill,q_500/${url}.jpg`;
   };
 
   return (
@@ -125,9 +91,11 @@ export default function BusinessCardContainer({
         : null}
     </FlexColStart>
   );
-}
+};
 
-type BusinessCardProps = {
+export default BusinessCardContainer;
+
+interface BusinessCardProps {
   name: string;
   categories: string[] | undefined;
   location: string;
@@ -142,9 +110,9 @@ type BusinessCardProps = {
   id: string;
   image: string;
   _key: string;
-};
+}
 
-function ColLayoutCard({
+const ColLayoutCard = ({
   name,
   categories,
   location,
@@ -153,8 +121,8 @@ function ColLayoutCard({
   image,
   id,
   _key,
-}: BusinessCardProps) {
-  const hasBusinessClosed = daysOfOps ? isOpened(daysOfOps) : null;
+}: BusinessCardProps) => {
+  const hasBusinessClosed = daysOfOps ? determineBusOpTime(daysOfOps) : null;
 
   return (
     <CardWrapper
@@ -175,7 +143,7 @@ function ColLayoutCard({
       ></div>
       <FlexColStart className="w-full px-4 py-2 gap-0">
         <h2 className="ntw text-15 font-bold font-hn-bold business-name leading-18">
-          {name.length > 20 ? name.slice(0, 20) + "..." : name}
+          {name.length > 35 ? name.slice(0, 20) + "..." : name}
         </h2>
 
         {/* categories */}
@@ -270,9 +238,9 @@ function ColLayoutCard({
       </FlexColStart>
     </CardWrapper>
   );
-}
+};
 
-function RowLayoutCard({
+const RowLayoutCard = ({
   name,
   categories,
   location,
@@ -280,8 +248,8 @@ function RowLayoutCard({
   phone,
   _key,
   image,
-}: BusinessCardProps) {
-  const hasBusinessClosed = daysOfOps ? isOpened(daysOfOps) : null;
+}: BusinessCardProps) => {
+  const hasBusinessClosed = daysOfOps ? determineBusOpTime(daysOfOps) : null;
   return (
     <CardWrapper
       key={_key}
@@ -305,7 +273,7 @@ function RowLayoutCard({
         ></div>
         <FlexColStart className="w-full px-5 gap-0">
           <h2 className="ntw text-15 font-bold font-hn-bold business-name leading-18">
-            {name.length > 20 ? name.slice(0, 20) + "..." : name}
+            {name.length > 35 ? name.slice(0, 20) + "..." : name}
           </h2>
 
           {/* categories */}
@@ -400,15 +368,15 @@ function RowLayoutCard({
       </FlexRowStart>
     </CardWrapper>
   );
-}
+};
 
-type CWProps = {
+interface CWProps {
   children: React.ReactNode;
   style?: React.CSSProperties;
   className?: React.ComponentProps<"div">["className"];
-};
+}
 
-function CardWrapper({ children, style, className, ...props }: CWProps) {
+const CardWrapper = ({ children, style, className, ...props }: CWProps) => {
   return (
     <div
       className={cn("ntw w-full rounded-10 ", className)}
@@ -421,4 +389,4 @@ function CardWrapper({ children, style, className, ...props }: CWProps) {
       {children}
     </div>
   );
-}
+};

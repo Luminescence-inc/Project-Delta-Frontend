@@ -1,20 +1,25 @@
-import React from "react";
+import { useCallback, useEffect, useState } from "react";
 import "./style.scss";
 import ChevronDown from "assets/icons/chevron-down.svg?react";
 import { cn } from "utils";
+import { BusinessFilterType, MultiSearchType } from "types/business";
 
 interface MultiSearchProps {
   rightIcon?: React.ReactNode;
   leftIcon?: React.ReactNode;
   label?: string;
-  type?: "multi" | "single";
+  type?: MultiSearchType;
   listsData?: { uuid: string; value: string }[] | undefined | null;
   selectedListData?:
     | { uuid?: string | undefined; value?: string | undefined }
     | { uuid?: string | undefined; value?: string | undefined }[]
     | undefined
     | null;
-  onChange?: (props: { uuid?: string; value?: string; type?: string }) => void;
+  onChange?: (props: {
+    uuid?: string;
+    value?: string;
+    type?: BusinessFilterType;
+  }) => void;
   onClick?: () => void;
   dataType?: string;
   disableTrigger?: boolean;
@@ -38,15 +43,15 @@ export default function MultiSearch({
   placeholder,
   onClick,
 }: MultiSearchProps) {
-  const [searchValue, setSearchValue] = React.useState("");
-  const [filterData, setFilterData] = React.useState<
+  const [searchValue, setSearchValue] = useState("");
+  const [filterData, setFilterData] = useState<
     { uuid?: string; value?: string }[]
   >(listsData!);
 
   label = label ?? "Label here..";
   rightIcon = <ChevronDown />;
 
-  const getActiveList = React.useCallback(
+  const getActiveList = useCallback(
     (uuid: string, type: string) => {
       if (type === "businessCategory") {
         return Array.isArray(selectedListData)
@@ -62,7 +67,7 @@ export default function MultiSearch({
     [selectedListData]
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (searchValue.length > 0) {
       const searchResult = listsData?.filter((data) =>
         data.value.toLowerCase().includes(searchValue.toLowerCase())
@@ -73,7 +78,7 @@ export default function MultiSearch({
     }
   }, [searchValue]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setFilterData(listsData!);
   }, [listsData]);
 
@@ -161,7 +166,7 @@ export default function MultiSearch({
                           onChange?.({
                             uuid: listData.uuid,
                             value: listData.value,
-                            type: dataType,
+                            type: dataType as BusinessFilterType,
                           });
                         }}
                       />
@@ -186,7 +191,7 @@ export default function MultiSearch({
                       onChange?.({
                         uuid: listData.uuid,
                         value: listData.value,
-                        type: dataType,
+                        type: dataType as BusinessFilterType,
                       });
                       setActivePanel("");
                     }}

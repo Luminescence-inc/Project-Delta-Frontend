@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./style.scss";
 import CloseIcon from "assets/icons/close-icon.svg?react";
 import CloseIcon2 from "assets/icons/close-icon-2.svg?react";
@@ -7,25 +7,26 @@ import MultiSearch from "./MultiSearch";
 import { FILTERED_COUNTRY } from "utils/business-profile-utils";
 import { Country, State, City } from "../../../country-sate-city";
 import { FilterData, useBusinessCtx } from "context/BusinessCtx";
+import { BusinessFilterType } from "types/business";
 
-type OnfilterDataProps = {
+interface OnfilterDataProps {
   uuid?: string | undefined;
   value?: string | undefined;
-  type?: string | undefined;
-};
+  type?: BusinessFilterType | undefined;
+}
 
-type Props = {
+interface BusinessFilterComponentProps {
   getfilterData: (filterData: FilterData) => void;
   closeFilter: () => void;
   businessesCategories: { uuid: string; value: string }[] | null | undefined;
-};
+}
 
-export default function BusinessesFilterComponent({
+const BusinessesFilterComponent = ({
   getfilterData,
   closeFilter,
   businessesCategories,
-}: Props) {
-  const [errorMsg, setErrorMsg] = React.useState<string>("");
+}: BusinessFilterComponentProps) => {
+  const [errorMsg, setErrorMsg] = useState<string>("");
   const {
     activePanel,
     setActivePanel,
@@ -154,7 +155,7 @@ export default function BusinessesFilterComponent({
   };
 
   // monitor when the country state gets changed
-  React.useEffect(() => {
+  useEffect(() => {
     if (filterData.country) {
       const formatedStates = getFilteredStates(filterData.country?.uuid);
       setFilteredStates(formatedStates);
@@ -181,7 +182,7 @@ export default function BusinessesFilterComponent({
   }, [filterData.country]);
 
   //   monitor when the state and province gets changed
-  React.useEffect(() => {
+  useEffect(() => {
     if (filterData.stateAndProvince) {
       const formattedCities = getFilteredCities(filterData.country!?.uuid);
       setFilteredCities(formattedCities);
@@ -271,14 +272,14 @@ export default function BusinessesFilterComponent({
             {/* categories placeholders */}
             {filterData.businessCategoryUuid && (
               <div className="ntw flex flex-row flex-wrap items-start justify-start mt-20 filter-placeholders gap-3">
-                {filterData.businessCategoryUuid?.map((it) => (
+                {filterData.businessCategoryUuid?.map((categories) => (
                   <div
-                    key={it.uuid}
+                    key={categories.uuid}
                     className="ntw px-12 py-5 rounded-30 flex flex-row items-center justify-start placeholder gap-2"
                   >
                     <span className="ntw text-12 font-normal">
                       {/* @ts-ignore */}
-                      {it?.value ?? "CATEGORY"}
+                      {categories?.value ?? "CATEGORY"}
                     </span>
                     <button
                       className="ntw cursor-pointer border-none outline-none close-btn"
@@ -286,7 +287,7 @@ export default function BusinessesFilterComponent({
                         //  remove the selected category from filter
                         const updatedFilter =
                           filterData.businessCategoryUuid?.filter(
-                            (c) => c.uuid !== it.uuid
+                            (c) => c.uuid !== categories.uuid
                           );
                         setFilterData({
                           ...filterData,
@@ -384,4 +385,6 @@ export default function BusinessesFilterComponent({
       </div>
     </div>
   );
-}
+};
+
+export default BusinessesFilterComponent;

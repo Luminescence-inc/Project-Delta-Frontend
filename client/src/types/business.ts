@@ -145,3 +145,14 @@ export interface ContactSupportResponse extends BaseResponseMessage {
     message: string;
   };
 }
+
+export type MultiSearchType = "multi" | "single";
+
+export type BusinessListingLayouts = "row" | "col";
+
+export enum BusinessFilterType {
+  BUSINESS_CATEGORY = "businessCategory",
+  COUNTRY = "country",
+  STATE = "stateAndProvince",
+  CITY = "city",
+}
