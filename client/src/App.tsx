@@ -10,7 +10,7 @@ import Login from "pages/Authentication/Login/Login";
 import ForgotPassword from "pages/Authentication/ForgotPassword/ForgotPassword";
 import ForgotPasswordFinal from "pages/Authentication/ForgotPassword/ForgotPasswordFinal";
 import Signup from "pages/Authentication/Signup/Signup";
-import ViewBusiness from "pages/Home/ViewBusiness/ViewBusiness";
+// import ViewBusiness from "pages/Home/ViewBusiness/ViewBusiness";
 import Email from "pages/Authentication/ForgotPassword/Email";
 import VerifiedEmail from "pages/Authentication/Verification/VerifiedEmail";
 import VerifiedAccount from "pages/Authentication/Verification/VerifyAccount";

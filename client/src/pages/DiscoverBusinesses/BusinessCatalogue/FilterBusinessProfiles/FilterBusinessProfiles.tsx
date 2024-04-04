@@ -36,7 +36,7 @@ const FilterBusinessProfiles: React.FC<FilterBusinessProps> = ({
   const [selectedBusinessCategory, setSelectedBusinessCategory] =
     useState<IOption[]>();
   const [_searchFilters, setSearchFilters] = useState<IFilter[]>([]);
-  const [error, setError] = useState<Boolean>(false);
+  // const [error, setError] = useState<Boolean>(false);
   const [countryError, setCountryError] = useState<Boolean>(false);
 
   const onSubmit = async (values: BusinessProfileSearchFormikPropsValues) => {
@@ -113,7 +113,10 @@ const FilterBusinessProfiles: React.FC<FilterBusinessProps> = ({
     const payload: ISearch = {
       filters: searchFilters,
     };
-    if (!error && countrySelected) {
+    // if (!error && countrySelected) {
+    //   onFilter(payload);
+    // }
+    if (countrySelected) {
       onFilter(payload);
     }
 
@@ -157,10 +160,10 @@ const FilterBusinessProfiles: React.FC<FilterBusinessProps> = ({
     return { states, countryCode };
   };
 
-  const getCityFormData = (countryCode: string, state: string) => {
-    const cities = City.getCitiesOfState(countryCode, state);
-    return { cities };
-  };
+  // const getCityFormData = (countryCode: string, state: string) => {
+  //   const cities = City.getCitiesOfState(countryCode, state);
+  //   return { cities };
+  // };
 
   useEffect(() => {
     console.log(searchQuery);

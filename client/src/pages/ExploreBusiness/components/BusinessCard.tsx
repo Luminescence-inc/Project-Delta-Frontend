@@ -6,7 +6,6 @@ import {
   FlexRowCenterBtw,
   FlexRowEnd,
   FlexRowStart,
-  FlexRowStartCenter,
 } from "components/Flex";
 import defaultBgImg from "assets/images/default-img.jpeg";
 import MapPin from "assets/icons/location-marker.svg?react";
@@ -72,7 +71,6 @@ const BusinessCardContainer = ({
                 daysOfOps={daysOfOperation}
                 phone={bd.phoneNumber || ""}
                 image={constructLogoUrl(bd.logoUrl) || ""}
-                id={bd.uuid}
                 _key={bd.uuid}
               />
             ) : (
@@ -83,7 +81,6 @@ const BusinessCardContainer = ({
                 daysOfOps={daysOfOperation}
                 phone={bd.phoneNumber || ""}
                 image={constructLogoUrl(bd.logoUrl) || ""}
-                id={bd.uuid}
                 _key={bd.uuid}
               />
             );
@@ -107,7 +104,6 @@ interface BusinessCardProps {
       }[]
     | undefined;
   phone: string;
-  id: string;
   image: string;
   _key: string;
 }
@@ -119,7 +115,6 @@ const ColLayoutCard = ({
   daysOfOps,
   phone,
   image,
-  id,
   _key,
 }: BusinessCardProps) => {
   const hasBusinessClosed = daysOfOps ? determineBusOpTime(daysOfOps) : null;
