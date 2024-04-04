@@ -8,7 +8,7 @@ import {
 import { useEffect, useState } from "react";
 import "./style.scss";
 import { LoaderCircle } from "lucide-react";
-import SearchIcon from "assets/icons/Search-business.svg?react";
+import SearchIcon from "assets/icons/search-business.svg?react";
 import LayoutPanelTop from "assets/icons/layout-panel-top.svg?react";
 import LayoutPanelLeft from "assets/icons/layout-panel-left.svg?react";
 import BusinessCardContainer from "./components/BusinessCard";
