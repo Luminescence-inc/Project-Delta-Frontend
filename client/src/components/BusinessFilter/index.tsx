@@ -235,9 +235,9 @@ const BusinessesFilterComponent = ({
 
   return (
     <div className="ntw filter-container">
-      <div className="ntw w-full flex flex-col items-start justify-start px-20 filter-card">
-        <div className="ntw w-full header flex flex-row items-center justify-between ">
-          <h2 className="ntw text-30 font-bold leading-42">Search</h2>
+      <div className="ntw w-full flex flex-col items-start justify-start px-20 filter-card py-50">
+        <div className="ntw w-full h-auto flex flex-row items-center justify-between ">
+          <h2 className="ntw text-30 font-bold">Search</h2>
           <button
             className="ntw close-btn border-none outline-none"
             onClick={closeFilter}
@@ -365,7 +365,7 @@ const BusinessesFilterComponent = ({
           {/* CONTROL BUTTON */}
           <div className="ntw w-full flex items-center justify-between mt-20 filter-controls">
             <button
-              className="ntw reset-btn w-120 h-55 rounded-6"
+              className="ntw reset-btn w-120 h-55 rounded-6 bg-none"
               onClick={resetFilter}
             >
               <span className="ntw text-14 leading-15 font-medium font-hn-medium">

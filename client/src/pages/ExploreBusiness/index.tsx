@@ -105,7 +105,7 @@ const ExploreBusiness = () => {
 
   return (
     <div className="ntw w-full h-full">
-      <FlexColStart className="w-full px-30 mt-10">
+      <FlexColStart className="w-full px-20 mt-10">
         <h1 className="ntw text-30 font-bold">Explore Businesses</h1>
         <p
           className="ntw text-15 font-medium"
@@ -117,7 +117,7 @@ const ExploreBusiness = () => {
         </p>
       </FlexColStart>
       {/* search component */}
-      <FlexRowCenterBtw className="w-full px-20 mt-5">
+      <FlexRowCenterBtw className="w-full px-20 mt-5 gap-20">
         <button
           className={cn(
             "ntw w-full px-15 py-15 rounded-10 border-none font-helvetical filter-trigger",
@@ -135,7 +135,7 @@ const ExploreBusiness = () => {
         </button>
         <button
           onClick={() => setLayout(layout === "col" ? "row" : "col")}
-          className="ntw border-none outline-none cursor-pointer"
+          className="ntw border-none outline-none cursor-pointer rounded-10"
         >
           <FlexColCenter>
             {layout === "col" ? (
