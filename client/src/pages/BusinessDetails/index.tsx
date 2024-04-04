@@ -8,6 +8,8 @@ import {
   FlexRowStartBtw,
   FlexRowStartCenter,
 } from "components/Flex";
+import ContactCard from "./components/ContactCard";
+import ReadMoreText from "./components/ReadmoreText";
 import ChevronLeftIcon from "assets/icons/chevron-left.svg?react";
 import ChevronDownIcon from "assets/icons/chevron-down-2.svg?react";
 import LocationMarkerIcon from "assets/icons/location-marker-2.svg?react";
@@ -17,6 +19,7 @@ import CalendarIcon from "assets/icons/calendar.svg?react";
 import defaultImg from "assets/images/default-img.jpeg";
 import "./details.scss";
 import { cn, determineBusOpTime } from "utils";
+import RenderSocialLinks from "./components/RenderSocialLinks";
 
 const categories = ["Food", "Groceries", "Fashion"];
 const daysOfWeek = [
@@ -38,6 +41,24 @@ const daysOfOps = [
     day: "Wednesday",
     ot: "8:00",
     ct: "10:00",
+  },
+];
+const socialLinks = [
+  {
+    url: "",
+    name: "instagram",
+  },
+  {
+    url: "",
+    name: "tiktok",
+  },
+  {
+    url: "",
+    name: "facebook",
+  },
+  {
+    url: "",
+    name: "website",
   },
 ];
 
@@ -237,7 +258,8 @@ export default function BusinessDetails() {
                     <span
                       className="ntw text-12 font-bold font-hn-light leading-14"
                       style={{
-                        color: getCurrentDay === day.day ? "#17BEBB" : "#000",
+                        color:
+                          getCurrentDay === day.day ? "#17BEBB" : "#0E2D52",
                       }}
                     >
                       {day.day}
@@ -257,7 +279,8 @@ export default function BusinessDetails() {
                     <span
                       className="ntw text-12 font-bold font-hn-light leading-14 mt-4"
                       style={{
-                        color: getCurrentDay === day.day ? "#17BEBB" : "#000",
+                        color:
+                          getCurrentDay === day.day ? "#17BEBB" : "#0E2D52",
                       }}
                     >
                       {day.ot} - {day.ct}
@@ -269,63 +292,42 @@ export default function BusinessDetails() {
           })}
         </div>
       </FlexColStart>
-    </FlexColStart>
-  );
-}
 
-type ReadMoreProps = {
-  text?: string;
-};
-
-function ReadMoreText({ text }: ReadMoreProps) {
-  const [isReadmore, setIsReadmore] = React.useState(false);
-  const TEXT_CONSTRAINT = 156;
-  const formattedText =
-    text && text?.length > TEXT_CONSTRAINT
-      ? text.slice(0, TEXT_CONSTRAINT) + "..."
-      : text;
-  const showReadmore = text && text?.length > TEXT_CONSTRAINT;
-
-  return (
-    <FlexRowStart className="w-auto flex-wrap">
-      <span className="ntw text-12 font-normal leading-18 font-hn-light">
-        {isReadmore ? text : formattedText}
-        {showReadmore && (
-          <button
-            className="ntw text-12 font-hn-light font-bold cursor-pointer readmore-trigger ml-5 border-none outline-none bg-none"
-            onClick={() => setIsReadmore(!isReadmore)}
-          >
-            {isReadmore ? "Read less" : "Read more"}
-          </button>
-        )}
-      </span>
-    </FlexRowStart>
-  );
-}
-
-type ContactCardProps = {
-  title: string;
-  tagline: string;
-  icon: React.ReactNode;
-};
-
-function ContactCard({ title, tagline, icon }: ContactCardProps) {
-  return (
-    <FlexRowStartCenter className="w-full mt-10 gap-10">
-      <div className="ntw w-17 h-18">{icon}</div>
-      <FlexColStart className="w-auto gap-1">
-        <h3 className="ntw text-11 leading-15 font-normal font-hn-light category-name">
-          {title}
+      {/*  social media links */}
+      <FlexColStart className="w-full mt-15 pb-100">
+        <h3 className="ntw text-13 leading-15 font-boild font-hn-bold">
+          Follow our social media
         </h3>
+        <FlexRowStartBtw className="w-auto gap-20 mt-10">
+          {socialLinks.map((link) => (
+            <RenderSocialLinks
+              url="https://github.com/benrobo"
+              name={link.name as any}
+            />
+          ))}
+        </FlexRowStartBtw>
+      </FlexColStart>
+
+      {/* divider */}
+      <div
+        className="ntw w-full"
+        style={{
+          background: "#DDDDDD",
+          border: "0.5px solid #DDDDDD",
+        }}
+      ></div>
+
+      {/* Similar businesses */}
+      <FlexColStart className="w-full mt-10">
         <h3
-          className="ntw text-13 leading-13 font-normal font-hn-light category-name"
+          className="ntw text-15 leading-18 font-bold font-hn-bold"
           style={{
-            color: "#67A2F1",
+            color: "#0E2D52",
           }}
         >
-          {tagline}
+          Similar businesses
         </h3>
       </FlexColStart>
-    </FlexRowStartCenter>
+    </FlexColStart>
   );
 }
