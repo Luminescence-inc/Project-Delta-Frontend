@@ -35,31 +35,32 @@ const Onboarding = () => {
   return (
     <div className="responsive-content">
       <div className="onboarding mobile-view">
-      <div className="card">
-        <h4>Select the option that suits you</h4>
+        <div className="card">
+          <h4>Select the option that suits you</h4>
 
-        <Pill
-          onClick={handleNewBusiness}
-          icon={<PlusIcon />}
-          title="New Business? Signup"
-          variant="red"
-        />
-        <Pill 
-          icon={<BagIcon />} 
-          onClick={() => navigate("/login")} 
-          title="Existing Business? Login" 
-          variant="pink" />
-        <Pill
-          onClick={() => navigate("/discover-businesses")}
-          icon={<SearchIcon />}
-          title="Discover Business"
-          variant="green"
-        />
+          <Pill
+            onClick={handleNewBusiness}
+            icon={<PlusIcon />}
+            title="New Business? Signup"
+            variant="red"
+          />
+          <Pill
+            icon={<BagIcon />}
+            onClick={() => navigate("/login")}
+            title="Existing Business? Login"
+            variant="pink"
+          />
+          <Pill
+            onClick={() => navigate("/explore-businesses")}
+            icon={<SearchIcon />}
+            title="Discover Business"
+            variant="green"
+          />
+        </div>
       </div>
-    </div>
-    <div>
-     <DefaultWebView className={"laptop-view"} />
-    </div>
+      <div>
+        <DefaultWebView className={"laptop-view"} />
+      </div>
     </div>
   );
 };

@@ -144,7 +144,7 @@ const Navbar = () => {
                 <li>
                   <p
                     onClick={() => {
-                      navigate("/discover-businesses");
+                      navigate("/explore-businesses");
                       setMenuOpen(false);
                     }}
                   >
