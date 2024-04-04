@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import "./style.scss";
 import CloseIcon from "assets/icons/close-icon.svg?react";
+import CloseIcon2 from "assets/icons/close-icon-2.svg?react";
 import SearchIcon from "assets/icons/search-icon-2.svg?react";
 import MultiSearch from "./MultiSearch";
 import { FILTERED_COUNTRY } from "utils/business-profile-utils";
@@ -24,7 +25,6 @@ export default function BusinessesFilterComponent({
   closeFilter,
   businessesCategories,
 }: Props) {
-  //   control the filter opened panel
   const [errorMsg, setErrorMsg] = React.useState<string>("");
   const {
     activePanel,
@@ -281,7 +281,7 @@ export default function BusinessesFilterComponent({
                       {it?.value ?? "CATEGORY"}
                     </span>
                     <button
-                      className="ntw cursor-pointer border-none outline-none mt-4 close-btn"
+                      className="ntw cursor-pointer border-none outline-none close-btn"
                       onClick={() => {
                         //  remove the selected category from filter
                         const updatedFilter =
@@ -294,7 +294,7 @@ export default function BusinessesFilterComponent({
                         });
                       }}
                     >
-                      <CloseIcon />
+                      <CloseIcon2 />
                     </button>
                   </div>
                 ))}
