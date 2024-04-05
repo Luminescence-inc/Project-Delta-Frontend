@@ -76,13 +76,11 @@ export const ColLayoutCard = ({
                     </span>
                     {categories[categories.length - 1] !== c && (
                       <span
-                        className="ntw text-10"
+                        className="ntw h-3 w-3 rounded-100 text-6"
                         style={{
-                          color: "#17BEBB",
+                          background: "#17BEBB",
                         }}
-                      >
-                        ⏺
-                      </span>
+                      ></span>
                     )}
                   </FlexRowCenter>
                 );
@@ -111,13 +109,11 @@ export const ColLayoutCard = ({
                     Open
                   </span>
                   <span
-                    className="ntw text-6"
+                    className="ntw h-3 w-3 rounded-100 text-6"
                     style={{
-                      color: "#000",
+                      background: "#000",
                     }}
-                  >
-                    ⏺
-                  </span>
+                  ></span>
 
                   <span
                     className="ntw text-11 font-normal leading-13 category-name"

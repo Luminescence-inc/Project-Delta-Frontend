@@ -1,15 +1,7 @@
 import React from "react";
 import "../style.scss";
-import {
-  FlexColStart,
-  FlexRowCenter,
-  FlexRowCenterBtw,
-  FlexRowEnd,
-  FlexRowStart,
-} from "components/Flex";
+import { FlexColStart } from "components/Flex";
 import defaultBgImg from "assets/images/default-img.jpeg";
-import MapPin from "assets/icons/location-marker.svg?react";
-import Phone from "assets/icons/phone.svg?react";
 import {
   BusinessListingLayouts,
   IOption,

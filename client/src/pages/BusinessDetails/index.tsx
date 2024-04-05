@@ -17,6 +17,7 @@ import LocationMarkerIcon from "assets/icons/location-marker-2.svg?react";
 import PhoneIcon from "assets/icons/phone.svg?react";
 import MailBoxIcon from "assets/icons/mailbox.svg?react";
 import CalendarIcon from "assets/icons/calendar.svg?react";
+import EllipseIcon from "assets/icons/ellipse.svg?react";
 import defaultImg from "assets/images/default-img.jpeg";
 import "./details.scss";
 import { cn, constructDOP, determineBusOpTime, isImgUrlValid } from "utils";
@@ -85,22 +86,6 @@ export default function BusinessDetails() {
     return time.split(":")[0].length > 1 ? time : "0" + time;
   };
 
-  const getOpeningHours = () => {
-    const calendar: { day: string; ot: string; ct: string }[] = [];
-    daysOfWeek.forEach((d) => {
-      const day = daysOfOps.find(
-        (day) => day.day.toLowerCase() === d.toLowerCase()
-      );
-      if (day) {
-        calendar.push({
-          day: d,
-          ot: prefixWithZero(day.ot) + " AM",
-          ct: prefixWithZero(day.ct) + " PM",
-        });
-      }
-    });
-    return calendar;
-  };
   const getCurrentDay = daysOfWeek[new Date().getDay()];
 
   useEffect(() => {
@@ -147,8 +132,12 @@ export default function BusinessDetails() {
         if (day) {
           return {
             day: d,
-            ot: prefixWithZero(openingTime!) + " AM",
-            ct: prefixWithZero(closingTime!) + " PM",
+            ot:
+              prefixWithZero(openingTime!).toLowerCase().replace("am", "") +
+              " AM",
+            ct:
+              prefixWithZero(closingTime!).toLowerCase().replace("pm", "") +
+              " PM",
           };
         }
         return {
@@ -269,13 +258,11 @@ export default function BusinessDetails() {
                           businessDetails.categories.length - 1
                         ] !== c && (
                           <span
-                            className="ntw text-5"
+                            className="ntw h-3 w-3 rounded-100 text-6"
                             style={{
-                              color: "#17BEBB",
+                              background: "#17BEBB",
                             }}
-                          >
-                            ⏺
-                          </span>
+                          ></span>
                         )}
                       </FlexRowCenter>
                     );
@@ -335,13 +322,11 @@ export default function BusinessDetails() {
                   Open
                 </span>
                 <span
-                  className="ntw text-6"
+                  className="ntw h-3 w-3 rounded-100 text-6"
                   style={{
-                    color: "#000",
+                    background: "#000",
                   }}
-                >
-                  ⏺
-                </span>
+                ></span>
 
                 <span
                   className="ntw text-11 font-normal font-hn-light leading-13"
@@ -371,7 +356,7 @@ export default function BusinessDetails() {
           {/* opening hours dropdown */}
           <FlexColStart className="w-full mt-10 opening-hours-dd rounded-5 max-h-271">
             <button
-              className="ntw w-full h-37 outline-none border-none rounded-5 opening-hours-dd-trigger flex items-center justify-between px-20 bg-none cursor-pointer"
+              className="ntw w-full h-37 mt-5 outline-none border-none rounded-5 opening-hours-dd-trigger flex items-center justify-between px-20 bg-none cursor-pointer"
               onClick={() => {
                 setCalendarOpened(!calendarOpened);
               }}
@@ -392,7 +377,7 @@ export default function BusinessDetails() {
             <div
               className={cn(
                 "ntw w-full calendar-grid overflow-hidden",
-                calendarOpened ? "h-auto" : "h-0"
+                calendarOpened ? "h-auto py-10" : "h-0"
               )}
             >
               {openingHoursCalendar.map((day) => {
@@ -410,13 +395,11 @@ export default function BusinessDetails() {
                           {day.day}
                         </span>
                         <span
-                          className="ntw text-6"
+                          className="ntw h-3 w-3 rounded-100 text-6"
                           style={{
-                            color: "#17BEBB",
+                            background: "#17BEBB",
                           }}
-                        >
-                          ⏺
-                        </span>
+                        ></span>
                       </FlexRowStartBtw>
                     </div>
                     <div className="ntw w-full time px-20">
