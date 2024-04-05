@@ -239,7 +239,7 @@ const BusinessesFilterComponent = ({
         <div className="ntw w-full h-auto flex flex-row items-center justify-between ">
           <h2 className="ntw text-30 font-bold">Search</h2>
           <button
-            className="ntw close-btn border-none outline-none"
+            className="ntw close-btn border-none outline-none cursor-pointer"
             onClick={closeFilter}
           >
             <CloseIcon />
