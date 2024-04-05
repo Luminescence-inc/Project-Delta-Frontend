@@ -105,8 +105,8 @@ export default function BusinessDetails() {
         if (day) {
           return {
             day: d,
-            ot: removeAMPM(prefixWithZero(openingTime!).toLowerCase()) + " AM",
-            ct: removeAMPM(prefixWithZero(closingTime!).toLowerCase()) + " PM",
+            ot: removeAMPM(prefixWithZero(openingTime!)) + " AM",
+            ct: removeAMPM(prefixWithZero(closingTime!)) + " PM",
           };
         }
         return {
@@ -303,11 +303,7 @@ export default function BusinessDetails() {
                     color: "#000",
                   }}
                 >
-                  Closes{" "}
-                  {hasBusinessClosed.closingTime
-                    ?.toLowerCase()
-                    ?.replace("pm", "")}
-                  pm
+                  Closes {removeAMPM(hasBusinessClosed.closingTime!)}PM
                 </span>
               </>
             ) : (
