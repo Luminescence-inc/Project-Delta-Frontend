@@ -46,3 +46,26 @@ export const determineBusOpTime = (daysOfOperation: DaysOfOperation[]) => {
   }
   return { isOpened: false, closingTime: null };
 };
+
+export const constructDOP = (
+  daysOfWeek: string[] | null,
+  openTime: string | null,
+  closeTime: string | null
+) => {
+  return daysOfWeek?.map((day) => {
+    return {
+      day: day,
+      ot: openTime,
+      ct: closeTime,
+    };
+  });
+};
+
+export const isImgUrlValid = (url: string) => {
+  try {
+    new URL(url);
+    return true;
+  } catch (e: unknown) {
+    return false;
+  }
+};

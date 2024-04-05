@@ -52,8 +52,12 @@ export const getListOfBusinsessProfile = (
 ) => {
   let searchQuery: ISearch = search || ({ filters: [] } as ISearch);
   const url = `${bizConnectAPI.baseURL}/api/business_profile/search`;
-  // console.log(url);
   return axios.post(url, { paging, search: searchQuery || { filters: [] } });
+};
+
+export const getBusinessProfileById = (id: string) => {
+  const url = `${bizConnectAPI.baseURL}/api/business_profile/list/${id}`;
+  return axios.get(url);
 };
 
 export const getBusinsessCategories = () => {

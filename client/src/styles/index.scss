@@ -164,6 +164,9 @@ img {
   &.w-full {
     width: 100%;
   }
+  &.w-screen {
+    width: 100vw;
+  }
   & .w-50 {
     width: 50%;
   }
@@ -177,6 +180,9 @@ img {
   }
   &.h-full {
     height: 100%;
+  }
+  &.h-screen {
+    height: 100vh;
   }
   &.h-50 {
     height: 50%;
@@ -192,6 +198,22 @@ img {
 
     &.w-#{$i} {
       width: $i + px;
+    }
+
+    &.min-h-#{$i} {
+      min-height: $i + px;
+    }
+
+    &.min-w-#{$i} {
+      min-width: $i + px;
+    }
+
+    &.max-h-#{$i} {
+      max-height: $i + px;
+    }
+
+    &.max-w-#{$i} {
+      max-width: $i + px;
     }
   }
 
@@ -361,6 +383,10 @@ img {
     background-color: var(--primary-color);
   }
 
+  &.bg-none {
+    background: none;
+  }
+
   // fonts
   &.font-sans {
     font-family: "Inter", sans-serif;
@@ -402,6 +428,38 @@ img {
   @for $i from 1 through 100 {
     &.scale-#{$i} {
       transform: scale($i / 10);
+    }
+  }
+
+  .overflow-hidden {
+    overflow: hidden;
+  }
+
+  .overflow-auto {
+    overflow: auto;
+  }
+
+  .overflow-x-hidden {
+    overflow-x: hidden;
+  }
+
+  .overflow-y-hidden {
+    overflow-y: hidden;
+  }
+
+  // transitions
+  &.transition-all {
+    transition: all 0.3s ease;
+  }
+
+  &.transition-opacity {
+    transition: opacity 0.3s ease;
+  }
+
+  // delay
+  @for $i from 1 through 100 {
+    &.delay-#{$i} {
+      transition-delay: $i + ms;
     }
   }
 }
