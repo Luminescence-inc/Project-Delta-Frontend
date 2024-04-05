@@ -362,7 +362,7 @@ export default function BusinessDetails() {
                           {day.day}
                         </span>
                         <span
-                          className="ntw h-3 w-3 rounded-100 text-6"
+                          className="ntw h-3 w-3 mt-5 rounded-100 text-6"
                           style={{
                             background:
                               getCurrentDay === day.day ? "#17BEBB" : "#0E2D52",
