@@ -145,7 +145,7 @@ export default function MultiSearch({
           />
           <br />
           {/* lists */}
-          <div className="ntw w-full flex flex-col items-start justify-start gap-2">
+          <div className="ntw w-full flex flex-col items-start justify-start gap-10">
             {type === "multi"
               ? filterData && filterData.length > 0
                 ? filterData.map((listData) => (
