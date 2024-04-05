@@ -1,6 +1,5 @@
-import React from "react";
-import "../style.scss";
 import { FlexColStart } from "components/Flex";
+import "../style.scss";
 import defaultBgImg from "assets/images/default-img.jpeg";
 import {
   BusinessListingLayouts,
