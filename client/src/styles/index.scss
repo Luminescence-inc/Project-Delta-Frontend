@@ -226,7 +226,7 @@ img {
   }
 
   // dynamic stylesm like tailwindcss px-[number] or py-[number]
-  @for $i from 1 through 100 {
+  @for $i from 1 through 1000 {
     &.p-#{$i} {
       padding: $i + px;
     }
