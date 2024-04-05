@@ -9,7 +9,7 @@ export const sleep = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms * 1000));
 
 export const removeAMPM = (time: string) => {
-  return time.replace(/(am|pm)/gi, "");
+  return time.replace(/(am|pm|AM|PM)/gi, "");
 };
 
 interface DaysOfOperation {
@@ -38,9 +38,7 @@ export const determineBusOpTime = (daysOfOperation: DaysOfOperation[]) => {
     return currentTime < closingTime
       ? {
           isOpened: true,
-          closingTime: day.ct?.toLowerCase().includes("am")
-            ? removeAMPM(day.ct) + "PM"
-            : day.ct,
+          closingTime: removeAMPM(day.ct!) + "PM",
         }
       : {
           isOpened: false,

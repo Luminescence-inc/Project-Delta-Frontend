@@ -121,7 +121,7 @@ export const ColLayoutCard = ({
                       color: "#000",
                     }}
                   >
-                    Closes {hasBusinessClosed.closingTime}pm
+                    Closes {hasBusinessClosed.closingTime}
                   </span>
                 </>
               ) : (
