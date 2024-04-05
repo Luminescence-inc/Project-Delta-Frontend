@@ -240,13 +240,11 @@ export const RowLayoutCard = ({
                       Open
                     </span>
                     <span
-                      className="ntw text-6"
+                      className="ntw h-3 w-3 rounded-100 text-6"
                       style={{
-                        color: "#000",
+                        background: "#17BEBB",
                       }}
-                    >
-                      ⏺
-                    </span>
+                    ></span>
 
                     <span
                       className="ntw text-11 font-normal font-hn-light leading-13 category-name"
@@ -254,7 +252,7 @@ export const RowLayoutCard = ({
                         color: "#000",
                       }}
                     >
-                      Closes {hasBusinessClosed.closingTime}pm
+                      Closes {hasBusinessClosed.closingTime}
                     </span>
                   </>
                 ) : (

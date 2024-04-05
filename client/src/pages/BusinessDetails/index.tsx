@@ -19,7 +19,13 @@ import CalendarIcon from "assets/icons/calendar.svg?react";
 import EllipseIcon from "assets/icons/ellipse.svg?react";
 import defaultImg from "assets/images/default-img.jpeg";
 import "./details.scss";
-import { cn, constructDOP, determineBusOpTime, isImgUrlValid } from "utils";
+import {
+  cn,
+  constructDOP,
+  determineBusOpTime,
+  isImgUrlValid,
+  removeAMPM,
+} from "utils";
 import RenderSocialLinks from "./components/RenderSocialLinks";
 import { ColLayoutCard } from "pages/ExploreBusiness/components/LayoutCards";
 import { useNavigate, useParams } from "react-router-dom";
@@ -99,12 +105,8 @@ export default function BusinessDetails() {
         if (day) {
           return {
             day: d,
-            ot:
-              prefixWithZero(openingTime!).toLowerCase().replace("am", "") +
-              " AM",
-            ct:
-              prefixWithZero(closingTime!).toLowerCase().replace("pm", "") +
-              " PM",
+            ot: removeAMPM(prefixWithZero(openingTime!).toLowerCase()) + " AM",
+            ct: removeAMPM(prefixWithZero(closingTime!).toLowerCase()) + " PM",
           };
         }
         return {
