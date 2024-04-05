@@ -175,7 +175,7 @@ export default function BusinessDetails() {
   };
 
   const similarBusinesses = getSimilarBusinesses(businesses);
-  //   console.log(similarBusinesses, businesses);
+
   return (
     <FlexColStart className="w-full h-auto px-28 business-details-container">
       {/* breadcrumb */}
