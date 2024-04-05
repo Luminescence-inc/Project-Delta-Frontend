@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
-  FlexColCenter,
   FlexColStart,
   FlexRowCenter,
   FlexRowCenterBtw,
@@ -28,7 +27,6 @@ import { IBusinessProfile } from "types/business-profile";
 import { CloudinaryConfig } from "config";
 import { getBusinessProfileById } from "api/business";
 
-const categories = ["Food", "Groceries", "Fashion"];
 const daysOfWeek = [
   "Sunday",
   "Monday",
@@ -38,39 +36,9 @@ const daysOfWeek = [
   "Friday",
   "Saturday",
 ];
-const daysOfOps = [
-  {
-    day: "Monday",
-    ot: "8:00",
-    ct: "6:00",
-  },
-  {
-    day: "Wednesday",
-    ot: "8:00",
-    ct: "10:00",
-  },
-];
-const socialLinks = [
-  {
-    url: "",
-    name: "instagram",
-  },
-  {
-    url: "",
-    name: "tiktok",
-  },
-  {
-    url: "",
-    name: "facebook",
-  },
-  {
-    url: "",
-    name: "website",
-  },
-];
 
 export default function BusinessDetails() {
-  const { businessCategory, businesses, allBusinessesLoading, setSearchQuery } =
+  const { businessCategory, businesses } =
     useBusinessCtx();
   // page loading set to TRUE by default before accessing the query params
   const [pageLoading, setPageLoading] = useState<boolean>(true);
@@ -85,22 +53,6 @@ export default function BusinessDetails() {
     return time.split(":")[0].length > 1 ? time : "0" + time;
   };
 
-  const getOpeningHours = () => {
-    const calendar: { day: string; ot: string; ct: string }[] = [];
-    daysOfWeek.forEach((d) => {
-      const day = daysOfOps.find(
-        (day) => day.day.toLowerCase() === d.toLowerCase()
-      );
-      if (day) {
-        calendar.push({
-          day: d,
-          ot: prefixWithZero(day.ot) + " AM",
-          ct: prefixWithZero(day.ct) + " PM",
-        });
-      }
-    });
-    return calendar;
-  };
   const getCurrentDay = daysOfWeek[new Date().getDay()];
 
   useEffect(() => {
