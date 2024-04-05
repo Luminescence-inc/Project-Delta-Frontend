@@ -61,7 +61,7 @@ export const ColLayoutCard = ({
           }}
         ></div>
         <FlexColStart className="w-full px-4 py-2 gap-0">
-          <h2 className="ntw text-15 font-bold font-hn-bold business-name leading-18">
+          <h2 className="ntw text-15 font-bold font-hn-bold business-name leading-18 mt-10">
             {name.length > 20 ? name.slice(0, 20) + "..." : name}
           </h2>
 
@@ -90,7 +90,7 @@ export const ColLayoutCard = ({
           {/* location */}
           <FlexRowStartCenter className="w-auto gap-5 h-16 py-15">
             <MapPin />
-            <span className="ntw text-13 font-normal font-hn-light location-text leading-15">
+            <span className="ntw text-13 font-normal font-hn-light location-text mt-2">
               {location}
             </span>
           </FlexRowStartCenter>
@@ -219,12 +219,12 @@ export const RowLayoutCard = ({
             </FlexRowCenterBtw>
 
             {/* location */}
-            <FlexRowStartCenter className="w-auto gap-5 h-16 mt-4">
+            <FlexRowCenter className="w-auto gap-5 h-16 mt-4">
               <MapPin />
-              <span className="ntw text-13 font-normal font-hn-light location-text leading-15">
+              <span className="ntw text-13 font-normal font-hn-light location-text mt-2">
                 {location}
               </span>
-            </FlexRowStartCenter>
+            </FlexRowCenter>
 
             {/* opening time */}
             <FlexRowCenterBtw className="w-full">
