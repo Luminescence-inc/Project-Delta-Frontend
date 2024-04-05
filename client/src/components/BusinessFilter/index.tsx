@@ -36,6 +36,8 @@ const BusinessesFilterComponent = ({
     setFilteredCities,
     filteredStates,
     setFilteredStates,
+    getBusinesses,
+    setSearchQuery,
   } = useBusinessCtx();
 
   const formatedCountries = () => {
@@ -218,6 +220,7 @@ const BusinessesFilterComponent = ({
       country: undefined,
     });
     setErrorMsg("");
+    setSearchQuery(null);
   };
 
   const applyFilter = () => {
