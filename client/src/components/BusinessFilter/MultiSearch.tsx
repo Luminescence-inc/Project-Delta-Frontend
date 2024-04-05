@@ -91,7 +91,7 @@ export default function MultiSearch({
       : null;
 
   return (
-    <div className="ntw w-full multisearch-comp flex flex-col items-start justify-start gap-2 relative">
+    <div className="ntw w-full multisearch-comp flex flex-col items-start justify-start gap-2 relative pb-20">
       <label className="ntw text-14 font-normal font-hn-light leading-19">
         {label}
       </label>
