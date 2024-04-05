@@ -39,8 +39,7 @@ const daysOfWeek = [
 ];
 
 export default function BusinessDetails() {
-  const { businessCategory, businesses } =
-    useBusinessCtx();
+  const { businessCategory, businesses } = useBusinessCtx();
   // page loading set to TRUE by default before accessing the query params
   const [pageLoading, setPageLoading] = useState<boolean>(true);
   const [calendarOpened, setCalendarOpened] = useState(false);
@@ -365,7 +364,8 @@ export default function BusinessDetails() {
                         <span
                           className="ntw h-3 w-3 rounded-100 text-6"
                           style={{
-                            background: "#17BEBB",
+                            background:
+                              getCurrentDay === day.day ? "#17BEBB" : "#0E2D52",
                           }}
                         ></span>
                       </FlexRowStartBtw>
