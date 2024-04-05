@@ -219,7 +219,7 @@ export const RowLayoutCard = ({
             </FlexRowCenterBtw>
 
             {/* location */}
-            <FlexRowCenter className="w-auto gap-5 h-16 mt-4">
+            <FlexRowCenter className="w-auto gap-5 h-16 mt-15 pb-10">
               <MapPin />
               <span className="ntw text-13 font-normal font-hn-light location-text mt-2">
                 {location}
