@@ -90,7 +90,7 @@ export const ColLayoutCard = ({
           {/* location */}
           <FlexRowStartCenter className="w-auto gap-5 h-16 py-15">
             <MapPin />
-            <span className="ntw text-13 font-normal font-hn-light location-text mt-2">
+            <span className="ntw text-13 font-normal font-hn-light location-text mt-3">
               {location}
             </span>
           </FlexRowStartCenter>
