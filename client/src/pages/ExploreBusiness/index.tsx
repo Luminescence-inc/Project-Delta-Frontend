@@ -5,7 +5,6 @@ import {
   FlexRowCenterBtw,
   FlexRowStartCenter,
 } from "components/Flex";
-import { useState } from "react";
 import "./style.scss";
 import { LoaderCircle } from "lucide-react";
 import SearchIcon from "assets/icons/search-business.svg?react";
@@ -13,7 +12,7 @@ import LayoutPanelTop from "assets/icons/layout-panel-top.svg?react";
 import LayoutPanelLeft from "assets/icons/layout-panel-left.svg?react";
 import BusinessCardContainer from "./components/BusinessCard";
 import BusinessesFilterComponent from "components/BusinessFilter";
-import { BusinessListingLayouts, UserBusinessList } from "types/business";
+import { UserBusinessList } from "types/business";
 import { FilterData, useBusinessCtx } from "context/BusinessCtx";
 import { IFilter } from "types/business-profile";
 import { cn } from "utils";
@@ -29,8 +28,9 @@ const ExploreBusiness = () => {
     setSearchQuery,
     showFilter,
     setShowFilter,
+    layout,
+    setLayout,
   } = useBusinessCtx();
-  const [layout, setLayout] = useState<BusinessListingLayouts>("col");
 
   // construct the search query
   const constructQuery = (filterData: FilterData) => {
@@ -84,7 +84,9 @@ const ExploreBusiness = () => {
           </FlexRowStartCenter>
         </button>
         <button
-          onClick={() => setLayout(layout === "col" ? "row" : "col")}
+          onClick={() =>
+            setLayout && setLayout(layout === "col" ? "row" : "col")
+          }
           className="ntw border-none outline-none cursor-pointer rounded-10"
         >
           <FlexColCenter>
@@ -120,7 +122,6 @@ const ExploreBusiness = () => {
 
       {/* business card lists */}
       <BusinessCardContainer
-        layout={layout}
         data={businesses as UserBusinessList[]}
         businessCategories={businessCategory}
       />
