@@ -1,26 +1,22 @@
 import { FlexColStart } from "components/Flex";
 import "../style.scss";
 import defaultBgImg from "assets/images/default-img.jpeg";
-import {
-  BusinessListingLayouts,
-  IOption,
-  UserBusinessList,
-} from "types/business";
+import { IOption, UserBusinessList } from "types/business";
 import { CloudinaryConfig } from "config";
 import { constructDOP } from "utils";
 import { ColLayoutCard, RowLayoutCard } from "./LayoutCards";
+import { useBusinessCtx } from "context/BusinessCtx";
 
 interface BusinessCardContainerProps {
-  layout: BusinessListingLayouts;
   data: UserBusinessList[];
   businessCategories: IOption[] | undefined;
 }
 
 const BusinessCardContainer = ({
-  layout,
   data,
   businessCategories,
 }: BusinessCardContainerProps) => {
+  const { layout } = useBusinessCtx();
   const constructLogoUrl = (url: string | null) => {
     return !url
       ? defaultBgImg
