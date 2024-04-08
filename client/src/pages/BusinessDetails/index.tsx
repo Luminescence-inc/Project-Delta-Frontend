@@ -184,19 +184,18 @@ export default function BusinessDetails() {
   return (
     <FlexColStart className="w-full h-auto px-28 business-details-container">
       {/* breadcrumb */}
-      <FlexRowStart className="w-auto gap-15">
-        <ChevronLeftIcon />
-        <button
-          //   href="#"
-          className="ntw text-12 font-hn-light font-bold leading-14 underline bg-none outline-none border-none cursor-pointer"
-          style={{
-            color: "#0E2D52",
-          }}
-          onClick={() => navigate("/explore-businesses")}
-        >
+      <button
+        className="ntw text-12 font-hn-light font-bold leading-14 underline bg-none outline-none border-none cursor-pointer"
+        style={{
+          color: "#0E2D52",
+        }}
+        onClick={() => navigate("/explore-businesses")}
+      >
+        <FlexRowStart className="w-auto gap-15">
+          <ChevronLeftIcon />
           Explore Businesses
-        </button>
-      </FlexRowStart>
+        </FlexRowStart>
+      </button>
 
       {businessDetails && !pageLoading ? (
         <>
