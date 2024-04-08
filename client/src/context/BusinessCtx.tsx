@@ -1,6 +1,10 @@
 import { allBusinessCategories, getListOfBusinsessProfile } from "api/business";
 import React, { PropsWithChildren, useEffect, useState } from "react";
-import { BusinessCategories, IOption } from "types/business";
+import {
+  BusinessCategories,
+  BusinessListingLayouts,
+  IOption,
+} from "types/business";
 import { IBusinessProfile, ISearch } from "types/business-profile";
 
 export const BusinessContext = React.createContext<ContextValues>({} as any);
@@ -41,6 +45,8 @@ interface ContextValues {
   getBusinesses: (currPage: number, filterApplied: boolean) => void;
   showFilter: boolean;
   setShowFilter: (showFilter: boolean) => void;
+  layout?: BusinessListingLayouts;
+  setLayout?: (layout: BusinessListingLayouts) => void;
 }
 
 interface BusinessContextProviderProps extends PropsWithChildren {}
@@ -67,6 +73,9 @@ export default function BusinessContextProvider({
     city: undefined,
     country: undefined,
   });
+
+  // for businesses layout cards
+  const [layout, setLayout] = useState<BusinessListingLayouts>("col");
 
   // all business categories
   useEffect(() => {
@@ -141,6 +150,8 @@ export default function BusinessContextProvider({
     getBusinesses,
     showFilter,
     setShowFilter,
+    layout,
+    setLayout,
   } satisfies ContextValues;
 
   return (
