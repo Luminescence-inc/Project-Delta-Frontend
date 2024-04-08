@@ -208,7 +208,12 @@ export default function MultiSearch({
                       setActivePanel("");
                     }}
                   >
-                    <span className="ntw text-15 font-normal">
+                    <span
+                      className="ntw text-15 font-normal"
+                      style={{
+                        color: "#000000",
+                      }}
+                    >
                       {listData.value}
                     </span>
                   </button>
