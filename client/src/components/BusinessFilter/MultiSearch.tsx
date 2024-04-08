@@ -150,7 +150,7 @@ export default function MultiSearch({
               ? filterData && filterData.length > 0
                 ? filterData.map((listData) => (
                     <button
-                      className="ntw flex items-center justify-start gap-10 outline-none border-none bg-none"
+                      className="ntw flex items-center justify-start gap-10 outline-none border-none bg-none cursor-pointer"
                       key={listData.uuid}
                       onClick={() => {
                         onChange?.({
