@@ -16,7 +16,6 @@ import LocationMarkerIcon from "assets/icons/location-marker-2.svg?react";
 import PhoneIcon from "assets/icons/phone.svg?react";
 import MailBoxIcon from "assets/icons/mailbox.svg?react";
 import CalendarIcon from "assets/icons/calendar.svg?react";
-import EllipseIcon from "assets/icons/ellipse.svg?react";
 import defaultImg from "assets/images/default-img.jpeg";
 import "./details.scss";
 import {
@@ -36,6 +35,7 @@ import { useBusinessCtx } from "context/BusinessCtx";
 import { IBusinessProfile } from "types/business-profile";
 import { CloudinaryConfig } from "config";
 import { getBusinessProfileById } from "api/business";
+import { LoaderCircle } from "lucide-react";
 
 const daysOfWeek = [
   "Sunday",
@@ -197,6 +197,12 @@ export default function BusinessDetails() {
         </FlexRowStart>
       </button>
 
+      {pageLoading && (
+        <FlexRowCenter className="w-full mt-20 gap-10">
+          <LoaderCircle size={15} className="loader" />
+        </FlexRowCenter>
+      )}
+
       {businessDetails && !pageLoading ? (
         <>
           {/* business image */}
@@ -321,7 +327,7 @@ export default function BusinessDetails() {
           </FlexRowCenter>
 
           {/* opening hours dropdown */}
-          <FlexColStart className="w-full mt-10 opening-hours-dd rounded-5 max-h-271">
+          <FlexColStart className="w-full mt-10 opening-hours-dd rounded-5 h-auto">
             <button
               className="ntw w-full h-37 mt-5 outline-none border-none rounded-5 opening-hours-dd-trigger flex items-center justify-between px-20 bg-none cursor-pointer"
               onClick={() => {
@@ -348,7 +354,7 @@ export default function BusinessDetails() {
             {/* grid */}
             <div
               className={cn(
-                "ntw w-full calendar-grid overflow-hidden",
+                "ntw w-full h-auto calendar-grid overflow-hidden",
                 calendarOpened ? "h-auto py-10" : "h-0"
               )}
             >
@@ -479,14 +485,14 @@ export default function BusinessDetails() {
             </FlexColStart>
           </FlexColStart>
         </>
-      ) : (
+      ) : !pageLoading ? (
         <FlexRowCenter className="w-full mt-20 gap-10">
           <span className="">⚠</span>
           <h2 className="ntw text-15 font-bold font-hn-light">
             No business found.
           </h2>
         </FlexRowCenter>
-      )}
+      ) : null}
     </FlexColStart>
   );
 }
