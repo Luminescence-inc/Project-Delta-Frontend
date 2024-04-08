@@ -30,6 +30,8 @@ interface BusinessCardProps {
   _key: string;
 }
 
+const NAME_CONSTRAINT = 35;
+
 export const ColLayoutCard = ({
   name,
   categories,
@@ -62,7 +64,9 @@ export const ColLayoutCard = ({
         ></div>
         <FlexColStart className="w-full px-4 py-2 gap-0">
           <h2 className="ntw text-15 font-bold font-hn-bold business-name leading-18 mt-10">
-            {name.length > 20 ? name.slice(0, 20) + "..." : name}
+            {name.length > NAME_CONSTRAINT
+              ? name.slice(0, NAME_CONSTRAINT) + "..."
+              : name}
           </h2>
 
           {/* categories */}
@@ -136,18 +140,17 @@ export const ColLayoutCard = ({
               )}
             </FlexRowCenter>
 
-            <a href={`tel:${phone}`} className="ntw">
-              <FlexRowCenter
-                className=" businesss-call-line w-auto w-81 h-25 px-5 rounded-100 gap-5"
-                style={{
-                  borderRadius: "100px",
-                }}
-              >
-                <Phone />
-                <span className="ntw text-12 font-bold font-hn-light leading-14 mt-2">
-                  Call me
-                </span>
-              </FlexRowCenter>
+            <a
+              href={`tel:${phone}`}
+              className="ntw flex flex-row items-center justify-center businesss-call-line w-auto w-81 h-25 px-5 rounded-100 gap-5"
+              style={{
+                borderRadius: "100px",
+              }}
+            >
+              <Phone />
+              <span className="ntw text-12 font-bold font-hn-light leading-14 mt-2">
+                Call me
+              </span>
             </a>
           </FlexRowCenterBtw>
         </FlexColStart>
@@ -191,7 +194,9 @@ export const RowLayoutCard = ({
           ></div>
           <FlexColStart className="w-full px-5 gap-0">
             <h2 className="ntw text-15 font-bold font-hn-bold business-name leading-18">
-              {name.length > 20 ? name.slice(0, 20) + "..." : name}
+              {name.length > NAME_CONSTRAINT
+                ? name.slice(0, NAME_CONSTRAINT) + "..."
+                : name}
             </h2>
 
             {/* categories */}
@@ -268,15 +273,14 @@ export const RowLayoutCard = ({
               </FlexRowCenter>
 
               <FlexRowEnd className="w-auto">
-                <a href={`tel:${phone}`} className="ntw">
-                  <FlexRowCenter
-                    className=" businesss-call-line w-auto w-35 h-25 px-5 py-10 rounded-100 gap-5"
-                    style={{
-                      borderRadius: "100px",
-                    }}
-                  >
-                    <Phone />
-                  </FlexRowCenter>
+                <a
+                  href={`tel:${phone}`}
+                  className="ntw flex flex-row items-center justify-center businesss-call-line w-auto w-35 h-25 px-5 py-10 rounded-100 gap-5"
+                  style={{
+                    borderRadius: "100px",
+                  }}
+                >
+                  <Phone />
                 </a>
               </FlexRowEnd>
             </FlexRowCenterBtw>
@@ -296,7 +300,7 @@ interface CWProps {
 const CardWrapper = ({ children, style, className, ...props }: CWProps) => {
   return (
     <div
-      className={cn("ntw w-full rounded-10 ", className)}
+      className={cn("ntw w-full rounded-10 business-layout-card", className)}
       style={{
         background: "#FFFFFF",
         ...style,
@@ -320,7 +324,18 @@ const CardNavigateWrapper = ({
     <button
       className="ntw w-full outline-none border-none bg-none cursor-pointer"
       key={id}
-      onClick={() => navigate(`/business-details/${id}`)}
+      onClick={(e) => {
+        const target = (
+          e.target as HTMLElement
+        )?.parentElement?.classList.contains("businesss-call-line");
+
+        // prevent redirecting to specified page and opening the tel-phone number on that page
+        if (target) {
+          e.stopPropagation();
+          return;
+        }
+        navigate(`/business-details/${id}`);
+      }}
     >
       {children}
     </button>
