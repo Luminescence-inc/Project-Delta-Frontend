@@ -274,7 +274,7 @@ const BusinessesFilterComponent = ({
 
             {/* categories placeholders */}
             {filterData.businessCategoryUuid && (
-              <div className="ntw flex flex-row flex-wrap items-start justify-start mt-20 filter-placeholders gap-3">
+              <div className="ntw flex flex-row flex-wrap items-start justify-start mt-0 filter-placeholders gap-3 pb-15">
                 {filterData.businessCategoryUuid?.map((categories) => (
                   <div
                     key={categories.uuid}
