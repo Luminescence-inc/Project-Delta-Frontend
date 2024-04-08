@@ -36,6 +36,7 @@ const BusinessesFilterComponent = ({
     setFilteredCities,
     filteredStates,
     setFilteredStates,
+    setSearchQuery,
   } = useBusinessCtx();
 
   const formatedCountries = () => {
@@ -218,6 +219,7 @@ const BusinessesFilterComponent = ({
       country: undefined,
     });
     setErrorMsg("");
+    setSearchQuery(null);
   };
 
   const applyFilter = () => {
@@ -239,7 +241,7 @@ const BusinessesFilterComponent = ({
         <div className="ntw w-full h-auto flex flex-row items-center justify-between ">
           <h2 className="ntw text-30 font-bold">Search</h2>
           <button
-            className="ntw close-btn border-none outline-none"
+            className="ntw close-btn border-none outline-none cursor-pointer"
             onClick={closeFilter}
           >
             <CloseIcon />
@@ -271,7 +273,7 @@ const BusinessesFilterComponent = ({
 
             {/* categories placeholders */}
             {filterData.businessCategoryUuid && (
-              <div className="ntw flex flex-row flex-wrap items-start justify-start mt-20 filter-placeholders gap-3">
+              <div className="ntw flex flex-row flex-wrap items-start justify-start mt-0 filter-placeholders gap-3 pb-15">
                 {filterData.businessCategoryUuid?.map((categories) => (
                   <div
                     key={categories.uuid}

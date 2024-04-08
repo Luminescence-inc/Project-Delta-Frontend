@@ -91,7 +91,7 @@ export default function MultiSearch({
       : null;
 
   return (
-    <div className="ntw w-full multisearch-comp flex flex-col items-start justify-start gap-2 relative">
+    <div className="ntw w-full multisearch-comp flex flex-col items-start justify-start gap-2 relative pb-20">
       <label className="ntw text-14 font-normal font-hn-light leading-19">
         {label}
       </label>
@@ -117,7 +117,7 @@ export default function MultiSearch({
           >
             {allowedDataType.includes(dataType!) && selectedListData
               ? activeSelectedItem?.uuid
-              : placeholder ?? "Search for businesses"}
+              : placeholder ?? "Search..."}
           </span>
         </div>
         {rightIcon ?? null}
@@ -139,19 +139,26 @@ export default function MultiSearch({
           <input
             type="text"
             className="ntw w-full px-3 py-2 outline-none border-none text-15"
-            placeholder="Search for businesses"
+            placeholder="Search..."
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
           />
           <br />
           {/* lists */}
-          <div className="ntw w-full flex flex-col items-start justify-start gap-2">
+          <div className="ntw w-full flex flex-col items-start justify-start gap-10">
             {type === "multi"
               ? filterData && filterData.length > 0
                 ? filterData.map((listData) => (
-                    <li
-                      className="ntw flex items-center justify-start gap-2"
+                    <button
+                      className="ntw flex items-center justify-start gap-10 outline-none border-none bg-none cursor-pointer"
                       key={listData.uuid}
+                      onClick={() => {
+                        onChange?.({
+                          uuid: listData.uuid,
+                          value: listData.value,
+                          type: dataType as BusinessFilterType,
+                        });
+                      }}
                     >
                       <input
                         type="checkbox"
@@ -170,10 +177,15 @@ export default function MultiSearch({
                           });
                         }}
                       />
-                      <span className="ntw text-15 font-normal">
+                      <span
+                        className="ntw text-15 font-normal"
+                        style={{
+                          color: "#777",
+                        }}
+                      >
                         {listData.value}
                       </span>
-                    </li>
+                    </button>
                   ))
                 : null
               : filterData && filterData.length > 0
@@ -196,7 +208,12 @@ export default function MultiSearch({
                       setActivePanel("");
                     }}
                   >
-                    <span className="ntw text-15 font-normal">
+                    <span
+                      className="ntw text-15 font-normal font-hn-medium"
+                      style={{
+                        color: "#777",
+                      }}
+                    >
                       {listData.value}
                     </span>
                   </button>

@@ -18,14 +18,24 @@ import MailBoxIcon from "assets/icons/mailbox.svg?react";
 import CalendarIcon from "assets/icons/calendar.svg?react";
 import defaultImg from "assets/images/default-img.jpeg";
 import "./details.scss";
-import { cn, constructDOP, determineBusOpTime, isImgUrlValid } from "utils";
+import {
+  cn,
+  constructDOP,
+  determineBusOpTime,
+  isImgUrlValid,
+  removeAMPM,
+} from "utils";
 import RenderSocialLinks from "./components/RenderSocialLinks";
-import { ColLayoutCard } from "pages/ExploreBusiness/components/LayoutCards";
+import {
+  ColLayoutCard,
+  RowLayoutCard,
+} from "pages/ExploreBusiness/components/LayoutCards";
 import { useNavigate, useParams } from "react-router-dom";
 import { useBusinessCtx } from "context/BusinessCtx";
 import { IBusinessProfile } from "types/business-profile";
 import { CloudinaryConfig } from "config";
 import { getBusinessProfileById } from "api/business";
+import { LoaderCircle } from "lucide-react";
 
 const daysOfWeek = [
   "Sunday",
@@ -38,8 +48,7 @@ const daysOfWeek = [
 ];
 
 export default function BusinessDetails() {
-  const { businessCategory, businesses } =
-    useBusinessCtx();
+  const { businessCategory, businesses, layout } = useBusinessCtx();
   // page loading set to TRUE by default before accessing the query params
   const [pageLoading, setPageLoading] = useState<boolean>(true);
   const [calendarOpened, setCalendarOpened] = useState(false);
@@ -99,8 +108,8 @@ export default function BusinessDetails() {
         if (day) {
           return {
             day: d,
-            ot: prefixWithZero(openingTime!) + " AM",
-            ct: prefixWithZero(closingTime!) + " PM",
+            ot: removeAMPM(prefixWithZero(openingTime!)) + " AM",
+            ct: removeAMPM(prefixWithZero(closingTime!)) + " PM",
           };
         }
         return {
@@ -171,23 +180,28 @@ export default function BusinessDetails() {
   };
 
   const similarBusinesses = getSimilarBusinesses(businesses);
-  //   console.log(similarBusinesses, businesses);
+
   return (
     <FlexColStart className="w-full h-auto px-28 business-details-container">
       {/* breadcrumb */}
-      <FlexRowStart className="w-auto gap-15">
-        <ChevronLeftIcon />
-        <button
-          //   href="#"
-          className="ntw text-12 font-hn-light font-bold leading-14 underline bg-none outline-none border-none cursor-pointer"
-          style={{
-            color: "#0E2D52",
-          }}
-          onClick={() => navigate("/explore-businesses")}
-        >
+      <button
+        className="ntw text-12 font-hn-light font-bold leading-14 underline bg-none outline-none border-none cursor-pointer"
+        style={{
+          color: "#0E2D52",
+        }}
+        onClick={() => navigate("/explore-businesses")}
+      >
+        <FlexRowStart className="w-auto gap-15">
+          <ChevronLeftIcon />
           Explore Businesses
-        </button>
-      </FlexRowStart>
+        </FlexRowStart>
+      </button>
+
+      {pageLoading && (
+        <FlexRowCenter className="w-full mt-20 gap-10">
+          <LoaderCircle size={15} className="loader" />
+        </FlexRowCenter>
+      )}
 
       {businessDetails && !pageLoading ? (
         <>
@@ -221,13 +235,11 @@ export default function BusinessDetails() {
                           businessDetails.categories.length - 1
                         ] !== c && (
                           <span
-                            className="ntw text-5"
+                            className="ntw h-3 w-3 rounded-100 text-6"
                             style={{
-                              color: "#17BEBB",
+                              background: "#17BEBB",
                             }}
-                          >
-                            ⏺
-                          </span>
+                          ></span>
                         )}
                       </FlexRowCenter>
                     );
@@ -287,13 +299,11 @@ export default function BusinessDetails() {
                   Open
                 </span>
                 <span
-                  className="ntw text-6"
+                  className="ntw h-3 w-3 rounded-100 text-6"
                   style={{
-                    color: "#000",
+                    background: "#000",
                   }}
-                >
-                  ⏺
-                </span>
+                ></span>
 
                 <span
                   className="ntw text-11 font-normal font-hn-light leading-13"
@@ -301,11 +311,7 @@ export default function BusinessDetails() {
                     color: "#000",
                   }}
                 >
-                  Closes{" "}
-                  {hasBusinessClosed.closingTime
-                    ?.toLowerCase()
-                    ?.replace("pm", "")}
-                  pm
+                  Closes {removeAMPM(hasBusinessClosed.closingTime!)}PM
                 </span>
               </>
             ) : (
@@ -321,16 +327,21 @@ export default function BusinessDetails() {
           </FlexRowCenter>
 
           {/* opening hours dropdown */}
-          <FlexColStart className="w-full mt-10 opening-hours-dd rounded-5 max-h-271">
+          <FlexColStart className="w-full mt-10 opening-hours-dd rounded-5 h-auto">
             <button
-              className="ntw w-full h-37 outline-none border-none rounded-5 opening-hours-dd-trigger flex items-center justify-between px-20 bg-none cursor-pointer"
+              className="ntw w-full h-37 mt-5 outline-none border-none rounded-5 opening-hours-dd-trigger flex items-center justify-between px-20 bg-none cursor-pointer"
               onClick={() => {
                 setCalendarOpened(!calendarOpened);
               }}
             >
               <FlexRowStartCenter className="w-auto">
                 <CalendarIcon />
-                <span className="ntw text-11 font-bold font-hn-medium leading-10">
+                <span
+                  className="ntw text-11 font-bold font-hn-medium leading-10 mt-2"
+                  style={{
+                    color: "#0E2D52",
+                  }}
+                >
                   View opening hours
                 </span>
               </FlexRowStartCenter>
@@ -343,8 +354,8 @@ export default function BusinessDetails() {
             {/* grid */}
             <div
               className={cn(
-                "ntw w-full calendar-grid overflow-hidden",
-                calendarOpened ? "h-auto" : "h-0"
+                "ntw w-full h-auto calendar-grid overflow-hidden",
+                calendarOpened ? "h-auto py-10" : "h-0"
               )}
             >
               {openingHoursCalendar.map((day) => {
@@ -362,13 +373,12 @@ export default function BusinessDetails() {
                           {day.day}
                         </span>
                         <span
-                          className="ntw text-6"
+                          className="ntw h-3 w-3 mt-5 rounded-100 text-6"
                           style={{
-                            color: "#17BEBB",
+                            background:
+                              getCurrentDay === day.day ? "#17BEBB" : "#0E2D52",
                           }}
-                        >
-                          ⏺
-                        </span>
+                        ></span>
                       </FlexRowStartBtw>
                     </div>
                     <div className="ntw w-full time px-20">
@@ -422,7 +432,7 @@ export default function BusinessDetails() {
               Similar Businesses
             </h3>
 
-            <FlexColStart className="w-full mt-20">
+            <FlexColStart className="w-full mt-20 pb-200">
               {similarBusinesses.length > 0 ? (
                 similarBusinesses.map((businesses) => {
                   const daysOfOperation = constructDOP(
@@ -432,8 +442,23 @@ export default function BusinessDetails() {
                   );
 
                   const businessesImg = constructBizImgUrl(businesses.logoUrl!);
-                  return (
+                  return layout === "col" ? (
                     <ColLayoutCard
+                      name={businesses.name ?? "N/A"}
+                      categories={businesses?.categories as string[]}
+                      location={"Ontario, Canada"}
+                      daysOfOps={daysOfOperation}
+                      phone={businesses.phoneNumber ?? "N/A"}
+                      image={
+                        !isImgUrlValid(businessesImg)
+                          ? defaultImg
+                          : businessesImg
+                      }
+                      _key={businesses.uuid!}
+                      id={businesses.uuid}
+                    />
+                  ) : (
+                    <RowLayoutCard
                       name={businesses.name ?? "N/A"}
                       categories={businesses?.categories as string[]}
                       location={"Ontario, Canada"}
@@ -452,7 +477,7 @@ export default function BusinessDetails() {
               ) : (
                 <FlexRowStart className="w-full gap-10">
                   <span className="">⚠</span>
-                  <h2 className="ntw text-15 font-bold font-hn-light">
+                  <h2 className="ntw text-12 font-bold font-hn-light">
                     No business found.
                   </h2>
                 </FlexRowStart>
@@ -460,14 +485,14 @@ export default function BusinessDetails() {
             </FlexColStart>
           </FlexColStart>
         </>
-      ) : (
-        <FlexRowCenter className="w-full mt-50 gap-10">
+      ) : !pageLoading ? (
+        <FlexRowCenter className="w-full mt-20 gap-10">
           <span className="">⚠</span>
           <h2 className="ntw text-15 font-bold font-hn-light">
             No business found.
           </h2>
         </FlexRowCenter>
-      )}
+      ) : null}
     </FlexColStart>
   );
 }

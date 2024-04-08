@@ -30,6 +30,8 @@ interface BusinessCardProps {
   _key: string;
 }
 
+const NAME_CONSTRAINT = 35;
+
 export const ColLayoutCard = ({
   name,
   categories,
@@ -54,15 +56,17 @@ export const ColLayoutCard = ({
           style={{
             background: "#e2efff",
             backgroundImage: `url(${image ?? defaultBgImg})`,
-            backgroundSize: "100% 100%",
+            backgroundSize: "cover",
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
             height: "137px",
           }}
         ></div>
         <FlexColStart className="w-full px-4 py-2 gap-0">
-          <h2 className="ntw text-15 font-bold font-hn-bold business-name leading-18">
-            {name.length > 20 ? name.slice(0, 20) + "..." : name}
+          <h2 className="ntw text-15 font-bold font-hn-bold business-name leading-18 mt-10">
+            {name.length > NAME_CONSTRAINT
+              ? name.slice(0, NAME_CONSTRAINT) + "..."
+              : name}
           </h2>
 
           {/* categories */}
@@ -76,13 +80,11 @@ export const ColLayoutCard = ({
                     </span>
                     {categories[categories.length - 1] !== c && (
                       <span
-                        className="ntw text-10"
+                        className="ntw h-3 w-3 rounded-100 text-6"
                         style={{
-                          color: "#17BEBB",
+                          background: "#17BEBB",
                         }}
-                      >
-                        ⏺
-                      </span>
+                      ></span>
                     )}
                   </FlexRowCenter>
                 );
@@ -92,7 +94,7 @@ export const ColLayoutCard = ({
           {/* location */}
           <FlexRowStartCenter className="w-auto gap-5 h-16 py-15">
             <MapPin />
-            <span className="ntw text-13 font-normal font-hn-light location-text leading-15">
+            <span className="ntw text-13 font-normal font-hn-light location-text mt-3">
               {location}
             </span>
           </FlexRowStartCenter>
@@ -111,13 +113,11 @@ export const ColLayoutCard = ({
                     Open
                   </span>
                   <span
-                    className="ntw text-6"
+                    className="ntw h-3 w-3 rounded-100 text-6"
                     style={{
-                      color: "#000",
+                      background: "#000",
                     }}
-                  >
-                    ⏺
-                  </span>
+                  ></span>
 
                   <span
                     className="ntw text-11 font-normal leading-13 category-name"
@@ -125,7 +125,7 @@ export const ColLayoutCard = ({
                       color: "#000",
                     }}
                   >
-                    Closes {hasBusinessClosed.closingTime}pm
+                    Closes {hasBusinessClosed.closingTime}
                   </span>
                 </>
               ) : (
@@ -140,18 +140,17 @@ export const ColLayoutCard = ({
               )}
             </FlexRowCenter>
 
-            <a href={`tel:${phone}`} className="ntw">
-              <FlexRowCenter
-                className=" businesss-call-line w-auto w-81 h-25 px-5 rounded-100 gap-5"
-                style={{
-                  borderRadius: "100px",
-                }}
-              >
-                <Phone />
-                <span className="ntw text-12 font-bold font-hn-light leading-14 mt-1">
-                  Call me
-                </span>
-              </FlexRowCenter>
+            <a
+              href={`tel:${phone}`}
+              className="ntw flex flex-row items-center justify-center businesss-call-line w-auto w-81 h-25 px-5 rounded-100 gap-5"
+              style={{
+                borderRadius: "100px",
+              }}
+            >
+              <Phone />
+              <span className="ntw text-12 font-bold font-hn-light leading-14 mt-2">
+                Call me
+              </span>
             </a>
           </FlexRowCenterBtw>
         </FlexColStart>
@@ -195,7 +194,9 @@ export const RowLayoutCard = ({
           ></div>
           <FlexColStart className="w-full px-5 gap-0">
             <h2 className="ntw text-15 font-bold font-hn-bold business-name leading-18">
-              {name.length > 20 ? name.slice(0, 20) + "..." : name}
+              {name.length > NAME_CONSTRAINT
+                ? name.slice(0, NAME_CONSTRAINT) + "..."
+                : name}
             </h2>
 
             {/* categories */}
@@ -223,12 +224,12 @@ export const RowLayoutCard = ({
             </FlexRowCenterBtw>
 
             {/* location */}
-            <FlexRowStartCenter className="w-auto gap-5 h-16 mt-4">
+            <FlexRowCenter className="w-auto gap-5 h-16 mt-15 pb-10">
               <MapPin />
-              <span className="ntw text-13 font-normal font-hn-light location-text leading-15">
+              <span className="ntw text-13 font-normal font-hn-light location-text mt-2">
                 {location}
               </span>
-            </FlexRowStartCenter>
+            </FlexRowCenter>
 
             {/* opening time */}
             <FlexRowCenterBtw className="w-full">
@@ -244,13 +245,11 @@ export const RowLayoutCard = ({
                       Open
                     </span>
                     <span
-                      className="ntw text-6"
+                      className="ntw h-3 w-3 rounded-100 text-6"
                       style={{
-                        color: "#000",
+                        background: "#17BEBB",
                       }}
-                    >
-                      ⏺
-                    </span>
+                    ></span>
 
                     <span
                       className="ntw text-11 font-normal font-hn-light leading-13 category-name"
@@ -258,7 +257,7 @@ export const RowLayoutCard = ({
                         color: "#000",
                       }}
                     >
-                      Closes {hasBusinessClosed.closingTime}pm
+                      Closes {hasBusinessClosed.closingTime}
                     </span>
                   </>
                 ) : (
@@ -274,15 +273,14 @@ export const RowLayoutCard = ({
               </FlexRowCenter>
 
               <FlexRowEnd className="w-auto">
-                <a href={`tel:${phone}`} className="ntw">
-                  <FlexRowCenter
-                    className=" businesss-call-line w-auto w-35 h-25 px-5 py-10 rounded-100 gap-5"
-                    style={{
-                      borderRadius: "100px",
-                    }}
-                  >
-                    <Phone />
-                  </FlexRowCenter>
+                <a
+                  href={`tel:${phone}`}
+                  className="ntw flex flex-row items-center justify-center businesss-call-line w-auto w-35 h-25 px-5 py-10 rounded-100 gap-5"
+                  style={{
+                    borderRadius: "100px",
+                  }}
+                >
+                  <Phone />
                 </a>
               </FlexRowEnd>
             </FlexRowCenterBtw>
@@ -302,7 +300,7 @@ interface CWProps {
 const CardWrapper = ({ children, style, className, ...props }: CWProps) => {
   return (
     <div
-      className={cn("ntw w-full rounded-10 ", className)}
+      className={cn("ntw w-full rounded-10 business-layout-card", className)}
       style={{
         background: "#FFFFFF",
         ...style,
@@ -326,7 +324,18 @@ const CardNavigateWrapper = ({
     <button
       className="ntw w-full outline-none border-none bg-none cursor-pointer"
       key={id}
-      onClick={() => navigate(`/business-details/${id}`)}
+      onClick={(e) => {
+        const target = (
+          e.target as HTMLElement
+        )?.parentElement?.classList.contains("businesss-call-line");
+
+        // prevent redirecting to specified page and opening the tel-phone number on that page
+        if (target) {
+          e.stopPropagation();
+          return;
+        }
+        navigate(`/business-details/${id}`);
+      }}
     >
       {children}
     </button>

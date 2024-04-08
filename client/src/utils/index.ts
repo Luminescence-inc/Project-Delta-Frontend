@@ -8,14 +8,15 @@ export function cn(...inputs: ClassValue[]) {
 export const sleep = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms * 1000));
 
-// determine whether a business is opened or close.
-// if it open, return true and closing time for that day,
-// otherwise false and null for that day
-type DaysOfOperation = {
+export const removeAMPM = (time: string) => {
+  return time.replace(/(am|pm|AM|PM)/gi, "");
+};
+
+interface DaysOfOperation {
   day: string | null;
   ot: string | null; // open time
   ct: string | null; // closing time
-};
+}
 
 export const determineBusOpTime = (daysOfOperation: DaysOfOperation[]) => {
   const daysOfWeeks = [
@@ -37,7 +38,7 @@ export const determineBusOpTime = (daysOfOperation: DaysOfOperation[]) => {
     return currentTime < closingTime
       ? {
           isOpened: true,
-          closingTime: day.ct,
+          closingTime: removeAMPM(day.ct!) + "PM",
         }
       : {
           isOpened: false,
