@@ -331,7 +331,7 @@ export default function BusinessDetails() {
               <FlexRowStartCenter className="w-auto">
                 <CalendarIcon />
                 <span
-                  className="ntw text-11 font-bold font-hn-medium leading-10"
+                  className="ntw text-11 font-bold font-hn-medium leading-10 mt-2"
                   style={{
                     color: "#0E2D52",
                   }}
