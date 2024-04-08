@@ -117,7 +117,7 @@ export default function MultiSearch({
           >
             {allowedDataType.includes(dataType!) && selectedListData
               ? activeSelectedItem?.uuid
-              : placeholder ?? "Search for businesses"}
+              : placeholder ?? "Search..."}
           </span>
         </div>
         {rightIcon ?? null}
