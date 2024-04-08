@@ -36,7 +36,6 @@ const BusinessesFilterComponent = ({
     setFilteredCities,
     filteredStates,
     setFilteredStates,
-    getBusinesses,
     setSearchQuery,
   } = useBusinessCtx();
 
