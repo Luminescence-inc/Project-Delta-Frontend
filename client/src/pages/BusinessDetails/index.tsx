@@ -27,7 +27,10 @@ import {
   removeAMPM,
 } from "utils";
 import RenderSocialLinks from "./components/RenderSocialLinks";
-import { ColLayoutCard } from "pages/ExploreBusiness/components/LayoutCards";
+import {
+  ColLayoutCard,
+  RowLayoutCard,
+} from "pages/ExploreBusiness/components/LayoutCards";
 import { useNavigate, useParams } from "react-router-dom";
 import { useBusinessCtx } from "context/BusinessCtx";
 import { IBusinessProfile } from "types/business-profile";
@@ -45,7 +48,7 @@ const daysOfWeek = [
 ];
 
 export default function BusinessDetails() {
-  const { businessCategory, businesses } = useBusinessCtx();
+  const { businessCategory, businesses, layout } = useBusinessCtx();
   // page loading set to TRUE by default before accessing the query params
   const [pageLoading, setPageLoading] = useState<boolean>(true);
   const [calendarOpened, setCalendarOpened] = useState(false);
@@ -434,8 +437,23 @@ export default function BusinessDetails() {
                   );
 
                   const businessesImg = constructBizImgUrl(businesses.logoUrl!);
-                  return (
+                  return layout === "col" ? (
                     <ColLayoutCard
+                      name={businesses.name ?? "N/A"}
+                      categories={businesses?.categories as string[]}
+                      location={"Ontario, Canada"}
+                      daysOfOps={daysOfOperation}
+                      phone={businesses.phoneNumber ?? "N/A"}
+                      image={
+                        !isImgUrlValid(businessesImg)
+                          ? defaultImg
+                          : businessesImg
+                      }
+                      _key={businesses.uuid!}
+                      id={businesses.uuid}
+                    />
+                  ) : (
+                    <RowLayoutCard
                       name={businesses.name ?? "N/A"}
                       categories={businesses?.categories as string[]}
                       location={"Ontario, Canada"}
