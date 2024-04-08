@@ -209,9 +209,9 @@ export default function MultiSearch({
                     }}
                   >
                     <span
-                      className="ntw text-15 font-normal"
+                      className="ntw text-15 font-normal font-hn-medium"
                       style={{
-                        color: "#000000",
+                        color: "#777",
                       }}
                     >
                       {listData.value}
