@@ -37,7 +37,6 @@ const BusinessCatalogue: React.FC<IBusinessCatalogue> = ({
   );
   const [isFilterOpen, setIsFilterOPen] = useState<boolean>(false);
   const handlePrevious = () => {
-    //console.log("Before" + props.currentPage);
     if (currentPage > 1) {
       setDisabledPrevious(false);
       onPageChange(currentPage - 1, searchQuery);
@@ -80,9 +79,10 @@ const BusinessCatalogue: React.FC<IBusinessCatalogue> = ({
         <div className="business-catalogue__filter-body">
           {isFilterOpen && (
             <FilterBusinessProfiles
-              onFilter={(searchParam: ISearch) => onPageChange(1, searchParam)}
+              onFilter={(searchParam: ISearch) => {
+                onPageChange(1, searchParam);
+              }}
               onCancle={() => setIsFilterOPen((prev) => !prev)}
-              searchParam={searchQuery}
               businessCategory={businessCategory}
             />
           )}

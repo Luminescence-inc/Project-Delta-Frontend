@@ -9,35 +9,35 @@ const AboutUs = () => {
   return (
     <div className="responsive-content">
       <div className="about mobile-view">
-      <header>
-        <h2>About Us </h2>
-      </header>
-      <img src={aboutImg} alt={aboutImg} />
-      <p>
-        BizConnect24 is powered by
-        <a href="https://www.luminescencegrp.com/" target="_blank">
-          Luminescence
-        </a>
-         Technologies Limited and is the number 1
-        service connecting Immigrant and Local business owners with their customers. If
-        you know anyone who currently operates a business abroad and wants to boost
-        their sales numbers, BizConnect24 is for them.
-      </p>
+        <header>
+          <h2>About Us </h2>
+        </header>
+        <img src={aboutImg} alt={aboutImg} />
+        <p>
+          BizConnect24 is powered by
+          <a href="https://www.luminescencegrp.com/" target="_blank">
+            Luminescence
+          </a>
+          Technologies Limited and is the number 1 service connecting Immigrant
+          and Local business owners with their customers. If you know anyone who
+          currently operates a business abroad and wants to boost their sales
+          numbers, BizConnect24 is for them.
+        </p>
 
-      <div className="disc-btn">
-        <Button
-          label="Search for business"
-          variant="primary"
-          className="about_btn"
-          onClick={() => {
-            navigate("/discover-businesses");
-          }}
-        />
+        <div className="disc-btn">
+          <Button
+            label="Search for business"
+            variant="primary"
+            className="about_btn"
+            onClick={() => {
+              navigate("/explore-businesses");
+            }}
+          />
+        </div>
       </div>
-    </div>
-    <div>
-      <DefaultWebView className={"laptop-view"} />
-    </div>
+      <div>
+        <DefaultWebView className={"laptop-view"} />
+      </div>
     </div>
   );
 };

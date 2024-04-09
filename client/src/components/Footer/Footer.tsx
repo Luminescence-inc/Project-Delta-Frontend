@@ -24,19 +24,19 @@ const Footer = () => {
               <LogoHeaderIcon />
             </Link>
             <p>
-              Connecting Immigrant and Local Business Owners with their Customers
+              Connecting Immigrant and Local Business Owners with their
+              Customers
             </p>
           </div>
-          
         </div>
-        <div className="footer-about" style={{paddingLeft:"7px"}}>
+        <div className="footer-about" style={{ paddingLeft: "7px" }}>
           <p
             onClick={() => {
               navigate("/");
             }}
-            style={{color:"#17BEBB"}}
+            style={{ color: "#17BEBB" }}
           >
-           Home
+            Home
           </p>
           <p
             onClick={() => {
@@ -47,7 +47,7 @@ const Footer = () => {
           </p>
           <p
             onClick={() => {
-              navigate("/discover-businesses");
+              navigate("/explore-businesses");
             }}
           >
             Discover Businesses
@@ -61,10 +61,16 @@ const Footer = () => {
           </p>
         </div>
 
-        <div className="bottom" style={{paddingLeft:"7px"}}>
-            <span style={{marginRight:"15px"}}><InstagramIcon /></span> 
-            <span style={{marginRight:"15px"}}><FacebookIcon /></span>
-            <span><TwitterIcon /></span>
+        <div className="bottom" style={{ paddingLeft: "7px" }}>
+          <span style={{ marginRight: "15px" }}>
+            <InstagramIcon />
+          </span>
+          <span style={{ marginRight: "15px" }}>
+            <FacebookIcon />
+          </span>
+          <span>
+            <TwitterIcon />
+          </span>
         </div>
 
         <h5 className="copyright">2024 Bizconnect24. All right reserved</h5>
