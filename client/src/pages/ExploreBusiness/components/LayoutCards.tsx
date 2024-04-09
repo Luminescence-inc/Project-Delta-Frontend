@@ -56,7 +56,7 @@ export const ColLayoutCard = ({
           style={{
             background: "#e2efff",
             backgroundImage: `url(${image ?? defaultBgImg})`,
-            backgroundSize: "cover",
+            backgroundSize: "100% 100%",
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
             height: "137px",
