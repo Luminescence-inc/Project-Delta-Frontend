@@ -116,12 +116,20 @@
       border-bottom: 1px solid #cccccc7e;
     }
 
+    span {
+      color: #777;
+    }
+
     .single-list {
       background: none;
     }
 
     .single-list.active {
       background: #0d2c51;
+      color: #fff;
+    }
+
+    .single-list.active > span {
       color: #fff;
     }
   }
