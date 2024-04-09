@@ -101,7 +101,7 @@ export const ColLayoutCard = ({
 
           {/* opening time */}
           <FlexRowCenterBtw className="w-full">
-            <FlexRowCenter className="w-auto gap-10">
+            <FlexRowStartCenter className="w-auto gap-10">
               {hasBusinessClosed && hasBusinessClosed.isOpened ? (
                 <>
                   <span
@@ -120,7 +120,7 @@ export const ColLayoutCard = ({
                   ></span>
 
                   <span
-                    className="ntw text-11 font-normal leading-13 category-name"
+                    className="ntw text-11 font-normal font-hn-light leading-13"
                     style={{
                       color: "#000",
                     }}
@@ -138,7 +138,7 @@ export const ColLayoutCard = ({
                   Closed
                 </span>
               )}
-            </FlexRowCenter>
+            </FlexRowStartCenter>
 
             <a
               href={`tel:${phone}`}
@@ -233,7 +233,7 @@ export const RowLayoutCard = ({
 
             {/* opening time */}
             <FlexRowCenterBtw className="w-full">
-              <FlexRowCenter className="w-auto gap-10">
+              <FlexRowStartCenter className="w-auto gap-10">
                 {hasBusinessClosed && hasBusinessClosed.isOpened ? (
                   <>
                     <span
@@ -252,7 +252,7 @@ export const RowLayoutCard = ({
                     ></span>
 
                     <span
-                      className="ntw text-11 font-normal font-hn-light leading-13 category-name"
+                      className="ntw text-11 font-normal font-hn-light leading-13"
                       style={{
                         color: "#000",
                       }}
@@ -270,7 +270,7 @@ export const RowLayoutCard = ({
                     Closed
                   </span>
                 )}
-              </FlexRowCenter>
+              </FlexRowStartCenter>
 
               <FlexRowEnd className="w-auto">
                 <a

@@ -177,12 +177,7 @@ export default function MultiSearch({
                           });
                         }}
                       />
-                      <span
-                        className="ntw text-15 font-normal"
-                        style={{
-                          color: "#777",
-                        }}
-                      >
+                      <span className="ntw text-15 font-normal">
                         {listData.value}
                       </span>
                     </button>
@@ -208,12 +203,7 @@ export default function MultiSearch({
                       setActivePanel("");
                     }}
                   >
-                    <span
-                      className="ntw text-15 font-normal font-hn-medium"
-                      style={{
-                        color: "#777",
-                      }}
-                    >
+                    <span className="ntw text-15 font-normal font-hn-medium mt-2">
                       {listData.value}
                     </span>
                   </button>

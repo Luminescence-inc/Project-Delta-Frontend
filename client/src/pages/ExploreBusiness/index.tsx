@@ -55,10 +55,12 @@ const ExploreBusiness = () => {
 
   return (
     <div className="ntw w-full h-full">
-      <FlexColStart className="w-full px-20 mt-10">
-        <h1 className="ntw text-30 font-bold">Explore Businesses</h1>
+      <FlexColStart className="w-full px-20 mt-10 gap-15">
+        <h1 className="ntw text-30 font-bold font-hn-bold">
+          Explore Businesses
+        </h1>
         <p
-          className="ntw text-15 font-medium"
+          className="ntw text-15 font-medium font-hn-medium"
           style={{
             color: "#9090A7",
           }}
@@ -67,7 +69,7 @@ const ExploreBusiness = () => {
         </p>
       </FlexColStart>
       {/* search component */}
-      <FlexRowCenterBtw className="w-full px-20 mt-5 gap-20">
+      <FlexRowCenterBtw className="w-full px-20 mt-5 gap-20 mt-10">
         <button
           className={cn(
             "ntw w-full px-15 py-15 rounded-10 border-none font-helvetical filter-trigger",
