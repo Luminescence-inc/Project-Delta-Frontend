@@ -128,7 +128,7 @@ export default function BusinessDetails() {
   const openingHoursCalendar = bizDaysOfOps ?? [];
 
   // social media links (construct)
-  const socialLinks = () => {
+  const constructSocialLinks = () => {
     const bizLinks = [
       {
         name: "facebook",
@@ -180,6 +180,7 @@ export default function BusinessDetails() {
   };
 
   const similarBusinesses = getSimilarBusinesses(businesses);
+  const socialLinks = constructSocialLinks().filter((l) => l.url !== null);
 
   return (
     <FlexColStart className="w-full h-auto px-28 business-details-container">
@@ -211,6 +212,9 @@ export default function BusinessDetails() {
               src={constructBizImgUrl(businessDetails?.logoUrl!)}
               alt="business"
               className="ntw w-full h-183 rounded-10"
+              style={{
+                objectFit: "cover",
+              }}
             />
           </FlexRowStart>
 
@@ -405,11 +409,16 @@ export default function BusinessDetails() {
             <h3 className="ntw text-13 leading-15 font-boild font-hn-bold">
               Follow our social media
             </h3>
-            <FlexRowStartBtw className="w-auto gap-20 mt-10">
-              {socialLinks().map((link) => (
-                <RenderSocialLinks url={link.url!} name={link.name as any} />
-              ))}
-            </FlexRowStartBtw>
+            {socialLinks.length > 0 && (
+              <FlexRowStartBtw className="w-auto gap-20 mt-10">
+                {socialLinks.map((link) => (
+                  <RenderSocialLinks url={link.url!} name={link.name as any} />
+                ))}
+              </FlexRowStartBtw>
+            )}
+            {socialLinks.length === 0 && (
+              <span className="ntw font-hn-light font-normal text-11">N/A</span>
+            )}
           </FlexColStart>
 
           {/* divider */}
