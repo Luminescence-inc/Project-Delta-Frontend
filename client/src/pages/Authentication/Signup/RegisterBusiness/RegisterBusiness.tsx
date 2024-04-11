@@ -279,6 +279,9 @@ const RegisterBusiness = () => {
       logoUrl: logoUrl,
     };
 
+    // validate social links
+    // This would need some readjustments
+
     try {
       const allCat: BusinessCategories = (await getAllBusinessCategories())
         .data;
