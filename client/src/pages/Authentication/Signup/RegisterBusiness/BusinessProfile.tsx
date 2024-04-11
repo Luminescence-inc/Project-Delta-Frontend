@@ -354,7 +354,7 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
               className="input-text-social"
               name="instagramUrl"
               type="text"
-              placeholder="Upload Instagram Link"
+              placeholder="Add Instagram Link"
               value={formik.values.instagramUrl}
               onChange={formik.handleChange}
             />
@@ -368,7 +368,7 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
               className="input-text-social"
               name="websiteUrl"
               type="text"
-              placeholder="Upload Website Link"
+              placeholder="Add Website Link"
               value={formik.values.websiteUrl}
               onChange={formik.handleChange}
             />
@@ -382,7 +382,7 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
               className="input-text-social"
               name="linkedinUrl"
               type="text"
-              placeholder="Upload Linkedin Link"
+              placeholder="Add Linkedin Link"
               value={formik.values.linkedinUrl}
               onChange={formik.handleChange}
             />
@@ -396,7 +396,7 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
               className="input-text-social"
               name="facebookUrl"
               type="text"
-              placeholder="Upload Facebook Link"
+              placeholder="Add Facebook Link"
               value={formik.values.facebookUrl}
               onChange={formik.handleChange}
             />
