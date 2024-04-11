@@ -186,8 +186,6 @@ export default function BusinessDetails() {
   const similarBusinesses = getSimilarBusinesses(businesses);
   const socialLinks = constructSocialLinks();
 
-  console.log(socialLinks);
-
   return (
     <FlexColStart className="w-full h-auto px-28 business-details-container">
       {/* breadcrumb */}
