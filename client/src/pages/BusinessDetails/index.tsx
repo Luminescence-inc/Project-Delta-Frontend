@@ -55,6 +55,10 @@ export default function BusinessDetails() {
   const [businessDetails, setBusinessDetails] = useState<
     (IBusinessProfile & { categories: string[] }) | null
   >(null);
+
+  // active link tooltip
+  const [activeLinkTt, setActiveLinkTt] = useState("");
+
   const navigate = useNavigate();
   const params = useParams();
 
@@ -146,7 +150,7 @@ export default function BusinessDetails() {
         name: "website",
         url: businessDetails?.websiteUrl,
       },
-    ].filter((link) => typeof link.url !== "undefined");
+    ];
     return bizLinks;
   };
 
@@ -180,7 +184,9 @@ export default function BusinessDetails() {
   };
 
   const similarBusinesses = getSimilarBusinesses(businesses);
-  const socialLinks = constructSocialLinks().filter((l) => l.url !== null);
+  const socialLinks = constructSocialLinks();
+
+  console.log(socialLinks);
 
   return (
     <FlexColStart className="w-full h-auto px-28 business-details-container">
@@ -409,16 +415,19 @@ export default function BusinessDetails() {
             <h3 className="ntw text-13 leading-15 font-boild font-hn-bold">
               Follow our social media
             </h3>
-            {socialLinks.length > 0 && (
-              <FlexRowStartBtw className="w-auto gap-20 mt-10">
-                {socialLinks.map((link) => (
-                  <RenderSocialLinks url={link.url!} name={link.name as any} />
-                ))}
-              </FlexRowStartBtw>
-            )}
-            {socialLinks.length === 0 && (
+            <FlexRowStartBtw className="w-auto gap-20 mt-10">
+              {socialLinks.map((link) => (
+                <RenderSocialLinks
+                  url={link.url!}
+                  name={link.name as any}
+                  activeTtip={activeLinkTt}
+                  setActiveTtip={setActiveLinkTt}
+                />
+              ))}
+            </FlexRowStartBtw>
+            {/* {socialLinks.length === 0 && (
               <span className="ntw font-hn-light font-normal text-11">N/A</span>
-            )}
+            )} */}
           </FlexColStart>
 
           {/* divider */}
