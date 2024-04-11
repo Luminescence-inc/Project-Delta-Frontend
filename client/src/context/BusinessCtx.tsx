@@ -47,6 +47,8 @@ interface ContextValues {
   setShowFilter: (showFilter: boolean) => void;
   layout?: BusinessListingLayouts;
   setLayout?: (layout: BusinessListingLayouts) => void;
+  socialLinksError: string | null;
+  setSocialLinksError: (error: string | null) => void;
 }
 
 interface BusinessContextProviderProps extends PropsWithChildren {}
@@ -76,6 +78,9 @@ export default function BusinessContextProvider({
 
   // for businesses layout cards
   const [layout, setLayout] = useState<BusinessListingLayouts>("col");
+
+  // businss registeration.
+  const [socialLinksError, setSocialLinksError] = useState<string | null>(null);
 
   // all business categories
   useEffect(() => {
@@ -152,6 +157,8 @@ export default function BusinessContextProvider({
     setShowFilter,
     layout,
     setLayout,
+    socialLinksError,
+    setSocialLinksError,
   } satisfies ContextValues;
 
   return (
