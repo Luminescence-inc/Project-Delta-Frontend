@@ -30,6 +30,8 @@ import { Country, State, City } from "../../../../../country-sate-city";
 import * as yup from "yup";
 import "./Register.scss";
 import { FILTERED_COUNTRY } from "utils/business-profile-utils";
+import { useBusinessCtx } from "context/BusinessCtx";
+import { isUrlValid } from "utils";
 
 const dayOrder: { [key: string]: number } = {
   Monday: 0,
@@ -53,6 +55,7 @@ const validationSchema = yup.object({
 });
 
 const RegisterBusiness = () => {
+  const { setSocialLinksError } = useBusinessCtx();
   const authToken = localStorage.getItem(TOKEN_NAME) as string;
   const parsedToken: JwtPayload = authToken
     ? JSON.parse(atob(authToken?.split(".")[1]))
@@ -279,8 +282,32 @@ const RegisterBusiness = () => {
       logoUrl: logoUrl,
     };
 
-    // validate social links
+    // validate all social links
     // This would need some readjustments
+    if (payload.instagramUrl && !isUrlValid(payload.instagramUrl!)) {
+      setSocialLinksError("Invalid Instagram URL");
+      setIsLoading(false);
+      setActiveTab(0);
+      return;
+    }
+    if (payload.websiteUrl && !isUrlValid(payload.websiteUrl!)) {
+      setSocialLinksError("Invalid Website URL");
+      setIsLoading(false);
+      setActiveTab(0);
+      return;
+    }
+    if (payload.linkedinUrl && !isUrlValid(payload.linkedinUrl!)) {
+      setSocialLinksError("Invalid LinkedIn URL");
+      setIsLoading(false);
+      setActiveTab(0);
+      return;
+    }
+    if (payload.facebookUrl && !isUrlValid(payload.facebookUrl!)) {
+      setSocialLinksError("Invalid Facebook URL");
+      setIsLoading(false);
+      setActiveTab(0);
+      return;
+    }
 
     try {
       const allCat: BusinessCategories = (await getAllBusinessCategories())
@@ -336,6 +363,7 @@ const RegisterBusiness = () => {
           setIsModalOpen(true);
           setSuccessfulSubmission(true);
           setIsLoading(false);
+          setSocialLinksError(null);
         })
         .catch((err) => {
           alert(`There was an error submitting the form. Error: ${err}`);
