@@ -23,6 +23,8 @@ import Select from "components/Input/Select";
 import { CloudinaryConfig } from "config";
 import defaultImg from "assets/images/default-img.jpeg";
 import "../Signup.scss";
+import { useBusinessCtx } from "context/BusinessCtx";
+import { FlexRowStart } from "components/Flex";
 
 interface BusinessProfileProps {
   setActiveTab: React.Dispatch<React.SetStateAction<number>>;
@@ -61,6 +63,7 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
   city,
   setCity,
 }) => {
+  const { socialLinksError } = useBusinessCtx();
   const [businessCategory, setBusinessCategory] = useState<IOption[]>();
   const [error, setError] = useState<Boolean>(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -347,6 +350,22 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
 
         <h4 style={{ paddingTop: "40px" }}>Upload social media links</h4>
 
+        {/* error msg for social links validation */}
+        {socialLinksError && (
+          <FlexRowStart className="w-full">
+            <p
+              className="ntw text-13 font-medium font-hn-medium"
+              style={{
+                color: "red",
+              }}
+            >
+              {socialLinksError}
+            </p>
+          </FlexRowStart>
+        )}
+
+        <br />
+
         <div className="form-group">
           <div className="input-wrapper">
             {<InstagramIcon className="input-icon-social" />}
@@ -354,7 +373,7 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
               className="input-text-social"
               name="instagramUrl"
               type="text"
-              placeholder="Upload Instagram Link"
+              placeholder="Add Instagram Link"
               value={formik.values.instagramUrl}
               onChange={formik.handleChange}
             />
@@ -368,7 +387,7 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
               className="input-text-social"
               name="websiteUrl"
               type="text"
-              placeholder="Upload Website Link"
+              placeholder="Add Website Link"
               value={formik.values.websiteUrl}
               onChange={formik.handleChange}
             />
@@ -382,7 +401,7 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
               className="input-text-social"
               name="linkedinUrl"
               type="text"
-              placeholder="Upload Linkedin Link"
+              placeholder="Add Linkedin Link"
               value={formik.values.linkedinUrl}
               onChange={formik.handleChange}
             />
@@ -396,7 +415,7 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
               className="input-text-social"
               name="facebookUrl"
               type="text"
-              placeholder="Upload Facebook Link"
+              placeholder="Add Facebook Link"
               value={formik.values.facebookUrl}
               onChange={formik.handleChange}
             />

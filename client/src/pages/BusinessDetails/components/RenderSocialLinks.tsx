@@ -4,8 +4,10 @@ import TwitterIcon from "assets/icons/twitter-icon.svg?react";
 import LinkedInIcon from "assets/icons/linkedin-icon.svg?react";
 import TikTokIcon from "assets/icons/tiktok-icon.svg?react";
 import WebsiteIcon from "assets/icons/website-icon.svg?react";
+import { cn } from "utils";
+import { useEffect } from "react";
 
-type SocialMediaProps = {
+interface SocialMediaProps {
   url: string;
   name:
     | "facebook"
@@ -14,14 +16,32 @@ type SocialMediaProps = {
     | "linkedin"
     | "tiktok"
     | "website";
-};
+  activeTtip: string;
+  setActiveTtip: (name: string) => void;
+}
 
-export default function RenderSocialLinks({ url, name }: SocialMediaProps) {
+const RenderSocialLinks = ({
+  url,
+  name,
+  setActiveTtip,
+  activeTtip,
+}: SocialMediaProps) => {
   const { valid } = isUrlValid(url);
 
-  if (!valid) return null;
-
   let icon = null;
+
+  useEffect(() => {
+    let timeout;
+    if (activeTtip === name) {
+      timeout = setTimeout(() => {
+        setActiveTtip("");
+      }, 2000);
+    }
+
+    return () => {
+      clearTimeout(timeout!);
+    };
+  }, [activeTtip]);
 
   switch (name) {
     case "facebook":
@@ -54,19 +74,38 @@ export default function RenderSocialLinks({ url, name }: SocialMediaProps) {
   }
 
   return (
-    <a
-      href={url}
-      target="_blank"
-      rel="noreferrer"
-      className="ntw w-34 h-34 flex flex-col items-center justify-center cursor-pointer rounded-100"
-      style={{
-        background: "#E7F2FF",
-      }}
-    >
-      {icon}
-    </a>
+    <div className="social-links-tooltip-container">
+      <a
+        href={url}
+        target="_blank"
+        rel="noreferrer"
+        className={cn(
+          "ntw w-34 h-34 flex flex-col items-center justify-center rounded-100 cursor-pointer"
+        )}
+        style={{
+          background: valid ? "#E7F2FF" : "#eee",
+          opacity: valid ? 1 : 0.6,
+          filter: valid ? "grayscale(0)" : "grayscale(100%)",
+        }}
+        onClick={() => setActiveTtip(name)}
+      >
+        {icon}
+      </a>
+      {!valid && (
+        <span
+          className={cn(
+            "ntw tooltiptext w-80 text-center absolute bg-black font-hn-normal text-white px-5 py-2 rounded-5 top-0 left-0 z-10",
+            activeTtip === name ? "visible" : "hidden"
+          )}
+        >
+          No link found
+        </span>
+      )}
+    </div>
   );
-}
+};
+
+export default RenderSocialLinks;
 
 const isUrlValid = (url: string) => {
   try {

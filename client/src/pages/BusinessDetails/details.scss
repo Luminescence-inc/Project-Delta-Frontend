@@ -25,3 +25,33 @@
     }
   }
 }
+
+// social media links tooltip
+.social-links-tooltip-container {
+  position: relative;
+
+  .tooltiptext {
+    font-size: 10px;
+    transform: scale(0.9);
+    left: -22px;
+
+    &::before {
+      // top arrow
+      content: "";
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 5px;
+      border-style: solid;
+      border-color: transparent transparent #000 transparent;
+    }
+
+    &.hidden {
+      visibility: hidden;
+    }
+    &.visible {
+      visibility: visible;
+    }
+  }
+}
