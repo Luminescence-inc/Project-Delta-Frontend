@@ -142,15 +142,16 @@ export const ColLayoutCard = ({
 
             <a
               href={`tel:${phone}`}
-              className="ntw flex flex-row items-center justify-center businesss-call-line w-auto w-81 h-25 px-5 rounded-100 gap-5"
+              className="ntw flex flex-row items-center justify-center businesss-call-line w-auto w-81 h-25 px-5 rounded-100 gap-5 text-12 font-bold font-hn-light leading-14"
               style={{
                 borderRadius: "100px",
               }}
             >
               <Phone />
-              <span className="ntw text-12 font-bold font-hn-light leading-14 mt-2">
+              {/* <span className="ntw text-12 font-bold font-hn-light leading-14 mt-2">
                 Call me
-              </span>
+              </span> */}
+              Call me
             </a>
           </FlexRowCenterBtw>
         </FlexColStart>
@@ -325,9 +326,11 @@ const CardNavigateWrapper = ({
       className="ntw w-full outline-none border-none bg-none cursor-pointer"
       key={id}
       onClick={(e) => {
-        const target = (
-          e.target as HTMLElement
-        )?.parentElement?.classList.contains("businesss-call-line");
+        const target =
+          (e.target as HTMLElement)?.parentElement?.classList.contains(
+            "businesss-call-line"
+          ) ||
+          (e.target as HTMLElement)?.classList.contains("businesss-call-line");
 
         // prevent redirecting to specified page and opening the tel-phone number on that page
         if (target) {
