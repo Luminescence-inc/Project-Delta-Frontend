@@ -448,7 +448,7 @@ export default function BusinessDetails() {
               Similar Businesses
             </h3>
 
-            <FlexColStart className="w-full mt-20 pb-200">
+            <FlexColStart className="w-full mt-20 pb-200 gap-20">
               {similarBusinesses.length > 0 ? (
                 similarBusinesses.map((businesses) => {
                   const daysOfOperation = constructDOP(
