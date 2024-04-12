@@ -64,6 +64,7 @@ export default function BusinessDetails() {
   }, [params, businessCategory]);
 
   const fetchBusinessProfile = async (id: string) => {
+    setPageLoading(true);
     const businessProfile = await getBusinessProfileById(id);
     const data = businessProfile.data?.data;
     const details = data?.details;

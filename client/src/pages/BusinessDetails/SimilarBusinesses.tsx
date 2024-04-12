@@ -50,6 +50,7 @@ const SimilarBusinesses = ({
   } as ISearch;
 
   const getBusinesses = async () => {
+    setLoading(true);
     const result = await getListOfBusinsessProfile(
       {
         page: 1,
