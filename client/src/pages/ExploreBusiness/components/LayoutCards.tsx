@@ -148,10 +148,9 @@ export const ColLayoutCard = ({
               }}
             >
               <Phone />
-              {/* <span className="ntw text-12 font-bold font-hn-light leading-14 mt-2">
+              <span className="ntw text-12 font-bold font-hn-light leading-14 mt-2">
                 Call me
-              </span> */}
-              Call me
+              </span>
             </a>
           </FlexRowCenterBtw>
         </FlexColStart>
