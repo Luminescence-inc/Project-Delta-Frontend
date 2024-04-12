@@ -1,5 +1,7 @@
 import { twMerge } from "tailwind-merge";
 import { type ClassValue, clsx } from "clsx";
+import defaultImg from "assets/images/default-img.jpeg";
+import { CloudinaryConfig } from "config";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -85,4 +87,10 @@ export const isUrlValid = (url: string) => {
   } catch (e: any) {
     return false;
   }
+};
+
+export const constructBizImgUrl = (url: string | null) => {
+  return !url
+    ? defaultImg
+    : `https://res.cloudinary.com/${CloudinaryConfig.cloudName}/image/upload/c_fill,q_500/${url}.jpg`;
 };
