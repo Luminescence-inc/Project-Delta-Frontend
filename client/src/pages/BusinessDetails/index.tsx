@@ -16,25 +16,12 @@ import LocationMarkerIcon from "assets/icons/location-marker-2.svg?react";
 import PhoneIcon from "assets/icons/phone.svg?react";
 import MailBoxIcon from "assets/icons/mailbox.svg?react";
 import CalendarIcon from "assets/icons/calendar.svg?react";
-import defaultImg from "assets/images/default-img.jpeg";
 import "./details.scss";
-import {
-  cn,
-  constructBizImgUrl,
-  constructDOP,
-  determineBusOpTime,
-  isImgUrlValid,
-  removeAMPM,
-} from "utils";
+import { cn, constructBizImgUrl, determineBusOpTime, removeAMPM } from "utils";
 import RenderSocialLinks from "./components/RenderSocialLinks";
-import {
-  ColLayoutCard,
-  RowLayoutCard,
-} from "pages/ExploreBusiness/components/LayoutCards";
 import { useNavigate, useParams } from "react-router-dom";
 import { useBusinessCtx } from "context/BusinessCtx";
 import { IBusinessProfile } from "types/business-profile";
-import { CloudinaryConfig } from "config";
 import { getBusinessProfileById } from "api/business";
 import { LoaderCircle } from "lucide-react";
 import SimilarBusinesses from "./SimilarBusinesses";
@@ -50,7 +37,7 @@ const daysOfWeek = [
 ];
 
 export default function BusinessDetails() {
-  const { businessCategory, businesses } = useBusinessCtx();
+  const { businessCategory } = useBusinessCtx();
   // page loading set to TRUE by default before accessing the query params
   const [pageLoading, setPageLoading] = useState<boolean>(true);
   const [calendarOpened, setCalendarOpened] = useState(false);
