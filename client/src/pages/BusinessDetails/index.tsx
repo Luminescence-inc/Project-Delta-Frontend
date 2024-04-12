@@ -334,7 +334,7 @@ export default function BusinessDetails() {
               >
                 {openingHoursCalendar.map((day) => {
                   return (
-                    <>
+                    <div className="ntw w-full" key={day.day}>
                       <div className="ntw w-full daysOfWeek px-20 ">
                         <FlexRowStartBtw className="w-full">
                           <span
@@ -374,7 +374,7 @@ export default function BusinessDetails() {
                           </span>
                         </FlexRowEnd>
                       </div>
-                    </>
+                    </div>
                   );
                 })}
               </div>
