@@ -20,6 +20,7 @@ import defaultImg from "assets/images/default-img.jpeg";
 import "./details.scss";
 import {
   cn,
+  constructBizImgUrl,
   constructDOP,
   determineBusOpTime,
   isImgUrlValid,
@@ -36,6 +37,7 @@ import { IBusinessProfile } from "types/business-profile";
 import { CloudinaryConfig } from "config";
 import { getBusinessProfileById } from "api/business";
 import { LoaderCircle } from "lucide-react";
+import SimilarBusinesses from "./SimilarBusinesses";
 
 const daysOfWeek = [
   "Sunday",
@@ -48,7 +50,7 @@ const daysOfWeek = [
 ];
 
 export default function BusinessDetails() {
-  const { businessCategory, businesses, layout } = useBusinessCtx();
+  const { businessCategory, businesses } = useBusinessCtx();
   // page loading set to TRUE by default before accessing the query params
   const [pageLoading, setPageLoading] = useState<boolean>(true);
   const [calendarOpened, setCalendarOpened] = useState(false);
@@ -90,12 +92,6 @@ export default function BusinessDetails() {
       });
     }
     setPageLoading(false);
-  };
-
-  const constructBizImgUrl = (url: string | null) => {
-    return !url
-      ? defaultImg
-      : `https://res.cloudinary.com/${CloudinaryConfig.cloudName}/image/upload/c_fill,q_500/${url}.jpg`;
   };
 
   const construcBizDaysOfOps = () => {
@@ -154,37 +150,15 @@ export default function BusinessDetails() {
     return bizLinks;
   };
 
-  const getSimilarBusinesses = (biz: IBusinessProfile[]) => {
-    const formattedBusinesses = [];
-    for (const b of biz) {
-      const bizCategoryId = b.businessCategoryUuid;
-      const bizCategory = businessCategory?.find(
-        (c) => c.uuid === bizCategoryId
-      );
-      if (b?.uuid !== businessDetails?.uuid) {
-        formattedBusinesses.push({
-          ...b,
-          categories: [bizCategory?.value],
-        });
-      }
-    }
-
-    // loop through formatted businesses and filter based on the categories
-    const similarBiz = [];
-    for (const fmtbiz of formattedBusinesses) {
-      const categories = fmtbiz.categories;
-      const currentBizCategory = businessCategory?.find(
-        (b) => b.uuid === businessDetails?.businessCategoryUuid
-      );
-      if (categories.includes(currentBizCategory?.value)) {
-        similarBiz.push(fmtbiz);
-      }
-    }
-    return similarBiz;
-  };
-
-  const similarBusinesses = getSimilarBusinesses(businesses);
   const socialLinks = constructSocialLinks();
+
+  if (pageLoading) {
+    return (
+      <FlexRowCenter className="w-full mt-20 gap-10">
+        <LoaderCircle size={15} className="loader" />
+      </FlexRowCenter>
+    );
+  }
 
   return (
     <FlexColStart className="w-full h-auto px-28 business-details-container">
@@ -201,12 +175,6 @@ export default function BusinessDetails() {
           Explore Businesses
         </FlexRowStart>
       </button>
-
-      {pageLoading && (
-        <FlexRowCenter className="w-full mt-20 gap-10">
-          <LoaderCircle size={15} className="loader" />
-        </FlexRowCenter>
-      )}
 
       {businessDetails && !pageLoading ? (
         <>
@@ -360,52 +328,60 @@ export default function BusinessDetails() {
               />
             </button>
             {/* grid */}
-            <div
-              className={cn(
-                "ntw w-full h-auto calendar-grid overflow-hidden",
-                calendarOpened ? "h-auto py-10" : "h-0"
-              )}
-            >
-              {openingHoursCalendar.map((day) => {
-                return (
-                  <>
-                    <div className="ntw w-full daysOfWeek px-20 ">
-                      <FlexRowStartBtw className="w-full">
-                        <span
-                          className="ntw text-12 font-bold font-hn-light leading-14"
-                          style={{
-                            color:
-                              getCurrentDay === day.day ? "#17BEBB" : "#0E2D52",
-                          }}
-                        >
-                          {day.day}
-                        </span>
-                        <span
-                          className="ntw h-3 w-3 mt-5 rounded-100 text-6"
-                          style={{
-                            background:
-                              getCurrentDay === day.day ? "#17BEBB" : "#0E2D52",
-                          }}
-                        ></span>
-                      </FlexRowStartBtw>
-                    </div>
-                    <div className="ntw w-full time px-20">
-                      <FlexRowEnd className="w-full">
-                        <span
-                          className="ntw text-12 font-bold font-hn-light leading-14 mt-4"
-                          style={{
-                            color:
-                              getCurrentDay === day.day ? "#17BEBB" : "#0E2D52",
-                          }}
-                        >
-                          {day.ot} - {day.ct}
-                        </span>
-                      </FlexRowEnd>
-                    </div>
-                  </>
-                );
-              })}
-            </div>
+            {openingHoursCalendar.length > 0 && (
+              <div
+                className={cn(
+                  "ntw w-full h-auto calendar-grid overflow-hidden",
+                  calendarOpened ? "h-auto py-10" : "h-0"
+                )}
+              >
+                {openingHoursCalendar.map((day) => {
+                  return (
+                    <>
+                      <div className="ntw w-full daysOfWeek px-20 ">
+                        <FlexRowStartBtw className="w-full">
+                          <span
+                            className="ntw text-12 font-bold font-hn-light leading-14"
+                            style={{
+                              color:
+                                getCurrentDay === day.day
+                                  ? "#17BEBB"
+                                  : "#0E2D52",
+                            }}
+                          >
+                            {day.day}
+                          </span>
+                          <span
+                            className="ntw h-3 w-3 mt-5 rounded-100 text-6"
+                            style={{
+                              background:
+                                getCurrentDay === day.day
+                                  ? "#17BEBB"
+                                  : "#0E2D52",
+                            }}
+                          ></span>
+                        </FlexRowStartBtw>
+                      </div>
+                      <div className="ntw w-full time px-20">
+                        <FlexRowEnd className="w-full">
+                          <span
+                            className="ntw text-12 font-bold font-hn-light leading-14 mt-4"
+                            style={{
+                              color:
+                                getCurrentDay === day.day
+                                  ? "#17BEBB"
+                                  : "#0E2D52",
+                            }}
+                          >
+                            {day.ot} - {day.ct}
+                          </span>
+                        </FlexRowEnd>
+                      </div>
+                    </>
+                  );
+                })}
+              </div>
+            )}
           </FlexColStart>
 
           {/*  social media links */}
@@ -420,6 +396,7 @@ export default function BusinessDetails() {
                   name={link.name as any}
                   activeTtip={activeLinkTt}
                   setActiveTtip={setActiveLinkTt}
+                  key={link.name}
                 />
               ))}
             </FlexRowStartBtw>
@@ -435,7 +412,7 @@ export default function BusinessDetails() {
           ></div>
 
           {/* Similar businesses */}
-          <FlexColStart className="w-full mt-10 h-auto">
+          <FlexColStart className="w-full mt-10 h-auto pb-200">
             <h3
               className="ntw text-15 leading-18 font-bold font-hn-bold"
               style={{
@@ -445,60 +422,15 @@ export default function BusinessDetails() {
               Similar Businesses
             </h3>
 
-            <FlexColStart className="w-full mt-20 pb-200 gap-20">
-              {similarBusinesses.length > 0 ? (
-                similarBusinesses.map((businesses) => {
-                  const daysOfOperation = constructDOP(
-                    businesses?.daysOfOperation!,
-                    businesses?.openTime!,
-                    businesses?.closeTime!
-                  );
-
-                  const businessesImg = constructBizImgUrl(businesses.logoUrl!);
-                  return layout === "col" ? (
-                    <ColLayoutCard
-                      name={businesses.name ?? "N/A"}
-                      categories={businesses?.categories as string[]}
-                      location={`${businesses.city},${businesses.stateAndProvince}`}
-                      daysOfOps={daysOfOperation}
-                      phone={businesses.phoneNumber ?? "N/A"}
-                      image={
-                        !isImgUrlValid(businessesImg)
-                          ? defaultImg
-                          : businessesImg
-                      }
-                      _key={businesses.uuid!}
-                      id={businesses.uuid}
-                    />
-                  ) : (
-                    <RowLayoutCard
-                      name={businesses.name ?? "N/A"}
-                      categories={businesses?.categories as string[]}
-                      location={`${businesses.city}, ${businesses.stateAndProvince}`}
-                      daysOfOps={daysOfOperation}
-                      phone={businesses.phoneNumber ?? "N/A"}
-                      image={
-                        !isImgUrlValid(businessesImg)
-                          ? defaultImg
-                          : businessesImg
-                      }
-                      _key={businesses.uuid!}
-                      id={businesses.uuid}
-                    />
-                  );
-                })
-              ) : (
-                <FlexRowStart className="w-full gap-10">
-                  <span className="">⚠</span>
-                  <h2 className="ntw text-12 font-bold font-hn-light">
-                    No business found.
-                  </h2>
-                </FlexRowStart>
-              )}
-            </FlexColStart>
+            <SimilarBusinesses
+              businessCategory={businessDetails.businessCategoryUuid!}
+              allCategories={businessCategory}
+              country={businessDetails?.country!}
+              currentBusinessId={businessDetails.uuid!}
+            />
           </FlexColStart>
         </>
-      ) : !pageLoading ? (
+      ) : !pageLoading && !businessDetails ? (
         <FlexRowCenter className="w-full mt-20 gap-10">
           <span className="">⚠</span>
           <h2 className="ntw text-15 font-bold font-hn-light">
