@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import {
   FlexColStart,
   FlexRowCenter,
@@ -337,7 +337,7 @@ export default function BusinessDetails() {
               >
                 {openingHoursCalendar.map((day) => {
                   return (
-                    <div className="ntw w-full" key={day.day}>
+                    <Fragment key={day.day}>
                       <div className="ntw w-full daysOfWeek px-20 ">
                         <FlexRowStartBtw className="w-full">
                           <span
@@ -377,7 +377,7 @@ export default function BusinessDetails() {
                           </span>
                         </FlexRowEnd>
                       </div>
-                    </div>
+                    </Fragment>
                   );
                 })}
               </div>
