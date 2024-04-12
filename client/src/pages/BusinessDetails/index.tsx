@@ -423,9 +423,6 @@ export default function BusinessDetails() {
                 />
               ))}
             </FlexRowStartBtw>
-            {/* {socialLinks.length === 0 && (
-              <span className="ntw font-hn-light font-normal text-11">N/A</span>
-            )} */}
           </FlexColStart>
 
           {/* divider */}
@@ -462,7 +459,7 @@ export default function BusinessDetails() {
                     <ColLayoutCard
                       name={businesses.name ?? "N/A"}
                       categories={businesses?.categories as string[]}
-                      location={"Ontario, Canada"}
+                      location={`${businesses.city},${businesses.stateAndProvince}`}
                       daysOfOps={daysOfOperation}
                       phone={businesses.phoneNumber ?? "N/A"}
                       image={
@@ -477,7 +474,7 @@ export default function BusinessDetails() {
                     <RowLayoutCard
                       name={businesses.name ?? "N/A"}
                       categories={businesses?.categories as string[]}
-                      location={"Ontario, Canada"}
+                      location={`${businesses.city}, ${businesses.stateAndProvince}`}
                       daysOfOps={daysOfOperation}
                       phone={businesses.phoneNumber ?? "N/A"}
                       image={
