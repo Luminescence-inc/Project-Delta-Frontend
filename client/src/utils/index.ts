@@ -70,3 +70,19 @@ export const isImgUrlValid = (url: string) => {
     return false;
   }
 };
+
+export const isUrlValid = (url: string) => {
+  try {
+    // first stage of validation
+    new URL(url);
+
+    // second stage (regexp)
+    const urlRegex =
+      /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g;
+    const result = url.match(urlRegex);
+
+    return result !== null;
+  } catch (e: any) {
+    return false;
+  }
+};
