@@ -172,9 +172,6 @@ export default function BusinessDetails() {
               src={constructBizImgUrl(businessDetails?.logoUrl!)}
               alt="business"
               className="ntw w-full h-183 rounded-10"
-              style={{
-                objectFit: "cover",
-              }}
             />
           </FlexRowStart>
 

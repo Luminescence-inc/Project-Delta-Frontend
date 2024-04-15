@@ -20,12 +20,12 @@ interface SocialMediaProps {
   setActiveTtip: (name: string) => void;
 }
 
-export default function RenderSocialLinks({
+const RenderSocialLinks = ({
   url,
   name,
   setActiveTtip,
   activeTtip,
-}: SocialMediaProps) {
+}: SocialMediaProps) => {
   const { valid } = isUrlValid(url);
 
   let icon = null;
@@ -103,7 +103,9 @@ export default function RenderSocialLinks({
       )}
     </div>
   );
-}
+};
+
+export default RenderSocialLinks;
 
 const isUrlValid = (url: string) => {
   try {
