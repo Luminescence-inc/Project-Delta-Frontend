@@ -1,283 +1,278 @@
 .home {
-    // background-color: var(--light-grey);
+  // background-color: var(--light-grey);
 }
 
-
-
 @media screen and (max-width: 500px) {
-    .home {
-        .home-content-container {
-            width: 346;
-            height: 166px;
-            padding-left: 30px;
-            padding-right: 30px;
-            padding-top: 32px;
-            margin-bottom: 16px;
-        }
+  .home {
+    .home-content-container {
+      width: 346;
+      height: 166px;
+      padding-left: 30px;
+      padding-right: 30px;
+      padding-top: 32px;
+      margin-bottom: 16px;
 
-        .header-content{
-            height: 700px;
-            background-color: #F4F9FF;
-
-            .header-content-text{
-
-                h1{
-                    font-family: Helvetica Neue;
-                    font-size: 30px;
-                    font-weight: 700;
-                    line-height: 42px;
-                    letter-spacing: 0px;
-                    text-align: left;
-                    color: #0E2D52;
-                }
-
-                p{
-                    font-family: Helvetica Neue;
-                    font-size: 15px;
-                    font-weight: 500;
-                    line-height: 25px;
-                    letter-spacing: 0px;
-                    text-align: left;
-                    color: #9090A7;
-                }
-
-            }
-
-        }
-
-        .cta-btn{
-            width: 250px;
-            height: 55px;
-            border-radius: 5px;
-            margin-top: 56px;
-            font-family: Inter;
-            font-size: 14px;
-            font-weight: 600;
-            line-height: 24px;
-            letter-spacing: 0px;
-            text-align: left;
-            color: #FFFFFF;
-        }
-
-        .cta-btn-explore{
-            width: 303px;
-            height: 55px;
-            border-radius: 5px;
-            font-family: Inter;
-            font-size: 14px;
-            font-weight: 600;
-            line-height: 24px;
-            letter-spacing: 0px;
-            text-align: left;
-            color: #FFFFFF;
-        }
-
-        .ctn-btn-sign-up {
-            width: 197px;
-            height: 55px;
-            padding: 15.5px, 72px, 15.5px, 72px;
-            border-radius: 5px;
-            background-color: #FFFFFF;
-            font-family: Inter;
-            font-size: 14px;
-            font-weight: 600;
-            line-height: 24px;
-            letter-spacing: 0px;
-            color: #0E2D52;
-        }
-
-        .cta-btn-explore-second {
-            width: 303px;
-            height: 55px;
-            padding: 15.5px, 72px, 15.5px, 72px;
-            border-radius: 5px;
-            border: 1px;
-            border: 1px solid #FFFFFF;
-            color: #FFFFFF;
-        }
-
-        .body-content {
-            background-color: #FFFFFF;
-            padding-top: 40px;
-
-            .title-card {
-                text-align: center;
-                padding-left: 35px;
-                padding-right: 35px;
-
-                h5 {
-                    font-family: Helvetica Neue;
-                    font-size: 13px;
-                    font-weight: 700;
-                    line-height: 24px;
-                    letter-spacing: 0px;
-                    color: #17BEBB;
-                    height: 24px;
-                }
-
-                h1{
-                    font-family: Helvetica Neue;
-                    font-size: 30px;
-                    font-weight: 700;
-                    line-height: 37px;
-                    letter-spacing: 0em;
-                    text-align: center;
-                    color: #0E2D52;
-                    margin-top: 6px;
-                    margin-bottom: 13px;
-                }
-
-                p{
-                    font-family: Helvetica Neue;
-                    font-size: 15px;
-                    font-weight: 400;
-                    line-height: 25px;
-                    letter-spacing: 0em;
-                    text-align: center;
-                    color: #9090A7;
-                }
-            }
-
-            .business-card {
-                text-align: left;
-                margin-left: 15px;
-                margin-right: 15px;
-
-                padding-left: 25px;
-                padding-right: 25px;
-                padding-top: 30px;
-                height: 253.21px;
-
-                border-radius: 14px;
-                border: 2px;
-                opacity: 0.04px;
-                box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-
-
-                h2 {
-                    font-family: Helvetica Neue;
-                    font-size: 20px;
-                    font-weight: 700;
-                    line-height: 24px;
-                    letter-spacing: 0em;
-                    text-align: left;
-                    color: #0E2D52;
-                    margin-top: 6px;
-                    margin-bottom: 11px;
-                }
-
-                p {
-                    font-family: Helvetica Neue;
-                    font-size: 15px;
-                    font-weight: 400;
-                    line-height: 25px;
-                    letter-spacing: 0em;
-                    text-align: left;
-                    color: #9090A7;
-
-                }
-            }
-
-            .customer-card {
-                text-align: left;
-                display: flex;
-                margin-left: 15px;
-                margin-right: 15px;
-
-                padding-bottom: 20px;
-                padding-top: 10px;
-
-                .icon {
-                    padding-right: 20px;
-                }
-
-                h2 {
-                    font-family: Helvetica Neue;
-                    font-size: 20px;
-                    font-weight: 700;
-                    line-height: 24px;
-                    letter-spacing: 0em;
-                    text-align: left;
-                    color: #0E2D52;
-                    padding-bottom: 10px;
-                }
-
-                p {
-                    font-family: Helvetica Neue;
-                    font-size: 15px;
-                    font-weight: 400;
-                    line-height: 25px;
-                    letter-spacing: 0em;
-                    text-align: left;
-                    color: #9090A7;
-                    width: 282px;
-                }
-            }
-
-            .network {
-                background-image: url('../../assets/icons/join-network-bg.svg?react');
-                background-size: cover;
-                background-position: center; 
-                height: 497px;
-
-                color: white;
-                text-align: center;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-
-                h1 {
-                    font-family: Helvetica Neue;
-                    font-size: 30px;
-                    font-weight: 700;
-                    line-height: 37px;
-                    letter-spacing: 0em;
-                    text-align: center;
-
-                    width: 259px;
-                    height: 74px;
-
-                }
-
-                p {
-                    font-family: Helvetica Neue;
-                    font-size: 15px;
-                    font-weight: 400;
-                    line-height: 25px;
-                    letter-spacing: 0em;
-                    text-align: center;
-
-                    width: 338px;
-                    height: 100px;
-
-                }
-            }
-        }
-
-        header {
-            h2 {
-                font-size: 24px;
-                font-weight: 700;
-                line-height: 40px;
-                text-align: center;
-            }
-
-            p {
-                font-size: 16px;
-                font-weight: 400;
-                text-align: center;
-                margin: 12px 0 28px;
-            }
-        }
-
-        .button-wrapper {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .auth-btn {
-            margin-top: 20px;
-        }
+      .search-component {
+        border: 1px solid #0e2d52;
+      }
     }
+
+    .header-content {
+      height: 700px;
+      background-color: #f4f9ff;
+
+      .header-content-text {
+        h1 {
+          font-family: Helvetica Neue;
+          font-size: 30px;
+          font-weight: 700;
+          line-height: 42px;
+          letter-spacing: 0px;
+          text-align: left;
+          color: #0e2d52;
+        }
+
+        p {
+          font-family: Helvetica Neue;
+          font-size: 15px;
+          font-weight: 500;
+          line-height: 25px;
+          letter-spacing: 0px;
+          text-align: left;
+          color: #9090a7;
+        }
+      }
+    }
+
+    .cta-btn {
+      width: 250px;
+      height: 55px;
+      border-radius: 5px;
+      margin-top: 56px;
+      font-family: Inter;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 24px;
+      letter-spacing: 0px;
+      text-align: left;
+      color: #ffffff;
+    }
+
+    .cta-btn-explore {
+      width: 303px;
+      height: 55px;
+      border-radius: 5px;
+      font-family: Inter;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 24px;
+      letter-spacing: 0px;
+      text-align: left;
+      color: #ffffff;
+    }
+
+    .ctn-btn-sign-up {
+      width: 197px;
+      height: 55px;
+      padding: 15.5px, 72px, 15.5px, 72px;
+      border-radius: 5px;
+      background-color: #ffffff;
+      font-family: Inter;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 24px;
+      letter-spacing: 0px;
+      color: #0e2d52;
+    }
+
+    .cta-btn-explore-second {
+      width: 303px;
+      height: 55px;
+      padding: 15.5px, 72px, 15.5px, 72px;
+      border-radius: 5px;
+      border: 1px;
+      border: 1px solid #ffffff;
+      color: #ffffff;
+    }
+
+    .body-content {
+      background-color: #ffffff;
+      padding-top: 40px;
+
+      .title-card {
+        text-align: center;
+        padding-left: 35px;
+        padding-right: 35px;
+
+        h5 {
+          font-family: Helvetica Neue;
+          font-size: 13px;
+          font-weight: 700;
+          line-height: 24px;
+          letter-spacing: 0px;
+          color: #17bebb;
+          height: 24px;
+        }
+
+        h1 {
+          font-family: Helvetica Neue;
+          font-size: 30px;
+          font-weight: 700;
+          line-height: 37px;
+          letter-spacing: 0em;
+          text-align: center;
+          color: #0e2d52;
+          margin-top: 6px;
+          margin-bottom: 13px;
+        }
+
+        p {
+          font-family: Helvetica Neue;
+          font-size: 15px;
+          font-weight: 400;
+          line-height: 25px;
+          letter-spacing: 0em;
+          text-align: center;
+          color: #9090a7;
+        }
+      }
+
+      .business-card {
+        text-align: left;
+        margin-left: 15px;
+        margin-right: 15px;
+
+        padding-left: 25px;
+        padding-right: 25px;
+        padding-top: 30px;
+        height: 253.21px;
+
+        border-radius: 14px;
+        border: 2px;
+        opacity: 0.04px;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+
+        h2 {
+          font-family: Helvetica Neue;
+          font-size: 20px;
+          font-weight: 700;
+          line-height: 24px;
+          letter-spacing: 0em;
+          text-align: left;
+          color: #0e2d52;
+          margin-top: 6px;
+          margin-bottom: 11px;
+        }
+
+        p {
+          font-family: Helvetica Neue;
+          font-size: 15px;
+          font-weight: 400;
+          line-height: 25px;
+          letter-spacing: 0em;
+          text-align: left;
+          color: #9090a7;
+        }
+      }
+
+      .customer-card {
+        text-align: left;
+        display: flex;
+        margin-left: 15px;
+        margin-right: 15px;
+
+        padding-bottom: 20px;
+        padding-top: 10px;
+
+        .icon {
+          padding-right: 20px;
+        }
+
+        h2 {
+          font-family: Helvetica Neue;
+          font-size: 20px;
+          font-weight: 700;
+          line-height: 24px;
+          letter-spacing: 0em;
+          text-align: left;
+          color: #0e2d52;
+          padding-bottom: 10px;
+        }
+
+        p {
+          font-family: Helvetica Neue;
+          font-size: 15px;
+          font-weight: 400;
+          line-height: 25px;
+          letter-spacing: 0em;
+          text-align: left;
+          color: #9090a7;
+          width: 282px;
+        }
+      }
+
+      .network {
+        background-image: url("../../assets/icons/join-network-bg.svg?react");
+        background-size: cover;
+        background-position: center;
+        height: 497px;
+
+        color: white;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        h1 {
+          font-family: Helvetica Neue;
+          font-size: 30px;
+          font-weight: 700;
+          line-height: 37px;
+          letter-spacing: 0em;
+          text-align: center;
+
+          width: 259px;
+          height: 74px;
+        }
+
+        p {
+          font-family: Helvetica Neue;
+          font-size: 15px;
+          font-weight: 400;
+          line-height: 25px;
+          letter-spacing: 0em;
+          text-align: center;
+
+          width: 338px;
+          height: 100px;
+        }
+      }
+    }
+
+    header {
+      h2 {
+        font-size: 24px;
+        font-weight: 700;
+        line-height: 40px;
+        text-align: center;
+      }
+
+      p {
+        font-size: 16px;
+        font-weight: 400;
+        text-align: center;
+        margin: 12px 0 28px;
+      }
+    }
+
+    .button-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .auth-btn {
+      margin-top: 20px;
+    }
+  }
 }
