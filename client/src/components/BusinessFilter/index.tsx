@@ -8,7 +8,7 @@ import { FILTERED_COUNTRY } from "utils/business-profile-utils";
 import { Country, State, City } from "../../../country-sate-city";
 import { FilterData, useBusinessCtx } from "context/BusinessCtx";
 import { BusinessFilterType } from "types/business";
-import { useNavigate, useNavigation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 interface OnfilterDataProps {
   uuid?: string | undefined;
