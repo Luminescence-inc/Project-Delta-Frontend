@@ -456,7 +456,7 @@ export default function BusinessDetails() {
                     <ColLayoutCard
                       name={businesses.name ?? "N/A"}
                       categories={businesses?.categories as string[]}
-                      location={`${businesses.city},${businesses.stateAndProvince}`}
+                      location={`${businesses.city}, ${businesses.stateAndProvince}`}
                       daysOfOps={daysOfOperation}
                       phone={businesses.phoneNumber ?? "N/A"}
                       image={
