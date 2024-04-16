@@ -29,9 +29,9 @@ const Navbar = () => {
   >([]);
 
   useEffect(() => {
-    if (localStorage.getItem(TOKEN_NAME) === null) return;
+    const authToken = localStorage.getItem(TOKEN_NAME) as string;
+    if (authToken === null) return;
     try {
-      const authToken = localStorage.getItem(TOKEN_NAME) as string;
       const parsedToken = JSON.parse(atob(authToken?.split(".")[1]));
       setAuthToken(authToken);
       setParsedToken(parsedToken);
