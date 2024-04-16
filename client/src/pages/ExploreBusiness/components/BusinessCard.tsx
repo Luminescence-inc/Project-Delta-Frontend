@@ -47,6 +47,7 @@ const BusinessCardContainer = ({
                 phone={bd.phoneNumber || ""}
                 image={constructLogoUrl(bd.logoUrl) || ""}
                 _key={bd.uuid}
+                key={bd.uuid}
               />
             ) : (
               <RowLayoutCard
@@ -58,6 +59,7 @@ const BusinessCardContainer = ({
                 phone={bd.phoneNumber || ""}
                 image={constructLogoUrl(bd.logoUrl) || ""}
                 _key={bd.uuid}
+                key={bd.uuid}
               />
             );
           })
