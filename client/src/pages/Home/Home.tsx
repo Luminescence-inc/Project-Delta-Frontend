@@ -109,19 +109,18 @@ const Home = () => {
               Connecting Immigrant & Local Business Owners With Their Customers
             </h1>
             <p>Seamlessly do business within your area and on the go</p>
+            {!authenticated && (
+              <div className="">
+                <Button
+                  className="cta-btn"
+                  label="Get Started"
+                  variant="primary"
+                  to="/onboarding"
+                  iconRight={<CtaArrow />}
+                />
+              </div>
+            )}
           </div>
-
-          {!authenticated && (
-            <div className="home-content-container">
-              <Button
-                className="cta-btn"
-                label="Get Started"
-                variant="primary"
-                to="/onboarding"
-                iconRight={<CtaArrow />}
-              />
-            </div>
-          )}
 
           {authenticated && (
             <div className="button-wrapper home-content-container">
