@@ -123,7 +123,7 @@ const Home = () => {
             </h1>
             <p>Seamlessly do business within your area and on the go</p>
             {!authenticated && (
-              <div className="ntw w-full">
+              <div className="ntw w-303">
                 <Button
                   className="cta-btn w-full font-hn-bold"
                   label="Business Owner? Get Started"
