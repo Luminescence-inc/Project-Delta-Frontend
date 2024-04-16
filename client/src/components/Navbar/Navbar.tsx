@@ -18,10 +18,8 @@ import "./Navbar.scss";
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const authToken = localStorage.getItem(TOKEN_NAME) as string;
-  const parsedToken: JwtPayload = authToken
-    ? JSON.parse(atob(authToken?.split(".")[1]))
-    : {};
+  const [parsedToken, setParsedToken] = useState<JwtPayload | null>(null);
+  const [authToken, setAuthToken] = useState<string | null>("");
   const [authenticated, setAuthenticated] = useState(false);
   const [tokenData, setTokenData] = useState<JwtPayload | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -31,10 +29,22 @@ const Navbar = () => {
   >([]);
 
   useEffect(() => {
+    if (localStorage.getItem(TOKEN_NAME) === null) return;
     try {
+      const authToken = localStorage.getItem(TOKEN_NAME) as string;
+      const parsedToken = JSON.parse(atob(authToken?.split(".")[1]));
+      setAuthToken(authToken);
+      setParsedToken(parsedToken);
       setTokenData(parsedToken);
-      if (parsedToken.id) {
-        isAuthenticated(authToken, parsedToken.id)
+    } catch (e: any) {
+      console.error("Error parsing token: ", e);
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      if (parsedToken?.id) {
+        isAuthenticated(authToken!, parsedToken.id)
           .then(() => {
             setAuthenticated(true);
           })
@@ -57,6 +67,7 @@ const Navbar = () => {
         setAuthenticated(false);
         navigate("/?login=false");
         setMenuOpen(false);
+        window && window.location.reload();
       })
       .catch((err) => {
         console.error(err);
@@ -64,12 +75,12 @@ const Navbar = () => {
   };
 
   const handleMenuIcon = () => {
-    if (parsedToken.id) {
-      isAuthenticated(authToken, parsedToken.id)
+    if (parsedToken?.id) {
+      isAuthenticated(authToken!, parsedToken.id)
         .then(() => {
           setAuthenticated(true);
           setMenuOpen(true);
-          getUserBusinessProfileList(authToken).then((res) => {
+          getUserBusinessProfileList(authToken!).then((res) => {
             const resData: UserBusinessListResponse = res.data;
             setUserBusinessListData(resData.data.businessProfiles);
           });
