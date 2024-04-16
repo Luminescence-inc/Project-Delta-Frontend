@@ -6,15 +6,18 @@
   .home {
     .home-content-container {
       width: 346;
-      height: 166px;
+      height: auto;
       padding-left: 30px;
       padding-right: 30px;
-      padding-top: 32px;
-      margin-bottom: 16px;
+
+      .search-component {
+        border: 1px solid #0e2d52;
+        box-shadow: 0px 1px 12px -4px #00000033;
+      }
     }
 
     .header-content {
-      height: 700px;
+      min-height: 700px;
       background-color: #f4f9ff;
 
       .header-content-text {
