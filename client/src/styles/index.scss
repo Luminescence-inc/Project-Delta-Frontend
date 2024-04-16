@@ -367,7 +367,7 @@ img {
   // Lineheight
   @for $i from 1 through 100 {
     &.leading-#{$i} {
-      line-height: $i / 10;
+      line-height: calc($i / 10);
     }
   }
 
@@ -427,7 +427,7 @@ img {
   // scales
   @for $i from 1 through 100 {
     &.scale-#{$i} {
-      transform: scale($i / 10);
+      transform: scale(calc($i / 10));
     }
   }
 
