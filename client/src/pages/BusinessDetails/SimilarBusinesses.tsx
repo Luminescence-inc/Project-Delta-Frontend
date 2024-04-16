@@ -1,6 +1,6 @@
 import { getListOfBusinsessProfile } from "api/business";
 import defaultImg from "assets/images/default-img.jpeg";
-import { FlexColCenter, FlexColStart, FlexRowStart } from "components/Flex";
+import { FlexColCenter, FlexColStart } from "components/Flex";
 import { useBusinessCtx } from "context/BusinessCtx";
 import { LoaderCircle } from "lucide-react";
 import {
@@ -11,6 +11,9 @@ import { useEffect, useState } from "react";
 import { IOption } from "types/business";
 import { IBusinessProfile, ISearch } from "types/business-profile";
 import { constructBizImgUrl, constructDOP, isImgUrlValid } from "utils";
+import EmptyCartIcon from "assets/icons/empty-cart.svg?react";
+import ChevronRightIcon from "assets/icons/chevron-right-1.svg?react";
+import { useNavigate } from "react-router-dom";
 
 interface SimilarBusinessesProps {
   businessCategory: string;
@@ -32,6 +35,7 @@ const SimilarBusinesses = ({
     []
   );
   const [loading, setLoading] = useState<boolean>(true);
+  const navigate = useNavigate();
 
   if (!businessCategory || !country) return null;
 
@@ -140,12 +144,27 @@ const SimilarBusinesses = ({
             );
           })
         ) : (
-          <FlexRowStart className="w-full gap-10">
-            <span className="">⚠</span>
-            <h2 className="ntw text-12 font-bold font-hn-light">
-              No business found.
-            </h2>
-          </FlexRowStart>
+          <FlexColCenter className="w-full gap-10 min-h-200 notfound-comp">
+            <EmptyCartIcon className="empty-cart-icon" />
+            <p
+              className="ntw text-12 font-normal font-hn-light"
+              style={{ color: "#9090A7" }}
+            >
+              No similar businesses found.
+            </p>
+            <button
+              className="ntw flex flex-row items-center justify-center gap-4 cursor-pointer border-none outline-none bg-none"
+              onClick={() => navigate("/explore-businesses")}
+            >
+              <p
+                className="ntw text-13 font-normal font-hn-light underline"
+                style={{ color: "#17BEBB" }}
+              >
+                Explore other business categories
+              </p>
+              <ChevronRightIcon />
+            </button>
+          </FlexColCenter>
         )}
       </FlexColStart>
     </FlexColStart>
