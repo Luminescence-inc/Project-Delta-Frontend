@@ -8,6 +8,7 @@ import { FILTERED_COUNTRY } from "utils/business-profile-utils";
 import { Country, State, City } from "../../../country-sate-city";
 import { FilterData, useBusinessCtx } from "context/BusinessCtx";
 import { BusinessFilterType } from "types/business";
+import { useNavigate } from "react-router-dom";
 
 interface OnfilterDataProps {
   uuid?: string | undefined;
@@ -38,6 +39,7 @@ const BusinessesFilterComponent = ({
     setFilteredStates,
     setSearchQuery,
   } = useBusinessCtx();
+  const navigate = useNavigate();
 
   const formatedCountries = () => {
     return FILTERED_COUNTRY.map((country) => {
@@ -242,7 +244,15 @@ const BusinessesFilterComponent = ({
           <h2 className="ntw text-30 font-bold">Search</h2>
           <button
             className="ntw close-btn border-none outline-none cursor-pointer"
-            onClick={closeFilter}
+            onClick={() => {
+              // if there isn't any filter applied, navigate to unboarding page
+              // else close the filter
+              if (!filterData.country) {
+                navigate("/onboarding");
+                return;
+              }
+              closeFilter();
+            }}
           >
             <CloseIcon />
           </button>
