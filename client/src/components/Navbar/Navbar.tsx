@@ -67,6 +67,8 @@ const Navbar = () => {
         setAuthenticated(false);
         navigate("/?login=false");
         setMenuOpen(false);
+
+        // force reload the page to clear all active states.
         window && window.location.reload();
       })
       .catch((err) => {
