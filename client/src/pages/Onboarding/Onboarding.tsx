@@ -9,9 +9,14 @@ import { isAuthenticated } from "api/auth";
 import { useNavigate } from "react-router-dom";
 import "./Onboarding.scss";
 import DefaultWebView from "components/DefaultWebView/DefaultWebView";
+import { prevPageLocalKeyName } from "config";
+import useTrackPagePath from "hooks/useTrackPagePath";
 
 const Onboarding = () => {
   const navigate = useNavigate();
+
+  // keep track of page path onMount
+  useTrackPagePath();
 
   const handleNewBusiness = () => {
     try {
@@ -32,6 +37,7 @@ const Onboarding = () => {
       console.log(error);
     }
   };
+
   return (
     <div className="responsive-content">
       <div className="onboarding mobile-view">
@@ -51,7 +57,15 @@ const Onboarding = () => {
             variant="pink"
           />
           <Pill
-            onClick={() => navigate("/explore-businesses")}
+            onClick={() => {
+              // keep track of prev page
+              localStorage.setItem(
+                prevPageLocalKeyName,
+                window.location.pathname
+              );
+
+              navigate("/explore-businesses");
+            }}
             icon={<SearchIcon />}
             title="Discover Business"
             variant="green"
