@@ -22,6 +22,8 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { getUserBusinessProfileList } from "api/business";
 import { UserBusinessListResponse } from "types/business";
 import "./Home.scss";
+import { FlexColCenter } from "components/Flex";
+import SearchCompIcon from "assets/icons/search-icon-3.svg?react";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -85,23 +87,40 @@ const Home = () => {
       <div className="home mobile-view">
         <header className="header-content">
           <div className="home-content-container header-content-text">
+            {/* Search component */}
+            <FlexColCenter className="w-full">
+              <button
+                className="ntw w-full h-44 rounded-10 search-component flex flex-row items-center justify-start px-15 gap-5 cursor-pointer bg-white"
+                onClick={() => navigate("/explore-businesses")}
+              >
+                <SearchCompIcon />
+                <span
+                  className="ntw text-12 leading-14 font-hn-light font-normal relative top-2"
+                  style={{
+                    color: "#9090A7",
+                  }}
+                >
+                  Search businesses
+                </span>
+              </button>
+            </FlexColCenter>
+            <br />
             <h1>
               Connecting Immigrant & Local Business Owners With Their Customers
             </h1>
             <p>Seamlessly do business within your area and on the go</p>
+            {!authenticated && (
+              <div className="">
+                <Button
+                  className="cta-btn"
+                  label="Get Started"
+                  variant="primary"
+                  to="/onboarding"
+                  iconRight={<CtaArrow />}
+                />
+              </div>
+            )}
           </div>
-
-          {!authenticated && (
-            <div className="home-content-container">
-              <Button
-                className="cta-btn"
-                label="Get Started"
-                variant="primary"
-                to="/onboarding"
-                iconRight={<CtaArrow />}
-              />
-            </div>
-          )}
 
           {authenticated && (
             <div className="button-wrapper home-content-container">

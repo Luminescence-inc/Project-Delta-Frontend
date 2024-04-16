@@ -116,7 +116,7 @@ const ExploreBusiness = () => {
               className="ntw text-15 font-bold font-hn-light"
               style={{ color: "#9090A7" }}
             >
-              No business found
+              No business found. Please modify your search
             </p>
           </FlexColStartCenter>
         )}
