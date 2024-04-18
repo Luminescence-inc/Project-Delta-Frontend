@@ -6,7 +6,8 @@ import { JwtPayload, TOKEN_NAME } from "types/auth";
 
 interface WithoutAuthRouteProps extends PropsWithChildren {}
 
-// to be used in the route component that needs authentication
+// to be used in the route component that
+// shouldn't be accessible after authentication
 
 export const WithoutAuth = ({ children }: WithoutAuthRouteProps) => {
   const { setIsAuth } = useDataCtx();
