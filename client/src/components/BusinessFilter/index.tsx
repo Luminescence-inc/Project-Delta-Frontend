@@ -9,6 +9,7 @@ import { Country, State, City } from "../../../country-sate-city";
 import { FilterData, useBusinessCtx } from "context/BusinessCtx";
 import { BusinessFilterType } from "types/business";
 import { useNavigate } from "react-router-dom";
+import { prevPageLocalKeyName } from "config";
 
 interface OnfilterDataProps {
   uuid?: string | undefined;
@@ -248,7 +249,13 @@ const BusinessesFilterComponent = ({
               // if there isn't any filter applied, navigate to unboarding page
               // else close the filter
               if (!filterData.country) {
-                navigate("/onboarding");
+                // get prev page visited from LS.
+                const prevPagePath = localStorage.getItem(prevPageLocalKeyName);
+                if (prevPagePath) {
+                  navigate(prevPagePath);
+                } else {
+                  navigate("/onboarding");
+                }
                 return;
               }
               closeFilter();

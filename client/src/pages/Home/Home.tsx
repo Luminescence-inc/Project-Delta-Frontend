@@ -25,6 +25,8 @@ import "./Home.scss";
 import { FlexColCenter } from "components/Flex";
 import SearchCompIcon from "assets/icons/search-icon-3.svg?react";
 import { useAuth } from "hooks/useAuth";
+import { prevPageLocalKeyName } from "config";
+import useTrackPagePath from "hooks/useTrackPagePath";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -67,6 +69,9 @@ const Home = () => {
     }
   }, []);
 
+  // keep track of page path onMount
+  useTrackPagePath();
+
   if (authenticated && !tokenData?.verified) {
     navigate("/verify-account");
   }
@@ -93,7 +98,15 @@ const Home = () => {
             <FlexColCenter className="w-full">
               <button
                 className="ntw w-full h-44 rounded-10 search-component flex flex-row items-center justify-start px-15 gap-5 cursor-pointer bg-white"
-                onClick={() => navigate("/explore-businesses")}
+                onClick={() => {
+                  // keep track of prev page route
+                  localStorage.setItem(
+                    prevPageLocalKeyName,
+                    window.location.pathname
+                  );
+
+                  navigate("/explore-businesses");
+                }}
               >
                 <SearchCompIcon />
                 <span
@@ -112,10 +125,10 @@ const Home = () => {
             </h1>
             <p>Seamlessly do business within your area and on the go</p>
             {!authenticated && (
-              <div className="">
+              <div className="ntw w-303">
                 <Button
-                  className="cta-btn"
-                  label="Get Started"
+                  className="cta-btn w-full font-hn-bold"
+                  label="Business Owner? Get Started"
                   variant="primary"
                   to="/onboarding"
                   iconRight={<CtaArrow />}
@@ -152,7 +165,7 @@ const Home = () => {
             </div>
           )}
 
-          <div style={authenticated ? { marginTop: "60px" } : {}}>
+          <div className="ntw w-full mt-40">
             <WorldMap />
           </div>
         </header>
