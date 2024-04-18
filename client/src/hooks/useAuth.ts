@@ -1,18 +1,14 @@
 import { getUserDetails } from "api/auth";
-import { useDataCtx } from "context/DataCtx";
 import { useEffect, useState } from "react";
 import { TOKEN_NAME, UserDetails } from "types/auth";
 
 export const useAuth = () => {
-  const { isAuth } = useDataCtx();
   const [userDetails, setUserDetails] = useState<UserDetails | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    if (isAuth) {
-      fetchUserInfo();
-    }
-  }, [isAuth]);
+    fetchUserInfo();
+  }, []);
 
   const fetchUserInfo = async () => {
     try {
