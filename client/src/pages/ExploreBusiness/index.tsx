@@ -16,6 +16,7 @@ import { UserBusinessList } from "types/business";
 import { FilterData, useBusinessCtx } from "context/BusinessCtx";
 import { IFilter } from "types/business-profile";
 import { cn } from "utils";
+import { useState } from "react";
 
 const ExploreBusiness = () => {
   const {
@@ -26,11 +27,10 @@ const ExploreBusiness = () => {
     allBusinessesLoading,
     totalPages,
     setSearchQuery,
-    showFilter,
-    setShowFilter,
     layout,
     setLayout,
   } = useBusinessCtx();
+  const [showFilter, setShowFilter] = useState<boolean>(true);
 
   // construct the search query
   const constructQuery = (filterData: FilterData) => {
