@@ -24,7 +24,6 @@ import { UserBusinessListResponse } from "types/business";
 import "./Home.scss";
 import { FlexColCenter } from "components/Flex";
 import SearchCompIcon from "assets/icons/search-icon-3.svg?react";
-import { useDataCtx } from "context/DataCtx";
 import { useAuth } from "hooks/useAuth";
 
 const Home = () => {
