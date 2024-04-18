@@ -7,14 +7,8 @@ import EditIcon from "assets/icons/edit-icon.svg?react";
 import Input from "components/Input/Input";
 import Button from "components/Button/Button";
 import { useFormik } from "formik";
-import {
-  SignUpData,
-  TOKEN_NAME,
-  JwtPayload,
-  UserDetailsResponse,
-  BaseResponseMessage,
-} from "types/auth";
-import { getUserDetails, isAuthenticated, updateUserDetails } from "api/auth";
+import { SignUpData, TOKEN_NAME, BaseResponseMessage } from "types/auth";
+import { updateUserDetails } from "api/auth";
 import { useEffect, useState } from "react";
 import "./MyAccount.scss";
 import * as yup from "yup";
