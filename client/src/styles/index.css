@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-color: #0e2d52;
+  --secondary-color: #d82c2c;
+  --white-color: #ffffff;
+  --black-color: #000000;
+  --light-grey: #f9f9f9;
+
+  /* fonts */
+  --font-hn-light: "HelveticaNeue-Light";
+  --font-hn-medium: "HelveticaNeue-Medium";
+  --font-hn-bold: "HelveticaNeue-Bold";
+}
+
+@font-face {
+  font-family: var(--font-hn-light);
+  src: url("../assets/fonts/HelveticaNeueLight.otf");
+}
+
+@font-face {
+  font-family: var(--font-hn-medium);
+  src: url("../assets/fonts/HelveticaNeueMedium.otf");
+}
+
+@font-face {
+  font-family: var(--font-hn-bold);
+  src: url("../assets/fonts/HelveticaNeueBold.otf");
+}
+
+.hideScrollBar::-webkit-scrollbar {
+  /* customize it */
+  width: 3px;
+  background: transparent;
+}
+
+.hideScrollBar::-webkit-scrollbar-thumb {
+  /* customize it */
+  background: #777;
+  border-radius: 30px;
+}
+
+.hideScrollBar::-webkit-scrollbar-track {
+  /* customize it */
+  background: transparent;
+}
+
+.hideScrollBar2::-webkit-scrollbar {
+  /* customize it */
+  width: 1px;
+  background: transparent;
+}

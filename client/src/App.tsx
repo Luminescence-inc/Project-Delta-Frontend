@@ -20,7 +20,6 @@ import AboutUs from "pages/AboutUs/AboutUs";
 import ContactSupport from "pages/ContactSupport/ContactSupport";
 import BusinessContextProvider from "context/BusinessCtx";
 import ExploreBusiness from "pages/ExploreBusiness";
-import "./index.css";
 import BusinessDetails from "pages/BusinessDetails";
 import { DataCtxProvider } from "context/DataCtx";
 import { WithoutAuth } from "components/ProtectedRoutes/withoutAuth";
@@ -34,7 +33,7 @@ function App() {
   }, [pathname]);
 
   return (
-    <div id="app-container">
+    <div id="app-container" className={`font-hnM`}>
       <DataCtxProvider>
         <Navbar />
         <BusinessContextProvider>
