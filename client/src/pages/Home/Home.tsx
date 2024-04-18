@@ -24,6 +24,8 @@ import { UserBusinessListResponse } from "types/business";
 import "./Home.scss";
 import { FlexColCenter } from "components/Flex";
 import SearchCompIcon from "assets/icons/search-icon-3.svg?react";
+import { useDataCtx } from "context/DataCtx";
+import { useAuth } from "hooks/useAuth";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -32,6 +34,7 @@ const Home = () => {
   const [searchParams] = useSearchParams();
   const [businessPresent, setBusinessPresent] = useState(false);
   const login = searchParams.get("login");
+  const { userDetails, loading } = useAuth();
 
   const authToken = localStorage.getItem(TOKEN_NAME) as string;
 
@@ -273,20 +276,22 @@ const Home = () => {
                 experience record breaking earnings
               </p>
 
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  paddingTop: "40px",
-                }}
-              >
-                <Button
-                  className="ctn-btn-sign-up"
-                  label="Sign Up"
-                  variant="primary"
-                  to="/signup"
-                />
-              </div>
+              {!loading && !userDetails && (
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    paddingTop: "40px",
+                  }}
+                >
+                  <Button
+                    className="ctn-btn-sign-up"
+                    label="Sign Up"
+                    variant="primary"
+                    to="/signup"
+                  />
+                </div>
+              )}
               <div
                 style={{
                   display: "flex",
