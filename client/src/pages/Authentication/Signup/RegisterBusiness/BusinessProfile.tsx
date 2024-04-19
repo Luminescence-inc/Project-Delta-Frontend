@@ -131,7 +131,7 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
 
   const handleNextButton = () => {
     if (tabsRef.current) {
-      tabsRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+      tabsRef.current.scrollIntoView({ behavior: "smooth" });
     }
     setActiveTab(1);
     setSelectedTab(false);
