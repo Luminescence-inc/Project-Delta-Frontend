@@ -149,10 +149,10 @@ const Navbar = () => {
           </div>
 
           {menuOpen && (
-            <div className="w-full h-full fixed md:absolute top-0 left-0 shadow-md px-[32px] py-[16px] bg-white-100 z-[999]">
+            <div className="w-full h-full fixed md:absolute top-0 left-0 shadow-md px-[32px] py-[4em] bg-white-100 z-[999]">
               <LogoHeaderIcon />
               <CancelIcon
-                className="absolute top-5 right-[24px] cursor-pointer"
+                className="absolute top-[4em] right-[24px] cursor-pointer"
                 onClick={() => setMenuOpen(false)}
               />
 

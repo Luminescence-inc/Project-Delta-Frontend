@@ -10,7 +10,7 @@ import CustomerBgImage from "assets/images/customer-homebg.png";
 import ChoiceIcon from "assets/icons/choice-icon.svg?react";
 import ConvenienceIcon from "assets/icons/convenience-icon.svg?react";
 import CummunityIcon from "assets/icons/community-icon.svg?react";
-import Button from "components/Button/Button";
+import Button from "components/ui/button";
 import DefaultWebView from "components/DefaultWebView/DefaultWebView";
 import TitleCard from "./components/TitleCard/TitleCard";
 import BusinessCard from "./components/BusinessCard/BusinessCard";
@@ -22,7 +22,11 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { getUserBusinessProfileList } from "api/business";
 import { UserBusinessListResponse } from "types/business";
 import "./Home.scss";
-import { FlexColCenter } from "components/Flex";
+import {
+  FlexColCenter,
+  FlexColStart,
+  FlexRowStartCenter,
+} from "components/Flex";
 import SearchCompIcon from "assets/icons/search-icon-3.svg?react";
 import { useAuth } from "hooks/useAuth";
 import { prevPageLocalKeyName } from "config";
@@ -90,89 +94,96 @@ const Home = () => {
   }
 
   return (
-    <div className="responsive-content">
-      <div className="home mobile-view">
-        <header className="header-content">
-          <div className="home-content-container header-content-text">
-            {/* Search component */}
-            <FlexColCenter className="w-full">
-              <button
-                className="ntw w-full h-44 rounded-10 search-component flex flex-row items-center justify-start px-15 gap-5 cursor-pointer bg-white"
-                onClick={() => {
-                  // keep track of prev page route
-                  localStorage.setItem(
-                    prevPageLocalKeyName,
-                    window.location.pathname
-                  );
+    <div className="w-full h-full">
+      <header className="w-full px-4 py-4">
+        <div className="">
+          {/* Search component */}
+          <FlexColCenter className="w-full">
+            <button
+              className="w-full h-[44px] rounded-[10px] flex flex-row items-center justify-start px-[15px] gap-5 cursor-pointer bg-white border-[1px] border-solid border-blue-200 shadow-md"
+              onClick={() => {
+                // keep track of prev page route
+                localStorage.setItem(
+                  prevPageLocalKeyName,
+                  window.location.pathname
+                );
 
-                  navigate("/explore-businesses");
-                }}
-              >
+                navigate("/explore-businesses");
+              }}
+            >
+              <FlexRowStartCenter className="w-full">
                 <SearchCompIcon />
                 <span
-                  className="ntw text-12 leading-14 font-hn-light font-normal relative top-2"
+                  className="text-[12px] leading-[14px] font-hnL font-normal relative top-[2px]"
                   style={{
                     color: "#9090A7",
                   }}
                 >
                   Search businesses
                 </span>
-              </button>
-            </FlexColCenter>
-            <br />
-            <h1>
-              Connecting Immigrant & Local Business Owners With Their Customers
-            </h1>
-            <p>Seamlessly do business within your area and on the go</p>
-            {!authenticated && (
-              <div className="ntw w-303">
-                <Button
-                  className="cta-btn w-full font-hn-bold"
-                  label="Business Owner? Get Started"
-                  variant="primary"
-                  to="/onboarding"
-                  iconRight={<CtaArrow />}
-                />
-              </div>
-            )}
-          </div>
-
-          {authenticated && (
-            <div className="button-wrapper home-content-container">
-              <div style={{ marginTop: "60px" }}>
-                {businessPresent && (
-                  <Button
-                    label="View your business"
-                    variant="primary"
-                    size="lg"
-                    to="/view-your-business"
-                    icon={<SearchIcon />}
-                  />
-                )}
-                <Button
-                  className={authenticated ? "auth-btn" : ""}
-                  label={
-                    businessPresent
-                      ? "Create a new business profile"
-                      : "Create your first business profile"
-                  }
-                  variant="transparent"
-                  size="lg"
-                  to="/signup/register-business"
-                  icon={<PlusIcon />}
-                />
-              </div>
+              </FlexRowStartCenter>
+            </button>
+          </FlexColCenter>
+          <br />
+          <h1 className="w-full text-[25px] font-bold leading-[38px] tracking-normal text-left text-blue-200 font-hnB">
+            Connecting Immigrant & Local Business Owners With Their Customers
+          </h1>
+          <p className="text-[15px] font-bold font-hnM leading-[25px] text-left text-gray-100 ">
+            Seamlessly do business within your area and on the go
+          </p>
+          {!authenticated && (
+            <div className="w-full">
+              <Button
+                intent="primary"
+                href="/onboarding"
+                rightIcon={<CtaArrow />}
+                className="w-full mt-8 rounded-md h-[55px]"
+              >
+                <span className="font-hnM font-bold text-[14px] ">
+                  Business Owner? Get Started
+                </span>
+              </Button>
             </div>
           )}
+        </div>
 
-          <div className="ntw w-full mt-40">
-            <WorldMap />
-          </div>
-        </header>
+        {authenticated && (
+          <FlexColStart className="gap-[5px]">
+            {businessPresent && (
+              <Button
+                intent="primary"
+                href="/view-your-business"
+                leftIcon={<SearchIcon />}
+                className="w-full mt-8 rounded-md h-[55px]"
+              >
+                <span className="font-hnM font-bold text-[14px] ">
+                  View your business
+                </span>
+              </Button>
+            )}
+            <Button
+              intent="transparent"
+              href="/signup/register-business"
+              leftIcon={<PlusIcon />}
+              className="w-full mt-8 rounded-md h-[55px]"
+            >
+              <span className="font-hnM font-bold text-[14px] ">
+                {businessPresent
+                  ? "Create a new business profile"
+                  : "Create your first business profile"}
+              </span>
+            </Button>
+          </FlexColStart>
+        )}
 
-        <section className="body-content">
+        <div className="w-full mt-[40px] pb-20">
+          <WorldMap />
+        </div>
+      </header>
+
+      <section className="w-full h-auto py-4 pt-[40px] bg-white-100 ">
+        <div className="w-full px-4">
           <TitleCard
-            className={"title-card"}
             title={"FOR BUSINESS OWNERS"}
             header={"Unlock Boundless Opportunities"}
             subTitle={
@@ -180,7 +191,8 @@ const Home = () => {
             }
           />
 
-          <div style={{ marginTop: "20px" }}>
+          {/* Businesses Card */}
+          <FlexColStart className="w-full mt-[20px] gap-5">
             <BusinessCard
               className={"business-card"}
               icon={<VisibilityIcon />}
@@ -205,7 +217,7 @@ const Home = () => {
                 "With access to a larger customer base and tools to expand their reach, immigrant & Local business owners can experience accelerated growth and increased revenue opportunities."
               }
             />
-          </div>
+          </FlexColStart>
 
           <div style={{ marginTop: "55px" }}>
             <TitleCard
@@ -232,9 +244,9 @@ const Home = () => {
             />
           </div>
 
+          {/* Customer Card */}
           <div style={{ marginTop: "35px" }}>
             <CustomerCard
-              className={"customer-card"}
               icon={<ChoiceIcon />}
               header={"Choice"}
               subTitle={
@@ -243,7 +255,6 @@ const Home = () => {
             />
 
             <CustomerCard
-              className={"customer-card"}
               icon={<ConvenienceIcon />}
               header={"Convenience"}
               subTitle={
@@ -252,7 +263,6 @@ const Home = () => {
             />
 
             <CustomerCard
-              className={"customer-card"}
               icon={<CummunityIcon />}
               header={"Community"}
               subTitle={
@@ -261,71 +271,87 @@ const Home = () => {
             />
           </div>
 
-          <div style={{ display: "flex", justifyContent: "center" }}>
+          <FlexColCenter className="w-full">
             <Button
-              className="cta-btn-explore"
+              intent="primary"
+              href="/explore-businesses"
+              rightIcon={<CtaArrow />}
+              className="w-full max-w-[303px] h-[55px] mt-8 rounded-md "
+            >
+              <span className="font-hnM font-bold text-[14px] leading-[14px] text-left text-white-100 ">
+                Explore Businesses
+              </span>
+            </Button>
+          </FlexColCenter>
+        </div>
+
+        <FlexColCenter
+          className="w-full h-[497px]"
+          style={{
+            marginTop: "35px",
+            backgroundImage: `url("/assets/icons/join-network-bg.svg")`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        >
+          <FlexColCenter className="w-full px-8 pb-[20px] text-center">
+            <h1 className="text-[30px] text-white-100 text-center font-hnM font-bold leading-[37px] ">
+              Join Our Growing Network
+            </h1>
+            <p className="text-[15px] leading-[25px] font-hnL font-bold text-white-100 ">
+              Join immigrant entrepreneurs leveraging BizConnect24 to unlock
+              your business growth. Sign up now for greater visibility and
+              experience record breaking earnings
+            </p>
+          </FlexColCenter>
+
+          {!loading && userDetails && (
+            <FlexColCenter
+              className="w-full max-w-[197px] "
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                paddingTop: "40px",
+              }}
+            >
+              <Button
+                intent="primary"
+                href="/signup"
+                className="w-full max-w-[197px] h-[55px] px-[15px] py-[15px] rounded-md bg-white-100 hover:bg-white-100/90 "
+              >
+                <span className="font-hnM font-bold text-[14px] leading-[14px] text-left text-blue-200 ">
+                  Sign Up
+                </span>
+              </Button>
+            </FlexColCenter>
+          )}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              paddingTop: "30px",
+            }}
+          >
+            <Button
+              intent="primary"
+              href="/explore-businesses"
+              className="w-[303px] h-[55px] px-[15px] py-[15px] rounded-md border-[1px] border-white-100 "
+              rightIcon={<CtaArrow />}
+            >
+              <span className="font-hnM font-bold text-[15px] leading-[14px] text-left text-white-100 ">
+                Explore Businesses
+              </span>
+            </Button>
+            {/* <Button
+              className="cta-btn-explore-second"
               label="Explore Businesses"
               variant="primary"
               to="/explore-businesses"
               iconRight={<CtaArrow />}
-            />
+            /> */}
           </div>
-
-          <div className="network" style={{ marginTop: "35px" }}>
-            <div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  paddingBottom: "20px",
-                }}
-              >
-                <h1>Join Our Growing Network</h1>
-              </div>
-              <p>
-                Join immigrant entrepreneurs leveraging BizConnect24 to unlock
-                your business growth. Sign up now for greater visibility and
-                experience record breaking earnings
-              </p>
-
-              {!loading && !userDetails && (
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    paddingTop: "40px",
-                  }}
-                >
-                  <Button
-                    className="ctn-btn-sign-up"
-                    label="Sign Up"
-                    variant="primary"
-                    to="/signup"
-                  />
-                </div>
-              )}
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  paddingTop: "30px",
-                }}
-              >
-                <Button
-                  className="cta-btn-explore-second"
-                  label="Explore Businesses"
-                  variant="primary"
-                  to="/explore-businesses"
-                  iconRight={<CtaArrow />}
-                />
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
-      <div>
-        <DefaultWebView className={"laptop-view"} />
-      </div>
+        </FlexColCenter>
+      </section>
     </div>
   );
 };
