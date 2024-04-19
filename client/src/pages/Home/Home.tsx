@@ -11,7 +11,6 @@ import ChoiceIcon from "assets/icons/choice-icon.svg?react";
 import ConvenienceIcon from "assets/icons/convenience-icon.svg?react";
 import CummunityIcon from "assets/icons/community-icon.svg?react";
 import Button from "components/ui/button";
-import DefaultWebView from "components/DefaultWebView/DefaultWebView";
 import TitleCard from "./components/TitleCard/TitleCard";
 import BusinessCard from "./components/BusinessCard/BusinessCard";
 import CustomerCard from "./components/CustomerCard/CustomerCard";
@@ -21,7 +20,6 @@ import { isAuthenticated } from "api/auth";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { getUserBusinessProfileList } from "api/business";
 import { UserBusinessListResponse } from "types/business";
-import "./Home.scss";
 import {
   FlexColCenter,
   FlexColStart,
