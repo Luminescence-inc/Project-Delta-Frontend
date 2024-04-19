@@ -14,7 +14,6 @@ import { isAuthenticated, logOut } from "api/auth";
 import { useNavigate } from "react-router-dom";
 import { UserBusinessList, UserBusinessListResponse } from "types/business";
 import { getUserBusinessProfileList } from "api/business";
-import "./Navbar.scss";
 import {
   FlexColStart,
   FlexRowCenter,

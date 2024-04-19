@@ -340,13 +340,6 @@ const Home = () => {
                 Explore Businesses
               </span>
             </Button>
-            {/* <Button
-              className="cta-btn-explore-second"
-              label="Explore Businesses"
-              variant="primary"
-              to="/explore-businesses"
-              iconRight={<CtaArrow />}
-            /> */}
           </div>
         </FlexColCenter>
       </section>
