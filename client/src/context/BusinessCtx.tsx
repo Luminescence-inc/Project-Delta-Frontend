@@ -43,8 +43,6 @@ interface ContextValues {
   totalPages: number;
   setTotalPages: (pages: number) => void;
   getBusinesses: (currPage: number, filterApplied: boolean) => void;
-  showFilter: boolean;
-  setShowFilter: (showFilter: boolean) => void;
   layout?: BusinessListingLayouts;
   setLayout?: (layout: BusinessListingLayouts) => void;
   socialLinksError: string | null;
@@ -64,7 +62,6 @@ export default function BusinessContextProvider({
   const [businessCategory, setBusinessCategory] = useState<IOption[]>();
 
   // for filtering business profiles
-  const [showFilter, setShowFilter] = useState<boolean>(true);
   const [searchQuery, setSearchQuery] = useState<ISearch | null>(null);
   const [activePanel, setActivePanel] = React.useState<string>("");
   const [filteredCities, setFilteredCities] = React.useState<any>([]);
@@ -153,8 +150,6 @@ export default function BusinessContextProvider({
     totalPages,
     setTotalPages,
     getBusinesses,
-    showFilter,
-    setShowFilter,
     layout,
     setLayout,
     socialLinksError,

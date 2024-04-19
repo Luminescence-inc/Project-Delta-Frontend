@@ -65,9 +65,9 @@ const Login = () => {
         if (parsedToken.verified) {
           // window.location.reload();
 
-          //add spinner - todo
-          navigate("/?login=true");
-          // window.location.reload();
+          // this is done to reload the page after login
+          // so every component can get the updated data
+          window.location.href = "/?login=true";
         } else {
           navigate("/verify-account");
           window.location.reload();
