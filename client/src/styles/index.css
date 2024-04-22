@@ -52,3 +52,35 @@
   width: 1px;
   background: transparent;
 }
+
+input[type="checkbox"] {
+  appearance: none;
+  width: 30px;
+  height: 20px;
+  background-color: #fff;
+  border: 2px solid #333;
+  border-radius: 4px;
+  margin-right: 8px;
+  cursor: pointer;
+  position: relative;
+}
+
+input[type="checkbox"]:checked {
+  background-color: #333;
+  border-color: #fff;
+}
+
+input[type="checkbox"]::before {
+  content: "\2713";
+  font-size: 16px;
+  color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+}
+
+input[type="checkbox"]:checked::before {
+  opacity: 1;
+}
