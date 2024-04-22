@@ -447,7 +447,7 @@ const RegisterBusiness = () => {
                 "text-[16px] font-bold font-hnM cursor-pointer leading-[24px]",
                 selectedTab?.toLowerCase() === tab.name.toLowerCase()
                   ? "border-b-2 border-blue-200 text-blue-200"
-                  : "text-blue-200/20"
+                  : "text-blue-200/60"
               )}
               onClick={() => {
                 switchTab(idx);
