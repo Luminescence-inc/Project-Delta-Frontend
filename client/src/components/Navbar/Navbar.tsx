@@ -198,8 +198,12 @@ const Navbar = () => {
                         height={14}
                       />
                     </FlexRowCenterBtw>
-                    {editProfileOpen && (
-                      <FlexColStart className="w-full max-h-[300px] overflow-scroll hideScrollBar">
+                    {editProfileOpen && userBusinessListData.length > 0 && (
+                      <FlexColStart
+                        className={cn(
+                          "w-full max-h-[300px] overflow-scroll hideScrollBar "
+                        )}
+                      >
                         {userBusinessListData?.map((data) => {
                           return (
                             <FlexRowStartBtw
