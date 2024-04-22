@@ -2,7 +2,6 @@
 
 import { FlexColStart, FlexRowCenter } from "components/Flex";
 import React from "react";
-// import "./Input.scss";
 
 interface IInput {
   label?: string;
