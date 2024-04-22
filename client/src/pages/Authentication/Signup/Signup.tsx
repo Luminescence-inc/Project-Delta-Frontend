@@ -23,6 +23,7 @@ import {
   FlexRowStartBtw,
 } from "components/Flex";
 import Button from "components/ui/button";
+import ErrorComponent from "../ErrorComponent";
 
 const validationSchema = yup.object({
   firstName: yup
@@ -240,7 +241,7 @@ const Signup = () => {
 
             <FlexRowStartBtw className="w-full py-10 mb-[24px]">
               <input type="checkbox" />
-              <p className="font-hnL font-normal text-blue-200 text-[12px] leading-[17px]">
+              <p className="font-hnM font-normal text-blue-200 text-[12px] leading-[17px]">
                 By clicking Sign Up you agree to our{" "}
                 <a
                   target="_blank"
@@ -286,7 +287,3 @@ const Signup = () => {
 };
 
 export default Signup;
-
-const ErrorComponent = ({ value }: { value: string }) => {
-  return <span className="text-red-305 flex text-[13px]">{value}</span>;
-};
