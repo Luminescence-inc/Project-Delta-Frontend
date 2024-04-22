@@ -27,7 +27,7 @@ const Input = ({
   onBlur,
 }: IInput) => {
   return (
-    <FlexColStart className="w-full gap-[4px] text-left">
+    <FlexColStart className="w-full gap-[4px] text-left pb-5">
       <label className="text-[14px] font-normal font-hnL text-dark-100">
         {label}
       </label>
