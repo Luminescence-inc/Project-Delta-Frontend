@@ -35,9 +35,6 @@ const AboutUs = () => {
           />
         </div>
       </div>
-      <div>
-        <DefaultWebView className={"laptop-view"} />
-      </div>
     </div>
   );
 };

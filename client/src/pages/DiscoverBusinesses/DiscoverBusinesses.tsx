@@ -119,9 +119,6 @@ export const DiscoverBusinesses = () => {
           </div>
         )}
       </div>
-      <div>
-        <DefaultWebView className={"laptop-view"} />
-      </div>
     </div>
   );
 };
