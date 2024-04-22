@@ -6,7 +6,6 @@ import ClosedEyeIcon from "assets/icons/closed-eye-icon.svg?react";
 import MailIcon from "assets/icons/mail-icon.svg?react";
 import ContactIcon from "assets/icons/contact-icon.svg?react";
 import Input from "components/Input/Input";
-import Button from "components/Button/Button";
 import { useFormik } from "formik";
 import {
   SignUpResponse,
@@ -17,10 +16,13 @@ import {
 import { registerUser } from "api/auth";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Signup.scss";
 import * as yup from "yup";
-import Spinner from "components/Spinner/Spinner";
-import DefaultWebView from "components/DefaultWebView/DefaultWebView";
+import {
+  FlexColStart,
+  FlexColStartCenter,
+  FlexRowStartBtw,
+} from "components/Flex";
+import Button from "components/ui/button";
 
 const validationSchema = yup.object({
   firstName: yup
@@ -104,33 +106,27 @@ const Signup = () => {
     validationSchema: validationSchema,
   });
 
-  // Custom Styles
-  const errorMessageStyle = {
-    color: "red",
-    display: "flex",
-    fontSize: "13px",
-  };
-
-  const submitErrorMessageStyle = {
-    color: "red",
-    fontSize: "13px",
-  };
-
   return (
     <div className="responsive-content">
-      <div className="signup mobile-view">
-        <div className="card">
-          <h4>Create An Account</h4>
+      <FlexColStart className="w-full h-full bg-gray-200 pt-[40px] px-[16px] pb-[150px] ">
+        <FlexColStartCenter className="w-full h-auto text-center bg-white-100 rounded-[8px] pt-[24px] px-[16px] pb-[23px] ">
+          <h4 className="text-[16px] text-center font-normal font-hnM leading-[24px] mb-[24px] ">
+            Create An Account
+          </h4>
 
           {/* Display Error message */}
-          {error && <span style={submitErrorMessageStyle}>{errorMessage}</span>}
+          {error && (
+            <span className="text-red-100 text-[13px]">{errorMessage}</span>
+          )}
 
-          <form onSubmit={formik.handleSubmit}>
-            <span style={errorMessageStyle}>
-              {formik.touched.firstName && formik.errors.firstName
-                ? formik.errors.firstName
-                : ""}
-            </span>
+          <form className="flex flex-col" onSubmit={formik.handleSubmit}>
+            <ErrorComponent
+              value={
+                formik.touched.firstName && formik.errors.firstName
+                  ? formik.errors.firstName
+                  : ""
+              }
+            />
             <Input
               type="text"
               label="First Name"
@@ -141,12 +137,14 @@ const Signup = () => {
               onBlur={formik.handleBlur}
               placeholder="Enter First Name"
             />
-
-            <span style={errorMessageStyle}>
-              {formik.touched.lastName && formik.errors.lastName
-                ? formik.errors.lastName
-                : ""}
-            </span>
+            <br />
+            <ErrorComponent
+              value={
+                formik.touched.lastName && formik.errors.lastName
+                  ? formik.errors.lastName
+                  : ""
+              }
+            />
             <Input
               type="text"
               label="Last Name"
@@ -158,11 +156,15 @@ const Signup = () => {
               placeholder="Enter Last Name"
             />
 
-            <span style={errorMessageStyle}>
-              {formik.touched.email && formik.errors.email
-                ? formik.errors.email
-                : ""}
-            </span>
+            <br />
+            <ErrorComponent
+              value={
+                formik.touched.email && formik.errors.email
+                  ? formik.errors.email
+                  : ""
+              }
+            />
+
             <Input
               type="email"
               label="Email Address"
@@ -173,12 +175,14 @@ const Signup = () => {
               icon={<MailIcon className="input-icon" />}
               placeholder="Enter Email Address"
             />
-
-            <span style={errorMessageStyle}>
-              {formik.touched.password && formik.errors.password
-                ? formik.errors.password
-                : ""}
-            </span>
+            <br />
+            <ErrorComponent
+              value={
+                formik.touched.password && formik.errors.password
+                  ? formik.errors.password
+                  : ""
+              }
+            />
             <Input
               type={!showPassword ? "password" : "text"}
               label="Password"
@@ -202,11 +206,15 @@ const Signup = () => {
               placeholder="Enter Password"
             />
 
-            <span style={errorMessageStyle}>
-              {formik.touched.confirmPassword && formik.errors.confirmPassword
-                ? formik.errors.confirmPassword
-                : ""}
-            </span>
+            <br />
+            <ErrorComponent
+              value={
+                formik.touched.confirmPassword && formik.errors.confirmPassword
+                  ? formik.errors.confirmPassword
+                  : ""
+              }
+            />
+
             <Input
               type={!showConfirmPassword ? "password" : "text"}
               label="Confirm Password"
@@ -230,13 +238,15 @@ const Signup = () => {
               placeholder="Enter Password"
             />
 
-            <div className="confirm-terms">
+            <FlexRowStartBtw className="w-full py-10 mb-[24px]">
               <input type="checkbox" />
-              <p>
+              <p className="font-hnL font-normal text-blue-200 text-[12px] leading-[17px]">
                 By clicking Sign Up you agree to our{" "}
                 <a
                   target="_blank"
-                  href="/docs/BizConnect24-Terms-of-Agreement.pdf" // pointing to the public dir
+                  href="/docs/BizConnect24-Terms-of-Agreement.pdf"
+                  className="text-teal-100"
+                  // pointing to the public dir
                 >
                   Terms and Conditions
                 </a>{" "}
@@ -244,46 +254,39 @@ const Signup = () => {
                 <a
                   target="_blank"
                   href="/docs/BizConnect24-Terms-of-Agreement.pdf" // pointing to the public dir
+                  className="text-teal-100"
                 >
                   Privacy Policy
                 </a>
               </p>
-            </div>
+            </FlexRowStartBtw>
 
-            {!isLoading && (
-              <Button
-                type="submit"
-                label="Submit"
-                variant="primary"
-                size="lg"
-              />
-            )}
-            {isLoading && (
-              <Button
-                type="submit"
-                label={Spinner()}
-                variant="primary"
-                size="lg"
-                disabled={true}
-              />
-            )}
+            <Button
+              intent={"primary"}
+              size={"lg"}
+              className="w-full rounded-sm"
+              isLoading={isLoading}
+              spinnerColor="#000"
+              onClick={formik.handleSubmit as any}
+            >
+              <span className="text-[14px] font-hnM">Submit</span>
+            </Button>
           </form>
 
-          <p className="no-account">
+          <p className="text-dark-100/50 text-[14px] font-hnM mt-[14px] ">
             Have an Account?{" "}
             <Link to="/login">
-              <span>Sign in</span>
+              <span className="text-blue-200 underline">Sign in</span>
             </Link>
           </p>
-        </div>
-      </div>
-      <div>
-        <DefaultWebView className={"laptop-view"} />
-      </div>
+        </FlexColStartCenter>
+      </FlexColStart>
     </div>
   );
 };
 
 export default Signup;
 
-// (e)=>{formik.setFieldValue("firstName",e.target.value)}
+const ErrorComponent = ({ value }: { value: string }) => {
+  return <span className="text-red-305 flex text-[13px]">{value}</span>;
+};
