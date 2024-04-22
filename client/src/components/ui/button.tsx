@@ -9,7 +9,7 @@ const buttonVariants = cva(
     variants: {
       intent: {
         primary:
-          "bg-blue-200 hover:bg-blue-200/90 disabled:bg-white-100/70 disabled:cursor-not-allowed disabled:text-white-400 text-white-100",
+          "bg-blue-200 hover:bg-blue-200/90 disabled:bg-blue-200/10 disabled:cursor-not-allowed disabled:text-white-400 text-white-100",
         secondary:
           "bg-white-100 text-brand-green-primary hover:bg-[#F4FBF6] focus:shadow-brand-green-shd active:bg-brand-green-shd disabled:bg-brand-disabled border-solid border-[2px] border-brand-green-primary ",
         success:
@@ -97,7 +97,7 @@ const Button: React.FC<ButtonProps> = ({
           )}
         >
           <path
-            fill={spinnerColor ?? "#fff"}
+            fill={spinnerColor ?? "#000"}
             d="M12 21a9 9 0 1 1 6.18-15.55a.75.75 0 0 1 0 1.06a.74.74 0 0 1-1.06 0A7.51 7.51 0 1 0 19.5 12a.75.75 0 0 1 1.5 0a9 9 0 0 1-9 9Z"
           />
         </svg>
