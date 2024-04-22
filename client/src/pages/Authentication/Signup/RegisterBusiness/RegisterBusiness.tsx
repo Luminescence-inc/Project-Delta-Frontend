@@ -31,7 +31,8 @@ import * as yup from "yup";
 import "./Register.scss";
 import { FILTERED_COUNTRY } from "utils/business-profile-utils";
 import { useBusinessCtx } from "context/BusinessCtx";
-import { isUrlValid } from "utils";
+import { cn, isUrlValid } from "utils";
+import { FlexRowCenter, FlexRowCenterBtw } from "components/Flex";
 
 const dayOrder: { [key: string]: number } = {
   Monday: 0,
@@ -54,6 +55,12 @@ const validationSchema = yup.object({
   city: yup.string().required("city is required!"),
 });
 
+type Tabs = "business-profile" | "operations-info";
+const tabs = [
+  { name: "business-profile", title: "Business Profile" },
+  { name: "operations-info", title: "Operations Info" },
+] as { name: Tabs; title: string }[];
+
 const RegisterBusiness = () => {
   const { setSocialLinksError } = useBusinessCtx();
   const authToken = localStorage.getItem(TOKEN_NAME) as string;
@@ -62,7 +69,9 @@ const RegisterBusiness = () => {
     : {};
   const tabsRef = useRef<HTMLDivElement>(null);
   const [activeTab, setActiveTab] = useState(0);
-  const [selectedTab, setSelectedTab] = useState(true);
+  const [selectedTab, setSelectedTab] = useState<
+    "business-profile" | "operations-info"
+  >("business-profile");
   const [imageFile, setImageFile] = useState<File | null>();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [error, setError] = useState(false);
@@ -216,10 +225,9 @@ const RegisterBusiness = () => {
 
           // Cause a Re-render and refresh the formik setFields
           switchTab(1);
-          setSelectedTab(false);
           setTimeout(() => {
             switchTab(0);
-            setSelectedTab(true);
+            setSelectedTab("business-profile");
           }, 0.1);
         }
       })
@@ -413,12 +421,6 @@ const RegisterBusiness = () => {
     validationSchema: validationSchema,
   });
 
-  //Inline styles
-  const tabDisplayStyles = {
-    color: "#0E2D52",
-    borderBottom: "1px solid #0E2D52",
-  };
-
   const customStyles = {
     content: {
       top: "35%",
@@ -436,33 +438,32 @@ const RegisterBusiness = () => {
 
   return (
     authenticated && (
-      <div ref={tabsRef} className="register">
-        <div className="tabs">
-          <span
-            style={selectedTab ? tabDisplayStyles : {}}
-            onClick={() => {
-              switchTab(0);
-              setSelectedTab(true);
-            }}
-          >
-            Business Profile
-          </span>
-          <span
-            style={!selectedTab ? tabDisplayStyles : {}}
-            onClick={() => {
-              switchTab(1);
-              setSelectedTab(false);
-            }}
-          >
-            Operations info
-          </span>
-        </div>
+      <div ref={tabsRef} className="w-full pt-[30px] px-[16px] pb-[150px] ">
+        <FlexRowCenter className="w-full h-full gap-10">
+          {tabs.map((tab, idx) => (
+            <span
+              key={idx}
+              className={cn(
+                "text-[16px] font-bold font-hnM cursor-pointer leading-[24px]",
+                selectedTab?.toLowerCase() === tab.name.toLowerCase()
+                  ? "border-b-2 border-blue-200 text-blue-200"
+                  : "text-blue-200/20"
+              )}
+              onClick={() => {
+                switchTab(idx);
+                setSelectedTab(tab.name as any);
+              }}
+            >
+              {tab.title}
+            </span>
+          ))}
+        </FlexRowCenter>
 
         {activeTab === 0 && !successfulSubmission && (
           <BusinessProfile
             formik={formik}
             setActiveTab={setActiveTab}
-            setSelectedTab={setSelectedTab}
+            // setSelectedTab={setSelectedTab}
             tabsRef={tabsRef}
             setImageFile={setImageFile}
             imageFile={imageFile}
