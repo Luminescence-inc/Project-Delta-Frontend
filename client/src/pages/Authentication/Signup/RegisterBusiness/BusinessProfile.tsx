@@ -24,7 +24,8 @@ import { CloudinaryConfig } from "config";
 import defaultImg from "assets/images/default-img.jpeg";
 import "../Signup.scss";
 import { useBusinessCtx } from "context/BusinessCtx";
-import { FlexRowStart } from "components/Flex";
+import { FlexColStart, FlexRowStart } from "components/Flex";
+import ErrorComponent from "pages/Authentication/ErrorComponent";
 
 interface BusinessProfileProps {
   setActiveTab: React.Dispatch<React.SetStateAction<number>>;
@@ -174,13 +175,17 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
   return (
     <div className="signup">
       <div className="card">
-        <h4>Complete Business Profile</h4>
+        <h4 className="text-[16px] text-center font-normal font-hnM leading-[24px] mb-[24px] ">
+          Complete Business Profile
+        </h4>
 
-        <span style={errorMessageStyle}>
-          {formik.touched.businessName && formik.errors.businessName
-            ? formik.errors.businessName
-            : ""}
-        </span>
+        <ErrorComponent
+          value={
+            formik.touched.businessName && formik.errors.businessName
+              ? formik.errors.businessName
+              : ""
+          }
+        />
         <Input
           type="text"
           label="Business Name"
@@ -191,22 +196,27 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
           placeholder="Enter Business Name"
         />
 
-        <div className="form-group">
-          <label htmlFor="">Describe your business</label>
+        <FlexColStart className="w-full ">
+          <label className="text-[14px] font-extrabold font-hnL text-dark-100">
+            Describe your business
+          </label>
           <textarea
             name="description"
+            className="w-full border-[1px] border-solid border-dark-103 tracking-[2px] text-[12px] text-blue-200 py-[10px] px-[10px] rounded-[5px] placeholder:text-dark-104"
             value={formik.values.description}
             onChange={formik.handleChange}
             rows={4}
             placeholder="Short sentence about your business"
           />
-        </div>
-
-        <span style={errorMessageStyle}>
-          {formik.touched.businessCategory && formik.errors.businessCategory
-            ? formik.errors.businessCategory
-            : ""}
-        </span>
+        </FlexColStart>
+        <br />
+        <ErrorComponent
+          value={
+            formik.touched.businessCategory && formik.errors.businessCategory
+              ? formik.errors.businessCategory
+              : ""
+          }
+        />
         <Select
           label="Business Category"
           name="businessCategory"
@@ -216,11 +226,15 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
           options={businessCategory}
         />
 
-        <span style={errorMessageStyle}>
-          {formik.touched.country && formik.errors.country
-            ? formik.errors.country
-            : ""}
-        </span>
+        <br />
+
+        <ErrorComponent
+          value={
+            formik.touched.country && formik.errors.country
+              ? formik.errors.country
+              : ""
+          }
+        />
         <Select
           label="Select Country"
           name="country"
@@ -230,11 +244,15 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
           options={country}
         />
 
-        <span style={errorMessageStyle}>
-          {formik.touched.stateAndProvince && formik.errors.stateAndProvince
-            ? formik.errors.stateAndProvince
-            : ""}
-        </span>
+        <br />
+
+        <ErrorComponent
+          value={
+            formik.touched.stateAndProvince && formik.errors.stateAndProvince
+              ? formik.errors.stateAndProvince
+              : ""
+          }
+        />
         <Select
           label="State and Province"
           name="stateAndProvince"
@@ -244,9 +262,13 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
           options={stateAndProvince}
         />
 
-        <span style={errorMessageStyle}>
-          {formik.touched.city && formik.errors.city ? formik.errors.city : ""}
-        </span>
+        <br />
+
+        <ErrorComponent
+          value={
+            formik.touched.city && formik.errors.city ? formik.errors.city : ""
+          }
+        />
         <Select
           label="Select City"
           name="city"
