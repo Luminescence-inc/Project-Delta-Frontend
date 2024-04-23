@@ -6,10 +6,9 @@ import {
   FlexRowStartCenter,
 } from "components/Flex";
 import "./style.scss";
-import { LoaderCircle } from "lucide-react";
 import SearchIcon from "assets/icons/search-business.svg?react";
-import LayoutPanelTop from "assets/icons/layout-panel-top.svg?react";
-import LayoutPanelLeft from "assets/icons/layout-panel-left.svg?react";
+import LayoutPanelTop from "../../../public/assets/icons/layout-panel-top.svg?react";
+import LayoutPanelLeft from "../../../public/assets/icons/layout-panel-left.svg?react";
 import BusinessCardContainer from "./components/BusinessCard";
 import BusinessesFilterComponent from "components/BusinessFilter";
 import { UserBusinessList } from "types/business";
@@ -18,6 +17,7 @@ import { IFilter } from "types/business-profile";
 import { cn } from "utils";
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { LoaderComponent } from "components/Loader";
 
 const ExploreBusiness = () => {
   const {
@@ -67,33 +67,25 @@ const ExploreBusiness = () => {
   // }, [searchQuery]);
 
   return (
-    <div className="ntw w-full h-full">
-      <FlexColStart className="w-full px-20 mt-10 gap-15">
-        <h1 className="ntw text-30 font-bold font-hn-bold">
-          Explore Businesses
-        </h1>
-        <p
-          className="ntw text-15 font-medium font-hn-medium"
-          style={{
-            color: "#9090A7",
-          }}
-        >
+    <FlexColStart className="w-full h-full">
+      <FlexColStart className="w-full px-[20px] mt-10 gap-[15px]">
+        <h1 className="text-[30px] font-bold font-inter">Explore Businesses</h1>
+        <p className="text-[15px] font-medium font-inter text-gray-103">
           Discover businesses within and beyond your community
         </p>
       </FlexColStart>
       {/* search component */}
-      <FlexRowCenterBtw className="w-full px-20 mt-5 gap-20 mt-10">
+      <FlexRowCenterBtw className="w-full px-[20px] mt-[10px] gap-[20px]">
         <button
           className={cn(
-            "ntw w-full px-15 py-15 rounded-10 border-none font-helvetical filter-trigger",
-            allBusinessesLoading ? "disabled" : "cursor-pointer bg-white"
+            "w-full px-[15px] py-[15px] rounded-[10px] border-none bg-white-100 disabled:bg-dark-401 disabled:cursor-not-allowed shadow-sm cursor-pointer"
           )}
           onClick={() => setShowFilter(true)}
           disabled={allBusinessesLoading}
         >
           <FlexRowStartCenter className="w-full">
             <SearchIcon />
-            <p className="ntw text-12 font-normal" style={{ color: "#9090A7" }}>
+            <p className="text-[12px] font-medium font-inter">
               Search business
             </p>
           </FlexRowStartCenter>
@@ -102,7 +94,7 @@ const ExploreBusiness = () => {
           onClick={() =>
             setLayout && setLayout(layout === "col" ? "row" : "col")
           }
-          className="ntw border-none outline-none cursor-pointer rounded-10"
+          className="border-none outline-none cursor-pointer rounded-[10px]"
         >
           <FlexColCenter>
             {layout === "col" ? (
@@ -114,26 +106,18 @@ const ExploreBusiness = () => {
         </button>
       </FlexRowCenterBtw>
 
-      <div
-        className="ntw w-full flex flex-col items-center justify-center"
-        style={{
-          height: "20px",
-        }}
-      >
-        {allBusinessesLoading && <LoaderCircle size={15} className="loader" />}
+      <FlexColCenter className="w-full h-[20px]">
+        {allBusinessesLoading && <LoaderComponent />}
 
         {/* not found msg */}
         {!allBusinessesLoading && businesses.length === 0 && (
-          <FlexColStartCenter className="w-full mt-35">
-            <p
-              className="ntw text-15 font-bold font-hn-light"
-              style={{ color: "#9090A7" }}
-            >
+          <FlexColStartCenter className="w-full mt-[35px]">
+            <p className="text-[15px] font-semibold font-inter text-gray-103">
               No business found. Please modify your search
             </p>
           </FlexColStartCenter>
         )}
-      </div>
+      </FlexColCenter>
 
       {/* business card lists */}
       <BusinessCardContainer
@@ -159,7 +143,7 @@ const ExploreBusiness = () => {
             }}
           >
             {allBusinessesLoading ? (
-              <LoaderCircle size={15} className="loader" />
+              <LoaderComponent />
             ) : (
               <span className="ntw text-14 font-normal">Load more</span>
             )}
@@ -175,7 +159,7 @@ const ExploreBusiness = () => {
           businessesCategories={businessCategory}
         />
       )}
-    </div>
+    </FlexColStart>
   );
 };
 export default ExploreBusiness;
