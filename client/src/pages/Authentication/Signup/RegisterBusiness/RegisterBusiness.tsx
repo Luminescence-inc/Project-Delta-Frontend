@@ -19,7 +19,6 @@ import {
   UserBusinessList,
 } from "types/business";
 import { CloudinaryConfig } from "config";
-import { isAuthenticated } from "api/auth";
 import { useSearchParams } from "react-router-dom";
 import { useFormik } from "formik";
 import BusinessProfile from "./BusinessProfile";
@@ -93,113 +92,122 @@ const RegisterBusiness = () => {
   useEffect(() => {
     if (userDetails && businessId) {
       setPageLoading(true);
-      getUserBusinessProfileDetail(authToken, businessId).then((res) => {
-        const resData: UserBusinessDetailsResponse = res.data;
-        const businessDetailsData: UserBusinessList = resData.data.details;
+      getUserBusinessProfileDetail(authToken, businessId)
+        .then((res) => {
+          setPageLoading(false);
+          const resData: UserBusinessDetailsResponse = res.data;
+          const businessDetailsData: UserBusinessList = resData.data.details;
 
-        // Set Formik Values
-        formik.setFieldValue("businessName", businessDetailsData.name);
-        formik.setFieldValue(
-          "description",
-          formatInput(businessDetailsData.description)
-        );
-        formik.setFieldValue(
-          "businessCategory",
-          formatInput(businessDetailsData?.businessCategory.description)
-        );
-        formik.setFieldValue(
-          "country",
-          formatInput(businessDetailsData.country)
-        );
-        formik.setFieldValue(
-          "stateAndProvince",
-          formatInput(businessDetailsData.stateAndProvince)
-        );
-        formik.setFieldValue("city", formatInput(businessDetailsData.city));
-        formik.setFieldValue("street", formatInput(businessDetailsData.street));
-        formik.setFieldValue(
-          "postalCode",
-          formatInput(businessDetailsData.postalCode)
-        );
-        formik.setFieldValue(
-          "instagramUrl",
-          formatInput(businessDetailsData.instagramUrl)
-        );
-        formik.setFieldValue(
-          "websiteUrl",
-          formatInput(businessDetailsData.websiteUrl)
-        );
-        formik.setFieldValue(
-          "linkedinUrl",
-          formatInput(businessDetailsData.linkedinUrl)
-        );
-        formik.setFieldValue(
-          "facebookUrl",
-          formatInput(businessDetailsData.facebookUrl)
-        );
-        formik.setFieldValue(
-          "phoneNumber",
-          formatInput(businessDetailsData.phoneNumber)
-        );
-        formik.setFieldValue(
-          "businessEmail",
-          formatInput(businessDetailsData.businessEmail)
-        );
-        formik.setFieldValue(
-          "openTime",
-          formatInput(businessDetailsData.openTime)
-        );
-        formik.setFieldValue(
-          "closeTime",
-          formatInput(businessDetailsData.closeTime)
-        );
-        formik.setFieldValue(
-          "daysOfOperation",
-          formatInput(businessDetailsData.daysOfOperation)
-        );
+          // Set Formik Values
+          formik.setFieldValue("businessName", businessDetailsData.name);
+          formik.setFieldValue(
+            "description",
+            formatInput(businessDetailsData.description)
+          );
+          formik.setFieldValue(
+            "businessCategory",
+            formatInput(businessDetailsData?.businessCategory.description)
+          );
+          formik.setFieldValue(
+            "country",
+            formatInput(businessDetailsData.country)
+          );
+          formik.setFieldValue(
+            "stateAndProvince",
+            formatInput(businessDetailsData.stateAndProvince)
+          );
+          formik.setFieldValue("city", formatInput(businessDetailsData.city));
+          formik.setFieldValue(
+            "street",
+            formatInput(businessDetailsData.street)
+          );
+          formik.setFieldValue(
+            "postalCode",
+            formatInput(businessDetailsData.postalCode)
+          );
+          formik.setFieldValue(
+            "instagramUrl",
+            formatInput(businessDetailsData.instagramUrl)
+          );
+          formik.setFieldValue(
+            "websiteUrl",
+            formatInput(businessDetailsData.websiteUrl)
+          );
+          formik.setFieldValue(
+            "linkedinUrl",
+            formatInput(businessDetailsData.linkedinUrl)
+          );
+          formik.setFieldValue(
+            "facebookUrl",
+            formatInput(businessDetailsData.facebookUrl)
+          );
+          formik.setFieldValue(
+            "phoneNumber",
+            formatInput(businessDetailsData.phoneNumber)
+          );
+          formik.setFieldValue(
+            "businessEmail",
+            formatInput(businessDetailsData.businessEmail)
+          );
+          formik.setFieldValue(
+            "openTime",
+            formatInput(businessDetailsData.openTime)
+          );
+          formik.setFieldValue(
+            "closeTime",
+            formatInput(businessDetailsData.closeTime)
+          );
+          formik.setFieldValue(
+            "daysOfOperation",
+            formatInput(businessDetailsData.daysOfOperation)
+          );
 
-        setLogoUrl(businessDetailsData.logoUrl);
-        setCountry(
-          Country.getAllCountries()
-            .map((ct) => {
-              return { uuid: ct.isoCode, value: ct.name };
+          setLogoUrl(businessDetailsData.logoUrl);
+          setCountry(
+            Country.getAllCountries()
+              .map((ct) => {
+                return { uuid: ct.isoCode, value: ct.name };
+              })
+              .filter((ct) => {
+                return FILTERED_COUNTRY.includes(ct.value);
+              })
+          );
+
+          const selectedCountry = country?.find((ct) => {
+            return ct.value === businessDetailsData.country;
+          });
+          const states = State.getStatesOfCountry(selectedCountry?.uuid);
+          setStateAndProvince(
+            states.map((st) => {
+              return { uuid: st.isoCode, value: st.name };
             })
-            .filter((ct) => {
-              return FILTERED_COUNTRY.includes(ct.value);
+          );
+
+          const selectedState = stateAndProvince?.find((st) => {
+            return st.value === businessDetailsData.stateAndProvince;
+          });
+          const cities = City.getCitiesOfState(
+            selectedCountry?.uuid as string,
+            selectedState?.uuid as string
+          );
+          setCity(
+            cities.map((ct) => {
+              return { uuid: ct.name, value: ct.name };
             })
-        );
+          );
 
-        const selectedCountry = country?.find((ct) => {
-          return ct.value === businessDetailsData.country;
+          // Cause a Re-render and refresh the formik setFields
+          switchTab(1);
+          setSelectedTab("operations-info");
+          setTimeout(() => {
+            switchTab(0);
+            setSelectedTab("business-profile");
+          }, 0.1);
+        })
+        .catch((err: any) => {
+          setPageLoading(false);
+          console.log(err);
         });
-        const states = State.getStatesOfCountry(selectedCountry?.uuid);
-        setStateAndProvince(
-          states.map((st) => {
-            return { uuid: st.isoCode, value: st.name };
-          })
-        );
-
-        const selectedState = stateAndProvince?.find((st) => {
-          return st.value === businessDetailsData.stateAndProvince;
-        });
-        const cities = City.getCitiesOfState(
-          selectedCountry?.uuid as string,
-          selectedState?.uuid as string
-        );
-        setCity(
-          cities.map((ct) => {
-            return { uuid: ct.name, value: ct.name };
-          })
-        );
-
-        // Cause a Re-render and refresh the formik setFields
-        switchTab(1);
-        setSelectedTab("operations-info");
-        setTimeout(() => {
-          switchTab(0);
-          setSelectedTab("business-profile");
-        }, 0.1);
-      });
     } else {
       // Set Formik Values to null
       formik.setFieldValue("businessName", "");
