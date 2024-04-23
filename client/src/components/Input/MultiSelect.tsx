@@ -4,6 +4,8 @@ import { FormikProps } from "formik";
 import Button from "components/Button/Button";
 import "./Input.scss";
 import SelectedPlaceholder from "components/SelectedPlaceholder";
+import { FlexColStart, FlexRowCenter } from "components/Flex";
+import { cn } from "utils";
 
 interface ISelect {
   label: string;
@@ -72,11 +74,14 @@ const MultiSelect = ({
 
   return (
     <>
-      <div className="form-group">
+      <FlexColStart className="w-full">
         <label htmlFor="">{label}</label>
-        <div className="input-wrapper">
+        <FlexRowCenter className="w-full relative">
           <input
-            className="select"
+            className={cn(
+              "w-full h-[46px] border-[1px] border-solid border-dark-103 tracking-[2px] text-[12px] text-blue-200 p-[16px] rounded-[5px] placeholder:text-dark-104 placeholder:text-[12px]",
+              showDropdown ? "cursor-text" : "cursor-pointer"
+            )}
             type="text"
             name={name}
             placeholder={label}
@@ -84,11 +89,14 @@ const MultiSelect = ({
             readOnly
           />
           <ArrowUpIcon
-            className="arrow-down input-icon"
+            className={cn(
+              "absolute top-[15px] right-[20px]",
+              "-rotate-[180deg]"
+            )}
             width={14}
             height={14}
           />
-        </div>
+        </FlexRowCenter>
         {/* Days of operation placeholders */}
         <SelectedPlaceholder
           selectedValues={selectedValues}
@@ -102,7 +110,7 @@ const MultiSelect = ({
           visible={showDropdown}
           type={name}
         />
-      </div>
+      </FlexColStart>
 
       {showDropdown && (
         <div ref={dropdownRef} className="dropdown-container">
