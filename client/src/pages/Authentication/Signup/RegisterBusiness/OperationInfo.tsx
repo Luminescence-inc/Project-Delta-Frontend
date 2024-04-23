@@ -13,8 +13,6 @@ import Input from "components/Input/Input";
 import Button from "components/ui/button";
 import Select from "components/Input/Select";
 import MultiSelect from "components/Input/MultiSelect";
-import "../Signup.scss";
-import Spinner from "components/Spinner/Spinner";
 import { FlexColStart, FlexColStartCenter } from "components/Flex";
 
 interface OperationInfoProps {
