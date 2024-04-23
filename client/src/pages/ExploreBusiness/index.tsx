@@ -29,7 +29,6 @@ const ExploreBusiness = () => {
     setSearchQuery,
     layout,
     setLayout,
-    searchQuery,
   } = useBusinessCtx();
   const [showFilter, setShowFilter] = useState<boolean>(true);
 
