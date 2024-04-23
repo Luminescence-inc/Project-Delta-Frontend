@@ -23,9 +23,12 @@ import Button from "components/ui/button";
 import Select from "components/Input/Select";
 import { CloudinaryConfig } from "config";
 import defaultImg from "assets/images/default-img.jpeg";
-import "../Signup.scss";
 import { useBusinessCtx } from "context/BusinessCtx";
-import { FlexColStart, FlexRowCenter } from "components/Flex";
+import {
+  FlexColStart,
+  FlexColStartCenter,
+  FlexRowCenter,
+} from "components/Flex";
 import ErrorComponent from "pages/Authentication/ErrorComponent";
 import { cn } from "utils";
 
@@ -186,8 +189,8 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
   };
 
   return (
-    <div className="signup">
-      <div className="card">
+    <FlexColStart className="w-full h-full bg-gray-200 pt-[40px] px-[16px] pb-[150px] ">
+      <FlexColStartCenter className="w-full h-auto text-center bg-white-100 rounded-[8px] pt-[24px] px-[16px] pb-[23px] gap-0">
         <h4 className="text-[16px] text-center font-normal font-hnM leading-[24px] mb-[24px] ">
           Complete Business Profile
         </h4>
@@ -411,8 +414,8 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
         >
           <span className="font-inter text-[14px] font-medium">Next</span>
         </Button>
-      </div>
-    </div>
+      </FlexColStartCenter>
+    </FlexColStart>
   );
 };
 
