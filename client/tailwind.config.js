@@ -114,6 +114,7 @@ export default {
         hnL: ["var(--font-hn-light)"],
         hnM: ["var(--font-hn-medium)"],
         hnB: ["var(--font-hn-bold)"],
+        inter: ["var(--font-inter)"],
       },
     },
   },
