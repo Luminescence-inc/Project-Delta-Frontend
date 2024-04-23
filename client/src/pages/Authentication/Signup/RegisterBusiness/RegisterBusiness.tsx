@@ -247,8 +247,9 @@ const RegisterBusiness = () => {
     return value ? value : "";
   };
 
-  const switchTab = (tab: number) => {
+  const switchTab = (tab: number, selectedTab?: RegisterBusinessTabs) => {
     setActiveTab(tab);
+    selectedTab && setSelectedTab(selectedTab as any);
   };
 
   const orderDays = (values: any) => {
@@ -301,26 +302,26 @@ const RegisterBusiness = () => {
     if (payload.instagramUrl && !isUrlValid(payload.instagramUrl!)) {
       setSocialLinksError("Invalid Instagram URL");
       setIsLoading(false);
-      setActiveTab(0);
+      switchTab(0, "business-profile");
       scrollToBottom();
       return;
     }
     if (payload.websiteUrl && !isUrlValid(payload.websiteUrl!)) {
       setSocialLinksError("Invalid Website URL");
       setIsLoading(false);
-      setActiveTab(0);
+      switchTab(0, "business-profile");
       return;
     }
     if (payload.linkedinUrl && !isUrlValid(payload.linkedinUrl!)) {
       setSocialLinksError("Invalid LinkedIn URL");
       setIsLoading(false);
-      setActiveTab(0);
+      switchTab(0, "business-profile");
       return;
     }
     if (payload.facebookUrl && !isUrlValid(payload.facebookUrl!)) {
       setSocialLinksError("Invalid Facebook URL");
       setIsLoading(false);
-      setActiveTab(0);
+      switchTab(0, "business-profile");
       return;
     }
 
