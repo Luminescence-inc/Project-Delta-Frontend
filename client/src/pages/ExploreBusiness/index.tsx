@@ -54,12 +54,6 @@ const ExploreBusiness = () => {
     });
   };
 
-  useEffect(() => {
-    if (searchQuery) {
-      setShowFilter(false);
-    }
-  }, [searchQuery]);
-
   return (
     <div className="ntw w-full h-full">
       <FlexColStart className="w-full px-20 mt-10 gap-15">

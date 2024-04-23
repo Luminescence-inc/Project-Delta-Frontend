@@ -239,7 +239,7 @@ const BusinessesFilterComponent = ({
   };
 
   return (
-    <div className="ntw filter-container">
+    <div className="ntw filter-container fixed">
       <div className="ntw w-full flex flex-col items-start justify-start px-20 filter-card py-50">
         <div className="ntw w-full h-auto flex flex-row items-center justify-between ">
           <h2 className="ntw text-30 font-bold">Search</h2>
