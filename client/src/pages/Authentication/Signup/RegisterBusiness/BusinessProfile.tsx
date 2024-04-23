@@ -401,6 +401,7 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
         {socialMediaLinksInput.map((socialIconName) => (
           <SocialMediaLinks
             formik={formik}
+            key={socialIconName}
             socialIconName={socialIconName as SupportedSocialMedia}
           />
         ))}
