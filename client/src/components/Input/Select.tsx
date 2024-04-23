@@ -5,12 +5,7 @@ import ArrowUpIcon from "assets/icons/arrow-up.svg?react";
 import CancelIcon from "assets/icons/cancel-select-icon.svg?react";
 import "./Input.scss";
 import { FormikProps } from "formik";
-import {
-  FlexColStart,
-  FlexRowCenter,
-  FlexRowCenterBtw,
-  FlexRowStartCenter,
-} from "components/Flex";
+import { FlexColStart, FlexRowCenter, FlexRowCenterBtw } from "components/Flex";
 import { cn } from "utils";
 
 interface ISelect {
@@ -59,13 +54,6 @@ const Select = ({ label, options, name, formikValue, formik }: ISelect) => {
     setShowDropdown(!showDropdown);
   };
 
-  //Inline style
-  const selectedStyle = {
-    color: "#FFFFFF",
-    backgroundColor: "#0E2D52",
-    borderRadius: "4px",
-  };
-
   return (
     <>
       <FlexColStart className="w-full gap-[4px] text-left pb-5">
@@ -79,7 +67,8 @@ const Select = ({ label, options, name, formikValue, formik }: ISelect) => {
           <FlexRowCenter className="w-full relative">
             <input
               className={cn(
-                "w-full h-[46px] border-[1px] border-solid border-dark-103 tracking-[2px] text-[12px] text-blue-200 p-[16px] rounded-[5px] placeholder:text-dark-104 placeholder:text-[12px]"
+                "w-full h-[46px] border-[1px] border-solid border-dark-103 tracking-[2px] text-[12px] text-blue-200 p-[16px] rounded-[5px] placeholder:text-dark-104 placeholder:text-[12px]",
+                showDropdown ? "cursor-text" : "cursor-pointer"
               )}
               type="text"
               name={name}
@@ -89,6 +78,8 @@ const Select = ({ label, options, name, formikValue, formik }: ISelect) => {
               onChange={(e) => {
                 setValue(e.target.value);
               }}
+              // disable suggestions dropdown
+              autoComplete="new"
             />
             <ArrowUpIcon
               className={cn(
@@ -107,7 +98,7 @@ const Select = ({ label, options, name, formikValue, formik }: ISelect) => {
           ref={dropdownRef}
           className="w-full relative border-[1px] border-gray-102 shadow-md py-4 px-6 mb-[20px] rounded-[8px]"
         >
-          <FlexColStart className="w-full">
+          <FlexColStart className="w-full border-b-[1px] border-b-white-300 py-1">
             {selectedValue ? (
               <FlexRowCenterBtw className="w-full py-3 mb-2 border-b-[1px] border-b-gray-102/50 ">
                 <span>{selectedValue.value}</span>
@@ -119,10 +110,12 @@ const Select = ({ label, options, name, formikValue, formik }: ISelect) => {
                 />
               </FlexRowCenterBtw>
             ) : (
-              <span className="px-3 text-[16px] text-dark-100">Select...</span>
+              <span className="px-3 font-hnM text-[14px] text-dark-104">
+                Select...
+              </span>
             )}
           </FlexColStart>
-          <div className="w-full h-full max-h-[250px] overflow-y-auto mt-[6px]">
+          <div className="w-full h-full max-h-[250px] overflow-y-auto mt-2">
             <ul className="w-full list-none p-0 m-0 ">
               {options?.map((option) => {
                 const isSelected = selectedValue?.uuid === option.uuid;
@@ -136,7 +129,7 @@ const Select = ({ label, options, name, formikValue, formik }: ISelect) => {
                       key={option.uuid}
                       onClick={() => handleSelect(option)}
                       className={cn(
-                        "w-full py-[8px] px-3 text-left cursor-pointer leading-[20px] tracking-normal text-dark-103 text-[14px] font-hnM font-extrabold rounded-md ",
+                        "w-full py-[8px] px-3 text-left cursor-pointer leading-[20px] tracking-normal text-dark-103 text-[14px] font-inter font-medium rounded-md ",
                         isSelected
                           ? "bg-blue-200 text-white-100"
                           : "text-dark-106"
