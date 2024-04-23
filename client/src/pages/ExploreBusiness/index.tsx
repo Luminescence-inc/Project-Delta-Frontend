@@ -78,14 +78,14 @@ const ExploreBusiness = () => {
       <FlexRowCenterBtw className="w-full px-[20px] mt-[10px] gap-[20px]">
         <button
           className={cn(
-            "w-full px-[15px] py-[15px] rounded-[10px] border-none bg-white-100 disabled:bg-dark-401 disabled:cursor-not-allowed shadow-sm cursor-pointer"
+            "w-full px-[15px] py-[12px] rounded-[10px] border-none bg-white-100 disabled:bg-dark-401 disabled:cursor-not-allowed shadow-sm cursor-pointer"
           )}
           onClick={() => setShowFilter(true)}
           disabled={allBusinessesLoading}
         >
-          <FlexRowStartCenter className="w-full">
+          <FlexRowStartCenter className="w-full gap-1">
             <SearchIcon />
-            <p className="text-[12px] font-medium font-inter">
+            <p className="text-[12px] text-gray-103 font-normal font-inter">
               Search business
             </p>
           </FlexRowStartCenter>
