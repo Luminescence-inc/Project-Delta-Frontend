@@ -13,6 +13,7 @@ import {
   BusinessProfileFormikPropsValues,
   CloudinaryUploadResponse,
   IOption,
+  RegisterBusinessTabs,
   UploadSignature,
   UserBusinessDetailsResponse,
   UserBusinessList,
@@ -55,23 +56,21 @@ const validationSchema = yup.object({
   city: yup.string().required("city is required!"),
 });
 
-type Tabs = "business-profile" | "operations-info";
 const tabs = [
   { name: "business-profile", title: "Business Profile" },
   { name: "operations-info", title: "Operations Info" },
-] as { name: Tabs; title: string }[];
+] as { name: RegisterBusinessTabs; title: string }[];
 
 const RegisterBusiness = () => {
-  const { setSocialLinksError } = useBusinessCtx();
+  const { setSocialLinksError, socialLinksError } = useBusinessCtx();
   const authToken = localStorage.getItem(TOKEN_NAME) as string;
   const parsedToken: JwtPayload = authToken
     ? JSON.parse(atob(authToken?.split(".")[1]))
     : {};
   const tabsRef = useRef<HTMLDivElement>(null);
   const [activeTab, setActiveTab] = useState(0);
-  const [selectedTab, setSelectedTab] = useState<
-    "business-profile" | "operations-info"
-  >("business-profile");
+  const [selectedTab, setSelectedTab] =
+    useState<RegisterBusinessTabs>("business-profile");
   const [imageFile, setImageFile] = useState<File | null>();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [error, setError] = useState(false);
@@ -85,6 +84,9 @@ const RegisterBusiness = () => {
   const [city, setCity] = useState<IOption[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const businessId = searchParams.get("update");
+
+  // socialMediaErrorEndRef
+  const socialErrorEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     isAuthenticated(authToken, parsedToken.id)
@@ -237,6 +239,10 @@ const RegisterBusiness = () => {
       });
   }, [businessId]);
 
+  const scrollToBottom = () => {
+    socialErrorEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
   const formatInput = (value: any) => {
     return value ? value : "";
   };
@@ -296,6 +302,7 @@ const RegisterBusiness = () => {
       setSocialLinksError("Invalid Instagram URL");
       setIsLoading(false);
       setActiveTab(0);
+      scrollToBottom();
       return;
     }
     if (payload.websiteUrl && !isUrlValid(payload.websiteUrl!)) {
@@ -463,7 +470,7 @@ const RegisterBusiness = () => {
           <BusinessProfile
             formik={formik}
             setActiveTab={setActiveTab}
-            // setSelectedTab={setSelectedTab}
+            setSelectedTab={setSelectedTab}
             tabsRef={tabsRef}
             setImageFile={setImageFile}
             imageFile={imageFile}
@@ -477,6 +484,7 @@ const RegisterBusiness = () => {
             stateAndProvince={stateAndProvince}
             city={city}
             setCity={setCity}
+            socialEndRef={socialErrorEndRef}
           />
         )}
         {activeTab === 1 && !successfulSubmission && (
