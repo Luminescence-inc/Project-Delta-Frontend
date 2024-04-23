@@ -16,7 +16,7 @@ import { UserBusinessList } from "types/business";
 import { FilterData, useBusinessCtx } from "context/BusinessCtx";
 import { IFilter } from "types/business-profile";
 import { cn } from "utils";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const ExploreBusiness = () => {
   const {
