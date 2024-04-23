@@ -1,4 +1,4 @@
-import { FlexColStart, FlexColStartCenter } from "components/Flex";
+import { FlexColStart } from "components/Flex";
 import { cn } from "utils";
 
 interface BusinessCardProps {

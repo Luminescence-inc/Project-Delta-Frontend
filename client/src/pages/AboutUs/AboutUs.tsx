@@ -1,7 +1,6 @@
 import "./AboutUs.scss";
 import aboutImg from "assets/images/about-page-image.png";
 import Button from "components/Button/Button";
-import DefaultWebView from "components/DefaultWebView/DefaultWebView";
 import { useNavigate } from "react-router-dom";
 
 const AboutUs = () => {
@@ -34,9 +33,6 @@ const AboutUs = () => {
             }}
           />
         </div>
-      </div>
-      <div>
-        <DefaultWebView className={"laptop-view"} />
       </div>
     </div>
   );

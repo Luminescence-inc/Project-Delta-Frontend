@@ -6,7 +6,6 @@ import { IBusinessProfile, ISearch } from "types/business-profile";
 import FilterBusinessProfiles from "./BusinessCatalogue/FilterBusinessProfiles/FilterBusinessProfiles";
 import { allBusinessCategories } from "api/business";
 import { BusinessCategories, IOption } from "types/business";
-import DefaultWebView from "components/DefaultWebView/DefaultWebView";
 import { useBusinessCtx } from "context/BusinessCtx";
 
 export const DiscoverBusinesses = () => {
@@ -118,9 +117,6 @@ export const DiscoverBusinesses = () => {
             )}
           </div>
         )}
-      </div>
-      <div>
-        <DefaultWebView className={"laptop-view"} />
       </div>
     </div>
   );

@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+}
+
 :root {
   --primary-color: #0e2d52;
   --secondary-color: #d82c2c;
@@ -54,24 +57,27 @@
 }
 
 input[type="checkbox"] {
+  width: 15px;
+  height: 15px;
+  border: none;
+  outline: none;
+}
+
+/* Override Checkbox */
+.override-checkbox > input[type="checkbox"] {
   appearance: none;
-  width: 30px;
-  height: 20px;
-  background-color: #fff;
-  border: 2px solid #333;
-  border-radius: 4px;
-  margin-right: 8px;
-  cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  background: #fff;
+  border: none;
+  outline: 0.5px solid #000;
+  border-radius: 2px;
   position: relative;
 }
 
-input[type="checkbox"]:checked {
-  background-color: #333;
-  border-color: #fff;
-}
-
-input[type="checkbox"]::before {
-  content: "\2713";
+.override-checkbox > input[type="checkbox"]::before {
+  content: "";
   font-size: 16px;
   color: #fff;
   position: absolute;
@@ -81,6 +87,11 @@ input[type="checkbox"]::before {
   opacity: 0;
 }
 
-input[type="checkbox"]:checked::before {
+.override-checkbox > input[type="checkbox"]:checked::before {
   opacity: 1;
+}
+
+.override-checkbox > input[type="checkbox"]:checked {
+  background-color: #333;
+  outline-color: #fff;
 }
