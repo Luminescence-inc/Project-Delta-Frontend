@@ -38,7 +38,6 @@ const ContactSupport = () => {
     { resetForm }: FormikHelpers<ContactSupportDataSchema>
   ) => {
     setIsLoading(true);
-    console.log("Submission occured ", values);
     try {
       const res = await submitContactRequest(values).catch((err) => {
         const errorResponse: BaseResponseMessage = err.response.data;
@@ -57,7 +56,6 @@ const ContactSupport = () => {
       setSuccessMessage(resData?.message?.desc);
       resetForm();
       setIsModalOpen(true);
-      console.log(resData);
       setIsLoading(false);
     } catch (err) {
       setIsLoading(false);
