@@ -75,26 +75,28 @@ const RenderSocialLinks = ({
 
   return (
     <div className="social-links-tooltip-container">
-      <a
-        href={url}
-        target="_blank"
-        rel="noreferrer"
+      <button
         className={cn(
-          "ntw w-34 h-34 flex flex-col items-center justify-center rounded-100 cursor-pointer"
+          "w-[34px] h-[34px] flex flex-col items-center justify-center rounded-full",
+          valid ? "cursor-pointer" : "cursor-not-allowed"
         )}
         style={{
           background: valid ? "#E7F2FF" : "#eee",
           opacity: valid ? 1 : 0.6,
           filter: valid ? "grayscale(0)" : "grayscale(100%)",
         }}
-        onClick={() => setActiveTtip(name)}
+        onClick={() => {
+          setActiveTtip(name);
+          if (!valid) return;
+          window.open(url, "_blank");
+        }}
       >
         {icon}
-      </a>
+      </button>
       {!valid && (
         <span
           className={cn(
-            "ntw tooltiptext w-80 text-center absolute bg-black font-hn-normal text-white px-5 py-2 rounded-5 top-0 left-0 z-10",
+            "tooltiptext w-[80px] text-center absolute bg-dark-105 font-inter text-white-100 px-[5px] py-[2px] rounded-[5px] top-10 left-0 z-10",
             activeTtip === name ? "visible" : "hidden"
           )}
         >
