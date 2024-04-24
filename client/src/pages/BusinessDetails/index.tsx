@@ -16,7 +16,6 @@ import LocationMarkerIcon from "assets/icons/location-marker-2.svg?react";
 import PhoneIcon from "assets/icons/phone.svg?react";
 import MailBoxIcon from "assets/icons/mailbox.svg?react";
 import CalendarIcon from "assets/icons/calendar.svg?react";
-import "./details.scss";
 import { cn, constructBizImgUrl, determineBusOpTime, removeAMPM } from "utils";
 import RenderSocialLinks from "./components/RenderSocialLinks";
 import { useNavigate, useParams } from "react-router-dom";
