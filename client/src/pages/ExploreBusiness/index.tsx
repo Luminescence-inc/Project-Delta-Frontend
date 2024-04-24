@@ -16,7 +16,7 @@ import { FilterData, useBusinessCtx } from "context/BusinessCtx";
 import { IFilter } from "types/business-profile";
 import { cn } from "utils";
 import { LoaderComponent } from "components/Loader";
-
+import { useState } from "react";
 
 const ExploreBusiness = () => {
   const {
