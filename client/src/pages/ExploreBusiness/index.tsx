@@ -120,10 +120,12 @@ const ExploreBusiness = () => {
       </FlexColCenter>
 
       {/* business card lists */}
-      <BusinessCardContainer
-        data={businesses as UserBusinessList[]}
-        businessCategories={businessCategory}
-      />
+      {!allBusinessesLoading && (
+        <BusinessCardContainer
+          data={businesses as UserBusinessList[]}
+          businessCategories={businessCategory}
+        />
+      )}
 
       {/* Load more button */}
       <div
