@@ -17,6 +17,7 @@ import { IFilter } from "types/business-profile";
 import { cn } from "utils";
 import { LoaderComponent } from "components/Loader";
 
+
 const ExploreBusiness = () => {
   const {
     businessCategory,
@@ -26,11 +27,10 @@ const ExploreBusiness = () => {
     allBusinessesLoading,
     totalPages,
     setSearchQuery,
-    showFilter,
-    setShowFilter,
     layout,
     setLayout,
   } = useBusinessCtx();
+  const [showFilter, setShowFilter] = useState<boolean>(true);
 
   // construct the search query
   const constructQuery = (filterData: FilterData) => {
