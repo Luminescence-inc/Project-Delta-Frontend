@@ -158,8 +158,8 @@ export default function BusinessDetails() {
     <FlexColStart className="w-full h-auto px-[28px]">
       {/* breadcrumb */}
       <button
-        className="text-[12px] font-inter font-medium leading-[14px] underline bg-none outline-none border-none cursor-pointer text-gray-103"
-        onClick={() => navigate("/explore-businesses?s=false")}
+       className="text-[12px] font-inter font-medium leading-[14px] underline bg-none outline-none border-none cursor-pointer text-blue-200"
+       onClick={() => navigate("/explore-businesses?s=false")}
       >
         <FlexRowStart className="w-auto gap-[15px]">
           <ChevronLeftIcon />
