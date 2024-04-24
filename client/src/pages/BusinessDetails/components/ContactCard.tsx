@@ -12,18 +12,13 @@ export default function ContactCard({
   icon,
 }: ContactCardProps) {
   return (
-    <FlexRowStartCenter className="w-full mt-10 gap-10">
-      <div className="ntw w-17 h-18">{icon}</div>
+    <FlexRowStartCenter className="w-full mt-2 gap-[10px]">
+      <div className="w-[17px] h-[18px]">{icon}</div>
       <FlexColStart className="w-auto gap-1">
-        <h3 className="ntw text-11 leading-15 font-normal font-hn-light category-name">
+        <h3 className="text-[11px] leading-[15px] font-normal font-inter text-gray-103">
           {title}
         </h3>
-        <h3
-          className="ntw text-13 leading-13 font-normal font-hn-light category-name"
-          style={{
-            color: "#67A2F1",
-          }}
-        >
+        <h3 className="text-[13px] leading-[13px] font-light font-inter text-blue-102">
           {tagline}
         </h3>
       </FlexColStart>
