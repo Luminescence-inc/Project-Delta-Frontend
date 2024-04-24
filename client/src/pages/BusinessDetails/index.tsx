@@ -159,7 +159,7 @@ export default function BusinessDetails() {
     <FlexColStart className="w-full h-auto px-[28px]">
       {/* breadcrumb */}
       <button
-        className="text-[12px] font-inter font-medium leading-[14px] underline bg-none outline-none border-none cursor-pointer text-blue-200"
+        className="text-[12px] font-inter font-medium leading-[14px] underline bg-none outline-none border-none cursor-pointer text-gray-103"
         onClick={() => navigate("/explore-businesses")}
       >
         <FlexRowStart className="w-auto gap-[15px]">
@@ -267,7 +267,7 @@ export default function BusinessDetails() {
           </FlexRowCenter>
 
           {/* opening hours dropdown */}
-          <FlexColStart className="w-full mt-[10px] bg-white-100 rounded-[5px] h-auto p-0">
+          <FlexColStart className="w-full mt-[10px] bg-white-100 rounded-[5px] h-auto p-0  shadow-sm border-[.5px] border-gray-103/10">
             <button
               className="w-full h-[40px] mt-[0px] outline-none border-none rounded-[5px] flex items-center justify-between px-[20px] bg-none cursor-pointer"
               onClick={() => {
@@ -311,7 +311,7 @@ export default function BusinessDetails() {
                             {day.day}
                           </span>
                           <span
-                            className="h-[3px] w-[3px] mt-[5px] rounded-full text-[6px]"
+                            className="h-[3px] w-[3px] mt-[6px] rounded-full text-[6px]"
                             style={{
                               background:
                                 getCurrentDay === day.day
@@ -324,7 +324,7 @@ export default function BusinessDetails() {
                       <div className="w-full col-span-2 px-[20px]">
                         <FlexRowEnd className="w-full">
                           <span
-                            className="text-[12px] font-normal font-inter leading-[14px] mt-[4px]"
+                            className="text-[12px] font-normal font-inter leading-[14px] mt-[3px]"
                             style={{
                               color:
                                 getCurrentDay === day.day
