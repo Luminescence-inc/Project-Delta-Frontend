@@ -23,8 +23,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useBusinessCtx } from "context/BusinessCtx";
 import { IBusinessProfile } from "types/business-profile";
 import { getBusinessProfileById } from "api/business";
-import { LoaderCircle } from "lucide-react";
 import SimilarBusinesses from "./SimilarBusinesses";
+import { LoaderComponent } from "components/Loader";
+import BusinessesNotfound from "./components/Notfound";
 
 const daysOfWeek = [
   "Sunday",
@@ -64,22 +65,28 @@ export default function BusinessDetails() {
   }, [params, businessCategory]);
 
   const fetchBusinessProfile = async (id: string) => {
-    setPageLoading(true);
-    const businessProfile = await getBusinessProfileById(id);
-    const data = businessProfile.data?.data;
-    const details = data?.details;
+    try {
+      setPageLoading(true);
+      const businessProfile = await getBusinessProfileById(id);
+      const data = businessProfile.data?.data;
+      const details = data?.details;
 
-    //! for now, it N-N relationship (i.e one category id assign to one business profile).
-    const categoryId = details?.businessCategoryUuid;
-    const category = businessCategory?.find((c) => c.uuid === categoryId);
+      setPageLoading(false);
 
-    if (category) {
-      setBusinessDetails({
-        ...details,
-        categories: [category.value],
-      });
+      //! for now, it N-N relationship (i.e one category id assign to one business profile).
+      const categoryId = details?.businessCategoryUuid;
+      const category = businessCategory?.find((c) => c.uuid === categoryId);
+
+      if (category) {
+        setBusinessDetails({
+          ...details,
+          categories: [category.value],
+        });
+      }
+    } catch (e: any) {
+      setPageLoading(false);
+      console.log(e);
     }
-    setPageLoading(false);
   };
 
   const construcBizDaysOfOps = () => {
@@ -143,22 +150,19 @@ export default function BusinessDetails() {
   if (pageLoading) {
     return (
       <FlexRowCenter className="w-full mt-20 gap-10">
-        <LoaderCircle size={15} className="loader" />
+        <LoaderComponent />
       </FlexRowCenter>
     );
   }
 
   return (
-    <FlexColStart className="w-full h-auto px-28 business-details-container">
+    <FlexColStart className="w-full h-auto px-[28px]">
       {/* breadcrumb */}
       <button
-        className="ntw text-12 font-hn-light font-bold leading-14 underline bg-none outline-none border-none cursor-pointer"
-        style={{
-          color: "#0E2D52",
-        }}
+        className="text-[12px] font-inter font-medium leading-[14px] underline bg-none outline-none border-none cursor-pointer text-blue-200"
         onClick={() => navigate("/explore-businesses")}
       >
-        <FlexRowStart className="w-auto gap-15">
+        <FlexRowStart className="w-auto gap-[15px]">
           <ChevronLeftIcon />
           Explore Businesses
         </FlexRowStart>
@@ -167,40 +171,35 @@ export default function BusinessDetails() {
       {businessDetails && !pageLoading ? (
         <>
           {/* business image */}
-          <FlexRowStart className="w-full mt-10">
+          <FlexRowStart className="w-full mt-[10px]">
             <img
               src={constructBizImgUrl(businessDetails?.logoUrl!)}
               alt="business"
-              className="ntw w-full h-183 rounded-10"
+              className="w-full h-[183px] rounded-[10px]"
             />
           </FlexRowStart>
 
           {/* categories and business name */}
-          <FlexColStart className="h-44 mt-20">
+          <FlexColStart className="h-[44px] mt-[20px]">
             {/* business name */}
-            <h2 className="ntw text-20 font-bold font-hn-bold business-name leading-10">
+            <h2 className="text-[20px] font-bold font-inter text-dark-105 leading-[10px]">
               {businessDetails?.name ?? "N/A"}
             </h2>
 
             {/* categories */}
-            <FlexRowCenterBtw className="w-auto gap-10">
+            <FlexRowCenterBtw className="gap-[10px]">
               {typeof businessDetails.categories !== "undefined" &&
               businessDetails?.categories.length > 0
                 ? businessDetails?.categories?.map((c) => {
                     return (
-                      <FlexRowCenter className="gap-10" key={c}>
-                        <span className="ntw text-11 leading-13 font-normal font-hn-light category-name">
+                      <FlexRowCenter className="gap-[10px]" key={c}>
+                        <span className="ntw text-[11px] leading-[13px] font-light font-inter text-gray-103">
                           {c}
                         </span>
                         {businessDetails.categories[
                           businessDetails.categories.length - 1
                         ] !== c && (
-                          <span
-                            className="ntw h-3 w-3 rounded-100 text-6"
-                            style={{
-                              background: "#17BEBB",
-                            }}
-                          ></span>
+                          <span className="h-[3px] w-[3px] rounded-full text-[6px] bg-teal-100"></span>
                         )}
                       </FlexRowCenter>
                     );
@@ -210,8 +209,8 @@ export default function BusinessDetails() {
           </FlexColStart>
 
           {/* description */}
-          <FlexColStart className=" mt-10">
-            <span className="ntw text-11 leading-13 font-normal font-hn-light category-name">
+          <FlexColStart className="mt-[10px]">
+            <span className="ntw text-[11px] leading-[13px] font-light font-inter text-gray-103">
               Description
             </span>
 
@@ -220,12 +219,12 @@ export default function BusinessDetails() {
           </FlexColStart>
 
           {/* contact info */}
-          <FlexColStart className=" mt-15">
-            <span className="ntw text-11 leading-13 font-normal font-hn-light category-name">
+          <FlexColStart className="mt-[15px]">
+            <span className="text-[11px] leading-[13px] font-light font-inter text-gray-103">
               Contact Info
             </span>
 
-            <FlexColStart className="gap-10">
+            <FlexColStart className="gap-2">
               <ContactCard
                 title="Address"
                 tagline={
@@ -248,61 +247,36 @@ export default function BusinessDetails() {
           </FlexColStart>
 
           {/* opening and closing time */}
-          <FlexRowCenter className="w-auto gap-5 mt-10">
+          <FlexRowCenter className="gap-[5px] mt-5">
             {hasBusinessClosed && hasBusinessClosed.isOpened ? (
               <>
-                <span
-                  className="ntw text-11 font-normal font-hn-light leading-13 category-name"
-                  style={{
-                    color: "#17BEBB",
-                  }}
-                >
+                <span className="text-[11px] font-normal font-inter leading-[13px] text-teal-100">
                   Open
                 </span>
-                <span
-                  className="ntw h-3 w-3 rounded-100 text-6"
-                  style={{
-                    background: "#000",
-                  }}
-                ></span>
+                <span className="h-[3px] w-[3px] rounded-full text-[6px] bg-dark-105"></span>
 
-                <span
-                  className="ntw text-11 font-normal font-hn-light leading-13"
-                  style={{
-                    color: "#000",
-                  }}
-                >
+                <span className="text-[11px] font-normal font-inter leading-[13px] text-dark-105">
                   Closes {removeAMPM(hasBusinessClosed.closingTime!)}PM
                 </span>
               </>
             ) : (
-              <span
-                className="ntw text-11 font-normal font-hn-light leading-13 category-name"
-                style={{
-                  color: "#FF9F9F",
-                }}
-              >
+              <span className="text-[11px] font-normal font-inter leading-[13px] text-red-301">
                 Closed
               </span>
             )}
           </FlexRowCenter>
 
           {/* opening hours dropdown */}
-          <FlexColStart className="w-full mt-10 opening-hours-dd rounded-5 h-auto">
+          <FlexColStart className="w-full mt-[10px] bg-white-100 rounded-[5px] h-auto p-0">
             <button
-              className="ntw w-full h-37 mt-5 outline-none border-none rounded-5 opening-hours-dd-trigger flex items-center justify-between px-20 bg-none cursor-pointer"
+              className="w-full h-[40px] mt-[0px] outline-none border-none rounded-[5px] flex items-center justify-between px-[20px] bg-none cursor-pointer"
               onClick={() => {
                 setCalendarOpened(!calendarOpened);
               }}
             >
-              <FlexRowStartCenter className="w-auto">
+              <FlexRowStartCenter className="w-auto gap-1">
                 <CalendarIcon />
-                <span
-                  className="ntw text-11 font-bold font-hn-medium leading-10 mt-2"
-                  style={{
-                    color: "#0E2D52",
-                  }}
-                >
+                <span className="text-[11px] font-semibold font-inter leading-[10px] mt-[1px] text-blue-200">
                   View opening hours
                 </span>
               </FlexRowStartCenter>
@@ -313,20 +287,20 @@ export default function BusinessDetails() {
               />
             </button>
             {/* grid */}
-            {openingHoursCalendar.length > 0 && (
+            {openingHoursCalendar.length > 0 && calendarOpened && (
               <div
                 className={cn(
-                  "ntw w-full h-auto calendar-grid overflow-hidden",
-                  calendarOpened ? "h-auto py-10" : "h-0"
+                  "w-full h-auto grid grid-cols-4 gap-[10px] overflow-hidden",
+                  calendarOpened ? "h-auto py-[10px]" : "h-0 p-0"
                 )}
               >
                 {openingHoursCalendar.map((day) => {
                   return (
                     <Fragment key={day.day}>
-                      <div className="ntw w-full daysOfWeek px-20 ">
+                      <div className="w-full col-span-2 px-[20px] ">
                         <FlexRowStartBtw className="w-full">
                           <span
-                            className="ntw text-12 font-bold font-hn-light leading-14"
+                            className="text-[12px] font-normal font-inter leading-[14px]"
                             style={{
                               color:
                                 getCurrentDay === day.day
@@ -337,7 +311,7 @@ export default function BusinessDetails() {
                             {day.day}
                           </span>
                           <span
-                            className="ntw h-3 w-3 mt-5 rounded-100 text-6"
+                            className="h-[3px] w-[3px] mt-[5px] rounded-full text-[6px]"
                             style={{
                               background:
                                 getCurrentDay === day.day
@@ -347,10 +321,10 @@ export default function BusinessDetails() {
                           ></span>
                         </FlexRowStartBtw>
                       </div>
-                      <div className="ntw w-full time px-20">
+                      <div className="w-full col-span-2 px-[20px]">
                         <FlexRowEnd className="w-full">
                           <span
-                            className="ntw text-12 font-bold font-hn-light leading-14 mt-4"
+                            className="text-[12px] font-normal font-inter leading-[14px] mt-[4px]"
                             style={{
                               color:
                                 getCurrentDay === day.day
@@ -370,11 +344,11 @@ export default function BusinessDetails() {
           </FlexColStart>
 
           {/*  social media links */}
-          <FlexColStart className="w-full mt-15 pb-100">
-            <h3 className="ntw text-13 leading-15 font-boild font-hn-bold">
+          <FlexColStart className="w-full mt-[15px] pb-[100px]">
+            <h3 className="text-[13px] leading-[15px] font-bold font-inter">
               Follow our social media
             </h3>
-            <FlexRowStartBtw className="w-auto gap-20 mt-10">
+            <FlexRowStartBtw className="w-auto gap-[20px] mt-[10px]">
               {socialLinks.map((link) => (
                 <RenderSocialLinks
                   url={link.url!}
@@ -389,7 +363,7 @@ export default function BusinessDetails() {
 
           {/* divider */}
           <div
-            className="ntw w-full"
+            className="w-full"
             style={{
               background: "#DDDDDD",
               border: "0.5px solid #DDDDDD",
@@ -397,13 +371,8 @@ export default function BusinessDetails() {
           ></div>
 
           {/* Similar businesses */}
-          <FlexColStart className="w-full mt-10 h-auto pb-200">
-            <h3
-              className="ntw text-15 leading-18 font-bold font-hn-bold"
-              style={{
-                color: "#0E2D52",
-              }}
-            >
+          <FlexColStart className="w-full mt-5 h-auto pb-[200px]">
+            <h3 className="text-[15px] leading-[18px] font-bold font-inter text-blue-200">
               Similar Businesses
             </h3>
 
@@ -416,12 +385,7 @@ export default function BusinessDetails() {
           </FlexColStart>
         </>
       ) : !pageLoading && !businessDetails ? (
-        <FlexRowCenter className="w-full mt-20 gap-10">
-          <span className="">⚠</span>
-          <h2 className="ntw text-15 font-bold font-hn-light">
-            No business found.
-          </h2>
-        </FlexRowCenter>
+        <BusinessesNotfound message="Not Found" />
       ) : null}
     </FlexColStart>
   );
