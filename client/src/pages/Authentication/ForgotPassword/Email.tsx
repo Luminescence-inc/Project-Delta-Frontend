@@ -1,13 +1,13 @@
 import MailIcon from "assets/icons/mail-icon.svg?react";
-import Button from "components/Button/Button";
+import Button from "components/ui/button";
 import Input from "components/Input/Input";
 import { useFormik } from "formik";
-import "./ForgotPassword.scss";
 import { LogInData, LogInResponse } from "types/auth";
 import { generateVerificationEmail } from "api/auth";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import Spinner from "components/Spinner/Spinner";
+import { FlexColCenter, FlexColStart, FlexRowCenter } from "components/Flex";
+import ErrorComponent from "../ErrorComponent";
 
 const Email = () => {
   const navigate = useNavigate();
@@ -75,12 +75,14 @@ const Email = () => {
     <>
       {!sentEmail && (
         <form onSubmit={formik.handleSubmit}>
-          <div className="forgot-password">
-            <div className="card">
+          <div className="pt-[80px] px-[16px] py-[150px] bg-gray-200">
+            <FlexColStart className="w-full pt-[24px] px-[16px] py-[32px] rounded-[8px] bg-white-100 ">
               {/* Display Error message */}
-              {error && <span>{errorMessage}</span>}
+              {error && <ErrorComponent value={errorMessage as string} />}
 
-              <h4>Reset password</h4>
+              <h4 className="text-[16px] font-bold font-inter leading-[24px] mb-[24px] ">
+                Reset password
+              </h4>
 
               <Input
                 type="email"
@@ -93,26 +95,33 @@ const Email = () => {
                 placeholder="Enter Email Address"
               />
 
-              {!isLoading && <Button
+              <Button
+                intent={"primary"}
+                size={"lg"}
+                className="w-full rounded-[5px] mt-3"
+                isLoading={isLoading}
+                spinnerColor="#000"
+                onClick={formik.submitForm as any}
                 type="submit"
-                label="Verify Email"
-                variant="primary"
-                size="lg"
-              />}
-              {isLoading && <Button type='submit'  label={Spinner()} variant='primary' size='lg' disabled={true} />}
-            </div>
+                disabled={formik.values.email === ""}
+              >
+                <span className="text-[14px] font-semibold font-inter">
+                  Verify Email
+                </span>
+              </Button>
+            </FlexColStart>
           </div>
         </form>
       )}
 
       {sentEmail && (
-        <div className="login">
-          <div className="card">
+        <FlexColCenter className="w-full">
+          <FlexRowCenter className="w-full px-5 py-6">
             <h4 onClick={() => navigate("/")}>
               Password Reset Link sent to Email
             </h4>
-          </div>
-        </div>
+          </FlexRowCenter>
+        </FlexColCenter>
       )}
     </>
   );
