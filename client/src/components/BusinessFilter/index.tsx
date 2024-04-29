@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-// import "./style.scss";
-import CloseIcon from "assets/icons/close-icon.svg?react";
-import CloseIcon2 from "assets/icons/close-icon-2.svg?react";
-import SearchIcon from "assets/icons/search-icon-2.svg?react";
+import CloseIcon from "../../../public/assets/icons/close-icon.svg?react";
+import CloseIcon2 from "../../../public/assets/icons/close-icon-2.svg?react";
+import SearchIcon from "../../../public/assets/icons/search-icon-2.svg?react";
 import MultiSearch from "./MultiSearch";
 import { FILTERED_COUNTRY } from "utils/business-profile-utils";
 import { Country, State, City } from "../../../country-sate-city";
