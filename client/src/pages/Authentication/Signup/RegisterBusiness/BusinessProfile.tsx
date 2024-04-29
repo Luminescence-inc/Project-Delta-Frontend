@@ -7,6 +7,7 @@ import {
   BusinessCategories,
   BusinessProfileFormikPropsValues,
   IOption,
+  RegisterBusinessTabs,
 } from "types/business";
 import { Country, State, City } from "../../../../../country-sate-city";
 import { FILE_TYPES, FILTERED_COUNTRY } from "utils/business-profile-utils";
@@ -18,17 +19,22 @@ import LinkedinIcon from "assets/icons/linkedin-icon.svg?react";
 import FaceBookIcon from "assets/icons/facebook-icon.svg?react";
 import WebIcon from "assets/icons/web-icon.svg?react";
 import Input from "components/Input/Input";
-import Button from "components/Button/Button";
+import Button from "components/ui/button";
 import Select from "components/Input/Select";
 import { CloudinaryConfig } from "config";
 import defaultImg from "assets/images/default-img.jpeg";
-import "../Signup.scss";
 import { useBusinessCtx } from "context/BusinessCtx";
-import { FlexRowStart } from "components/Flex";
+import {
+  FlexColStart,
+  FlexColStartCenter,
+  FlexRowCenter,
+} from "components/Flex";
+import ErrorComponent from "pages/Authentication/ErrorComponent";
+import { cn } from "utils";
 
 interface BusinessProfileProps {
   setActiveTab: React.Dispatch<React.SetStateAction<number>>;
-  setSelectedTab: React.Dispatch<React.SetStateAction<boolean>>;
+  setSelectedTab: React.Dispatch<React.SetStateAction<RegisterBusinessTabs>>;
   setImageFile: React.Dispatch<React.SetStateAction<File | null | undefined>>;
   setDeleteLogo: React.Dispatch<React.SetStateAction<boolean>>;
   deleteLogo: boolean;
@@ -43,7 +49,17 @@ interface BusinessProfileProps {
   setStateAndProvince: React.Dispatch<React.SetStateAction<IOption[]>>;
   city: IOption[];
   setCity: React.Dispatch<React.SetStateAction<IOption[]>>;
+  socialEndRef: React.RefObject<HTMLDivElement>;
 }
+
+type SupportedSocialMedia = "instagram" | "website" | "linkedin" | "facebook";
+
+const socialMediaLinksInput = [
+  "instagram",
+  "website",
+  "linkedin",
+  "facebook",
+] as SupportedSocialMedia[];
 
 const BusinessProfile: FC<BusinessProfileProps> = ({
   setActiveTab,
@@ -62,6 +78,7 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
   stateAndProvince,
   city,
   setCity,
+  socialEndRef,
 }) => {
   const { socialLinksError } = useBusinessCtx();
   const [businessCategory, setBusinessCategory] = useState<IOption[]>();
@@ -134,7 +151,7 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
       tabsRef.current.scrollIntoView({ behavior: "smooth" });
     }
     setActiveTab(1);
-    setSelectedTab(false);
+    setSelectedTab("operations-info");
   };
 
   const handleImage = (files: FileList | null) => {
@@ -172,15 +189,19 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
   };
 
   return (
-    <div className="signup">
-      <div className="card">
-        <h4>Complete Business Profile</h4>
+    <FlexColStart className="w-full h-full bg-gray-200 pt-[40px] px-[16px] pb-[150px] ">
+      <FlexColStartCenter className="w-full h-auto text-center bg-white-100 rounded-[8px] pt-[24px] px-[16px] pb-[23px] gap-0">
+        <h4 className="text-[16px] text-center font-normal font-hnM leading-[24px] mb-[24px] ">
+          Complete Business Profile
+        </h4>
 
-        <span style={errorMessageStyle}>
-          {formik.touched.businessName && formik.errors.businessName
-            ? formik.errors.businessName
-            : ""}
-        </span>
+        <ErrorComponent
+          value={
+            formik.touched.businessName && formik.errors.businessName
+              ? formik.errors.businessName
+              : ""
+          }
+        />
         <Input
           type="text"
           label="Business Name"
@@ -191,22 +212,27 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
           placeholder="Enter Business Name"
         />
 
-        <div className="form-group">
-          <label htmlFor="">Describe your business</label>
+        <FlexColStart className="w-full ">
+          <label className="text-[14px] font-extrabold font-hnL text-dark-100">
+            Describe your business
+          </label>
           <textarea
             name="description"
+            className="w-full border-[1px] border-solid border-dark-103 tracking-[2px] text-[12px] text-blue-200 py-[10px] px-[10px] rounded-[5px] placeholder:text-dark-104"
             value={formik.values.description}
             onChange={formik.handleChange}
             rows={4}
             placeholder="Short sentence about your business"
           />
-        </div>
-
-        <span style={errorMessageStyle}>
-          {formik.touched.businessCategory && formik.errors.businessCategory
-            ? formik.errors.businessCategory
-            : ""}
-        </span>
+        </FlexColStart>
+        <br />
+        <ErrorComponent
+          value={
+            formik.touched.businessCategory && formik.errors.businessCategory
+              ? formik.errors.businessCategory
+              : ""
+          }
+        />
         <Select
           label="Business Category"
           name="businessCategory"
@@ -216,11 +242,15 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
           options={businessCategory}
         />
 
-        <span style={errorMessageStyle}>
-          {formik.touched.country && formik.errors.country
-            ? formik.errors.country
-            : ""}
-        </span>
+        <br />
+
+        <ErrorComponent
+          value={
+            formik.touched.country && formik.errors.country
+              ? formik.errors.country
+              : ""
+          }
+        />
         <Select
           label="Select Country"
           name="country"
@@ -230,11 +260,15 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
           options={country}
         />
 
-        <span style={errorMessageStyle}>
-          {formik.touched.stateAndProvince && formik.errors.stateAndProvince
-            ? formik.errors.stateAndProvince
-            : ""}
-        </span>
+        <br />
+
+        <ErrorComponent
+          value={
+            formik.touched.stateAndProvince && formik.errors.stateAndProvince
+              ? formik.errors.stateAndProvince
+              : ""
+          }
+        />
         <Select
           label="State and Province"
           name="stateAndProvince"
@@ -244,9 +278,13 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
           options={stateAndProvince}
         />
 
-        <span style={errorMessageStyle}>
-          {formik.touched.city && formik.errors.city ? formik.errors.city : ""}
-        </span>
+        <br />
+
+        <ErrorComponent
+          value={
+            formik.touched.city && formik.errors.city ? formik.errors.city : ""
+          }
+        />
         <Select
           label="Select City"
           name="city"
@@ -256,6 +294,7 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
           options={city}
         />
 
+        <br />
         <Input
           name="street"
           type="text"
@@ -264,6 +303,7 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
           onChange={formik.handleChange}
           placeholder="Enter Street Name"
         />
+        <br />
 
         <Input
           type="text"
@@ -273,6 +313,7 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
           onChange={formik.handleChange}
           placeholder="Enter Postal Code"
         />
+        <br />
 
         {error && (
           <span style={errorMessageStyle}>File Type not Supported</span>
@@ -285,48 +326,47 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
             NB: Uploading a new logo will override the previous Logo
           </span>
         )}
-        <div className="file-upload">
-          <label className="file-upload-label">
-            <span className="placeholder-text">
+
+        <div className="w-full relative font-inter border-[1px] border-white-200 rounded-[5px] mt-[10px] ">
+          <FlexRowCenter className="w-full p-[16px] ">
+            <span className=" flex-1 flex items-center justify-center text-blue-200 text-[10px] font-semibold font-inter leading-[14px] ">
               {imageFile ? imageFile.name : "Upload Your Logo (jpg/jpeg/png)"}
               <UploadIcon
-                className="upload-arrow"
                 onClick={(e) => {
                   e.stopPropagation();
                   fileInputRef.current?.click();
                 }}
+                className="ml-[10px] cursor-pointer"
               />
             </span>
             <input
               type="file"
               ref={fileInputRef}
-              onChange={(e) => {
-                handleImage(e.target.files);
-              }}
-              style={{ display: "none" }}
+              onChange={(e) => handleImage(e.target.files)}
+              className="hidden"
             />
             {imageFile && (
               <button className="delete-button" onClick={handleDelete}>
                 <CancelIcon width={14} height={14} />
               </button>
             )}
-          </label>
+          </FlexRowCenter>
         </div>
         {imageFile && (
-          <div>
-            <h3 style={{ paddingTop: "20px", paddingBottom: "10px" }}>
+          <div className="mt-2">
+            <h3 className="pb-[20px] pt-[10px] font-inter font-medium">
               Selected Logo:
             </h3>
             <img
               src={URL.createObjectURL(imageFile)}
               alt="Uploaded"
-              style={{ maxWidth: "100%", width: "342px", height: "152px" }}
+              className="max-w-[100%] w-[342px] h-[152px]"
             />
           </div>
         )}
         {!imageFile && businessId != null && logoUrl && (
           <div>
-            <h3 style={{ paddingTop: "20px", paddingBottom: "10px" }}>
+            <h3 className="font-inter font-medium pt-[20px] pb-[10px]">
               Current Logo:
             </h3>
             <img
@@ -335,16 +375,17 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
                 `https://res.cloudinary.com/${CloudinaryConfig.cloudName}/image/upload/c_fill,q_400/${logoUrl}.jpg`
               }
               alt="Uploaded"
-              style={{ maxWidth: "100%" }}
+              className="max-w-[100%]"
             />
             <Button
               onClick={handleDeleteLogo}
-              className={!deleteLogo ? "deleteLogo" : "reverse-delete-logo"}
+              className="deleteLogo"
               type="submit"
-              label={!deleteLogo ? "Delete" : "Reverse"}
-              variant="primary"
+              intent={!deleteLogo ? "error" : "primary"}
               size="md"
-            />
+            >
+              <span className="font-inter font-medium">Delete</span>
+            </Button>
           </div>
         )}
 
@@ -352,85 +393,80 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
 
         {/* error msg for social links validation */}
         {socialLinksError && (
-          <FlexRowStart className="w-full">
-            <p
-              className="ntw text-13 font-medium font-hn-medium"
-              style={{
-                color: "red",
-              }}
-            >
-              {socialLinksError}
-            </p>
-          </FlexRowStart>
+          <ErrorComponent _ref={socialEndRef} value={socialLinksError} />
         )}
 
         <br />
 
-        <div className="form-group">
-          <div className="input-wrapper">
-            {<InstagramIcon className="input-icon-social" />}
-            <input
-              className="input-text-social"
-              name="instagramUrl"
-              type="text"
-              placeholder="Add Instagram Link"
-              value={formik.values.instagramUrl}
-              onChange={formik.handleChange}
-            />
-          </div>
-        </div>
-
-        <div className="form-group">
-          <div className="input-wrapper">
-            {<WebIcon className="input-icon-social" style={{ left: "30px" }} />}
-            <input
-              className="input-text-social"
-              name="websiteUrl"
-              type="text"
-              placeholder="Add Website Link"
-              value={formik.values.websiteUrl}
-              onChange={formik.handleChange}
-            />
-          </div>
-        </div>
-
-        <div className="form-group">
-          <div className="input-wrapper">
-            {<LinkedinIcon className="input-icon-social" />}
-            <input
-              className="input-text-social"
-              name="linkedinUrl"
-              type="text"
-              placeholder="Add Linkedin Link"
-              value={formik.values.linkedinUrl}
-              onChange={formik.handleChange}
-            />
-          </div>
-        </div>
-
-        <div className="form-group">
-          <div className="input-wrapper">
-            {<FaceBookIcon className="input-icon-social" />}
-            <input
-              className="input-text-social"
-              name="facebookUrl"
-              type="text"
-              placeholder="Add Facebook Link"
-              value={formik.values.facebookUrl}
-              onChange={formik.handleChange}
-            />
-          </div>
-        </div>
+        {socialMediaLinksInput.map((socialIconName) => (
+          <SocialMediaLinks
+            formik={formik}
+            key={socialIconName}
+            socialIconName={socialIconName as SupportedSocialMedia}
+          />
+        ))}
 
         <Button
-          label="Next"
-          variant="primary"
-          size="lg"
           onClick={handleNextButton}
-        />
-      </div>
-    </div>
+          className="w-full rounded-[5px] mt-5"
+          type="submit"
+          intent="primary"
+          size="lg"
+        >
+          <span className="font-inter text-[14px] font-medium">Next</span>
+        </Button>
+      </FlexColStartCenter>
+    </FlexColStart>
   );
 };
 
 export default BusinessProfile;
+
+interface ISocialMediaLinks {
+  formik: FormikProps<BusinessProfileFormikPropsValues>;
+  socialIconName: SupportedSocialMedia;
+}
+
+const SocialMediaLinks = ({ formik, socialIconName }: ISocialMediaLinks) => {
+  const formattedSocialIconName =
+    socialIconName.charAt(0).toUpperCase() + socialIconName.slice(1);
+  const linkName = socialIconName.toLowerCase() + "Url";
+  return (
+    <div className="w-full mb-[24px]">
+      <FlexRowCenter className="w-full relative">
+        {renderSocialMediaIcons(socialIconName)}
+        <input
+          className="w-full rounded-[5px]  p-[16px] border-[1px] border-dark-103 text-[12px] font-medium leading-[14px] tracking-wide text-blue-200 pl-[60px]"
+          name={linkName}
+          type="url"
+          placeholder={`Add ${formattedSocialIconName} Link`}
+          // @ts-expect-error
+          value={formik.values[linkName as any]}
+          onChange={formik.handleChange}
+        />
+      </FlexRowCenter>
+    </div>
+  );
+};
+
+const renderSocialMediaIcons = (name: SupportedSocialMedia) => {
+  let icon = null;
+  let defaultClass = "absolute left-4";
+  switch (name) {
+    case "instagram":
+      icon = <InstagramIcon className={cn(defaultClass)} />;
+      break;
+    case "website":
+      icon = <WebIcon className={cn(defaultClass, "left-6")} />;
+      break;
+    case "linkedin":
+      icon = <LinkedinIcon className={cn(defaultClass)} />;
+      break;
+    case "facebook":
+      icon = <FaceBookIcon className={cn(defaultClass, "left-8")} />;
+      break;
+    default:
+      break;
+  }
+  return icon;
+};

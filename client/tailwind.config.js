@@ -19,6 +19,7 @@ export default {
           103: "#0000002e",
           104: "#00000047",
           105: "#000",
+          106: "#00000096",
           200: "#16181d",
           300: "#312c3b",
           400: "#3e3749",
@@ -26,6 +27,7 @@ export default {
         },
         gray: {
           100: "#828297",
+          102: "#ccc",
           200: "#f9f9f9",
         },
         red: {
@@ -112,6 +114,7 @@ export default {
         hnL: ["var(--font-hn-light)"],
         hnM: ["var(--font-hn-medium)"],
         hnB: ["var(--font-hn-bold)"],
+        inter: ["var(--font-inter)"],
       },
     },
   },

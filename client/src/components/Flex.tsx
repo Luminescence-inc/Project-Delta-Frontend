@@ -48,6 +48,34 @@ export function FlexColCenter({ children, className, ...props }: FlexProps) {
   );
 }
 
+export function FlexColCenterBtw({ children, className, ...props }: FlexProps) {
+  return (
+    <div
+      className={twMerge(
+        "w-auto flex flex-col items-center justify-between gap-3",
+        className
+      )}
+      {...props}
+    >
+      {children}
+    </div>
+  );
+}
+
+export function FlexColCenterArr({ children, className, ...props }: FlexProps) {
+  return (
+    <div
+      className={twMerge(
+        "w-auto flex flex-col items-center justify-around gap-3",
+        className
+      )}
+      {...props}
+    >
+      {children}
+    </div>
+  );
+}
+
 export function FlexColStartCenter({
   children,
   className,
@@ -170,6 +198,20 @@ export function FlexRowCenterBtw({ children, className, ...props }: FlexProps) {
     <div
       className={twMerge(
         "w-auto flex items-center justify-between gap-3",
+        className
+      )}
+      {...props}
+    >
+      {children}
+    </div>
+  );
+}
+
+export function FlexRowCenterArr({ children, className, ...props }: FlexProps) {
+  return (
+    <div
+      className={twMerge(
+        "w-auto flex items-center justify-around gap-3",
         className
       )}
       {...props}

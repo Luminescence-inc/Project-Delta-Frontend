@@ -16,21 +16,27 @@
   --font-hn-light: "HelveticaNeue-Light";
   --font-hn-medium: "HelveticaNeue-Medium";
   --font-hn-bold: "HelveticaNeue-Bold";
+  --font-inter: "Inter";
 }
 
 @font-face {
   font-family: var(--font-hn-light);
-  src: url("../assets/fonts/HelveticaNeueLight.otf");
+  src: url("/assets/fonts/HelveticaNeueLight.otf");
 }
 
 @font-face {
   font-family: var(--font-hn-medium);
-  src: url("../assets/fonts/HelveticaNeueMedium.otf");
+  src: url("/assets/fonts/HelveticaNeueMedium.otf");
 }
 
 @font-face {
   font-family: var(--font-hn-bold);
-  src: url("../assets/fonts/HelveticaNeueBold.otf");
+  src: url("/assets/fonts/HelveticaNeueBold.otf");
+}
+
+@font-face {
+  font-family: var(--font-inter);
+  src: url("/assets/fonts/Inter-Regular.ttf");
 }
 
 .hideScrollBar::-webkit-scrollbar {
