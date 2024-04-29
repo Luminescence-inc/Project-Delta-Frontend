@@ -3,14 +3,13 @@
 import PlusIcon from "assets/icons/plus-icon.svg?react";
 import BagIcon from "assets/icons/bag-icon.svg?react";
 import SearchIcon from "assets/icons/search-icon.svg?react";
-import Pill from "./components/Pill/Pill";
+import Pill from "./components/Pill";
 import { JwtPayload, TOKEN_NAME } from "types/auth";
 import { isAuthenticated } from "api/auth";
 import { useNavigate } from "react-router-dom";
-import "./Onboarding.scss";
-import DefaultWebView from "components/DefaultWebView/DefaultWebView";
 import { prevPageLocalKeyName } from "config";
 import useTrackPagePath from "hooks/useTrackPagePath";
+import { FlexColStart } from "components/Flex";
 
 const Onboarding = () => {
   const navigate = useNavigate();
@@ -39,42 +38,39 @@ const Onboarding = () => {
   };
 
   return (
-    <div className="responsive-content">
-      <div className="onboarding mobile-view">
-        <div className="card">
-          <h4>Select the option that suits you</h4>
+    <div className="w-full h-full bg-gray-200 py-[100px] px-[16px]">
+      <FlexColStart className="w-full gap-[30px] px-[16px] py-[32px] bg-white-100 ">
+        <h4 className="text-[16px] font-normal font-hnM leading-[24px]">
+          Select the option that suits you
+        </h4>
 
-          <Pill
-            onClick={handleNewBusiness}
-            icon={<PlusIcon />}
-            title="New Business? Signup"
-            variant="red"
-          />
-          <Pill
-            icon={<BagIcon />}
-            onClick={() => navigate("/login")}
-            title="Existing Business? Login"
-            variant="pink"
-          />
-          <Pill
-            onClick={() => {
-              // keep track of prev page
-              localStorage.setItem(
-                prevPageLocalKeyName,
-                window.location.pathname
-              );
+        <Pill
+          onClick={handleNewBusiness}
+          icon={<PlusIcon />}
+          title="New Business? Signup"
+          variant="red"
+        />
+        <Pill
+          icon={<BagIcon />}
+          onClick={() => navigate("/login")}
+          title="Existing Business? Login"
+          variant="pink"
+        />
+        <Pill
+          onClick={() => {
+            // keep track of prev page
+            localStorage.setItem(
+              prevPageLocalKeyName,
+              window.location.pathname
+            );
 
-              navigate("/explore-businesses");
-            }}
-            icon={<SearchIcon />}
-            title="Discover Business"
-            variant="green"
-          />
-        </div>
-      </div>
-      <div>
-        <DefaultWebView className={"laptop-view"} />
-      </div>
+            navigate("/explore-businesses");
+          }}
+          icon={<SearchIcon />}
+          title="Discover Business"
+          variant="green"
+        />
+      </FlexColStart>
     </div>
   );
 };

@@ -1,12 +1,11 @@
 import LogoHeaderIcon from "assets/icons/logo-header-icon.svg?react";
+import { FlexColCenter } from "components/Flex";
 
-interface IDefaultWebViewProps {
-  className: string;
-}
+interface IDefaultWebViewProps {}
 
-const DefaultWebView = ({ className }: IDefaultWebViewProps) => {
+const DefaultWebView = ({}: IDefaultWebViewProps) => {
   return (
-    <div className={className}>
+    <FlexColCenter className={"w-full"}>
       <div
         className="email-container"
         style={{ padding: "32px", display: "flex", justifyContent: "center" }}
@@ -18,32 +17,16 @@ const DefaultWebView = ({ className }: IDefaultWebViewProps) => {
           >
             <LogoHeaderIcon />
           </div>
-          <div
-            className="body-style"
-            style={{
-              padding: "10px",
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            <h2 className="title-text">Web View Notification</h2>
-          </div>
-          <div
-            className="body-style"
-            style={{
-              padding: "10px",
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            <p className="body-text">
+          <FlexColCenter className="w-full p-5 text-center">
+            <h2 className="font-hnB font-bold">Web View Notification</h2>
+            <p className="font-hnL font-extrabold text-[14px]">
               For an awesome experience, please switch to your mobile phone.
               Thanks
             </p>
-          </div>
+          </FlexColCenter>
         </div>
       </div>
-    </div>
+    </FlexColCenter>
   );
 };
 
