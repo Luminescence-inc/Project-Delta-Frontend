@@ -1,5 +1,4 @@
 import { FlexColStart } from "components/Flex";
-import "../style.scss";
 import defaultBgImg from "assets/images/default-img.jpeg";
 import { IOption, UserBusinessList } from "types/business";
 import { CloudinaryConfig } from "config";

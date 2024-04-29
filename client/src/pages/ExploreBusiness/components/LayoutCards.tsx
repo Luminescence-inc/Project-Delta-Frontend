@@ -9,7 +9,6 @@ import {
 import MapPin from "assets/icons/location-marker.svg?react";
 import Phone from "assets/icons/phone.svg?react";
 import { cn, determineBusOpTime } from "utils";
-import "../style.scss";
 import { useNavigate } from "react-router-dom";
 
 interface BusinessCardProps {
