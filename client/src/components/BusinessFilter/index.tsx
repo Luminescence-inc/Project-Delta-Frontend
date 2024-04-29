@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./style.scss";
+// import "./style.scss";
 import CloseIcon from "assets/icons/close-icon.svg?react";
 import CloseIcon2 from "assets/icons/close-icon-2.svg?react";
 import SearchIcon from "assets/icons/search-icon-2.svg?react";
@@ -10,6 +10,12 @@ import { FilterData, useBusinessCtx } from "context/BusinessCtx";
 import { BusinessFilterType } from "types/business";
 import { useNavigate } from "react-router-dom";
 import { prevPageLocalKeyName } from "config";
+import {
+  FlexColStart,
+  FlexRowCenterBtw,
+  FlexRowStart,
+  FlexRowStartCenter,
+} from "components/Flex";
 
 interface OnfilterDataProps {
   uuid?: string | undefined;
@@ -239,12 +245,12 @@ const BusinessesFilterComponent = ({
   };
 
   return (
-    <div className="ntw filter-container">
-      <div className="ntw w-full flex flex-col items-start justify-start px-20 filter-card py-50">
-        <div className="ntw w-full h-auto flex flex-row items-center justify-between ">
-          <h2 className="ntw text-30 font-bold">Search</h2>
+    <FlexColStart className="w-full h-full fixed top-0 left-0 z-[999] bg-white-100">
+      <div className="w-full h-auto flex flex-col items-start justify-start px-[20px] py-[50px] bg-white-100">
+        <div className="w-full h-auto flex flex-row items-center justify-between ">
+          <h2 className="text-[30px] font-bold font-inter">Search</h2>
           <button
-            className="ntw close-btn border-none outline-none cursor-pointer"
+            className="be-none border-none outline-none cursor-pointer"
             onClick={() => {
               // if there isn't any filter applied, navigate to unboarding page
               // else close the filter
@@ -266,14 +272,16 @@ const BusinessesFilterComponent = ({
         </div>
 
         {/* error msg */}
-        <div className="ntw w-full pb-9 flex flex-col items-start justify-start error-cont">
-          <span className="ntw text-12 py-10 font-normal">{errorMsg}</span>
+        <div className="w-full pb-[9px] flex flex-col items-start justify-start min-h-[50px] ">
+          <span className="text-[12px] py-[10px] font-normal font-inter text-red-305">
+            {errorMsg}
+          </span>
         </div>
 
         {/* body */}
-        <div className="ntw flex flex-col w-full h-auto gap-5">
+        <FlexColStart className="w-full h-auto gap-[5px] transition-all duration-300">
           {/* SELECT BUSINESS CATEGORY */}
-          <div className="ntw w-full flex flex-col items-start flex-start">
+          <FlexColStart className="w-full">
             <MultiSearch
               leftIcon={<SearchIcon fill="#fff" />}
               label="Business Category"
@@ -290,18 +298,17 @@ const BusinessesFilterComponent = ({
 
             {/* categories placeholders */}
             {filterData.businessCategoryUuid && (
-              <div className="ntw flex flex-row flex-wrap items-start justify-start mt-0 filter-placeholders gap-3 pb-15">
+              <FlexRowStart className="flex-wrap mt-0 placeholder:bg-gray-201 gap-[3px] pb-[15px] transition-all">
                 {filterData.businessCategoryUuid?.map((categories) => (
-                  <div
+                  <FlexRowStartCenter
                     key={categories.uuid}
-                    className="ntw px-12 py-5 rounded-30 flex flex-row items-center justify-start placeholder gap-2"
+                    className="px-[12px] py-[5px] rounded-[30px] bg-gray-201 gap-2"
                   >
-                    <span className="ntw text-12 font-normal">
-                      {/* @ts-ignore */}
+                    <span className="text-[12px] font-medium font-inter">
                       {categories?.value ?? "CATEGORY"}
                     </span>
                     <button
-                      className="ntw cursor-pointer border-none outline-none close-btn"
+                      className="cursor-pointer border-none outline-none bg-none"
                       onClick={() => {
                         //  remove the selected category from filter
                         const updatedFilter =
@@ -316,11 +323,11 @@ const BusinessesFilterComponent = ({
                     >
                       <CloseIcon2 />
                     </button>
-                  </div>
+                  </FlexRowStartCenter>
                 ))}
-              </div>
+              </FlexRowStart>
             )}
-          </div>
+          </FlexColStart>
 
           {/* SELECT COUNTRY */}
           <MultiSearch
@@ -382,27 +389,27 @@ const BusinessesFilterComponent = ({
           />
 
           {/* CONTROL BUTTON */}
-          <div className="ntw w-full flex items-center justify-between mt-20 filter-controls">
+          <FlexRowCenterBtw className="w-full mt-[20px]">
             <button
-              className="ntw reset-btn w-120 h-55 rounded-6 bg-none"
+              className="text-dark-100 w-[120px] h-[55px] rounded-[6px] bg-none"
               onClick={resetFilter}
             >
-              <span className="ntw text-14 leading-15 font-medium font-hn-medium">
+              <span className="text-[14px] leading-[15px] font-medium font-inter">
                 Reset
               </span>
             </button>
             <button
-              className="ntw search-btn w-120 h-55 rounded-6"
               onClick={applyFilter}
+              className="bg-blue-200 text-white-100 w-[120px] h-[55px] rounded-[6px]"
             >
-              <span className="ntw text-14 leading-15 font-medium font-hn-medium">
+              <span className="text-[14px] leading-[15px] font-medium font-inter">
                 Search
               </span>
             </button>
-          </div>
-        </div>
+          </FlexRowCenterBtw>
+        </FlexColStart>
       </div>
-    </div>
+    </FlexColStart>
   );
 };
 
