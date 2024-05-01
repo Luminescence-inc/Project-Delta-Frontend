@@ -5,7 +5,6 @@ import {
   FlexRowCenterBtw,
   FlexRowStartCenter,
 } from "components/Flex";
-import "./style.scss";
 import SearchIcon from "assets/icons/search-business.svg?react";
 import LayoutPanelTop from "../../../public/assets/icons/layout-panel-top.svg?react";
 import LayoutPanelLeft from "../../../public/assets/icons/layout-panel-left.svg?react";
@@ -15,9 +14,8 @@ import { UserBusinessList } from "types/business";
 import { FilterData, useBusinessCtx } from "context/BusinessCtx";
 import { IFilter } from "types/business-profile";
 import { cn } from "utils";
-import { useState } from "react";
-import { useSearchParams } from "react-router-dom";
 import { LoaderComponent } from "components/Loader";
+import { useState } from "react";
 
 const ExploreBusiness = () => {
   const {
@@ -31,12 +29,7 @@ const ExploreBusiness = () => {
     layout,
     setLayout,
   } = useBusinessCtx();
-  const [searchParams] = useSearchParams();
-  let show = true;
-
-  if (searchParams.get("s") == "false"){show=false}
-
-  const [showFilter, setShowFilter] = useState<boolean>(show);
+  const [showFilter, setShowFilter] = useState<boolean>(true);
 
   // construct the search query
   const constructQuery = (filterData: FilterData) => {
@@ -59,13 +52,6 @@ const ExploreBusiness = () => {
     });
   };
 
-  // ! Might be useful later
-  // useEffect(() => {
-  //   if (searchQuery) {
-  //     setShowFilter(false);
-  //   }
-  // }, [searchQuery]);
-
   return (
     <FlexColStart className="w-full h-full">
       <FlexColStart className="w-full px-[20px] mt-10 gap-[15px]">
@@ -75,10 +61,10 @@ const ExploreBusiness = () => {
         </p>
       </FlexColStart>
       {/* search component */}
-      <FlexRowCenterBtw className="w-full px-[20px] mt-[10px] gap-[20px]">
+      <FlexRowCenterBtw className="w-full px-[20px] mt-[10px] gap-[20px] bg-none">
         <button
           className={cn(
-            "w-full px-[15px] py-[12px] rounded-[10px] border-none bg-white-100 disabled:bg-dark-401 disabled:cursor-not-allowed shadow-sm cursor-pointer"
+            "w-full px-[15px] py-[12px] rounded-[10px] border-none outline-none bg-white-100 disabled:bg-white-106 disabled:cursor-not-allowed shadow-sm cursor-pointer"
           )}
           onClick={() => setShowFilter(true)}
           disabled={allBusinessesLoading}
@@ -128,8 +114,8 @@ const ExploreBusiness = () => {
       )}
 
       {/* Load more button */}
-      <div
-        className="ntw w-full flex flex-col items-center justify-center"
+      <FlexColCenter
+        className="w-full h-[100px] mt-4"
         style={{
           height: "100px",
         }}
@@ -137,8 +123,8 @@ const ExploreBusiness = () => {
         {currPage < totalPages && (
           <button
             className={cn(
-              "ntw px-20 py-10 rounded-5 border-none outline-none flex items-center justify-center gap-1 loadmore-btn",
-              allBusinessesLoading ? "disabled" : ""
+              "px-[20px] py-[10px] rounded-5 border-none outline-none flex items-center justify-center gap-[1px] cursor-pointer bg-white-105 transition-all",
+              allBusinessesLoading ? "bg-white-106 cursor-not-allowed" : ""
             )}
             onClick={() => {
               getBusinesses(currPage + 1, false);
@@ -147,11 +133,13 @@ const ExploreBusiness = () => {
             {allBusinessesLoading ? (
               <LoaderComponent />
             ) : (
-              <span className="ntw text-14 font-normal">Load more</span>
+              <span className="text-[14px] font-normal font-inter text-dark-100">
+                Load more
+              </span>
             )}
           </button>
         )}
-      </div>
+      </FlexColCenter>
 
       {/* Filtering component */}
       {showFilter && (

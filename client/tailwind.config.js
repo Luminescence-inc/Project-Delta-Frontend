@@ -7,6 +7,7 @@ export default {
         white: {
           100: "#fff",
           105: "#f4f9ff",
+          106: "#f5f5f5",
           200: "#ccc",
           300: "#ebebebb6",
           400: "#777",
@@ -31,6 +32,7 @@ export default {
           102: "#ccc",
           103: "#9090A7",
           200: "#f9f9f9",
+          201: "#eaeaea",
         },
         red: {
           100: "rgb(255, 0, 0, .4)",
