@@ -12,7 +12,6 @@ import { UserBusinessList, UserBusinessListResponse } from "types/business";
 import { BaseResponseMessage } from "types/auth";
 import { useNavigate } from "react-router-dom";
 import { CloudinaryConfig } from "config";
-import defaultImage from "assets/images/default-img.jpeg";
 import {
   FlexColCenter,
   FlexColStart,
@@ -124,7 +123,7 @@ const ViewBusiness = () => {
                     src={
                       thisBusinessProfile?.logoUrl
                         ? `https://res.cloudinary.com/${CloudinaryConfig.cloudName}/image/upload/c_fill,q_500/${thisBusinessProfile?.logoUrl}.jpg`
-                        : defaultImage
+                        : "/assets/images/default-img.jpeg"
                     }
                     alt="businessImage"
                   />
