@@ -26,7 +26,7 @@ export const LoaderComponent = ({ text }: LoaderProps) => {
         <line x1="4.93" x2="7.76" y1="19.07" y2="16.24" />
         <line x1="16.24" x2="19.07" y1="7.76" y2="4.93" />
       </svg>
-      <span className="ml-2 text-blue-500">{text}</span>
+      <span className="ml-2 text-blue-200">{text}</span>
     </div>
   );
 };
