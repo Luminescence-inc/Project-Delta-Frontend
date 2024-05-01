@@ -4,7 +4,7 @@ import { twMerge } from "tailwind-merge";
 import { Link } from "react-router-dom";
 
 const buttonVariants = cva(
-  "relative px-4 py-3 flex items-center justify-center gap-5 w-fit h-[48px] rounded-sm font-ppReg text-white-100",
+  "relative px-4 py-3 flex items-center justify-center gap-5 w-fit h-[48px] rounded-[6px] font-ppReg text-white-100",
   {
     variants: {
       intent: {
@@ -17,9 +17,9 @@ const buttonVariants = cva(
         tertiary:
           "bg-brand-green-ttr text-brand-green-primary hover:bg-[#F4FBF6] focus:shadow-brand-green-shd active:bg-brand-green-shd disabled:bg-brand-disabled disabled:cursor-not-allowed ",
         transparent:
-          "bg-brand-green-ttr text-brand-green-primary bg-none focus:shadow-brand-green-shd active:bg-brand-green-shd disabled:bg-brand-disabled disabled:cursor-not-allowed border-[1px] border-solid border-blue-200 ",
+          "bg-none disabled:bg-brand-disabled disabled:cursor-not-allowed border-[2px] border-solid border-blue-200 text-blue-200 ",
         error:
-          "bg-brand-red-primary text-white-100 hover:bg-brand-red-hover focus:bg-brand-red-focused active:bg-brand-red-pressed disabled:bg-brand-disabled disabled:cursor-not-allowed",
+          "bg-red-305 text-white-100 hover:bg-brand-red-hover focus:bg-brand-red-focused active:bg-brand-red-pressed disabled:bg-red-305/70 disabled:cursor-not-allowed",
         dark: "bg-dark-100/90 text-white-100 hover:bg-dark-100 focus:bg-dark-100 active:bg-dark-100 disabled:bg-brand-disabled disabled:cursor-not-allowed",
       },
       size: {

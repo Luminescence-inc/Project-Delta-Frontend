@@ -1,10 +1,8 @@
 /** @format */
 
-import Button from "components/Button/Button";
-import "./ViewBusiness.scss";
-import { JwtPayload, TOKEN_NAME } from "types/auth";
-import { useState, useEffect } from "react";
-import { isAuthenticated } from "api/auth";
+import Button from "components/ui/button";
+import { TOKEN_NAME } from "types/auth";
+import { useState, useEffect, Fragment } from "react";
 import Modal from "react-modal";
 import {
   getUserBusinessProfileList,
@@ -14,25 +12,25 @@ import { UserBusinessList, UserBusinessListResponse } from "types/business";
 import { BaseResponseMessage } from "types/auth";
 import { useNavigate } from "react-router-dom";
 import { CloudinaryConfig } from "config";
-import Spinner from "components/Spinner/Spinner";
-import defaultImage from "assets/images/default-img.jpeg";
+import {
+  FlexColCenter,
+  FlexColStart,
+  FlexColStartCenter,
+} from "components/Flex";
+import { LoaderComponent } from "components/Loader";
 
 const ViewBusiness = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const authToken = localStorage.getItem(TOKEN_NAME) as string;
-  const [authenticated, setAuthenticated] = useState(false);
   const [userListOfBusinessProfile, setUserListOfBusinessProfile] = useState<
     UserBusinessList[] | []
   >([]);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [businessName, setBusinessName] = useState("");
   const [businessUuid, setBusinessUuid] = useState("");
+  const [businessesLoading, setBusinessesLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
-  const parsedToken: JwtPayload = authToken
-    ? JSON.parse(atob(authToken?.split(".")[1]))
-    : {};
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -58,101 +56,100 @@ const ViewBusiness = () => {
     setBusinessName(name);
     setBusinessUuid(uuid);
   };
+
   const handleDeleteBusinessProfile = (businessProfileID: string) => {
     setIsLoading(true);
-    if (parsedToken.id) {
-      isAuthenticated(authToken, parsedToken.id)
-        .then(() => {
-          setAuthenticated(true);
-        })
-        .catch((err) => {
-          console.error(err);
-          navigate("/login");
+    deleteUserBusinessProfile(authToken, businessProfileID)
+      .then((res) => {
+        const deletedResponse: BaseResponseMessage = res.data;
+        if (deletedResponse?.success) {
+          let updatedUserListOfBusinessProfile =
+            userListOfBusinessProfile?.filter(
+              (thisBusinessProfile) =>
+                thisBusinessProfile.uuid !== businessProfileID
+            );
+          setUserListOfBusinessProfile(updatedUserListOfBusinessProfile);
           setConfirmDelete(false);
           setIsLoading(false);
-          setIsModalOpen(false);
-        });
-      deleteUserBusinessProfile(authToken, businessProfileID)
-        .then((res) => {
-          const deletedResponse: BaseResponseMessage = res.data;
-          if (deletedResponse?.success) {
-            let updatedUserListOfBusinessProfile =
-              userListOfBusinessProfile?.filter(
-                (thisBusinessProfile) =>
-                  thisBusinessProfile.uuid !== businessProfileID
-              );
-            setUserListOfBusinessProfile(updatedUserListOfBusinessProfile);
-            setConfirmDelete(false);
-            setIsLoading(false);
-          }
-        })
-        .catch((err) => {
-          setIsLoading(false);
-          console.error(err);
-        });
-    }
-  };
-  useEffect(() => {
-    isAuthenticated(authToken, parsedToken.id)
-      .then(() => {
-        setAuthenticated(true);
+        }
       })
       .catch((err) => {
-        setAuthenticated(false);
+        setIsLoading(false);
         console.error(err);
       });
+  };
 
-    getUserBusinessProfileList(authToken).then((res) => {
-      const businessListResponse: UserBusinessListResponse = res.data;
-      setUserListOfBusinessProfile(businessListResponse.data?.businessProfiles);
-    });
+  useEffect(() => {
+    setBusinessesLoading(true);
+    getUserBusinessProfileList(authToken)
+      .then((res) => {
+        setBusinessesLoading(false);
+        const businessListResponse: UserBusinessListResponse = res.data;
+        setUserListOfBusinessProfile(
+          businessListResponse.data?.businessProfiles
+        );
+      })
+      .catch((err) => {
+        setBusinessesLoading(false);
+        console.error(err);
+      });
   }, []);
-  if (!authenticated) {
-    navigate("/login");
-  }
 
   return (
     <>
-      <div className="view-business">
-        <header>
-          <h2>Business</h2>
-          <p>
+      <div className="w-full p-[16px] bg-gray-202">
+        <header className="w-full text-center mt-[64px] mb-[64px]">
+          <h2 className="mb-[16px] text-[32px] leading-[40px] font-bold font-inter">
+            Business
+          </h2>
+          <p className="text-[16px] leading-[24px]">
             Here is a list of all business associated with your account. you can
             update or delete your business
           </p>
         </header>
 
+        {businessesLoading && (
+          <FlexColCenter className="w-full">
+            <LoaderComponent />
+          </FlexColCenter>
+        )}
+
         {userListOfBusinessProfile && userListOfBusinessProfile.length > 0 && (
-          <div className="businesses">
-            {userListOfBusinessProfile.map((thisBusinessProfile) => {
+          <FlexColStart className="w-full gap-10">
+            {userListOfBusinessProfile.map((thisBusinessProfile, i) => {
               return (
-                <div className="card card-home card-business">
+                <div className="w-full" key={i}>
                   <img
                     src={
                       thisBusinessProfile?.logoUrl
                         ? `https://res.cloudinary.com/${CloudinaryConfig.cloudName}/image/upload/c_fill,q_500/${thisBusinessProfile?.logoUrl}.jpg`
-                        : defaultImage
+                        : "/assets/images/default-img.jpeg"
                     }
                     alt="businessImage"
                   />
-                  <h3>{thisBusinessProfile.name}</h3>
-                  <p>{thisBusinessProfile.description}</p>
+                  <h3 className="text-[16px] leading-[40px]">
+                    {thisBusinessProfile.name}
+                  </h3>
+                  <p className="text-[16px] leading-[24px] mb-[32px]">
+                    {thisBusinessProfile.description}
+                  </p>
 
                   <Button
-                    className="spacing"
-                    label="Update Business"
-                    variant="primary"
+                    className="w-full mb-[10px] text-[14px] font-inter font-semibold"
+                    intent="primary"
                     size="lg"
                     onClick={() =>
                       navigate(
                         `/signup/register-business?update=${thisBusinessProfile.uuid}`
                       )
                     }
-                  />
+                  >
+                    <span>Update Business</span>
+                  </Button>
 
                   <Button
-                    label="Delete Business"
-                    variant="secondary"
+                    className="w-full text-[14px] font-inter font-semibold"
+                    intent="error"
                     size="lg"
                     onClick={() =>
                       handleDeleteButton(
@@ -160,109 +157,97 @@ const ViewBusiness = () => {
                         thisBusinessProfile.uuid
                       )
                     }
-                  />
+                  >
+                    <span>Delete Business</span>
+                  </Button>
                 </div>
               );
             })}
-          </div>
+          </FlexColStart>
         )}
+
         <Modal
           isOpen={isModalOpen}
           onRequestClose={closeModal}
           contentLabel="Success Modal"
           style={customStyles}
         >
-          <div
-            className="modal"
-            style={{ display: "block", textAlign: "center" }}
-          >
-            <h2
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                fontSize: "16px",
-                fontWeight: "700",
-                marginBottom: "10px",
-              }}
-            >
+          <FlexColStartCenter className="w-full text-center gap-1 max-w-[350px] px-3">
+            <h2 className="text-[16px] font-semibold font-inter">
               {confirmDelete ? "Are you sure?" : "Delete Succesful"}
             </h2>
-            <p
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                fontSize: "12px",
-                fontWeight: "400",
-                marginBottom: "20px",
-              }}
-            >
+            <p className="text-[12px] font-normal font-inter">
               {confirmDelete
-                ? `You’re deleting your (${businessName}),  you can’t undo this request.`
+                ? `You’re about to delete (${businessName}) business, you can’t undo this request.`
                 : "You have successfully deleted your business profile"}
             </p>
             {confirmDelete && (
-              <>
-                <div style={{ marginBottom: "20px" }}>
+              <Fragment>
+                <Button
+                  className="w-full mt-3"
+                  type="submit"
+                  intent="transparent"
+                  size="lg"
+                  onClick={() => {
+                    setIsModalOpen(false);
+                    setConfirmDelete(false);
+                  }}
+                  isLoading={isLoading}
+                >
+                  <span className="font-inter font-bold text-[14px]">
+                    Cancel
+                  </span>
+                </Button>
+                {!isLoading && (
                   <Button
+                    className="w-full mt-3"
                     type="submit"
-                    label="Cancel"
-                    variant="cancel"
+                    intent="primary"
                     size="lg"
                     onClick={() => {
-                      setIsModalOpen(false);
-                      setConfirmDelete(false);
+                      handleDeleteBusinessProfile(businessUuid);
                     }}
-                  />
-                </div>
-                <div>
-                  {!isLoading && (
-                    <Button
-                      type="submit"
-                      label="Yes, delete business"
-                      variant="primary"
-                      size="lg"
-                      onClick={() => {
-                        handleDeleteBusinessProfile(businessUuid);
-                      }}
-                    />
-                  )}
-                  {isLoading && (
-                    <Button
-                      type="submit"
-                      label={Spinner()}
-                      variant="primary"
-                      size="lg"
-                      disabled={true}
-                    />
-                  )}
-                </div>
-              </>
+                  >
+                    <span className="font-inter font-semibold text-[14px]">
+                      Yes, delete business
+                    </span>
+                  </Button>
+                )}
+              </Fragment>
             )}
             {!confirmDelete && (
               <Button
+                className="mt-3 w-full"
                 type="submit"
-                label="Click to Continue"
-                variant="primary"
+                intent="primary"
                 size="lg"
                 onClick={() => setIsModalOpen(false)}
-              />
+              >
+                <span className="font-inter text-[14px]">
+                  Click to Continue
+                </span>
+              </Button>
             )}
-          </div>
+          </FlexColStartCenter>
         </Modal>
       </div>
 
-      <div className="add-new-business">
-        <h4>Want to Add more businesses?</h4>
-        <p>
+      <FlexColStartCenter className="w-full bg-blue-200 text-white-100 py-[40px] px-[23px] gap-[24px] text-center">
+        <h4 className="font-bold font-inter">Want to Add more businesses?</h4>
+        <p className="mb-[8px]">
           You can add as many businesses as you wish. Click on the button below.
         </p>
         <Button
-          label="Create a new business profile"
-          variant="transparent"
+          className="text-white-100 border-white-100 w-full border-[1px]"
+          intent="transparent"
           size="lg"
           onClick={() => navigate("/signup/register-business")}
-        />
-      </div>
+        >
+          <span className="font-inter font-bold text-[14px]">
+            Create a new business profile
+          </span>
+        </Button>
+      </FlexColStartCenter>
     </>
   );
 };
