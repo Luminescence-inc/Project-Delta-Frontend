@@ -35,7 +35,7 @@ const AboutUs = () => {
       <FlexColCenter className="w-full">
         <Button
           intent="primary"
-          className="w-[80%] mb-[1rem] text-[14px] font-inter"
+          className="w-[80%] mb-[1rem] text-[14px] font-inter font-semibold"
           onClick={() => {
             navigate("/explore-businesses");
           }}
