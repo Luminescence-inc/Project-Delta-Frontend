@@ -13,7 +13,12 @@ import { BaseResponseMessage } from "types/auth";
 import { useNavigate } from "react-router-dom";
 import { CloudinaryConfig } from "config";
 import defaultImage from "assets/images/default-img.jpeg";
-import { FlexColStart, FlexColStartCenter } from "components/Flex";
+import {
+  FlexColCenter,
+  FlexColStart,
+  FlexColStartCenter,
+} from "components/Flex";
+import { LoaderComponent } from "components/Loader";
 
 const ViewBusiness = () => {
   const navigate = useNavigate();
@@ -25,6 +30,7 @@ const ViewBusiness = () => {
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [businessName, setBusinessName] = useState("");
   const [businessUuid, setBusinessUuid] = useState("");
+  const [businessesLoading, setBusinessesLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const closeModal = () => {
@@ -51,6 +57,7 @@ const ViewBusiness = () => {
     setBusinessName(name);
     setBusinessUuid(uuid);
   };
+
   const handleDeleteBusinessProfile = (businessProfileID: string) => {
     setIsLoading(true);
     deleteUserBusinessProfile(authToken, businessProfileID)
@@ -72,11 +79,21 @@ const ViewBusiness = () => {
         console.error(err);
       });
   };
+
   useEffect(() => {
-    getUserBusinessProfileList(authToken).then((res) => {
-      const businessListResponse: UserBusinessListResponse = res.data;
-      setUserListOfBusinessProfile(businessListResponse.data?.businessProfiles);
-    });
+    setBusinessesLoading(true);
+    getUserBusinessProfileList(authToken)
+      .then((res) => {
+        setBusinessesLoading(false);
+        const businessListResponse: UserBusinessListResponse = res.data;
+        setUserListOfBusinessProfile(
+          businessListResponse.data?.businessProfiles
+        );
+      })
+      .catch((err) => {
+        setBusinessesLoading(false);
+        console.error(err);
+      });
   }, []);
 
   return (
@@ -91,6 +108,12 @@ const ViewBusiness = () => {
             update or delete your business
           </p>
         </header>
+
+        {businessesLoading && (
+          <FlexColCenter className="w-full">
+            <LoaderComponent />
+          </FlexColCenter>
+        )}
 
         {userListOfBusinessProfile && userListOfBusinessProfile.length > 0 && (
           <FlexColStart className="w-full gap-10">
