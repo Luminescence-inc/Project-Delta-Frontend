@@ -117,9 +117,9 @@ const ViewBusiness = () => {
 
         {userListOfBusinessProfile && userListOfBusinessProfile.length > 0 && (
           <FlexColStart className="w-full gap-10">
-            {userListOfBusinessProfile.map((thisBusinessProfile) => {
+            {userListOfBusinessProfile.map((thisBusinessProfile, i) => {
               return (
-                <div className="w-full">
+                <div className="w-full" key={i}>
                   <img
                     src={
                       thisBusinessProfile?.logoUrl
