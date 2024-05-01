@@ -4,6 +4,39 @@ export default {
   theme: {
     extend: {
       colors: {
+        brand: {
+          green: {
+            primary: "#009254",
+            hover: "#33A467",
+            focused: "#009254",
+            pressed: "#006F37",
+            shd: "#CAEAD499",
+            ttr: "#F4FBF6",
+            shade0: "#000000",
+            shade10: "#052011",
+            shade20: "#003A1B",
+            shade40: "#005427",
+            shade50: "#00894C",
+            shade70: "#64BD87",
+            shade80: "#96D4AB",
+            shade90: "#CAEAD4",
+            shade95: "#E6F5EA",
+          },
+          red: {
+            primary: "#FF2E2E",
+            hover: "#FF5C5C",
+            focused: "#FF2E2E",
+            pressed: "#FF2E2E",
+          },
+          success: {
+            primary: "#06C270",
+            hover: "#39D98A",
+            focused: "#06C270",
+            pressed: "#06C270",
+          },
+          disabled: "#E1E3E2",
+          disabled2: "#C4C7C6",
+        },
         white: {
           100: "#fff",
           105: "#f4f9ff",
