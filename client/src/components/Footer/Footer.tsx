@@ -35,7 +35,6 @@ const Footer = () => {
       className="text-white-100 px-7 py-10"
       onClick={(e) => {
         e.stopPropagation();
-        console.log("Footer");
       }}
     >
       <div className="">
