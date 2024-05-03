@@ -16,7 +16,7 @@ import { UserBusinessList } from "types/business";
 import { FilterData, useBusinessCtx } from "context/BusinessCtx";
 import { IFilter } from "types/business-profile";
 import { cn } from "utils";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const ExploreBusiness = () => {
   const {
@@ -29,6 +29,7 @@ const ExploreBusiness = () => {
     setSearchQuery,
     layout,
     setLayout,
+    searchQuery,
   } = useBusinessCtx();
   const [showFilter, setShowFilter] = useState<boolean>(true);
 
@@ -54,11 +55,11 @@ const ExploreBusiness = () => {
   };
 
   // ! Might be useful later
-  // useEffect(() => {
-  //   if (searchQuery) {
-  //     setShowFilter(false);
-  //   }
-  // }, [searchQuery]);
+  useEffect(() => {
+    if (searchQuery) {
+      setShowFilter(false);
+    }
+  }, [searchQuery]);
 
   return (
     <div className="ntw w-full h-full">
