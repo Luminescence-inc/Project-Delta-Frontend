@@ -156,7 +156,7 @@ export default function BusinessDetails() {
         style={{
           color: "#0E2D52",
         }}
-        onClick={() => navigate("/explore-businesses")}
+        onClick={() => navigate("/explore-businesses?s=false")}
       >
         <FlexRowStart className="w-auto gap-15">
           <ChevronLeftIcon />
