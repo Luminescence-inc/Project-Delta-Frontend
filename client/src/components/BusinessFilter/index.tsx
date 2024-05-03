@@ -44,6 +44,7 @@ const BusinessesFilterComponent = ({
     filteredStates,
     setFilteredStates,
     setSearchQuery,
+    setBusinesses,
   } = useBusinessCtx();
   const navigate = useNavigate();
 
@@ -237,6 +238,8 @@ const BusinessesFilterComponent = ({
       return;
     }
 
+    // clear last businesses data
+    setBusinesses([]);
     // apply the filter
     getfilterData(filterData);
     // hide the filter
