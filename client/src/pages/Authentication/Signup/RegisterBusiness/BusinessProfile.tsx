@@ -212,7 +212,7 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
           placeholder="Enter Business Name"
         />
 
-        <FlexColStart className="w-full ">
+        <FlexColStart className="w-full mt-5 mb-3">
           <label className="text-[14px] font-semibold font-inter text-dark-100/60">
             Describe your business
           </label>
