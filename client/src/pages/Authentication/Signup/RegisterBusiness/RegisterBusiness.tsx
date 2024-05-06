@@ -34,6 +34,7 @@ import { cn, isUrlValid } from "utils";
 import { FlexRowCenter } from "components/Flex";
 import { useAuth } from "hooks/useAuth";
 import { LoaderComponent } from "components/Loader";
+import toast from "react-hot-toast";
 
 const dayOrder: { [key: string]: number } = {
   Monday: 0,
@@ -298,26 +299,26 @@ const RegisterBusiness = () => {
     // validate all social links
     // This would need some readjustments
     if (payload.instagramUrl && !isUrlValid(payload.instagramUrl!)) {
-      setSocialLinksError("Invalid Instagram URL");
+      toast.error("Invalid Instagram URL");
       setIsLoading(false);
       switchTab(0, "business-profile");
       scrollToBottom();
       return;
     }
     if (payload.websiteUrl && !isUrlValid(payload.websiteUrl!)) {
-      setSocialLinksError("Invalid Website URL");
+      toast.error("Invalid Website URL");
       setIsLoading(false);
       switchTab(0, "business-profile");
       return;
     }
     if (payload.linkedinUrl && !isUrlValid(payload.linkedinUrl!)) {
-      setSocialLinksError("Invalid LinkedIn URL");
+      toast.error("Invalid LinkedIn URL");
       setIsLoading(false);
       switchTab(0, "business-profile");
       return;
     }
     if (payload.facebookUrl && !isUrlValid(payload.facebookUrl!)) {
-      setSocialLinksError("Invalid Facebook URL");
+      toast.error("Invalid Facebook URL");
       setIsLoading(false);
       switchTab(0, "business-profile");
       return;
@@ -332,7 +333,7 @@ const RegisterBusiness = () => {
     } catch (error) {
       console.log(error);
       setError(true);
-      alert(
+      toast.error(
         "There was an error submitting the form. Please Check your Business Categories option Please try again."
       );
     }
@@ -367,7 +368,9 @@ const RegisterBusiness = () => {
       console.error(error);
       //trigger an alert or notify the logo wasn't uploaded
       setError(true);
-      alert(`There was an error while uploading your Logo. Error: ${error}`);
+      toast.error(
+        `There was an error while uploading your Logo. Error: ${error}`
+      );
     }
 
     // Submit to BizConnect Create API if error doesn't exsist
@@ -380,7 +383,7 @@ const RegisterBusiness = () => {
           setSocialLinksError(null);
         })
         .catch((err) => {
-          alert(`There was an error submitting the form. Error: ${err}`);
+          toast.error(`There was an error submitting the form. Error: ${err}`);
           console.error(err);
           setIsLoading(false);
         });
@@ -395,7 +398,7 @@ const RegisterBusiness = () => {
           setIsLoading(false);
         })
         .catch((err) => {
-          alert(`There was an error submitting the form. Error: ${err}`);
+          toast.error(`There was an error submitting the form. Error: ${err}`);
           console.error(err);
           setIsLoading(false);
         });
