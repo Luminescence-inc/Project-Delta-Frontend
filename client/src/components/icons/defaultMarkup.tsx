@@ -12,7 +12,7 @@ const IconMarkup = (props: IconProps & SvgIconProps) => {
       width={props?.size ?? 24}
       height={props?.size ?? 24}
       fill={props?.fill ?? "none"}
-      stroke={props?.color ?? "#fff"}
+      stroke={props?.color ?? "#000"}
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={props?.strokeWidth ?? 2}
