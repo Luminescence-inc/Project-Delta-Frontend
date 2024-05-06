@@ -1,23 +1,22 @@
 /** @format */
 
-import Button from "components/ui/button";
-import { TOKEN_NAME } from "types/auth";
+import Button from "@components/ui/button";
+import { TOKEN_NAME, BaseResponseMessage } from "@/types/auth";
 import { useState, useEffect, Fragment } from "react";
 import Modal from "react-modal";
 import {
   getUserBusinessProfileList,
   deleteUserBusinessProfile,
-} from "api/business";
-import { UserBusinessList, UserBusinessListResponse } from "types/business";
-import { BaseResponseMessage } from "types/auth";
+} from "@/api/business";
+import { UserBusinessList, UserBusinessListResponse } from "@/types/business";
 import { useNavigate } from "react-router-dom";
-import { CloudinaryConfig } from "config";
+import { CloudinaryConfig } from "@/config";
 import {
   FlexColCenter,
   FlexColStart,
   FlexColStartCenter,
-} from "components/Flex";
-import { LoaderComponent } from "components/Loader";
+} from "@components/Flex";
+import { LoaderComponent } from "@components/Loader";
 
 const ViewBusiness = () => {
   const navigate = useNavigate();

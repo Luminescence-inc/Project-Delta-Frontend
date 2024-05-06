@@ -1,12 +1,12 @@
-import MailIcon from "assets/icons/mail-icon.svg?react";
-import Button from "components/ui/button";
-import Input from "components/Input/Input";
+import { Mail } from "@components/icons";
+import Button from "@components/ui/button";
+import Input from "@components/Input/Input";
 import { useFormik } from "formik";
-import { LogInData, LogInResponse } from "types/auth";
-import { generateVerificationEmail } from "api/auth";
+import { LogInData, LogInResponse } from "@/types/auth";
+import { generateVerificationEmail } from "@/api/auth";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { FlexColCenter, FlexColStart, FlexRowCenter } from "components/Flex";
+import { FlexColCenter, FlexColStart, FlexRowCenter } from "@components/Flex";
 import ErrorComponent from "../ErrorComponent";
 
 const Email = () => {
@@ -91,7 +91,7 @@ const Email = () => {
                 value={formik.values.email}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                icon={<MailIcon className="input-icon" />}
+                icon={<Mail className="input-icon" />}
                 placeholder="Enter Email Address"
               />
 

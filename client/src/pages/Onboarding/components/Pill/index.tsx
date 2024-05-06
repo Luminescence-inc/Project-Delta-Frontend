@@ -1,6 +1,6 @@
 import React from "react";
-import { cn } from "utils";
-import { FlexRowStartCenter } from "components/Flex";
+import { cn } from "@/utils";
+import { FlexRowStartCenter } from "@components/Flex";
 
 interface IPill {
   icon: React.ReactNode;

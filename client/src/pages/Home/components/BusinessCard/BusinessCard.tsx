@@ -1,5 +1,5 @@
-import { FlexColStart } from "components/Flex";
-import { cn } from "utils";
+import { FlexColStart } from "@components/Flex";
+import { cn } from "@/utils";
 
 interface BusinessCardProps {
   className?: string;

@@ -1,11 +1,11 @@
 import { useRef, useState, useEffect } from "react";
-import ArrowUpIcon from "assets/icons/arrow-up.svg?react";
+import { ArrowUp } from "@components/icons";
 import { FormikProps } from "formik";
-import Button from "components/Button/Button";
+import Button from "@components/Button/Button";
 import "./Input.scss";
-import SelectedPlaceholder from "components/SelectedPlaceholder";
-import { FlexColStart, FlexRowCenter } from "components/Flex";
-import { cn } from "utils";
+import SelectedPlaceholder from "@components/SelectedPlaceholder";
+import { FlexColStart, FlexRowCenter } from "@components/Flex";
+import { cn } from "@/utils";
 
 interface ISelect {
   label: string;
@@ -90,7 +90,7 @@ const MultiSelect = ({
             onClick={toggleDropdown}
             readOnly
           />
-          <ArrowUpIcon
+          <ArrowUp
             className={cn(
               "absolute top-[15px] right-[20px]",
               "-rotate-[180deg]"

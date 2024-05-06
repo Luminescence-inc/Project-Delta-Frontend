@@ -1,5 +1,5 @@
-import { FlexColStart, FlexRowStart } from "components/Flex";
-import { cn } from "utils";
+import { FlexColStart, FlexRowStart } from "@components/Flex";
+import { cn } from "@/utils";
 
 interface CustomerCardProps {
   className?: string;

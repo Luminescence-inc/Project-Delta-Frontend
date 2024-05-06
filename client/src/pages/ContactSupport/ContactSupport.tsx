@@ -1,19 +1,16 @@
 import { useState } from "react";
-import ContactSupportIcon from "assets/icons/contact-support-icon.svg?react";
-import Spinner from "components/Spinner/Spinner";
+// import { ContactSupport as ContactSupportIcon } from "@components/icons";
+import Spinner from "@components/Spinner/Spinner";
 import Modal from "react-modal";
-import {
-  ContactSupportDataSchema,
-  // ContactSupportResponse,
-} from "types/business";
-import { BaseResponseMessage } from "types/auth";
-import { submitContactRequest } from "api/business";
+import { ContactSupportDataSchema } from "@/types/business";
+import { BaseResponseMessage } from "@/types/auth";
+import { submitContactRequest } from "@/api/business";
 import { useFormik, FormikHelpers } from "formik";
 
 import * as yup from "yup";
 import "./ContactSupport.scss";
-import Input from "components/Input/Input";
-import Button from "components/Button/Button";
+import Input from "@components/Input/Input";
+import Button from "@components/Button/Button";
 
 const validationSchema = yup.object({
   personName: yup
@@ -121,7 +118,7 @@ const ContactSupport = () => {
       <div className="card_board">
         <div className="card_board__contact-support-icon-container">
           <div className="contact-support-icon-border">
-            <ContactSupportIcon />
+            {/* <ContactSupportIcon /> */}
           </div>
         </div>
         <h4>Please complete support form</h4>

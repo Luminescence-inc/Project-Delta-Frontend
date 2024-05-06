@@ -1,5 +1,5 @@
-import { FlexColStartCenter } from "components/Flex";
-import { cn } from "utils";
+import { FlexColStartCenter } from "@components/Flex";
+import { cn } from "@/utils";
 
 interface TitleCardProps {
   className?: string;

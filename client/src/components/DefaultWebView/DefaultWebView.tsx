@@ -1,5 +1,4 @@
-import LogoHeaderIcon from "assets/icons/logo-header-icon.svg?react";
-import { FlexColCenter } from "components/Flex";
+import { FlexColCenter } from "@components/Flex";
 
 interface IDefaultWebViewProps {}
 
@@ -15,7 +14,11 @@ const DefaultWebView = ({}: IDefaultWebViewProps) => {
             className="body-style"
             style={{ display: "flex", justifyContent: "center" }}
           >
-            <LogoHeaderIcon />
+            <img
+              src={"/assets/icons/logo-header-icon.svg"}
+              alt="logo"
+              className="w-[50px] h-[50px] object-contain"
+            />
           </div>
           <FlexColCenter className="w-full p-5 text-center">
             <h2 className="font-hnB font-bold">Web View Notification</h2>

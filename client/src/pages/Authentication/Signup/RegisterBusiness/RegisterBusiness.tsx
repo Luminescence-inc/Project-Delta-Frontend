@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import { JwtPayload, TOKEN_NAME } from "types/auth";
+import { JwtPayload, TOKEN_NAME } from "@/types/auth";
 import {
   createBusinessProfile,
   getAllBusinessCategories,
   getUploadSignature,
   getUserBusinessProfileDetail,
   updateUserBusinessProfileDetail,
-} from "api/business";
+} from "@/api/business";
 import {
   BusinessCategories,
   BusinessCreationBody,
@@ -17,23 +17,23 @@ import {
   UploadSignature,
   UserBusinessDetailsResponse,
   UserBusinessList,
-} from "types/business";
-import { CloudinaryConfig } from "config";
+} from "@/types/business";
+import { CloudinaryConfig } from "@/config";
 import { useSearchParams } from "react-router-dom";
 import { useFormik } from "formik";
 import BusinessProfile from "./BusinessProfile";
 import OperationInfo from "./OperationInfo";
 import axios from "axios";
 import Modal from "react-modal";
-import Button from "components/Button/Button";
+import Button from "@components/Button/Button";
 import { Country, State, City } from "../../../../../country-sate-city";
 import * as yup from "yup";
-import { FILTERED_COUNTRY } from "utils/business-profile-utils";
-import { useBusinessCtx } from "context/BusinessCtx";
-import { cn, isUrlValid } from "utils";
-import { FlexRowCenter } from "components/Flex";
-import { useAuth } from "hooks/useAuth";
-import { LoaderComponent } from "components/Loader";
+import { FILTERED_COUNTRY } from "@/utils/business-profile-utils";
+import { useBusinessCtx } from "@context/BusinessCtx";
+import { cn, isUrlValid } from "@/utils";
+import { FlexRowCenter } from "@components/Flex";
+import { useAuth } from "@hooks/useAuth";
+import { LoaderComponent } from "@components/Loader";
 import toast from "react-hot-toast";
 
 const dayOrder: { [key: string]: number } = {

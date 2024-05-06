@@ -1,8 +1,8 @@
-import { isAuthenticated } from "api/auth";
-import { useDataCtx } from "context/DataCtx";
+import { isAuthenticated } from "@/api/auth";
+import { useDataCtx } from "@context/DataCtx";
 import { PropsWithChildren, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { JwtPayload, TOKEN_NAME } from "types/auth";
+import { JwtPayload, TOKEN_NAME } from "@/types/auth";
 
 interface WithoutAuthRouteProps extends PropsWithChildren {}
 

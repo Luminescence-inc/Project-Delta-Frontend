@@ -1,11 +1,8 @@
 /** @format */
 import { Link, useNavigate } from "react-router-dom";
-import LogoHeaderIcon from "assets/icons/logo-header-icon.svg?react";
-import FacebookIcon from "assets/icons/new-facebook-icon.svg?react";
-import InstagramIcon from "assets/icons/new-insta-icon.svg?react";
-import TwitterIcon from "assets/icons/new-twitter-icon.svg?react";
-import { cn } from "utils";
-import { FlexColStart, FlexRowStart } from "components/Flex";
+import { cn } from "@/utils";
+import { FlexColStart, FlexRowStart } from "@components/Flex";
+import { Facebook, Instagram, Twitter } from "@components/icons";
 
 const navigations = [
   {
@@ -40,7 +37,7 @@ const Footer = () => {
       <div className="">
         <div className="">
           <Link to="/">
-            <LogoHeaderIcon />
+            <img src={"/assets/images/logos/logo-header.svg"} />
           </Link>
           <p className="text-[14px] font-normal font-inter py-[20px] text-blue-200 pb-[30px]">
             Connecting Immigrant and Local Business Owners with their Customers
@@ -65,9 +62,9 @@ const Footer = () => {
       </FlexColStart>
 
       <FlexRowStart className="w-full gap-[16px] my-[16px]">
-        <InstagramIcon />
-        <FacebookIcon />
-        <TwitterIcon />
+        <Instagram />
+        <Facebook />
+        <Twitter />
       </FlexRowStart>
 
       <h5 className="text-center text-gray-100 leading-[14px] font-normal text-[12px] font-inter mt-10">

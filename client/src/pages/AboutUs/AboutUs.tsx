@@ -1,6 +1,5 @@
-import aboutImg from "assets/images/about-page-image.png";
-import Button from "components/ui/button";
-import { FlexColCenter, FlexColStartCenter } from "components/Flex";
+import Button from "@components/ui/button";
+import { FlexColCenter, FlexColStartCenter } from "@components/Flex";
 import { useNavigate } from "react-router-dom";
 
 const AboutUs = () => {
@@ -13,8 +12,8 @@ const AboutUs = () => {
         </h2>
       </header>
       <img
-        src={aboutImg}
-        alt={aboutImg}
+        src={"/assets/images/about-page-image.png"}
+        alt={"about-page-image"}
         className="w-full object-cover rounded-md"
       />
       <p className="font-normal p-[2rem] text-center font-inter leading-[24px]">
