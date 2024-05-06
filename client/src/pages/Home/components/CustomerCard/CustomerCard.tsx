@@ -24,7 +24,7 @@ const CustomerCard = ({
       )}
       style={style}
     >
-      <div className="pr-[20px]">{icon}</div>
+      {icon}
       <FlexColStart className="w-auto gap-0">
         <h2 className="font-hnM text-[20px] leading-[24px] text-left text-blue-200 mt-[6px] mb-[11px] ">
           {header}

@@ -100,9 +100,13 @@ const Home = () => {
               }}
             >
               <FlexRowStartCenter className="w-full">
-                <SearchIcon2 />
+                <SearchIcon2
+                  size={20}
+                  className="stroke-gray-103"
+                  strokeWidth={1}
+                />
                 <span
-                  className="text-[12px] leading-[14px] font-hnL font-normal relative top-[2px]"
+                  className="text-[12px] leading-[14px] font-hnL font-normal relative top-[0px]"
                   style={{
                     color: "#9090A7",
                   }}
@@ -141,7 +145,9 @@ const Home = () => {
               <Button
                 intent="primary"
                 href="/view-your-business"
-                leftIcon={<SearchIcon />}
+                leftIcon={
+                  <SearchIcon2 size={25} className="stroke-white-100" />
+                }
                 className="w-full mt-8 rounded-md h-[55px]"
               >
                 <span className="font-hnM font-bold text-[14px] ">
@@ -152,7 +158,7 @@ const Home = () => {
             <Button
               intent="transparent"
               href="/signup/register-business"
-              leftIcon={<Plus />}
+              leftIcon={<Plus strokeWidth={0.8} size={25} />}
               className="w-full mt-8 rounded-md h-[55px]"
             >
               <span className="font-hnM font-bold text-[14px] ">
@@ -189,7 +195,10 @@ const Home = () => {
             <BusinessCard
               className={"business-card"}
               icon={
-                <img src={"/assets/images/opportunities/visibility-icon.svg"} />
+                <img
+                  className="w-[60px]"
+                  src={"/assets/images/opportunities/visibility-icon.svg"}
+                />
               }
               header={"Increased Visibility"}
               subTitle={
@@ -199,7 +208,10 @@ const Home = () => {
             <BusinessCard
               className={"business-card"}
               icon={
-                <img src={"/assets/images/opportunities/audience-icon.svg"} />
+                <img
+                  className="w-[60px]"
+                  src={"/assets/images/opportunities/audience-icon.svg"}
+                />
               }
               header={"Access to Targeted Audience"}
               subTitle={
@@ -209,7 +221,10 @@ const Home = () => {
             <BusinessCard
               className={"business-card"}
               icon={
-                <img src={"/assets/images/opportunities/growth-icon.svg"} />
+                <img
+                  className="w-[60px]"
+                  src={"/assets/images/opportunities/growth-icon.svg"}
+                />
               }
               header={"Business Growth"}
               subTitle={
@@ -235,19 +250,22 @@ const Home = () => {
               marginRight: "25px",
             }}
           >
-            {/* <img
+            <img
               width={349}
               height={357}
-              src={CustomerBgImage}
-              alt={CustomerBgImage}
-            /> */}
+              src={"/assets/images/customer-homebg.jpeg"}
+              alt={"customer-homebg"}
+            />
           </div>
 
           {/* Customer Card */}
-          <div style={{ marginTop: "35px" }}>
+          <div className="w-full mt-5">
             <CustomerCard
               icon={
-                <img src={"/assets/images/opportunities/choice-icon.svg"} />
+                <img
+                  className="w-[60px] mr-[20px]"
+                  src={"/assets/images/opportunities/choice-icon.svg"}
+                />
               }
               header={"Choice"}
               subTitle={
@@ -258,6 +276,7 @@ const Home = () => {
             <CustomerCard
               icon={
                 <img
+                  className="w-[60px] mr-[20px]"
                   src={"/assets/images/opportunities/convenience-icon.svg"}
                 />
               }
@@ -269,7 +288,10 @@ const Home = () => {
 
             <CustomerCard
               icon={
-                <img src={"/assets/images/opportunities/community-icon.svg"} />
+                <img
+                  className="w-[60px] mr-[20px]"
+                  src={"/assets/images/opportunities/community-icon.svg"}
+                />
               }
               header={"Community"}
               subTitle={
@@ -282,7 +304,9 @@ const Home = () => {
             <Button
               intent="primary"
               href="/explore-businesses"
-              rightIcon={<CtaArrow />}
+              rightIcon={
+                <CtaArrow strokeWidth={0.4} className="stroke-white-100" />
+              }
               className="w-full max-w-[303px] h-[55px] mt-8 rounded-md "
             >
               <span className="font-hnM font-bold text-[14px] leading-[14px] text-left text-white-100 ">
@@ -343,7 +367,9 @@ const Home = () => {
               intent="primary"
               href="/explore-businesses"
               className="w-[303px] h-[55px] px-[15px] py-[15px] rounded-md border-[1px] border-white-100 "
-              rightIcon={<CtaArrow />}
+              rightIcon={
+                <CtaArrow strokeWidth={0.4} className="stroke-white-100" />
+              }
             >
               <span className="font-hnM font-bold text-[15px] leading-[14px] text-left text-white-100 ">
                 Explore Businesses
