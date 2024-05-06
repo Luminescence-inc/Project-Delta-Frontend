@@ -213,7 +213,7 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
         />
 
         <FlexColStart className="w-full ">
-          <label className="text-[14px] font-extrabold font-hnL text-dark-100">
+          <label className="text-[14px] font-semibold font-inter text-dark-100/60">
             Describe your business
           </label>
           <textarea
