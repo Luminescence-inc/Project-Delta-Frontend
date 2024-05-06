@@ -1,8 +1,7 @@
 /** @format */
 import { Link, useNavigate } from "react-router-dom";
 import { cn } from "@/utils";
-import { FlexColStart, FlexRowStart } from "@components/Flex";
-import { Facebook, Instagram, Twitter } from "@components/icons";
+import { FlexColStart, FlexRowCenter, FlexRowStart } from "@components/Flex";
 
 const navigations = [
   {
@@ -23,6 +22,12 @@ const navigations = [
   },
 ];
 
+const socialLinks = [
+  { name: "instagram" },
+  { name: "facebook" },
+  { name: "twitter" },
+];
+
 const Footer = () => {
   const navigate = useNavigate();
   const pathname = window.location.pathname.replace("/", "");
@@ -37,7 +42,10 @@ const Footer = () => {
       <div className="">
         <div className="">
           <Link to="/">
-            <img src={"/assets/images/logos/logo-header.svg"} />
+            <img
+              className="w-[200px]"
+              src={"/assets/images/logos/logo-header.svg"}
+            />
           </Link>
           <p className="text-[14px] font-normal font-inter py-[20px] text-blue-200 pb-[30px]">
             Connecting Immigrant and Local Business Owners with their Customers
@@ -62,9 +70,14 @@ const Footer = () => {
       </FlexColStart>
 
       <FlexRowStart className="w-full gap-[16px] my-[16px]">
-        <Instagram />
-        <Facebook />
-        <Twitter />
+        {socialLinks.map((s, i) => (
+          <FlexRowCenter
+            key={i}
+            className="w-[40px] h-[40px] rounded-full bg-blue-200/10"
+          >
+            <RenderSocialIcons name={s.name} />
+          </FlexRowCenter>
+        ))}
       </FlexRowStart>
 
       <h5 className="text-center text-gray-100 leading-[14px] font-normal text-[12px] font-inter mt-10">
@@ -75,3 +88,30 @@ const Footer = () => {
 };
 
 export default Footer;
+
+function RenderSocialIcons({ name }: { name: string }) {
+  let icon = null;
+  switch (name) {
+    case "instagram":
+      icon = (
+        <img className="w-[20px]" src={"/assets/images/logos/ig-logo.svg"} />
+      );
+      break;
+    case "facebook":
+      icon = (
+        <img
+          className="w-[14px]"
+          src={"/assets/images/logos/facebook-logo.svg"}
+        />
+      );
+      break;
+    case "twitter":
+      icon = (
+        <img className="w-[20px]" src={"/assets/images/logos/x-logo.svg"} />
+      );
+      break;
+    default:
+      icon = null;
+  }
+  return icon;
+}

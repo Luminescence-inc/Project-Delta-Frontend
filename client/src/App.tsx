@@ -31,7 +31,7 @@ function App() {
   const { pathname } = useLocation();
   const [width, setWidth] = useState(window.innerWidth);
 
-  const MobileConstraint = 500;
+  const MobileConstraint = 700;
 
   useEffect(() => {
     window.scrollTo(0, 0);
