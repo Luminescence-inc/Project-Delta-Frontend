@@ -1,5 +1,5 @@
 /** @format */
-import { FlexColCenter } from "components/Flex";
+import { FlexColCenter } from "@components/Flex";
 
 const VerifiedAccount = () => {
   return (

@@ -5,10 +5,9 @@ import {
   FlexRowEnd,
   FlexRowStart,
   FlexRowStartCenter,
-} from "components/Flex";
-import MapPin from "assets/icons/location-marker.svg?react";
-import Phone from "assets/icons/phone.svg?react";
-import { cn, determineBusOpTime } from "utils";
+} from "@components/Flex";
+import { LocationMarker, Phone } from "@components/icons";
+import { cn, determineBusOpTime } from "@/utils";
 import { useNavigate } from "react-router-dom";
 
 interface BusinessCardProps {
@@ -87,7 +86,7 @@ export const ColLayoutCard = ({
 
           {/* location */}
           <FlexRowStartCenter className="gap-[5px] h-[16px] py-[15px]">
-            <MapPin />
+            <LocationMarker />
             <span className="text-[13px] font-normal font-inter text-blue-200 mt-[3px]">
               {location}
             </span>
@@ -186,7 +185,7 @@ export const RowLayoutCard = ({
 
             {/* location */}
             <FlexRowStartCenter className="gap-[5px] h-[16px] py-[15px]">
-              <MapPin />
+              <LocationMarker />
               <span className="text-[13px] font-normal font-inter text-blue-200 mt-[3px]">
                 {location}
               </span>

@@ -1,10 +1,11 @@
-import InstagramIcon from "assets/icons/instagram-icon-2.svg?react";
-import FacebookIcon from "assets/icons/facebook-icon.svg?react";
-import TwitterIcon from "assets/icons/twitter-icon.svg?react";
-import LinkedInIcon from "assets/icons/linkedin-icon.svg?react";
-import TikTokIcon from "assets/icons/tiktok-icon.svg?react";
-import WebsiteIcon from "assets/icons/website-icon.svg?react";
-import { cn } from "utils";
+import {
+  Facebook,
+  Instagram,
+  Twitter,
+  Globe,
+  LinkedIn,
+} from "@components/icons";
+import { cn } from "@/utils";
 import { useEffect } from "react";
 
 interface SocialMediaProps {
@@ -45,27 +46,23 @@ const RenderSocialLinks = ({
 
   switch (name) {
     case "facebook":
-      icon = <FacebookIcon />;
+      icon = <Facebook />;
       break;
 
     case "instagram":
-      icon = <InstagramIcon />;
+      icon = <Instagram />;
       break;
 
     case "twitter":
-      icon = <TwitterIcon />;
+      icon = <Twitter />;
       break;
 
     case "linkedin":
-      icon = <LinkedInIcon />;
-      break;
-
-    case "tiktok":
-      icon = <TikTokIcon />;
+      icon = <LinkedIn />;
       break;
 
     case "website":
-      icon = <WebsiteIcon />;
+      icon = <Globe />;
       break;
 
     default:

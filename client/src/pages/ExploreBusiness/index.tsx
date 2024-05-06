@@ -4,19 +4,18 @@ import {
   FlexColStartCenter,
   FlexRowCenterBtw,
   FlexRowStartCenter,
-} from "components/Flex";
-import SearchIcon from "assets/icons/search-business.svg?react";
+} from "@components/Flex";
+import { SearchIcon } from "@components/icons";
 import LayoutPanelTop from "../../../public/assets/icons/layout-panel-top.svg?react";
 import LayoutPanelLeft from "../../../public/assets/icons/layout-panel-left.svg?react";
 import BusinessCardContainer from "./components/BusinessCard";
-import BusinessesFilterComponent from "components/BusinessFilter";
-import { UserBusinessList } from "types/business";
-import { FilterData, useBusinessCtx } from "context/BusinessCtx";
-import { IFilter } from "types/business-profile";
-import { cn } from "utils";
+import BusinessesFilterComponent from "@components/BusinessFilter";
+import { UserBusinessList } from "@/types/business";
+import { FilterData, useBusinessCtx } from "@context/BusinessCtx";
+import { IFilter } from "@/types/business-profile";
+import { cn } from "@/utils";
+import { LoaderComponent } from "@components/Loader";
 import { useEffect, useState } from "react";
-import { LoaderComponent } from "components/Loader";
-
 
 const ExploreBusiness = () => {
   const {

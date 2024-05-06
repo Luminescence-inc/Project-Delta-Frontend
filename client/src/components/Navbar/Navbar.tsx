@@ -2,27 +2,22 @@
 
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import MenuIcon from "assets/icons/menu-icon.svg?react";
-import LogoHeaderIcon from "assets/icons/logo-header-icon.svg?react";
-import CancelIcon from "assets/icons/cancel-icon.svg?react";
-import ArrowUpIcon from "assets/icons/arrow-up.svg?react";
-import EditIcon from "assets/icons/edit-icon.svg?react";
-import PlusIcon from "assets/icons/uil_plus.svg?react";
-import Button from "components/ui/button";
-import { JwtPayload, TOKEN_NAME } from "types/auth";
-import { isAuthenticated, logOut } from "api/auth";
+import Button from "@components/ui/button";
+import { JwtPayload, TOKEN_NAME } from "@/types/auth";
+import { isAuthenticated, logOut } from "@/api/auth";
 import { useNavigate } from "react-router-dom";
-import { UserBusinessList, UserBusinessListResponse } from "types/business";
-import { getUserBusinessProfileList } from "api/business";
+import { UserBusinessList, UserBusinessListResponse } from "@/types/business";
+import { getUserBusinessProfileList } from "@/api/business";
 import {
   FlexColStart,
   FlexRowCenter,
   FlexRowCenterBtw,
   FlexRowStart,
   FlexRowStartBtw,
-} from "components/Flex";
-import { cn } from "utils";
-import { useAuth } from "hooks/useAuth";
+} from "@components/Flex";
+import { cn } from "@/utils";
+import { useAuth } from "@hooks/useAuth";
+import { ArrowUp, Cancel, Edit, Menu, Plus } from "../icons";
 
 const navigationRoute = [
   { title: "Home", name: "home", path: "/" },
@@ -135,9 +130,9 @@ const Navbar = () => {
             {!menuOpen && (
               <FlexRowCenterBtw className="w-full bg-white-100 mt-[24px] rounded-[5px] px-[27px] py-[18px] shadow-sm">
                 <Link to="/">
-                  <LogoHeaderIcon />
+                  <img src={"/assets/images/logos/logo-header.svg"} />
                 </Link>
-                <MenuIcon
+                <Menu
                   className="icon-menu cursor-pointer"
                   onClick={() => {
                     handleMenuIcon();
@@ -149,8 +144,8 @@ const Navbar = () => {
 
           {menuOpen && (
             <div className="w-full h-full fixed md:absolute top-0 left-0 shadow-md px-[32px] py-[4em] bg-white-100 z-[999]">
-              <LogoHeaderIcon />
-              <CancelIcon
+              <img src={"/assets/images/logos/logo-header.svg"} />
+              <Cancel
                 className="absolute top-[4em] right-[24px] cursor-pointer"
                 onClick={() => setMenuOpen(false)}
               />
@@ -188,7 +183,7 @@ const Navbar = () => {
                       <p className="text-gray-100 text-[18px] font-hnM select-none cursor-pointer">
                         Edit Businesses Profile
                       </p>
-                      <ArrowUpIcon
+                      <ArrowUp
                         className={
                           editProfileOpen
                             ? "rotate-[360deg]"
@@ -216,7 +211,7 @@ const Navbar = () => {
                               <p className="text-[16px] font-normal font-hnL text-gray-100">
                                 {data.name}
                               </p>
-                              <EditIcon width={22} height={22} />
+                              <Edit width={22} height={22} />
                             </FlexRowStartBtw>
                           );
                         })}
@@ -227,7 +222,7 @@ const Navbar = () => {
                       className="w-full h-[37px] py-[22px] rounded-[5px] mt-5"
                       intent={"transparent"}
                       onClick={() => setMenuOpen(false)}
-                      leftIcon={<PlusIcon />}
+                      leftIcon={<Plus />}
                     >
                       <span className="font-hnM">
                         Create a new business profile

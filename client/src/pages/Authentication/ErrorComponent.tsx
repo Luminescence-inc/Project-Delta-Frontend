@@ -1,4 +1,4 @@
-import { FlexColStart } from "components/Flex";
+import { FlexColStart } from "@components/Flex";
 
 interface IErrorComponent {
   value: string;

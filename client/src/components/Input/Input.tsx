@@ -1,6 +1,6 @@
 /** @format */
 
-import { FlexColStart, FlexRowCenter } from "components/Flex";
+import { FlexColStart, FlexRowCenter } from "@components/Flex";
 import React from "react";
 
 interface IInput {

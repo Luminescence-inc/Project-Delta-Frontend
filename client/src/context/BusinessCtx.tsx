@@ -1,11 +1,14 @@
-import { allBusinessCategories, getListOfBusinsessProfile } from "api/business";
+import {
+  allBusinessCategories,
+  getListOfBusinsessProfile,
+} from "@/api/business";
 import React, { PropsWithChildren, useEffect, useState } from "react";
 import {
   BusinessCategories,
   BusinessListingLayouts,
   IOption,
-} from "types/business";
-import { IBusinessProfile, ISearch } from "types/business-profile";
+} from "@/types/business";
+import { IBusinessProfile, ISearch } from "@/types/business-profile";
 
 export const BusinessContext = React.createContext<ContextValues>({} as any);
 

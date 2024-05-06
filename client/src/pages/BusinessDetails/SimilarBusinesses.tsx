@@ -1,16 +1,15 @@
-import { getListOfBusinsessProfile } from "api/business";
-import defaultImg from "assets/images/default-img.jpeg";
-import { FlexColCenter, FlexColStart } from "components/Flex";
-import { useBusinessCtx } from "context/BusinessCtx";
+import { getListOfBusinsessProfile } from "@/api/business";
+import { FlexColCenter, FlexColStart } from "@components/Flex";
+import { useBusinessCtx } from "@context/BusinessCtx";
 import {
   ColLayoutCard,
   RowLayoutCard,
-} from "pages/ExploreBusiness/components/LayoutCards";
+} from "@pages/ExploreBusiness/components/LayoutCards";
 import { useEffect, useState } from "react";
-import { IOption } from "types/business";
-import { IBusinessProfile, ISearch } from "types/business-profile";
-import { constructBizImgUrl, constructDOP, isImgUrlValid } from "utils";
-import { LoaderComponent } from "components/Loader";
+import { IOption } from "@/types/business";
+import { IBusinessProfile, ISearch } from "@/types/business-profile";
+import { constructBizImgUrl, constructDOP, isImgUrlValid } from "@/utils";
+import { LoaderComponent } from "@components/Loader";
 import BusinessesNotfound from "./components/Notfound";
 
 interface SimilarBusinessesProps {
@@ -97,6 +96,8 @@ const SimilarBusinesses = ({
       </FlexColCenter>
     );
   }
+
+  const defaultImg = "/assets/images/default-img.jpeg";
 
   return (
     <FlexColStart className="w-full mt-[20px]">

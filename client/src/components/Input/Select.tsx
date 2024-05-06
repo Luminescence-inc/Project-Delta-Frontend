@@ -1,12 +1,15 @@
 /** @format */
 
 import { useRef, useState, useEffect } from "react";
-import ArrowUpIcon from "assets/icons/arrow-up.svg?react";
-import CancelIcon from "assets/icons/cancel-select-icon.svg?react";
+import { ArrowUp, X } from "@components/icons";
 import "./Input.scss";
 import { FormikProps } from "formik";
-import { FlexColStart, FlexRowCenter, FlexRowCenterBtw } from "components/Flex";
-import { cn } from "utils";
+import {
+  FlexColStart,
+  FlexRowCenter,
+  FlexRowCenterBtw,
+} from "@/components/Flex";
+import { cn } from "@/utils";
 
 interface ISelect {
   label: string;
@@ -81,7 +84,7 @@ const Select = ({ label, options, name, formikValue, formik }: ISelect) => {
               // disable suggestions dropdown
               autoComplete="new"
             />
-            <ArrowUpIcon
+            <ArrowUp
               className={cn(
                 "absolute top-[15px] right-[20px]",
                 "-rotate-[180deg]"
@@ -102,7 +105,7 @@ const Select = ({ label, options, name, formikValue, formik }: ISelect) => {
             {selectedValue ? (
               <FlexRowCenterBtw className="w-full py-3 mb-2 border-b-[1px] border-b-gray-102/50 ">
                 <span>{selectedValue.value}</span>
-                <CancelIcon
+                <X
                   className="cursor-pointer"
                   onClick={handleCancel}
                   width={24}

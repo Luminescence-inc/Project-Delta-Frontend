@@ -1,20 +1,16 @@
 /** @format */
-
-import EyeIcon from "assets/icons/eye-icon.svg?react";
-import ClosedEyeIcon from "assets/icons/closed-eye-icon.svg?react";
-import MailIcon from "assets/icons/mail-icon.svg?react";
-import EditIcon from "assets/icons/edit-icon.svg?react";
-import Input from "components/Input/Input";
-import Button from "components/Button/Button";
+import { Eye, ClosedEye, Mail, Edit } from "@components/icons";
+import Input from "@components/Input/Input";
+import Button from "@components/Button/Button";
 import { useFormik } from "formik";
-import { SignUpData, TOKEN_NAME, BaseResponseMessage } from "types/auth";
-import { updateUserDetails } from "api/auth";
+import { SignUpData, TOKEN_NAME, BaseResponseMessage } from "@/types/auth";
+import { updateUserDetails } from "@/api/auth";
 import { useEffect, useState } from "react";
 import "./MyAccount.scss";
 import * as yup from "yup";
-import Spinner from "components/Spinner/Spinner";
-import { useAuth } from "hooks/useAuth";
-import { LoaderComponent } from "components/Loader/index";
+import Spinner from "@components/Spinner/Spinner";
+import { useAuth } from "@hooks/useAuth";
+import { LoaderComponent } from "@components/Loader/index";
 
 const validationSchema = yup.object({
   firstName: yup
@@ -155,7 +151,7 @@ const MyAccount = () => {
             name="firstName"
             value={formik.values.firstName}
             onChange={formik.handleChange}
-            icon={<EditIcon className="input-icon" width={22} height={22} />}
+            icon={<Edit className="input-icon" width={22} height={22} />}
             onBlur={formik.handleBlur}
             placeholder="Enter First Name"
           />
@@ -172,7 +168,7 @@ const MyAccount = () => {
             value={formik.values.lastName}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            icon={<EditIcon className="input-icon" width={22} height={22} />}
+            icon={<Edit className="input-icon" width={22} height={22} />}
             placeholder="Enter Last Name"
           />
 
@@ -182,7 +178,7 @@ const MyAccount = () => {
             name="email"
             disabled={true}
             value={formik.values.email}
-            icon={<MailIcon className="input-icon" />}
+            icon={<Mail className="input-icon" />}
             placeholder="Enter Email Address"
           />
 
@@ -220,12 +216,12 @@ const MyAccount = () => {
             onBlur={formik.handleBlur}
             icon={
               showPassword ? (
-                <EyeIcon
+                <Eye
                   onClick={() => setShowPassword(!showPassword)}
                   className="input-icon"
                 />
               ) : (
-                <ClosedEyeIcon
+                <ClosedEye
                   onClick={() => setShowPassword(!showPassword)}
                   className="input-icon"
                 />
@@ -248,12 +244,12 @@ const MyAccount = () => {
             onBlur={formik.handleBlur}
             icon={
               showConfirmPassword ? (
-                <EyeIcon
+                <Eye
                   onClick={() => setShowConirmPassword(!showConfirmPassword)}
                   className="input-icon"
                 />
               ) : (
-                <ClosedEyeIcon
+                <ClosedEye
                   onClick={() => setShowConirmPassword(!showConfirmPassword)}
                   className="input-icon"
                 />
