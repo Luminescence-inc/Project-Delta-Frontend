@@ -11,6 +11,8 @@ import * as yup from "yup";
 import Spinner from "@components/Spinner/Spinner";
 import { useAuth } from "@hooks/useAuth";
 import { LoaderComponent } from "@components/Loader/index";
+import { FlexColCenter, FlexRowStartBtw } from "@/components/Flex";
+import { Link } from "react-router-dom";
 
 const validationSchema = yup.object({
   firstName: yup
@@ -124,10 +126,12 @@ const MyAccount = () => {
   }
 
   return (
-    <div className="my-account">
-      <div className="card">
-        <h4>My Account</h4>
-        <p>Edit or update your information</p>
+    <FlexColCenter className="w-full bg-gray-201/20 px-5">
+      <FlexColCenter className="w-full bg-white-100 px-5 py-9 ">
+        <h4 className="font-inter font-semibold">My Account</h4>
+        <p className="font-inter text-[17px] mb-2">
+          Edit or update your information
+        </p>
 
         {/* Display Error message */}
         {error && <span style={submitErrorMessageStyle}>{errorMessage}</span>}
@@ -139,7 +143,7 @@ const MyAccount = () => {
           </span>
         )}
 
-        <form onSubmit={formik.handleSubmit}>
+        <form onSubmit={formik.handleSubmit} className="w-full">
           <span style={errorMessageStyle}>
             {formik.touched.firstName && formik.errors.firstName
               ? formik.errors.firstName
@@ -151,7 +155,13 @@ const MyAccount = () => {
             name="firstName"
             value={formik.values.firstName}
             onChange={formik.handleChange}
-            icon={<Edit className="input-icon" width={22} height={22} />}
+            icon={
+              <Edit
+                strokeWidth={1}
+                className="stroke-white-100 fill-blue-200"
+                size={20}
+              />
+            }
             onBlur={formik.handleBlur}
             placeholder="Enter First Name"
           />
@@ -168,7 +178,13 @@ const MyAccount = () => {
             value={formik.values.lastName}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            icon={<Edit className="input-icon" width={22} height={22} />}
+            icon={
+              <Edit
+                strokeWidth={1}
+                className="stroke-white-100 fill-blue-200"
+                size={20}
+              />
+            }
             placeholder="Enter Last Name"
           />
 
@@ -178,7 +194,12 @@ const MyAccount = () => {
             name="email"
             disabled={true}
             value={formik.values.email}
-            icon={<Mail className="input-icon" />}
+            icon={
+              <Mail
+                strokeWidth={1}
+                className="rounded-full stroke-white-100 fill-blue-200"
+              />
+            }
             placeholder="Enter Email Address"
           />
 
@@ -187,27 +208,17 @@ const MyAccount = () => {
               ? formik.errors.password
               : ""}
           </span>
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <p
-              style={{
-                marginBottom: "0px",
-                fontSize: "14px",
-                color: "var(--black-color)",
-              }}
-            >
+          <FlexRowStartBtw className="w-full">
+            <p className="text-[14px] font-inter font-normal text-dark-100/60">
               Password
             </p>
-            <p
-              style={{
-                marginBottom: "0px",
-                color: "#0E2D52",
-                fontWeight: "400",
-                fontSize: "12px",
-              }}
+            <Link
+              to="/forgot-password/email"
+              className="text-[12px] font-inter font-semibold text-dark-100/60 underline"
             >
               Reset Password
-            </p>
-          </div>
+            </Link>
+          </FlexRowStartBtw>
           <Input
             type={!showPassword ? "password" : "text"}
             name="password"
@@ -217,13 +228,15 @@ const MyAccount = () => {
             icon={
               showPassword ? (
                 <Eye
+                  className="cursor-pointer"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="input-icon"
+                  size={20}
                 />
               ) : (
                 <ClosedEye
                   onClick={() => setShowPassword(!showPassword)}
-                  className="input-icon"
+                  size={20}
+                  className="cursor-pointer"
                 />
               )
             }
@@ -246,12 +259,14 @@ const MyAccount = () => {
               showConfirmPassword ? (
                 <Eye
                   onClick={() => setShowConirmPassword(!showConfirmPassword)}
-                  className="input-icon"
+                  className="cursor-pointer"
+                  size={20}
                 />
               ) : (
                 <ClosedEye
                   onClick={() => setShowConirmPassword(!showConfirmPassword)}
-                  className="input-icon"
+                  className="cursor-pointer"
+                  size={20}
                 />
               )
             }
@@ -277,8 +292,8 @@ const MyAccount = () => {
             )}
           </div>
         </form>
-      </div>
-    </div>
+      </FlexColCenter>
+    </FlexColCenter>
   );
 };
 
