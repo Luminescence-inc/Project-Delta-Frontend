@@ -6,7 +6,7 @@ import {
   FlexRowStart,
   FlexRowStartCenter,
 } from "@components/Flex";
-import { LocationMarker, Phone } from "@components/icons";
+import { MapPin, Phone } from "@components/icons";
 import { cn, determineBusOpTime } from "@/utils";
 import { useNavigate } from "react-router-dom";
 
@@ -86,7 +86,7 @@ export const ColLayoutCard = ({
 
           {/* location */}
           <FlexRowStartCenter className="gap-[5px] h-[16px] py-[15px]">
-            <LocationMarker />
+            <MapPin size={15} className="stroke-gray-100/70" />
             <span className="text-[13px] font-normal font-inter text-blue-200 mt-[3px]">
               {location}
             </span>
@@ -117,7 +117,7 @@ export const ColLayoutCard = ({
               href={`tel:${phone}`}
               className="flex flex-row items-center justify-center text-blue-200 bg-blue-202 w-[81px] h-[25px] px-[5px] rounded-full gap-[5px] text-[12px]"
             >
-              <Phone />
+              <Phone size={15} className="stroke-blue-200/80" />
               <span className="text-[12px] font-medium font-inter leading-[14px] mt-[2px]">
                 Call me
               </span>
@@ -185,7 +185,7 @@ export const RowLayoutCard = ({
 
             {/* location */}
             <FlexRowStartCenter className="gap-[5px] h-[16px] py-[15px]">
-              <LocationMarker />
+              <MapPin size={15} className="stroke-gray-100/70" />
               <span className="text-[13px] font-normal font-inter text-blue-200 mt-[3px]">
                 {location}
               </span>
@@ -217,7 +217,7 @@ export const RowLayoutCard = ({
                   href={`tel:${phone}`}
                   className="flex flex-row items-center justify-center text-blue-200 bg-blue-202 w-[35px] h-[25px] px-[5px] rounded-full gap-[5px] text-[12px]"
                 >
-                  <Phone />
+                  <Phone size={15} className="stroke-blue-200/80" />
                 </a>
               </FlexRowEnd>
             </FlexRowCenterBtw>
