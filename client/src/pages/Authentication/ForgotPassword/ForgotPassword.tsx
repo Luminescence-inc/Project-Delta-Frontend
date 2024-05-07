@@ -97,13 +97,15 @@ const ForgotPassword = () => {
             icon={
               showPassword ? (
                 <Eye
+                  className="cursor-pointer"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="input-icon"
+                  size={20}
                 />
               ) : (
                 <ClosedEye
                   onClick={() => setShowPassword(!showPassword)}
-                  className="input-icon"
+                  size={20}
+                  className="cursor-pointer"
                 />
               )
             }
@@ -125,13 +127,15 @@ const ForgotPassword = () => {
             icon={
               showConfirmPassword ? (
                 <Eye
-                  onClick={() => setShowConirmPassword(!showConfirmPassword)}
-                  className="input-icon"
+                  className="cursor-pointer"
+                  onClick={() => setShowPassword(!showPassword)}
+                  size={20}
                 />
               ) : (
                 <ClosedEye
-                  onClick={() => setShowConirmPassword(!showConfirmPassword)}
-                  className="input-icon"
+                  onClick={() => setShowPassword(!showPassword)}
+                  size={20}
+                  className="cursor-pointer"
                 />
               )
             }
