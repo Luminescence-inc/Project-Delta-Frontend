@@ -17,6 +17,7 @@ import {
   Phone,
   Mail,
   Calendar,
+  MapPin,
 } from "@components/icons";
 import {
   cn,
@@ -168,8 +169,8 @@ export default function BusinessDetails() {
         className="text-[12px] font-inter font-medium leading-[14px] underline bg-none outline-none border-none cursor-pointer text-gray-103"
         onClick={() => navigate("/explore-businesses")}
       >
-        <FlexRowStart className="w-auto gap-[15px]">
-          <ChevronLeft />
+        <FlexRowStart className="w-auto gap-[4px]">
+          <ChevronLeft strokeWidth={1} />
           Explore Businesses
         </FlexRowStart>
       </button>
@@ -237,17 +238,35 @@ export default function BusinessDetails() {
                   `${businessDetails?.city}, ${businessDetails?.stateAndProvince}` ??
                   "N/A"
                 }
-                icon={<LocationMarker />}
+                icon={
+                  <MapPin
+                    size={18}
+                    strokeWidth={1.3}
+                    className="stroke-dark-100/90"
+                  />
+                }
               />
               <ContactCard
                 title="Mobile"
                 tagline={businessDetails?.phoneNumber ?? "N/A"}
-                icon={<Phone />}
+                icon={
+                  <Phone
+                    size={18}
+                    strokeWidth={1.3}
+                    className="stroke-dark-100/90"
+                  />
+                }
               />
               <ContactCard
                 title="Email"
                 tagline={businessDetails?.businessEmail ?? "N/A"}
-                icon={<Mail />}
+                icon={
+                  <Mail
+                    size={18}
+                    strokeWidth={1.3}
+                    className="stroke-dark-100/90"
+                  />
+                }
               />
             </FlexColStart>
           </FlexColStart>
@@ -281,7 +300,7 @@ export default function BusinessDetails() {
               }}
             >
               <FlexRowStartCenter className="w-auto gap-1">
-                <Calendar />
+                <Calendar size={15} className="stroke-dark-100/60 mr-1" />
                 <span className="text-[11px] font-semibold font-inter leading-[10px] mt-[1px] text-blue-200">
                   View opening hours
                 </span>
