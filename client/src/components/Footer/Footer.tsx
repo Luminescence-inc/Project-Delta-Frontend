@@ -1,7 +1,7 @@
 /** @format */
 import { Link, useNavigate } from "react-router-dom";
 import { cn } from "@/utils";
-import { FlexColStart, FlexRowCenter, FlexRowStart } from "@components/Flex";
+import { FlexColStart, FlexRowStart } from "@components/Flex";
 
 const navigations = [
   {
