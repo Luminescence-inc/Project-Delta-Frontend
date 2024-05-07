@@ -71,12 +71,13 @@ const Footer = () => {
 
       <FlexRowStart className="w-full gap-[16px] my-[16px]">
         {socialLinks.map((s, i) => (
-          <FlexRowCenter
+          <a
+            href="#"
             key={i}
-            className="w-[40px] h-[40px] rounded-full bg-blue-200/10"
+            className="w-[30px] h-[30px] flex items-center justify-center rounded-full bg-blue-200/10"
           >
             <RenderSocialIcons name={s.name} />
-          </FlexRowCenter>
+          </a>
         ))}
       </FlexRowStart>
 
@@ -91,23 +92,30 @@ export default Footer;
 
 function RenderSocialIcons({ name }: { name: string }) {
   let icon = null;
+  let defaultStyle = "scale-[.80]";
   switch (name) {
     case "instagram":
       icon = (
-        <img className="w-[20px]" src={"/assets/images/logos/ig-logo.svg"} />
+        <img
+          className={cn("w-[20px]", defaultStyle)}
+          src={"/assets/images/logos/ig-logo.svg"}
+        />
       );
       break;
     case "facebook":
       icon = (
         <img
-          className="w-[14px]"
+          className={cn("w-[14px]", defaultStyle)}
           src={"/assets/images/logos/facebook-logo.svg"}
         />
       );
       break;
     case "twitter":
       icon = (
-        <img className="w-[20px]" src={"/assets/images/logos/x-logo.svg"} />
+        <img
+          className={cn("w-[20px]", defaultStyle)}
+          src={"/assets/images/logos/x-logo.svg"}
+        />
       );
       break;
     default:
