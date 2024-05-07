@@ -1,10 +1,4 @@
-import {
-  Facebook,
-  Instagram,
-  Twitter,
-  Globe,
-  LinkedIn,
-} from "@components/icons";
+import { Globe } from "@components/icons";
 import { cn } from "@/utils";
 import { useEffect } from "react";
 
@@ -46,23 +40,23 @@ const RenderSocialLinks = ({
 
   switch (name) {
     case "facebook":
-      icon = <Facebook />;
+      icon = RenderSocialIcons({ name });
       break;
 
     case "instagram":
-      icon = <Instagram />;
+      icon = RenderSocialIcons({ name });
       break;
 
     case "twitter":
-      icon = <Twitter />;
+      icon = RenderSocialIcons({ name });
       break;
 
     case "linkedin":
-      icon = <LinkedIn />;
+      icon = RenderSocialIcons({ name });
       break;
 
     case "website":
-      icon = <Globe />;
+      icon = RenderSocialIcons({ name });
       break;
 
     default:
@@ -71,10 +65,10 @@ const RenderSocialLinks = ({
   }
 
   return (
-    <div className="social-links-tooltip-container">
+    <div className="w-auto relative">
       <button
         className={cn(
-          "w-[34px] h-[34px] flex flex-col items-center justify-center rounded-full",
+          "w-[34px] h-[34px] flex flex-col items-center justify-center rounded-full scale-[.90]",
           valid ? "cursor-pointer" : "cursor-not-allowed"
         )}
         style={{
@@ -90,10 +84,10 @@ const RenderSocialLinks = ({
       >
         {icon}
       </button>
-      {!valid && (
+      {true && (
         <span
           className={cn(
-            "tooltiptext w-[80px] text-center absolute bg-dark-105 font-inter text-white-100 px-[5px] py-[2px] rounded-[5px] top-10 left-0 z-10",
+            "tooltiptext text-[10px] w-[80px] text-center absolute bg-dark-105 font-inter text-white-100 px-[5px] py-[2px] rounded-[5px] top-10 -left-5 z-10",
             activeTtip === name ? "visible" : "hidden"
           )}
         >
@@ -114,3 +108,33 @@ const isUrlValid = (url: string) => {
     return { valid: false, obj: null };
   }
 };
+
+function RenderSocialIcons({ name }: { name: string }) {
+  let icon = null;
+  switch (name) {
+    case "instagram":
+      icon = (
+        <img className="w-[16px]" src={"/assets/images/logos/ig-logo.svg"} />
+      );
+      break;
+    case "facebook":
+      icon = (
+        <img
+          className="w-[10px]"
+          src={"/assets/images/logos/facebook-logo.svg"}
+        />
+      );
+      break;
+    case "twitter":
+      icon = (
+        <img className="w-[16px]" src={"/assets/images/logos/x-logo.svg"} />
+      );
+      break;
+    case "website":
+      icon = <Globe size={17} className="text-blue-200" />;
+      break;
+    default:
+      icon = null;
+  }
+  return icon;
+}
