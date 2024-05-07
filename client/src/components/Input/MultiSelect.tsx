@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-import { ArrowUp, ChevronDown } from "@components/icons";
+import { ChevronDown } from "@components/icons";
 import { FormikProps } from "formik";
 import Button from "@components/Button/Button";
 import "./Input.scss";
@@ -91,11 +91,8 @@ const MultiSelect = ({
             readOnly
           />
           <ChevronDown
-            className={cn(
-              "absolute top-[15px] right-[20px]",
-              "-rotate-[180deg]"
-            )}
-            size={30}
+            className={cn("absolute top-[15px] right-[20px]")}
+            size={20}
           />
         </FlexRowCenter>
         {/* Days of operation placeholders */}
