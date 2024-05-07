@@ -14,7 +14,14 @@ import { FILE_TYPES, FILTERED_COUNTRY } from "@/utils/business-profile-utils";
 // import ContactIcon from "assets/icons/contact-icon.svg?react";
 // import UploadIcon from "assets/icons/upload-logo.svg?react";
 // import CancelIcon from "assets/icons/cancel-select-icon.svg?react";
-import { Instagram, Facebook, LinkedIn, Globe } from "@components/icons";
+import {
+  Instagram,
+  Facebook,
+  LinkedIn,
+  Globe,
+  ArrowBigUpDash,
+  X,
+} from "@components/icons";
 import Input from "@/components/Input/Input";
 import Button from "@/components/ui/button";
 import Select from "@/components/Input/Select";
@@ -327,7 +334,7 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
         )}
 
         <div className="w-full relative font-inter border-[1px] border-white-200 rounded-[5px] mt-[10px] ">
-          <FlexRowCenter className="w-full p-[16px] ">
+          <FlexRowCenter className="w-full p-[16px] relative ">
             <span
               onClick={(e) => {
                 e.stopPropagation();
@@ -336,13 +343,15 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
               className="cursor-pointer flex items-center justify-center text-blue-200 text-[10px] font-semibold font-inter leading-[14px] "
             >
               {imageFile ? imageFile.name : "Upload Your Logo (jpg/jpeg/png)"}
-              {/* <UploadIcon
+              <ArrowBigUpDash
                 onClick={(e) => {
                   e.stopPropagation();
                   fileInputRef.current?.click();
                 }}
+                size={15}
+                strokeWidth={2.5}
                 className="ml-[10px] cursor-pointer"
-              /> */}
+              />
             </span>
             <input
               type="file"
@@ -351,8 +360,11 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
               className="hidden"
             />
             {imageFile && (
-              <button className="delete-button" onClick={handleDelete}>
-                {/* <CancelIcon width={14} height={14} /> */}
+              <button
+                className="p-1 rounded-full absolute top-[15px] right-5 bg-blue-200 flex flex-col items-center justify-center"
+                onClick={handleDelete}
+              >
+                <X size={12} className="stroke-white-100" />
               </button>
             )}
           </FlexRowCenter>
@@ -395,14 +407,7 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
         )}
 
         <h4 style={{ paddingTop: "40px" }}>Upload social media links</h4>
-
-        {/* error msg for social links validation */}
-        {socialLinksError && (
-          <ErrorComponent _ref={socialEndRef} value={socialLinksError} />
-        )}
-
         <br />
-
         {socialMediaLinksInput.map((socialIconName) => (
           <SocialMediaLinks
             formik={formik}
@@ -431,7 +436,6 @@ interface ISocialMediaLinks {
   formik: FormikProps<BusinessProfileFormikPropsValues>;
   socialIconName: SupportedSocialMedia;
 }
-
 const SocialMediaLinks = ({ formik, socialIconName }: ISocialMediaLinks) => {
   const formattedSocialIconName =
     socialIconName.charAt(0).toUpperCase() + socialIconName.slice(1);
@@ -456,19 +460,28 @@ const SocialMediaLinks = ({ formik, socialIconName }: ISocialMediaLinks) => {
 
 const renderSocialMediaIcons = (name: SupportedSocialMedia) => {
   let icon = null;
-  let defaultClass = "absolute left-4";
+  let defaultClass = "absolute left-4 scale-[.75] stroke-blue-200 ";
   switch (name) {
     case "instagram":
-      icon = <Instagram className={cn(defaultClass)} />;
+      icon = <Instagram className={cn(defaultClass, "left-5")} />;
       break;
     case "website":
-      icon = <Globe className={cn(defaultClass, "left-6")} />;
+      icon = <Globe className={cn(defaultClass, "left-5")} />;
       break;
     case "linkedin":
-      icon = <LinkedIn className={cn(defaultClass)} />;
+      icon = (
+        <LinkedIn
+          strokeWidth={2.5}
+          className={cn(defaultClass, "left-5 fill-blue-200 stroke-none")}
+        />
+      );
       break;
     case "facebook":
-      icon = <Facebook className={cn(defaultClass, "left-8")} />;
+      icon = (
+        <Facebook
+          className={cn(defaultClass, "left-5 stroke-none fill-blue-200")}
+        />
+      );
       break;
     default:
       break;
