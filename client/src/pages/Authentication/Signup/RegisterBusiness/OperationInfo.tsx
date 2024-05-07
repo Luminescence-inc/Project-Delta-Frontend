@@ -43,7 +43,7 @@ const OperationInfo: FC<OperationInfoProps> = ({
           value={formik.values.phoneNumber}
           onChange={formik.handleChange}
           label="Business Phone Number"
-          icon={<Phone className="input-icon" />}
+          icon={<Phone className="stroke-none fill-blue-200 scale-[.75]" />}
           placeholder="Enter Phone Number"
         />
 
@@ -53,7 +53,12 @@ const OperationInfo: FC<OperationInfoProps> = ({
           value={formik.values.businessEmail}
           onChange={formik.handleChange}
           label="Business Email"
-          icon={<Mail className="input-icon" />}
+          icon={
+            <Mail
+              strokeWidth={1}
+              className="stroke-white-100 fill-blue-200 rounded-md scale-[.85]"
+            />
+          }
           placeholder="Enter Business Email"
         />
 
