@@ -128,7 +128,9 @@ const Home = () => {
               <Button
                 intent="primary"
                 href="/onboarding"
-                rightIcon={<CtaArrow />}
+                rightIcon={
+                  <CtaArrow strokeWidth={1} className="stroke-white-100" />
+                }
                 className="w-full mt-8 rounded-md h-[55px]"
               >
                 <span className="font-hnM font-bold text-[14px] ">
