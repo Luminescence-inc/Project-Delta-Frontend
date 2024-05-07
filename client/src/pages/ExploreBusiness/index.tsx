@@ -15,7 +15,6 @@ import { FilterData, useBusinessCtx } from "context/BusinessCtx";
 import { IFilter } from "types/business-profile";
 import { cn } from "utils";
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
 import { LoaderComponent } from "components/Loader";
 
 
