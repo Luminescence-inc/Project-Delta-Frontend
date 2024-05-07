@@ -13,7 +13,6 @@ import ReadMoreText from "./components/ReadmoreText";
 import {
   ChevronLeft,
   ChevronDown,
-  LocationMarker,
   Phone,
   Mail,
   Calendar,

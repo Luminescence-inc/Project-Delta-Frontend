@@ -1,5 +1,5 @@
 /** @format */
-import { CtaArrow, SearchIcon, Plus } from "@components/icons/index";
+import { CtaArrow, Plus } from "@components/icons/index";
 import Button from "@components/ui/button";
 import TitleCard from "./components/TitleCard/TitleCard";
 import BusinessCard from "./components/BusinessCard/BusinessCard";

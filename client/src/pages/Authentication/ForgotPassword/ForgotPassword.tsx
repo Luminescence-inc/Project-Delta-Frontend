@@ -8,7 +8,7 @@ import * as yup from "yup";
 import { BaseResponseMessage, ResetPasswordData } from "@/types/auth";
 import { useFormik } from "formik";
 import { useNavigate, useParams } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { resetUserPassword } from "@/api/auth";
 import Spinner from "@components/Spinner/Spinner";
 
@@ -67,6 +67,11 @@ const ForgotPassword = () => {
       setErrorMessage("error occured while resetting password");
     }
   };
+
+  useEffect(() => {
+    // remove this during code refactoring
+    setShowConirmPassword(false);
+  }, []);
 
   const formik = useFormik({
     initialValues: {

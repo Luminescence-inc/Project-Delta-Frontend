@@ -1,5 +1,4 @@
 import { useState } from "react";
-// import ContactSupportIcon from "assets/icons/contact-support-icon.svg?react";
 import Modal from "react-modal";
 import { ContactSupportDataSchema } from "@/types/business";
 import { BaseResponseMessage } from "@/types/auth";
@@ -10,7 +9,6 @@ import Input from "@components/Input/Input";
 import Button from "@components/ui/button";
 import { FlexColCenter, FlexColStart, FlexRowCenter } from "@components/Flex";
 import ErrorComponent from "@pages/Authentication/ErrorComponent";
-import { Headset } from "@/components/icons";
 
 const validationSchema = yup.object({
   personName: yup
