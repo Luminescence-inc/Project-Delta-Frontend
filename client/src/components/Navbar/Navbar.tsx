@@ -17,7 +17,7 @@ import {
 } from "@components/Flex";
 import { cn } from "@/utils";
 import { useAuth } from "@hooks/useAuth";
-import { ArrowUp, Cancel, Edit, Menu, Plus } from "../icons";
+import { Cancel, ChevronDown, Edit, Menu, Plus } from "../icons";
 
 const navigationRoute = [
   { title: "Home", name: "home", path: "/" },
@@ -128,23 +128,27 @@ const Navbar = () => {
         >
           <div className="w-full px-4 py-4 ">
             {!menuOpen && (
-              <FlexRowCenterBtw className="w-full bg-white-100 mt-[24px] rounded-[5px] px-[27px] py-[18px] shadow-sm">
+              <FlexRowStartBtw className="w-full bg-white-100 mt-[24px] rounded-[5px] px-[27px] py-[18px] shadow-sm">
                 <Link to="/">
                   <img src={"/assets/images/logos/logo-header.svg"} />
                 </Link>
                 <Menu
-                  className="icon-menu cursor-pointer"
+                  size={30}
+                  className="stroke-blue-200 cursor-pointer relative top-3"
                   onClick={() => {
                     handleMenuIcon();
                   }}
                 />
-              </FlexRowCenterBtw>
+              </FlexRowStartBtw>
             )}
           </div>
 
           {menuOpen && (
             <div className="w-full h-full fixed md:absolute top-0 left-0 shadow-md px-[32px] py-[4em] bg-white-100 z-[999]">
-              <img src={"/assets/images/logos/logo-header.svg"} />
+              <img
+                className="w-[180px]"
+                src={"/assets/images/logos/logo-header.svg"}
+              />
               <Cancel
                 className="absolute top-[4em] right-[24px] cursor-pointer"
                 onClick={() => setMenuOpen(false)}
@@ -177,20 +181,19 @@ const Navbar = () => {
                 {!loading && userDetails && (
                   <>
                     <FlexRowCenterBtw
-                      className="w-full mt-[24px]"
+                      className="w-full mt-[24px] cursor-pointer"
                       onClick={() => setEditProfileOpen((prev) => !prev)}
                     >
                       <p className="text-gray-100 text-[18px] font-hnM select-none cursor-pointer">
                         Edit Businesses Profile
                       </p>
-                      <ArrowUp
+                      <ChevronDown
                         className={
                           editProfileOpen
-                            ? "rotate-[360deg]"
-                            : "rotate-[180deg]"
+                            ? "rotate-[180deg]"
+                            : "rotate-[360deg]"
                         }
-                        width={14}
-                        height={14}
+                        size={20}
                       />
                     </FlexRowCenterBtw>
                     {editProfileOpen && userBusinessListData.length > 0 && (
@@ -211,7 +214,11 @@ const Navbar = () => {
                               <p className="text-[16px] font-normal font-hnL text-gray-100">
                                 {data.name}
                               </p>
-                              <Edit width={22} height={22} />
+                              <Edit
+                                strokeWidth={1}
+                                className="stroke-white-100 fill-blue-200"
+                                size={20}
+                              />
                             </FlexRowStartBtw>
                           );
                         })}
@@ -222,7 +229,9 @@ const Navbar = () => {
                       className="w-full h-[37px] py-[22px] rounded-[5px] mt-5"
                       intent={"transparent"}
                       onClick={() => setMenuOpen(false)}
-                      leftIcon={<Plus />}
+                      leftIcon={
+                        <Plus strokeWidth={2} className="stroke-none" />
+                      }
                     >
                       <span className="font-hnM">
                         Create a new business profile
@@ -265,7 +274,7 @@ const Navbar = () => {
                           navigate("/account");
                           setMenuOpen(false);
                         }}
-                        className=" text-center mt-[40px] cursor-pointer"
+                        className=" text-center mt-[20px] cursor-pointer"
                       >
                         My Account
                       </p>
