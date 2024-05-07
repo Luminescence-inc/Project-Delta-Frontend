@@ -1,5 +1,4 @@
 import { FlexColStart } from "components/Flex";
-import "../style.scss";
 import defaultBgImg from "assets/images/default-img.jpeg";
 import { IOption, UserBusinessList } from "types/business";
 import { CloudinaryConfig } from "config";
@@ -24,7 +23,7 @@ const BusinessCardContainer = ({
   };
 
   return (
-    <FlexColStart className="w-full px-20 business-card-container gap-20">
+    <FlexColStart className="w-full px-[20px] business-card-container gap-[20px]">
       {data?.length > 0
         ? data.map((bd) => {
             const daysOfOperation = constructDOP(

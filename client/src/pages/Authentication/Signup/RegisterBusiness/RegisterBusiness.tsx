@@ -13,12 +13,12 @@ import {
   BusinessProfileFormikPropsValues,
   CloudinaryUploadResponse,
   IOption,
+  RegisterBusinessTabs,
   UploadSignature,
   UserBusinessDetailsResponse,
   UserBusinessList,
 } from "types/business";
 import { CloudinaryConfig } from "config";
-import { isAuthenticated } from "api/auth";
 import { useSearchParams } from "react-router-dom";
 import { useFormik } from "formik";
 import BusinessProfile from "./BusinessProfile";
@@ -28,10 +28,12 @@ import Modal from "react-modal";
 import Button from "components/Button/Button";
 import { Country, State, City } from "../../../../../country-sate-city";
 import * as yup from "yup";
-import "./Register.scss";
 import { FILTERED_COUNTRY } from "utils/business-profile-utils";
 import { useBusinessCtx } from "context/BusinessCtx";
-import { isUrlValid } from "utils";
+import { cn, isUrlValid } from "utils";
+import { FlexRowCenter } from "components/Flex";
+import { useAuth } from "hooks/useAuth";
+import { LoaderComponent } from "components/Loader";
 
 const dayOrder: { [key: string]: number } = {
   Monday: 0,
@@ -54,20 +56,26 @@ const validationSchema = yup.object({
   city: yup.string().required("city is required!"),
 });
 
+const tabs = [
+  { name: "business-profile", title: "Business Profile" },
+  { name: "operations-info", title: "Operations Info" },
+] as { name: RegisterBusinessTabs; title: string }[];
+
 const RegisterBusiness = () => {
   const { setSocialLinksError } = useBusinessCtx();
+  const [pageLoading, setPageLoading] = useState(false);
   const authToken = localStorage.getItem(TOKEN_NAME) as string;
   const parsedToken: JwtPayload = authToken
     ? JSON.parse(atob(authToken?.split(".")[1]))
     : {};
   const tabsRef = useRef<HTMLDivElement>(null);
   const [activeTab, setActiveTab] = useState(0);
-  const [selectedTab, setSelectedTab] = useState(true);
+  const [selectedTab, setSelectedTab] =
+    useState<RegisterBusinessTabs>("business-profile");
   const [imageFile, setImageFile] = useState<File | null>();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [error, setError] = useState(false);
   const [successfulSubmission, setSuccessfulSubmission] = useState(false);
-  const [authenticated, setAuthenticated] = useState(false);
   const [searchParams] = useSearchParams();
   const [logoUrl, setLogoUrl] = useState<string | null>(null);
   const [deleteLogo, setDeleteLogo] = useState(false);
@@ -76,165 +84,170 @@ const RegisterBusiness = () => {
   const [city, setCity] = useState<IOption[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const businessId = searchParams.get("update");
+  const { userDetails, loading } = useAuth();
+
+  // socialMediaErrorEndRef
+  const socialErrorEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    isAuthenticated(authToken, parsedToken.id)
-      .then(() => {
-        setAuthenticated(true);
-        if (businessId) {
-          getUserBusinessProfileDetail(authToken, businessId).then((res) => {
-            const resData: UserBusinessDetailsResponse = res.data;
-            const businessDetailsData: UserBusinessList = resData.data.details;
+    if (userDetails && businessId) {
+      setPageLoading(true);
+      getUserBusinessProfileDetail(authToken, businessId)
+        .then((res) => {
+          setPageLoading(false);
+          const resData: UserBusinessDetailsResponse = res.data;
+          const businessDetailsData: UserBusinessList = resData.data.details;
 
-            console.log(businessDetailsData);
+          // Set Formik Values
+          formik.setFieldValue("businessName", businessDetailsData.name);
+          formik.setFieldValue(
+            "description",
+            formatInput(businessDetailsData.description)
+          );
+          formik.setFieldValue(
+            "businessCategory",
+            formatInput(businessDetailsData?.businessCategory.description)
+          );
+          formik.setFieldValue(
+            "country",
+            formatInput(businessDetailsData.country)
+          );
+          formik.setFieldValue(
+            "stateAndProvince",
+            formatInput(businessDetailsData.stateAndProvince)
+          );
+          formik.setFieldValue("city", formatInput(businessDetailsData.city));
+          formik.setFieldValue(
+            "street",
+            formatInput(businessDetailsData.street)
+          );
+          formik.setFieldValue(
+            "postalCode",
+            formatInput(businessDetailsData.postalCode)
+          );
+          formik.setFieldValue(
+            "instagramUrl",
+            formatInput(businessDetailsData.instagramUrl)
+          );
+          formik.setFieldValue(
+            "websiteUrl",
+            formatInput(businessDetailsData.websiteUrl)
+          );
+          formik.setFieldValue(
+            "linkedinUrl",
+            formatInput(businessDetailsData.linkedinUrl)
+          );
+          formik.setFieldValue(
+            "facebookUrl",
+            formatInput(businessDetailsData.facebookUrl)
+          );
+          formik.setFieldValue(
+            "phoneNumber",
+            formatInput(businessDetailsData.phoneNumber)
+          );
+          formik.setFieldValue(
+            "businessEmail",
+            formatInput(businessDetailsData.businessEmail)
+          );
+          formik.setFieldValue(
+            "openTime",
+            formatInput(businessDetailsData.openTime)
+          );
+          formik.setFieldValue(
+            "closeTime",
+            formatInput(businessDetailsData.closeTime)
+          );
+          formik.setFieldValue(
+            "daysOfOperation",
+            formatInput(businessDetailsData.daysOfOperation)
+          );
 
-            // Set Formik Values
-            formik.setFieldValue("businessName", businessDetailsData.name);
-            formik.setFieldValue(
-              "description",
-              formatInput(businessDetailsData.description)
-            );
-            formik.setFieldValue(
-              "businessCategory",
-              formatInput(businessDetailsData?.businessCategory.description)
-            );
-            formik.setFieldValue(
-              "country",
-              formatInput(businessDetailsData.country)
-            );
-            formik.setFieldValue(
-              "stateAndProvince",
-              formatInput(businessDetailsData.stateAndProvince)
-            );
-            formik.setFieldValue("city", formatInput(businessDetailsData.city));
-            formik.setFieldValue(
-              "street",
-              formatInput(businessDetailsData.street)
-            );
-            formik.setFieldValue(
-              "postalCode",
-              formatInput(businessDetailsData.postalCode)
-            );
-            formik.setFieldValue(
-              "instagramUrl",
-              formatInput(businessDetailsData.instagramUrl)
-            );
-            formik.setFieldValue(
-              "websiteUrl",
-              formatInput(businessDetailsData.websiteUrl)
-            );
-            formik.setFieldValue(
-              "linkedinUrl",
-              formatInput(businessDetailsData.linkedinUrl)
-            );
-            formik.setFieldValue(
-              "facebookUrl",
-              formatInput(businessDetailsData.facebookUrl)
-            );
-            formik.setFieldValue(
-              "phoneNumber",
-              formatInput(businessDetailsData.phoneNumber)
-            );
-            formik.setFieldValue(
-              "businessEmail",
-              formatInput(businessDetailsData.businessEmail)
-            );
-            formik.setFieldValue(
-              "openTime",
-              formatInput(businessDetailsData.openTime)
-            );
-            formik.setFieldValue(
-              "closeTime",
-              formatInput(businessDetailsData.closeTime)
-            );
-            formik.setFieldValue(
-              "daysOfOperation",
-              formatInput(businessDetailsData.daysOfOperation)
-            );
-
-            setLogoUrl(businessDetailsData.logoUrl);
-            setCountry(
-              Country.getAllCountries()
-                .map((ct) => {
-                  return { uuid: ct.isoCode, value: ct.name };
-                })
-                .filter((ct) => {
-                  return FILTERED_COUNTRY.includes(ct.value);
-                })
-            );
-
-            const selectedCountry = country?.find((ct) => {
-              return ct.value === businessDetailsData.country;
-            });
-            const states = State.getStatesOfCountry(selectedCountry?.uuid);
-            setStateAndProvince(
-              states.map((st) => {
-                return { uuid: st.isoCode, value: st.name };
+          setLogoUrl(businessDetailsData.logoUrl);
+          setCountry(
+            Country.getAllCountries()
+              .map((ct) => {
+                return { uuid: ct.isoCode, value: ct.name };
               })
-            );
-
-            const selectedState = stateAndProvince?.find((st) => {
-              return st.value === businessDetailsData.stateAndProvince;
-            });
-            const cities = City.getCitiesOfState(
-              selectedCountry?.uuid as string,
-              selectedState?.uuid as string
-            );
-            setCity(
-              cities.map((ct) => {
-                return { uuid: ct.name, value: ct.name };
+              .filter((ct) => {
+                return FILTERED_COUNTRY.includes(ct.value);
               })
-            );
+          );
 
-            // Cause a Re-render and refresh the formik setFields
-            switchTab(1);
-            setSelectedTab(false);
-            setTimeout(() => {
-              switchTab(0);
-              setSelectedTab(true);
-            }, 0.1);
+          const selectedCountry = country?.find((ct) => {
+            return ct.value === businessDetailsData.country;
           });
-        } else {
-          // Set Formik Values to null
-          formik.setFieldValue("businessName", "");
-          formik.setFieldValue("description", "");
-          formik.setFieldValue("businessCategory", "");
-          formik.setFieldValue("country", "");
-          formik.setFieldValue("stateAndProvince", "");
-          formik.setFieldValue("city", "");
-          formik.setFieldValue("street", "");
-          formik.setFieldValue("postalCode", "");
-          formik.setFieldValue("instagramUrl", "");
-          formik.setFieldValue("websiteUrl", "");
-          formik.setFieldValue("linkedinUrl", "");
-          formik.setFieldValue("facebookUrl", "");
-          formik.setFieldValue("phoneNumber", "");
-          formik.setFieldValue("businessEmail", "");
-          formik.setFieldValue("openTime", "");
-          formik.setFieldValue("closeTime", "");
-          formik.setFieldValue("daysOfOperation", []);
+          const states = State.getStatesOfCountry(selectedCountry?.uuid);
+          setStateAndProvince(
+            states.map((st) => {
+              return { uuid: st.isoCode, value: st.name };
+            })
+          );
+
+          const selectedState = stateAndProvince?.find((st) => {
+            return st.value === businessDetailsData.stateAndProvince;
+          });
+          const cities = City.getCitiesOfState(
+            selectedCountry?.uuid as string,
+            selectedState?.uuid as string
+          );
+          setCity(
+            cities.map((ct) => {
+              return { uuid: ct.name, value: ct.name };
+            })
+          );
 
           // Cause a Re-render and refresh the formik setFields
           switchTab(1);
-          setSelectedTab(false);
+          setSelectedTab("operations-info");
           setTimeout(() => {
             switchTab(0);
-            setSelectedTab(true);
+            setSelectedTab("business-profile");
           }, 0.1);
-        }
-      })
-      .catch((err) => {
-        setAuthenticated(false);
-        console.error(err);
-      });
-  }, [businessId]);
+        })
+        .catch((err: any) => {
+          setPageLoading(false);
+          console.log(err);
+        });
+    } else {
+      // Set Formik Values to null
+      formik.setFieldValue("businessName", "");
+      formik.setFieldValue("description", "");
+      formik.setFieldValue("businessCategory", "");
+      formik.setFieldValue("country", "");
+      formik.setFieldValue("stateAndProvince", "");
+      formik.setFieldValue("city", "");
+      formik.setFieldValue("street", "");
+      formik.setFieldValue("postalCode", "");
+      formik.setFieldValue("instagramUrl", "");
+      formik.setFieldValue("websiteUrl", "");
+      formik.setFieldValue("linkedinUrl", "");
+      formik.setFieldValue("facebookUrl", "");
+      formik.setFieldValue("phoneNumber", "");
+      formik.setFieldValue("businessEmail", "");
+      formik.setFieldValue("openTime", "");
+      formik.setFieldValue("closeTime", "");
+      formik.setFieldValue("daysOfOperation", []);
+
+      // Cause a Re-render and refresh the formik setFields
+      switchTab(1);
+      setTimeout(() => {
+        switchTab(0);
+        setSelectedTab("business-profile");
+      }, 0.1);
+    }
+  }, [businessId, userDetails]);
+
+  const scrollToBottom = () => {
+    socialErrorEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   const formatInput = (value: any) => {
     return value ? value : "";
   };
 
-  const switchTab = (tab: number) => {
+  const switchTab = (tab: number, selectedTab?: RegisterBusinessTabs) => {
     setActiveTab(tab);
+    selectedTab && setSelectedTab(selectedTab as any);
   };
 
   const orderDays = (values: any) => {
@@ -287,25 +300,26 @@ const RegisterBusiness = () => {
     if (payload.instagramUrl && !isUrlValid(payload.instagramUrl!)) {
       setSocialLinksError("Invalid Instagram URL");
       setIsLoading(false);
-      setActiveTab(0);
+      switchTab(0, "business-profile");
+      scrollToBottom();
       return;
     }
     if (payload.websiteUrl && !isUrlValid(payload.websiteUrl!)) {
       setSocialLinksError("Invalid Website URL");
       setIsLoading(false);
-      setActiveTab(0);
+      switchTab(0, "business-profile");
       return;
     }
     if (payload.linkedinUrl && !isUrlValid(payload.linkedinUrl!)) {
       setSocialLinksError("Invalid LinkedIn URL");
       setIsLoading(false);
-      setActiveTab(0);
+      switchTab(0, "business-profile");
       return;
     }
     if (payload.facebookUrl && !isUrlValid(payload.facebookUrl!)) {
       setSocialLinksError("Invalid Facebook URL");
       setIsLoading(false);
-      setActiveTab(0);
+      switchTab(0, "business-profile");
       return;
     }
 
@@ -413,12 +427,6 @@ const RegisterBusiness = () => {
     validationSchema: validationSchema,
   });
 
-  //Inline styles
-  const tabDisplayStyles = {
-    color: "#0E2D52",
-    borderBottom: "1px solid #0E2D52",
-  };
-
   const customStyles = {
     content: {
       top: "35%",
@@ -434,99 +442,101 @@ const RegisterBusiness = () => {
     overlay: { backgroundColor: "rgba(0, 0, 0, 0.5)" },
   };
 
+  if (loading || pageLoading) {
+    return <LoaderComponent />;
+  }
+
   return (
-    authenticated && (
-      <div ref={tabsRef} className="register">
-        <div className="tabs">
+    <div ref={tabsRef} className="w-full pt-[30px] px-[16px] pb-[150px] ">
+      <FlexRowCenter className="w-full h-full gap-10">
+        {tabs.map((tab, idx) => (
           <span
-            style={selectedTab ? tabDisplayStyles : {}}
+            key={idx}
+            className={cn(
+              "text-[16px] font-bold font-hnM cursor-pointer leading-[24px]",
+              selectedTab?.toLowerCase() === tab.name.toLowerCase()
+                ? "border-b-2 border-blue-200 text-blue-200"
+                : "text-blue-200/60"
+            )}
             onClick={() => {
-              switchTab(0);
-              setSelectedTab(true);
+              switchTab(idx);
+              setSelectedTab(tab.name as any);
             }}
           >
-            Business Profile
+            {tab.title}
           </span>
-          <span
-            style={!selectedTab ? tabDisplayStyles : {}}
-            onClick={() => {
-              switchTab(1);
-              setSelectedTab(false);
-            }}
-          >
-            Operations info
-          </span>
-        </div>
+        ))}
+      </FlexRowCenter>
 
-        {activeTab === 0 && !successfulSubmission && (
-          <BusinessProfile
-            formik={formik}
-            setActiveTab={setActiveTab}
-            setSelectedTab={setSelectedTab}
-            tabsRef={tabsRef}
-            setImageFile={setImageFile}
-            imageFile={imageFile}
-            businessId={businessId}
-            logoUrl={logoUrl}
-            deleteLogo={deleteLogo}
-            setDeleteLogo={setDeleteLogo}
-            country={country}
-            setCountry={setCountry}
-            setStateAndProvince={setStateAndProvince}
-            stateAndProvince={stateAndProvince}
-            city={city}
-            setCity={setCity}
-          />
-        )}
-        {activeTab === 1 && !successfulSubmission && (
-          <OperationInfo
-            formik={formik}
-            businessId={businessId}
-            isLoading={isLoading}
-          />
-        )}
+      {activeTab === 0 && !successfulSubmission && (
+        <BusinessProfile
+          formik={formik}
+          setActiveTab={setActiveTab}
+          setSelectedTab={setSelectedTab}
+          tabsRef={tabsRef}
+          setImageFile={setImageFile}
+          imageFile={imageFile}
+          businessId={businessId}
+          logoUrl={logoUrl}
+          deleteLogo={deleteLogo}
+          setDeleteLogo={setDeleteLogo}
+          country={country}
+          setCountry={setCountry}
+          setStateAndProvince={setStateAndProvince}
+          stateAndProvince={stateAndProvince}
+          city={city}
+          setCity={setCity}
+          socialEndRef={socialErrorEndRef}
+        />
+      )}
+      {activeTab === 1 && !successfulSubmission && (
+        <OperationInfo
+          formik={formik}
+          businessId={businessId}
+          isLoading={isLoading}
+        />
+      )}
 
-        <Modal
-          isOpen={isModalOpen}
-          onRequestClose={closeModal}
-          contentLabel="Success Modal"
-          style={customStyles}
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={closeModal}
+        contentLabel="Success Modal"
+        style={customStyles}
+      >
+        <div
+          className="modal"
+          style={{ display: "block", textAlign: "center" }}
         >
-          <div
-            className="modal"
-            style={{ display: "block", textAlign: "center" }}
+          <h2
+            style={{
+              fontSize: "16px",
+              fontWeight: "700",
+              marginBottom: "10px",
+            }}
           >
-            <h2
-              style={{
-                fontSize: "16px",
-                fontWeight: "700",
-                marginBottom: "10px",
-              }}
-            >
-              {businessId ? "Update Succesful" : "You're in!"}
-            </h2>
-            <p
-              style={{
-                fontSize: "12px",
-                fontWeight: "400",
-                marginBottom: "20px",
-              }}
-            >
-              {businessId
-                ? "You have successfully updated your business account."
-                : "You have successfully created your business account."}
-            </p>
-            <Button
-              type="submit"
-              label="Click to Continue"
-              variant="primary"
-              size="lg"
-              to="/"
-            />
-          </div>
-        </Modal>
-      </div>
-    )
+            {businessId ? "Update Succesful" : "You're in!"}
+          </h2>
+          <p
+            style={{
+              fontSize: "12px",
+              fontWeight: "400",
+              marginBottom: "20px",
+            }}
+          >
+            {businessId
+              ? "You have successfully updated your business account."
+              : "You have successfully created your business account."}
+          </p>
+          <Button
+            type="submit"
+            label="Click to Continue"
+            variant="primary"
+            size="lg"
+            to="/"
+          />
+        </div>
+      </Modal>
+    </div>
   );
 };
 

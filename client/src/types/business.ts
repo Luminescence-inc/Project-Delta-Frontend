@@ -156,3 +156,5 @@ export enum BusinessFilterType {
   STATE = "stateAndProvince",
   CITY = "city",
 }
+
+export type RegisterBusinessTabs = "business-profile" | "operations-info";

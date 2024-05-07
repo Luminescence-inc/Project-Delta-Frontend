@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
-import "./style.scss";
 import ChevronDown from "assets/icons/chevron-down.svg?react";
 import { cn } from "utils";
 import { BusinessFilterType, MultiSearchType } from "types/business";
+import { FlexColStart, FlexRowStart } from "components/Flex";
 
 interface MultiSearchProps {
   rightIcon?: React.ReactNode;
@@ -91,44 +91,45 @@ export default function MultiSearch({
       : null;
 
   return (
-    <div className="ntw w-full multisearch-comp flex flex-col items-start justify-start gap-2 relative pb-20">
-      <label className="ntw text-14 font-normal font-hn-light leading-19">
+    <FlexColStart className="w-full gap-2 relative pb-[20px]">
+      <label className="text-[14px] font-normal font-inter leading-[19px]">
         {label}
       </label>
       <button
         className={cn(
-          "ntw trigger w-full h-46 flex flex-row items-center justify-start p-16 rounded-5 cursor-pointer gap-10",
-          disableTrigger ? "disabled" : ""
+          "w-full h-[46px] flex flex-row items-center justify-start p-[16px] rounded-[5px] cursor-pointer gap-[10px] border-[1px] border-solid border-white-200 bg-none",
+          disableTrigger ? "bg-white-106 cursor-not-allowed" : ""
         )}
         onClick={() => {
           setActivePanel &&
             setActivePanel(activePanel.length > 0 ? "" : dataType!);
           onClick && onClick();
         }}
-        // disabled={disableTrigger}
       >
         {leftIcon ?? null}
-        <div className="ntw w-full flex items-start justify-start">
+        <FlexRowStart className="w-full">
           <span
             className={cn(
-              "ntw text-10 leading-11 font-normal font-hn-light tracking-2 placeholder",
-              typeof activeSelectedItem?.uuid !== "undefined" ? "value" : ""
+              "text-[10px] leading-[11px] font-semibold font-inter tracking-[1px] text-dark-104",
+              typeof activeSelectedItem?.uuid !== "undefined"
+                ? "text-dark-100"
+                : ""
             )}
           >
             {allowedDataType.includes(dataType!) && selectedListData
               ? activeSelectedItem?.uuid
               : placeholder ?? "Search..."}
           </span>
-        </div>
+        </FlexRowStart>
         {rightIcon ?? null}
       </button>
 
       {/* floating panel */}
       {!disableTrigger && (
-        <div
+        <FlexColStart
           className={cn(
-            "ntw w-full h-auto floating-panel flex flex-col items-start justify-start absolute top-90 rounded-10",
-            activePanel === dataType ? "py-20 px-20" : ""
+            "w-full h-auto absolute top-[90px] rounded-[10px] drop-shadow-lg shadow-lg bg-white-100 z-[100] overflow-hidden",
+            activePanel === dataType ? "py-[20px] px-[20px]" : ""
           )}
           style={{
             maxHeight: "250px",
@@ -138,20 +139,19 @@ export default function MultiSearch({
         >
           <input
             type="text"
-            className="ntw w-full px-3 py-2 outline-none border-none text-15"
+            className="w-full px-[3px] py-[2px] text-[15px] border-b-[1px] bordcer-b-solid border-b-white-40 outline-none"
             placeholder="Search..."
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
           />
-          <br />
           {/* lists */}
-          <div className="ntw w-full flex flex-col items-start justify-start gap-10">
+          <FlexColStart className="w-full flex flex-col items-start justify-start gap-[5px]">
             {type === "multi"
               ? filterData && filterData.length > 0
                 ? filterData.map((listData) => (
                     <button
-                      className="ntw flex items-center justify-start gap-10 outline-none border-none bg-none cursor-pointer"
                       key={listData.uuid}
+                      className="flex items-center justify-start gap-[10px] outline-none border-none bg-none cursor-pointer"
                       onClick={() => {
                         onChange?.({
                           uuid: listData.uuid,
@@ -177,7 +177,7 @@ export default function MultiSearch({
                           });
                         }}
                       />
-                      <span className="ntw text-15 font-normal">
+                      <span className="text-[15px] font-normal text-white-400 font-inter">
                         {listData.value}
                       </span>
                     </button>
@@ -188,10 +188,10 @@ export default function MultiSearch({
                   <button
                     key={listData.uuid}
                     className={cn(
-                      "ntw single-list w-full flex items-center justify-start gap-2 border-none outline-none px-10 py-5 rounded-5 cursor-pointer",
+                      "w-full flex items-center justify-start gap-[2px] border-none outline-none px-[10px] py-[5px] rounded-[5px] cursor-pointer",
                       getActiveList(listData.uuid!, dataType!) === listData.uuid
-                        ? "active"
-                        : ""
+                        ? "bg-blue-200 text-white-100"
+                        : "text-white-400"
                     )}
                     onClick={() => {
                       // close panel
@@ -203,15 +203,15 @@ export default function MultiSearch({
                       setActivePanel("");
                     }}
                   >
-                    <span className="ntw text-15 font-normal font-hn-medium mt-2">
+                    <span className="text-[15px] font-medium font-inter mt-[2px]">
                       {listData.value}
                     </span>
                   </button>
                 ))
               : null}
-          </div>
-        </div>
+          </FlexColStart>
+        </FlexColStart>
       )}
-    </div>
+    </FlexColStart>
   );
 }

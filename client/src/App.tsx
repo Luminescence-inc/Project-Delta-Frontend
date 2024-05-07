@@ -1,6 +1,6 @@
 /** @format */
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import Footer from "components/Footer/Footer";
 import Navbar from "components/Navbar/Navbar";
@@ -20,21 +20,39 @@ import AboutUs from "pages/AboutUs/AboutUs";
 import ContactSupport from "pages/ContactSupport/ContactSupport";
 import BusinessContextProvider from "context/BusinessCtx";
 import ExploreBusiness from "pages/ExploreBusiness";
-import "./index.css";
 import BusinessDetails from "pages/BusinessDetails";
 import { DataCtxProvider } from "context/DataCtx";
 import { WithoutAuth } from "components/ProtectedRoutes/withoutAuth";
 import { WithAuth } from "components/ProtectedRoutes/withAuth";
+import DefaultWebView from "components/DefaultWebView/DefaultWebView";
 
 function App() {
   const { pathname } = useLocation();
+  const [width, setWidth] = useState(window.innerWidth);
+
+  const MobileConstraint = 500;
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
 
+  useEffect(() => {
+    window.addEventListener("resize", () => {
+      const width = window.innerWidth;
+      setWidth(width);
+    });
+
+    return () => {
+      window.removeEventListener("resize", () => {});
+    };
+  }, [width]);
+
+  if (width > MobileConstraint) {
+    return <DefaultWebView />;
+  }
+
   return (
-    <div id="app-container">
+    <div id="app-container" className={`font-hnM`}>
       <DataCtxProvider>
         <Navbar />
         <BusinessContextProvider>

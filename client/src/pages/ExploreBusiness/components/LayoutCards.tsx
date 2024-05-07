@@ -6,11 +6,9 @@ import {
   FlexRowStart,
   FlexRowStartCenter,
 } from "components/Flex";
-import defaultBgImg from "assets/images/default-img.jpeg";
 import MapPin from "assets/icons/location-marker.svg?react";
 import Phone from "assets/icons/phone.svg?react";
 import { cn, determineBusOpTime } from "utils";
-import "../style.scss";
 import { useNavigate } from "react-router-dom";
 
 interface BusinessCardProps {
@@ -48,43 +46,39 @@ export const ColLayoutCard = ({
     <CardNavigateWrapper id={id}>
       <CardWrapper
         key={_key}
-        style={{ maxHeight: "260px" }}
-        className="px-5 py-5"
+        className="w-full max-h-[260px] px-[5px] py-[5px]"
       >
         <div
-          className="ntw business-card-image w-full h-auto rounded-10"
+          className="w-full h-auto rounded-[10px]"
           style={{
             background: "#e2efff",
-            backgroundImage: `url(${image ?? defaultBgImg})`,
+            backgroundImage: `url(${
+              image ?? "/assets/images/default-img.jpeg"
+            })`,
             backgroundSize: "100% 100%",
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
             height: "137px",
           }}
         ></div>
-        <FlexColStart className="w-full px-4 py-2 gap-0">
-          <h2 className="ntw text-15 font-bold font-hn-bold business-name leading-18 mt-10">
+        <FlexColStart className="w-full px-[4px] py-[2px] gap-0">
+          <h2 className="text-[15px] font-bold font-inter text-blue-200 leading-[18px] mt-[10px]">
             {name.length > NAME_CONSTRAINT
               ? name.slice(0, NAME_CONSTRAINT) + "..."
               : name}
           </h2>
 
           {/* categories */}
-          <FlexRowCenterBtw className="w-auto gap-2">
+          <FlexRowCenterBtw className="gap-[2px] mt-1">
             {categories &&
               categories.map((c) => {
                 return (
-                  <FlexRowCenter className="gap-2" key={c}>
-                    <span className="ntw text-11 leading-13 font-normal font-hn-light category-name">
+                  <FlexRowCenter className="gap-[2px]" key={c}>
+                    <span className="text-[11px] leading-[13px] font-light font-inter text-gray-103">
                       {c}
                     </span>
                     {categories[categories.length - 1] !== c && (
-                      <span
-                        className="ntw h-3 w-3 rounded-100 text-6"
-                        style={{
-                          background: "#17BEBB",
-                        }}
-                      ></span>
+                      <span className="h-[3px] w-[3px] rounded-full text-[6px] bg-teal-100"></span>
                     )}
                   </FlexRowCenter>
                 );
@@ -92,49 +86,29 @@ export const ColLayoutCard = ({
           </FlexRowCenterBtw>
 
           {/* location */}
-          <FlexRowStartCenter className="w-auto gap-5 h-16 py-15">
+          <FlexRowStartCenter className="gap-[5px] h-[16px] py-[15px]">
             <MapPin />
-            <span className="ntw text-13 font-normal font-hn-light location-text mt-3">
+            <span className="text-[13px] font-normal font-inter text-blue-200 mt-[3px]">
               {location}
             </span>
           </FlexRowStartCenter>
 
           {/* opening time */}
           <FlexRowCenterBtw className="w-full">
-            <FlexRowStartCenter className="w-auto gap-10">
+            <FlexRowStartCenter className="gap-[10px]">
               {hasBusinessClosed && hasBusinessClosed.isOpened ? (
                 <>
-                  <span
-                    className="ntw text-11 font-normal font-hn-light leading-13 category-name"
-                    style={{
-                      color: "#17BEBB",
-                    }}
-                  >
+                  <span className="text-[11px] font-normal font-inter leading-[13px] text-teal-100">
                     Open
                   </span>
-                  <span
-                    className="ntw h-3 w-3 rounded-100 text-6"
-                    style={{
-                      background: "#000",
-                    }}
-                  ></span>
+                  <span className="h-[3px] w-[3px] rounded-full text-[6px] bg-dark-105"></span>
 
-                  <span
-                    className="ntw text-11 font-normal font-hn-light leading-13"
-                    style={{
-                      color: "#000",
-                    }}
-                  >
+                  <span className="text-[11px] font-normal font-inter leading-[13px]">
                     Closes {hasBusinessClosed.closingTime}
                   </span>
                 </>
               ) : (
-                <span
-                  className="ntw text-11 font-normal font-hn-light leading-13 category-name"
-                  style={{
-                    color: "#FF9F9F",
-                  }}
-                >
+                <span className="text-[11px] font-normal font-inter leading-[13px] text-red-301">
                   Closed
                 </span>
               )}
@@ -142,13 +116,10 @@ export const ColLayoutCard = ({
 
             <a
               href={`tel:${phone}`}
-              className="ntw flex flex-row items-center justify-center businesss-call-line w-auto w-81 h-25 px-5 rounded-100 gap-5 text-12 font-bold font-hn-light leading-14"
-              style={{
-                borderRadius: "100px",
-              }}
+              className="flex flex-row items-center justify-center text-blue-200 bg-blue-202 w-[81px] h-[25px] px-[5px] rounded-full gap-[5px] text-[12px]"
             >
               <Phone />
-              <span className="ntw text-12 font-bold font-hn-light leading-14 mt-2">
+              <span className="text-[12px] font-medium font-inter leading-[14px] mt-[2px]">
                 Call me
               </span>
             </a>
@@ -165,35 +136,32 @@ export const RowLayoutCard = ({
   location,
   daysOfOps,
   phone,
-  _key,
   image,
   id,
 }: BusinessCardProps) => {
   const hasBusinessClosed = daysOfOps ? determineBusOpTime(daysOfOps) : null;
+
   return (
     <CardNavigateWrapper id={id}>
-      <CardWrapper
-        key={_key}
-        style={{
-          maxHeight: "108px",
-        }}
-      >
-        <FlexRowStart className="w-full px-5 py-5">
+      <CardWrapper className="w-full max-h-[108px]">
+        <FlexRowStart className="w-full px-[5px] py-[5px]">
           <div
-            className="ntw w-full business-card-image rounded-10"
+            className="w-full h-auto rounded-[10px]"
             style={{
               width: "64px",
               minWidth: "64px",
               background: "#e2efff",
-              backgroundImage: `url(${image ?? defaultBgImg})`,
+              backgroundImage: `url(${
+                image ?? "/assets/images/default-img.jpeg"
+              })`,
               backgroundSize: "cover",
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",
               height: "95px",
             }}
           ></div>
-          <FlexColStart className="w-full px-5 gap-0">
-            <h2 className="ntw text-15 font-bold font-hn-bold business-name leading-18">
+          <FlexColStart className="w-full px-[5px] gap-0">
+            <h2 className="text-[15px] font-bold font-inter text-blue-200 leading-[18px] mt-[10px]">
               {name.length > NAME_CONSTRAINT
                 ? name.slice(0, NAME_CONSTRAINT) + "..."
                 : name}
@@ -204,19 +172,12 @@ export const RowLayoutCard = ({
               {categories &&
                 categories.map((c) => {
                   return (
-                    <FlexRowCenter className="gap-2" key={c}>
-                      <span className="ntw text-11 leading-13 font-normal font-hn-light category-name">
+                    <FlexRowCenter className="gap-[2px]" key={c}>
+                      <span className="text-[11px] leading-[13px] font-light font-inter text-gray-103">
                         {c}
                       </span>
                       {categories[categories.length - 1] !== c && (
-                        <span
-                          className="ntw text-10"
-                          style={{
-                            color: "#17BEBB",
-                          }}
-                        >
-                          ⏺
-                        </span>
+                        <span className="h-[3px] w-[3px] rounded-full text-[6px] bg-teal-100"></span>
                       )}
                     </FlexRowCenter>
                   );
@@ -224,49 +185,29 @@ export const RowLayoutCard = ({
             </FlexRowCenterBtw>
 
             {/* location */}
-            <FlexRowCenter className="w-auto gap-5 h-16 mt-15 pb-10">
+            <FlexRowStartCenter className="gap-[5px] h-[16px] py-[15px]">
               <MapPin />
-              <span className="ntw text-13 font-normal font-hn-light location-text mt-2">
+              <span className="text-[13px] font-normal font-inter text-blue-200 mt-[3px]">
                 {location}
               </span>
-            </FlexRowCenter>
+            </FlexRowStartCenter>
 
             {/* opening time */}
             <FlexRowCenterBtw className="w-full">
-              <FlexRowStartCenter className="w-auto gap-10">
+              <FlexRowStartCenter className="w-auto gap-[10px]">
                 {hasBusinessClosed && hasBusinessClosed.isOpened ? (
                   <>
-                    <span
-                      className="ntw text-11 font-normal font-hn-light leading-13 category-name"
-                      style={{
-                        color: "#17BEBB",
-                      }}
-                    >
+                    <span className="text-[11px] font-normal font-inter leading-[13px] text-teal-100">
                       Open
                     </span>
-                    <span
-                      className="ntw h-3 w-3 rounded-100 text-6"
-                      style={{
-                        background: "#17BEBB",
-                      }}
-                    ></span>
+                    <span className="h-[3px] w-[3px] rounded-full text-[6px] bg-dark-105"></span>
 
-                    <span
-                      className="ntw text-11 font-normal font-hn-light leading-13"
-                      style={{
-                        color: "#000",
-                      }}
-                    >
+                    <span className="text-[11px] font-normal font-inter leading-[13px]">
                       Closes {hasBusinessClosed.closingTime}
                     </span>
                   </>
                 ) : (
-                  <span
-                    className="ntw text-11 font-normal font-hn-light leading-13 category-name"
-                    style={{
-                      color: "#FF9F9F",
-                    }}
-                  >
+                  <span className="text-[11px] font-normal font-inter leading-[13px] text-red-301">
                     Closed
                   </span>
                 )}
@@ -275,10 +216,7 @@ export const RowLayoutCard = ({
               <FlexRowEnd className="w-auto">
                 <a
                   href={`tel:${phone}`}
-                  className="ntw flex flex-row items-center justify-center businesss-call-line w-auto w-35 h-25 px-5 py-10 rounded-100 gap-5"
-                  style={{
-                    borderRadius: "100px",
-                  }}
+                  className="flex flex-row items-center justify-center text-blue-200 bg-blue-202 w-[35px] h-[25px] px-[5px] rounded-full gap-[5px] text-[12px]"
                 >
                   <Phone />
                 </a>
@@ -300,7 +238,7 @@ interface CWProps {
 const CardWrapper = ({ children, style, className, ...props }: CWProps) => {
   return (
     <div
-      className={cn("ntw w-full rounded-10 business-layout-card", className)}
+      className={cn("w-full rounded-[10px] shadow-lg bg-white-100", className)}
       style={{
         background: "#FFFFFF",
         ...style,
@@ -322,7 +260,7 @@ const CardNavigateWrapper = ({
   const navigate = useNavigate();
   return (
     <button
-      className="ntw w-full outline-none border-none bg-none cursor-pointer"
+      className="w-full outline-none border-none bg-none cursor-pointer"
       key={id}
       onClick={(e) => {
         const target =

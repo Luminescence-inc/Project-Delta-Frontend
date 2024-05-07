@@ -3,12 +3,10 @@ name: React CI
 on:
   push:
     branches:
-      - main
-      - dev
+      - feature/TEC-77/dev-tailwind-css
   pull_request:
     branches:
-      - main
-      - dev
+      - feature/TEC-77/dev-tailwind-css
 
 jobs:
   build:
@@ -44,9 +42,9 @@ jobs:
           if [ "${{ github.ref }}" = "refs/heads/main" ]; then
             echo "Deploying to production environment..."
             aws s3 sync ./client/dist s3://www.bizconnect24.com
-          elif [ "${{ github.ref }}" = "refs/heads/dev" ]; then
+          elif [ "${{ github.ref }}" = "refs/heads/feature/TEC-77/dev-tailwind-css" ]; then
             echo "Deploying to development environment..."
-            aws s3 sync ./client/dist s3://devmain.bizconnect24.com
+            aws s3 sync ./client/dist s3://tailwindtesting.bizconnect24.com
           else
             echo "Not deploying to any environment."
           fi

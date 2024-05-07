@@ -1,7 +1,7 @@
 /** @format */
 
-import React from 'react';
-import './Input.scss';
+import { FlexColStart, FlexRowCenter } from "components/Flex";
+import React from "react";
 
 interface IInput {
   label?: string;
@@ -11,19 +11,40 @@ interface IInput {
   name?: string;
   value?: string;
   disabled?: boolean;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>)=> void
-  onBlur?: (e: React.FocusEvent<any, Element>)=> void
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (e: React.FocusEvent<any, Element>) => void;
 }
 
-const Input = ({ label, type, icon, placeholder, name, value, disabled, onChange, onBlur }: IInput) => {
+const Input = ({
+  label,
+  type,
+  icon,
+  placeholder,
+  name,
+  value,
+  disabled,
+  onChange,
+  onBlur,
+}: IInput) => {
   return (
-    <div className='form-group'>
-      <label htmlFor=''>{label}</label>
-      <div className='input-wrapper'>
-        <input name={name} type={type} placeholder={placeholder} value={value} onChange={onChange} onBlur={onBlur} disabled={disabled?disabled:false} />
-        {icon}
-      </div>
-    </div>
+    <FlexColStart className="w-full gap-[4px] text-left pb-5">
+      <label className="text-[14px] font-semibold font-inter text-dark-100/60">
+        {label}
+      </label>
+      <FlexRowCenter className="w-full relative">
+        <input
+          name={name}
+          type={type}
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+          onBlur={onBlur}
+          disabled={disabled ? disabled : false}
+          className="w-full h-[46px] border-[1px] border-solid border-dark-103 tracking-[2px] text-[12px] text-blue-200 p-[16px] rounded-[5px] placeholder:text-dark-104"
+        />
+        <span className="absolute top-[13.5px] right-[20px]">{icon}</span>
+      </FlexRowCenter>
+    </FlexColStart>
   );
 };
 
