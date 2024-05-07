@@ -1,7 +1,7 @@
 /** @format */
 
 import { useRef, useState, useEffect } from "react";
-import { ArrowUp, ChevronDown, X } from "@components/icons";
+import { ChevronDown, X } from "@components/icons";
 import "./Input.scss";
 import { FormikProps } from "formik";
 import {

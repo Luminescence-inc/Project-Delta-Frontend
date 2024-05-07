@@ -1,5 +1,10 @@
-import { LogInData, ResetPasswordData, SignUpData, updateUserData } from "types/auth";
-import { bizConnectAPI } from "../config";
+import {
+  LogInData,
+  ResetPasswordData,
+  SignUpData,
+  updateUserData,
+} from "@/types/auth";
+import { bizConnectAPI } from "@/config";
 import axios from "axios";
 
 export const registerUser = (data: SignUpData) => {
