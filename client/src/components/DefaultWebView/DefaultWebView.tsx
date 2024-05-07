@@ -15,9 +15,9 @@ const DefaultWebView = ({}: IDefaultWebViewProps) => {
             style={{ display: "flex", justifyContent: "center" }}
           >
             <img
-              src={"/assets/icons/logo-header-icon.svg"}
+              src={"/assets/images/logo/logo-header.svg"}
               alt="logo"
-              className="w-[50px] h-[50px] object-contain"
+              className="w-[150px] object-contain"
             />
           </div>
           <FlexColCenter className="w-full p-5 text-center">
