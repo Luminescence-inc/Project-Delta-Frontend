@@ -1,7 +1,7 @@
 /** @format */
 
 import { useRef, useState, useEffect } from "react";
-import { ArrowUp, X } from "@components/icons";
+import { ArrowUp, ChevronDown, X } from "@components/icons";
 import "./Input.scss";
 import { FormikProps } from "formik";
 import {
@@ -84,13 +84,9 @@ const Select = ({ label, options, name, formikValue, formik }: ISelect) => {
               // disable suggestions dropdown
               autoComplete="new"
             />
-            <ArrowUp
-              className={cn(
-                "absolute top-[15px] right-[20px]",
-                "-rotate-[180deg]"
-              )}
-              width={14}
-              height={14}
+            <ChevronDown
+              className={cn("absolute top-[15px] right-[20px]")}
+              size={20}
             />
           </FlexRowCenter>
         </button>
