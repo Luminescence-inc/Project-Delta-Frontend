@@ -114,20 +114,20 @@ function RenderSocialIcons({ name }: { name: string }) {
   switch (name) {
     case "instagram":
       icon = (
-        <img className="w-[16px]" src={"/assets/images/logos/ig-logo.svg"} />
+        <img className="w-[16px]" src={"/assets/images/logo/ig-logo.svg"} />
       );
       break;
     case "facebook":
       icon = (
         <img
           className="w-[10px]"
-          src={"/assets/images/logos/facebook-logo.svg"}
+          src={"/assets/images/logo/facebook-logo.svg"}
         />
       );
       break;
     case "twitter":
       icon = (
-        <img className="w-[16px]" src={"/assets/images/logos/x-logo.svg"} />
+        <img className="w-[16px]" src={"/assets/images/logo/x-logo.svg"} />
       );
       break;
     case "website":

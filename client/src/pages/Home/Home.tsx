@@ -174,7 +174,7 @@ const Home = () => {
 
         <div className="w-full mt-[40px] pb-20">
           <img
-            src={"/assets/icons/world-map.svg"}
+            src={"/assets/images/world-map.svg"}
             alt="world map"
             className="w-full h-auto"
             style={{ height: "auto", width: "100%" }}
@@ -322,7 +322,7 @@ const Home = () => {
           className="w-full h-[497px]"
           style={{
             marginTop: "35px",
-            backgroundImage: `url("/assets/icons/join-network-bg.svg")`,
+            backgroundImage: `url("/assets/images/join-network-bg.svg")`,
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}

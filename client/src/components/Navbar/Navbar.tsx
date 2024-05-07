@@ -130,7 +130,7 @@ const Navbar = () => {
             {!menuOpen && (
               <FlexRowStartBtw className="w-full bg-white-100 mt-[24px] rounded-[5px] px-[27px] py-[18px] shadow-sm">
                 <Link to="/">
-                  <img src={"/assets/images/logos/logo-header.svg"} />
+                  <img src={"/assets/images/logo/logo-header.svg"} />
                 </Link>
                 <Menu
                   size={30}
@@ -147,7 +147,7 @@ const Navbar = () => {
             <div className="w-full h-full fixed md:absolute top-0 left-0 shadow-md px-[32px] py-[4em] bg-white-100 z-[999]">
               <img
                 className="w-[180px]"
-                src={"/assets/images/logos/logo-header.svg"}
+                src={"/assets/images/logo/logo-header.svg"}
               />
               <Cancel
                 className="absolute top-[4em] right-[24px] cursor-pointer"
