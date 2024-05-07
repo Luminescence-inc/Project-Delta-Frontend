@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { FlexColCenter, FlexColStart, FlexRowCenter } from "@components/Flex";
 import ErrorComponent from "../ErrorComponent";
+import toast from "react-hot-toast";
 
 const Email = () => {
   const navigate = useNavigate();
@@ -32,10 +33,15 @@ const Email = () => {
         // }
         // setError(true);
 
+        // replace { or } to ''
+        const msg =
+          err.response.data.message?.desc.replace(/{|}/g, "") ??
+          "Error occured while reseting link";
         setIsLoading(false);
-        setErrorMessage("Error occured while reseting link");
+        setErrorMessage(msg);
+        toast.error(msg);
 
-        console.error(err);
+        console.error(msg);
         setError(true);
       });
 
@@ -54,9 +60,11 @@ const Email = () => {
         // window.location.reload();
         setIsLoading(false);
         setSentEmail(true);
+        toast.success("Password reset link sent to email");
       }
     } catch (error) {
       console.error(error);
+      toast.error("Error occured while reseting link");
       setIsLoading(false);
       setError(true);
       setErrorMessage("Error occured while reseting link");
@@ -91,7 +99,12 @@ const Email = () => {
                 value={formik.values.email}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                icon={<Mail className="input-icon" />}
+                icon={
+                  <Mail
+                    strokeWidth={1}
+                    className="rounded-full stroke-white-100 fill-blue-200"
+                  />
+                }
                 placeholder="Enter Email Address"
               />
 
