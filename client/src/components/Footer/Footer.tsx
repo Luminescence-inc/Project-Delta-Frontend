@@ -44,7 +44,7 @@ const Footer = () => {
           <Link to="/">
             <img
               className="w-[200px]"
-              src={"/assets/images/logos/logo-header.svg"}
+              src={"/assets/images/logo/logo-header.svg"}
             />
           </Link>
           <p className="text-[14px] font-normal font-inter py-[20px] text-blue-200 pb-[30px]">
@@ -98,7 +98,7 @@ function RenderSocialIcons({ name }: { name: string }) {
       icon = (
         <img
           className={cn("w-[20px]", defaultStyle)}
-          src={"/assets/images/logos/ig-logo.svg"}
+          src={"/assets/images/logo/ig-logo.svg"}
         />
       );
       break;
@@ -106,7 +106,7 @@ function RenderSocialIcons({ name }: { name: string }) {
       icon = (
         <img
           className={cn("w-[14px]", defaultStyle)}
-          src={"/assets/images/logos/facebook-logo.svg"}
+          src={"/assets/images/logo/facebook-logo.svg"}
         />
       );
       break;
@@ -114,7 +114,7 @@ function RenderSocialIcons({ name }: { name: string }) {
       icon = (
         <img
           className={cn("w-[20px]", defaultStyle)}
-          src={"/assets/images/logos/x-logo.svg"}
+          src={"/assets/images/logo/x-logo.svg"}
         />
       );
       break;
