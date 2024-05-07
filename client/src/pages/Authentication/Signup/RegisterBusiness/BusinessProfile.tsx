@@ -11,9 +11,6 @@ import {
 } from "@/types/business";
 import { Country, State, City } from "../../../../../country-sate-city";
 import { FILE_TYPES, FILTERED_COUNTRY } from "@/utils/business-profile-utils";
-// import ContactIcon from "assets/icons/contact-icon.svg?react";
-// import UploadIcon from "assets/icons/upload-logo.svg?react";
-// import CancelIcon from "assets/icons/cancel-select-icon.svg?react";
 import {
   Instagram,
   Facebook,
@@ -26,7 +23,6 @@ import Input from "@/components/Input/Input";
 import Button from "@/components/ui/button";
 import Select from "@/components/Input/Select";
 import { CloudinaryConfig } from "@/config";
-import { useBusinessCtx } from "@/context/BusinessCtx";
 import {
   FlexColStart,
   FlexColStartCenter,
@@ -81,9 +77,7 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
   stateAndProvince,
   city,
   setCity,
-  socialEndRef,
 }) => {
-  const { socialLinksError } = useBusinessCtx();
   const [businessCategory, setBusinessCategory] = useState<IOption[]>();
   const [error, setError] = useState<Boolean>(false);
   const fileInputRef = useRef<HTMLInputElement>(null);

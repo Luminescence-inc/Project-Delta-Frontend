@@ -11,7 +11,7 @@ import {
   LogInResponse,
 } from "@/types/auth";
 import { registerUser } from "@/api/auth";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import {
@@ -46,6 +46,11 @@ const Signup = () => {
   const [showConfirmPassword, setShowConirmPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState<String | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    // remove this during code cleanup
+    setShowConirmPassword(false);
+  }, []);
 
   const onSubmit = async (values: SignUpData) => {
     const { confirmPassword, ...data } = values;
