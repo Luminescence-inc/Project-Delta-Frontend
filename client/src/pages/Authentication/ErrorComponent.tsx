@@ -1,3 +1,5 @@
+import { FlexColStart } from "components/Flex";
+
 interface IErrorComponent {
   value: string;
   _ref?: React.RefObject<HTMLDivElement>;
@@ -5,9 +7,11 @@ interface IErrorComponent {
 
 const ErrorComponent = ({ value, _ref }: IErrorComponent) => {
   return (
-    <span ref={_ref} className="text-red-305 flex text-[13px]">
-      {value}
-    </span>
+    <FlexColStart className="w-full">
+      <span ref={_ref} className="text-red-305 text-[13px]">
+        {value}
+      </span>
+    </FlexColStart>
   );
 };
 

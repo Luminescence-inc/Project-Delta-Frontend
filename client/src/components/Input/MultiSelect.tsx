@@ -75,7 +75,9 @@ const MultiSelect = ({
   return (
     <>
       <FlexColStart className="w-full">
-        <label htmlFor="">{label}</label>
+        <label className="text-[14px] font-inter font-semibold text-dark-100/60">
+          {label}
+        </label>
         <FlexRowCenter className="w-full relative">
           <input
             className={cn(

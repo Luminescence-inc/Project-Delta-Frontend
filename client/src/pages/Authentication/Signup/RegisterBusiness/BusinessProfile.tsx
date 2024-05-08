@@ -212,8 +212,8 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
           placeholder="Enter Business Name"
         />
 
-        <FlexColStart className="w-full ">
-          <label className="text-[14px] font-extrabold font-hnL text-dark-100">
+        <FlexColStart className="w-full mt-5 mb-3">
+          <label className="text-[14px] font-semibold font-inter text-dark-100/60">
             Describe your business
           </label>
           <textarea
@@ -329,7 +329,13 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
 
         <div className="w-full relative font-inter border-[1px] border-white-200 rounded-[5px] mt-[10px] ">
           <FlexRowCenter className="w-full p-[16px] ">
-            <span className=" flex-1 flex items-center justify-center text-blue-200 text-[10px] font-semibold font-inter leading-[14px] ">
+            <span
+              onClick={(e) => {
+                e.stopPropagation();
+                fileInputRef.current?.click();
+              }}
+              className="cursor-pointer flex items-center justify-center text-blue-200 text-[10px] font-semibold font-inter leading-[14px] "
+            >
               {imageFile ? imageFile.name : "Upload Your Logo (jpg/jpeg/png)"}
               <UploadIcon
                 onClick={(e) => {

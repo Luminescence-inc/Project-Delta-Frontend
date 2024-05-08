@@ -92,8 +92,12 @@ const ExploreBusiness = () => {
         </button>
       </FlexRowCenterBtw>
 
-      <FlexColCenter className="w-full h-[20px]">
-        {allBusinessesLoading && <LoaderComponent />}
+      <FlexColCenter className="w-full min-h-[20px]">
+        {allBusinessesLoading && (
+          <div className="mt-5">
+            <LoaderComponent />
+          </div>
+        )}
 
         {/* not found msg */}
         {!allBusinessesLoading && businesses.length === 0 && (
@@ -106,12 +110,10 @@ const ExploreBusiness = () => {
       </FlexColCenter>
 
       {/* business card lists */}
-      {!allBusinessesLoading && (
-        <BusinessCardContainer
-          data={businesses as UserBusinessList[]}
-          businessCategories={businessCategory}
-        />
-      )}
+      <BusinessCardContainer
+        data={businesses as UserBusinessList[]}
+        businessCategories={businessCategory}
+      />
 
       {/* Load more button */}
       <FlexColCenter
@@ -120,14 +122,16 @@ const ExploreBusiness = () => {
           height: "100px",
         }}
       >
-        {currPage < totalPages && (
+        {currPage < totalPages && businesses.length > 0 && (
           <button
             className={cn(
               "px-[20px] py-[10px] rounded-5 border-none outline-none flex items-center justify-center gap-[1px] cursor-pointer bg-white-105 transition-all",
               allBusinessesLoading ? "bg-white-106 cursor-not-allowed" : ""
             )}
             onClick={() => {
-              getBusinesses(currPage + 1, false);
+              if (!allBusinessesLoading) {
+                getBusinesses(currPage + 1, false);
+              }
             }}
           >
             {allBusinessesLoading ? (

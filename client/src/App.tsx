@@ -25,6 +25,7 @@ import { DataCtxProvider } from "context/DataCtx";
 import { WithoutAuth } from "components/ProtectedRoutes/withoutAuth";
 import { WithAuth } from "components/ProtectedRoutes/withAuth";
 import DefaultWebView from "components/DefaultWebView/DefaultWebView";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const { pathname } = useLocation();
@@ -124,6 +125,11 @@ function App() {
               <Route path="/contact-support" element={<ContactSupport />} />
             </Routes>
           </main>
+          <Toaster
+            toastOptions={{
+              position: "top-center",
+            }}
+          />
         </BusinessContextProvider>
         <Footer />
       </DataCtxProvider>
