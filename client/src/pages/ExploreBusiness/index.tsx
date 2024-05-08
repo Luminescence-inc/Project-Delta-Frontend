@@ -14,8 +14,9 @@ import { UserBusinessList } from "types/business";
 import { FilterData, useBusinessCtx } from "context/BusinessCtx";
 import { IFilter } from "types/business-profile";
 import { cn } from "utils";
+import { useEffect, useState } from "react";
 import { LoaderComponent } from "components/Loader";
-import { useState } from "react";
+
 
 const ExploreBusiness = () => {
   const {
@@ -28,6 +29,7 @@ const ExploreBusiness = () => {
     setSearchQuery,
     layout,
     setLayout,
+    searchQuery,
   } = useBusinessCtx();
   const [showFilter, setShowFilter] = useState<boolean>(true);
 
@@ -52,6 +54,13 @@ const ExploreBusiness = () => {
     });
   };
 
+  // ! Might be useful later
+  useEffect(() => {
+    if (searchQuery) {
+      setShowFilter(false);
+    }
+  }, [searchQuery]);
+    
   return (
     <FlexColStart className="w-full h-full">
       <FlexColStart className="w-full px-[20px] mt-10 gap-[15px]">
