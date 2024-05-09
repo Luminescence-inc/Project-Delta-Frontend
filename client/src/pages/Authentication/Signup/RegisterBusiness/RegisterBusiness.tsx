@@ -560,8 +560,8 @@ const RegisterBusiness = () => {
             className="w-full rounded-[5px] mt-5"
             onClick={() => {
               setIsModalOpen(false);
+              window.location.href = "/view-your-business";
             }}
-            href={"/view-your-business"}
           >
             <span className="text-[14px] font-semibold font-inter">
               Click to Continue
