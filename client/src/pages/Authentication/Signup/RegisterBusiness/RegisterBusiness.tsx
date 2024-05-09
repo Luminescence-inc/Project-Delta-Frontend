@@ -427,7 +427,7 @@ const RegisterBusiness = () => {
     },
     validateOnBlur: true,
     onSubmit,
-    // validationSchema: validationSchema,
+    validationSchema: validationSchema,
   });
 
   const customStyles = {
