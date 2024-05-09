@@ -160,7 +160,13 @@ const Home = () => {
             <Button
               intent="transparent"
               href="/signup/register-business"
-              leftIcon={<Plus strokeWidth={0.8} size={25} />}
+              leftIcon={
+                <Plus
+                  strokeWidth={0.8}
+                  size={25}
+                  className="fill-blue-200 stroke-none"
+                />
+              }
               className="w-full mt-8 rounded-md h-[55px]"
             >
               <span className="font-hnM font-bold text-[14px] ">
