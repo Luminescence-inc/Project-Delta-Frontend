@@ -25,7 +25,7 @@ import BusinessProfile from "./BusinessProfile";
 import OperationInfo from "./OperationInfo";
 import axios from "axios";
 import Modal from "react-modal";
-import Button from "@components/Button/Button";
+import Button from "@components/ui/button";
 import { Country, State, City } from "../../../../../country-sate-city";
 import * as yup from "yup";
 import { FILTERED_COUNTRY } from "@/utils/business-profile-utils";
@@ -553,13 +553,20 @@ const RegisterBusiness = () => {
               ? "You have successfully updated your business account."
               : "You have successfully created your business account."}
           </p>
+
           <Button
-            type="submit"
-            label="Click to Continue"
-            variant="primary"
-            size="lg"
-            to="/"
-          />
+            intent={"primary"}
+            size={"lg"}
+            className="w-full rounded-[5px] mt-5"
+            onClick={() => {
+              setIsModalOpen(false);
+            }}
+            href={"/view-your-business"}
+          >
+            <span className="text-[14px] font-semibold font-inter">
+              Click to Continue
+            </span>
+          </Button>
         </div>
       </Modal>
     </div>
