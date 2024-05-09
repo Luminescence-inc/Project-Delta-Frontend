@@ -20,7 +20,7 @@ export default function ReadMoreText({ text }: ReadMoreProps) {
         {isReadmore ? text : formattedText}
         {showReadmore && (
           <button
-            className="ntw text-12 font-hn-light font-bold cursor-pointer readmore-trigger ml-5 border-none outline-none bg-none"
+            className="ntw text-12 text-teal-100 font-hn-light font-semibold cursor-pointer readmore-trigger ml-5 border-none outline-none bg-none"
             onClick={() => setIsReadmore(!isReadmore)}
           >
             {isReadmore ? "Read less" : "Read more"}
