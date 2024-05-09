@@ -17,6 +17,7 @@ import { FilterData, useBusinessCtx } from "context/BusinessCtx";
 import { IFilter } from "types/business-profile";
 import { cn } from "utils";
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 const ExploreBusiness = () => {
   const {
@@ -30,7 +31,12 @@ const ExploreBusiness = () => {
     layout,
     setLayout,
   } = useBusinessCtx();
-  const [showFilter, setShowFilter] = useState<boolean>(true);
+  const [searchParams] = useSearchParams();
+  let show = true;
+
+  if (searchParams.get("s") == "false"){show=false}
+
+  const [showFilter, setShowFilter] = useState<boolean>(show);
 
   // construct the search query
   const constructQuery = (filterData: FilterData) => {
@@ -52,6 +58,13 @@ const ExploreBusiness = () => {
       filters: query,
     });
   };
+
+  // ! Might be useful later
+  // useEffect(() => {
+  //   if (searchQuery) {
+  //     setShowFilter(false);
+  //   }
+  // }, [searchQuery]);
 
   return (
     <div className="ntw w-full h-full">
