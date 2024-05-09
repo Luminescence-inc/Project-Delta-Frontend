@@ -427,7 +427,7 @@ const RegisterBusiness = () => {
     },
     validateOnBlur: true,
     onSubmit,
-    validationSchema: validationSchema,
+    // validationSchema: validationSchema,
   });
 
   const customStyles = {
@@ -449,6 +449,24 @@ const RegisterBusiness = () => {
     return <LoaderComponent />;
   }
 
+  const isRequiredFieldEmpty = () => {
+    const requiredFields = [
+      "businessName",
+      "businessCategory",
+      "country",
+      "stateAndProvince",
+      "city",
+    ];
+    let error = false;
+    for (let field of requiredFields) {
+      // @ts-expect-error
+      if (!formik.values[field]) {
+        error = true;
+      }
+    }
+    return error;
+  };
+
   return (
     <div ref={tabsRef} className="w-full pt-[30px] px-[16px] pb-[150px] ">
       <FlexRowCenter className="w-full h-full gap-10">
@@ -462,6 +480,10 @@ const RegisterBusiness = () => {
                 : "text-blue-200/60"
             )}
             onClick={() => {
+              if (isRequiredFieldEmpty() && idx === 1) {
+                toast.error("Please fill in all required business details.");
+                return;
+              }
               switchTab(idx);
               setSelectedTab(tab.name as any);
             }}
@@ -490,6 +512,7 @@ const RegisterBusiness = () => {
           city={city}
           setCity={setCity}
           socialEndRef={socialErrorEndRef}
+          isRequiredFieldEmpty={isRequiredFieldEmpty}
         />
       )}
       {activeTab === 1 && !successfulSubmission && (
