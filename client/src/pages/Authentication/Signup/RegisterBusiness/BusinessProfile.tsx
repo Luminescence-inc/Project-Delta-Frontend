@@ -389,20 +389,23 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
             </h3>
             <img
               src={
-                "/assets/images/default-img.jpeg" ??
-                `https://res.cloudinary.com/${CloudinaryConfig.cloudName}/image/upload/c_fill,q_400/${logoUrl}.jpg`
+                logoUrl
+                  ? `https://res.cloudinary.com/${CloudinaryConfig.cloudName}/image/upload/c_fill,q_400/${logoUrl}.jpg`
+                  : "/assets/images/default-img.jpeg"
               }
               alt="Uploaded"
               className="max-w-[100%]"
             />
             <Button
               onClick={handleDeleteLogo}
-              className="deleteLogo"
+              className="w-full rounded-[5px] mt-5 text-sm"
               type="submit"
               intent={!deleteLogo ? "error" : "primary"}
               size="md"
             >
-              <span className="font-inter font-medium">Delete</span>
+              <span className="font-inter font-medium">
+                {!deleteLogo ? "Delete Logo" : "Reverse"}
+              </span>
             </Button>
           </div>
         )}
