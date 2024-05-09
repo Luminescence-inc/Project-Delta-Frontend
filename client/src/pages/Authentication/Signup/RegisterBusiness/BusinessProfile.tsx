@@ -383,7 +383,7 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
           </div>
         )}
         {!imageFile && businessId != null && logoUrl && (
-          <div>
+          <div className="w-full">
             <h3 className="font-inter font-medium pt-[20px] pb-[10px]">
               Current Logo:
             </h3>
