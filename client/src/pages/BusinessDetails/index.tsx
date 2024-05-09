@@ -188,18 +188,18 @@ export default function BusinessDetails() {
           {/* categories and business name */}
           <FlexColStart className="h-[44px] mt-[20px]">
             {/* business name */}
-            <h2 className="text-[20px] font-bold font-inter text-dark-105 leading-[10px]">
+            <h2 className="text-[20px] font-bold font-inter text-dark-105 leading-[20px]">
               {businessDetails?.name ?? "N/A"}
             </h2>
 
             {/* categories */}
-            <FlexRowCenterBtw className="gap-[10px]">
+            <FlexRowCenterBtw className="w-full gap-[10px] mt-1 mb-5">
               {typeof businessDetails.categories !== "undefined" &&
               businessDetails?.categories.length > 0
                 ? businessDetails?.categories?.map((c) => {
                     return (
                       <FlexRowCenter className="gap-[10px]" key={c}>
-                        <span className="ntw text-[11px] leading-[13px] font-light font-inter text-gray-103">
+                        <span className="ntw text-[11px] leading-[13px] font-normal font-inter text-gray-103">
                           {c}
                         </span>
                         {businessDetails.categories[
@@ -215,8 +215,8 @@ export default function BusinessDetails() {
           </FlexColStart>
 
           {/* description */}
-          <FlexColStart className="mt-[10px]">
-            <span className="ntw text-[11px] leading-[13px] font-light font-inter text-gray-103">
+          <FlexColStart className="mt-10">
+            <span className="ntw text-[11px] leading-[13px] font-semibold font-inter text-gray-103">
               Description
             </span>
 
@@ -226,7 +226,7 @@ export default function BusinessDetails() {
 
           {/* contact info */}
           <FlexColStart className="mt-[15px]">
-            <span className="text-[11px] leading-[13px] font-light font-inter text-gray-103">
+            <span className="text-[11px] leading-[13px] font-semibold font-inter text-gray-103">
               Contact Info
             </span>
 
