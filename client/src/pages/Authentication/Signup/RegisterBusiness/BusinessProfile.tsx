@@ -30,6 +30,7 @@ import {
 } from "@/components/Flex";
 import ErrorComponent from "@pages/Authentication/ErrorComponent";
 import { cn } from "@/utils";
+import toast from "react-hot-toast";
 
 interface BusinessProfileProps {
   setActiveTab: React.Dispatch<React.SetStateAction<number>>;
@@ -146,6 +147,16 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
   const handleNextButton = () => {
     if (tabsRef.current) {
       tabsRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+    if (error) {
+      const errmsg =
+        formik.errors.businessName ||
+        formik.errors.businessCategory ||
+        formik.errors.country ||
+        formik.errors.stateAndProvince ||
+        formik.errors.city;
+      toast.error(errmsg!);
+      return;
     }
     setActiveTab(1);
     setSelectedTab("operations-info");
