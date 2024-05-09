@@ -16,11 +16,11 @@ export default function ReadMoreText({ text }: ReadMoreProps) {
 
   return (
     <FlexRowStart className="w-auto flex-wrap">
-      <span className="ntw text-12 font-normal leading-18 font-hn-light">
+      <span className="text-[12px] font-light font-hnL text-gray-100 leading-[18px]">
         {isReadmore ? text : formattedText}
         {showReadmore && (
           <button
-            className="ntw text-12 text-teal-100 font-hn-light font-semibold cursor-pointer readmore-trigger ml-5 border-none outline-none bg-none"
+            className="text-[12px] text-teal-100 font-inter font-semibold cursor-pointer readmore-trigger ml-[5px] border-none outline-none bg-none"
             onClick={() => setIsReadmore(!isReadmore)}
           >
             {isReadmore ? "Read less" : "Read more"}
