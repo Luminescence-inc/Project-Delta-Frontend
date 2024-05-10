@@ -17,6 +17,7 @@ import {
   FlexColStartCenter,
 } from "@components/Flex";
 import { LoaderComponent } from "@components/Loader";
+import ReadMoreText from "@/pages/BusinessDetails/components/ReadmoreText";
 
 const ViewBusiness = () => {
   const navigate = useNavigate();
@@ -130,7 +131,7 @@ const ViewBusiness = () => {
                     {thisBusinessProfile.name}
                   </h3>
                   <p className="text-[16px] leading-[24px] mb-[32px]">
-                    {thisBusinessProfile.description}
+                    <ReadMoreText text={thisBusinessProfile.description!} />
                   </p>
 
                   <Button

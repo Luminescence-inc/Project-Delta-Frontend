@@ -27,7 +27,7 @@ interface BusinessCardProps {
   _key: string;
 }
 
-const NAME_CONSTRAINT = 35;
+const NAME_CONSTRAINT = 30;
 
 export const ColLayoutCard = ({
   name,
