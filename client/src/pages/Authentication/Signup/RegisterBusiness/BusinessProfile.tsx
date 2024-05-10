@@ -30,6 +30,7 @@ import {
 } from "@/components/Flex";
 import ErrorComponent from "@pages/Authentication/ErrorComponent";
 import { cn } from "@/utils";
+import toast from "react-hot-toast";
 
 interface BusinessProfileProps {
   setActiveTab: React.Dispatch<React.SetStateAction<number>>;
@@ -49,6 +50,7 @@ interface BusinessProfileProps {
   city: IOption[];
   setCity: React.Dispatch<React.SetStateAction<IOption[]>>;
   socialEndRef: React.RefObject<HTMLDivElement>;
+  isRequiredFieldEmpty: () => boolean;
 }
 
 type SupportedSocialMedia = "instagram" | "website" | "linkedin" | "facebook";
@@ -77,6 +79,7 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
   stateAndProvince,
   city,
   setCity,
+  isRequiredFieldEmpty,
 }) => {
   const [businessCategory, setBusinessCategory] = useState<IOption[]>();
   const [error, setError] = useState<Boolean>(false);
@@ -147,6 +150,10 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
     if (tabsRef.current) {
       tabsRef.current.scrollIntoView({ behavior: "smooth" });
     }
+    if (isRequiredFieldEmpty()) {
+      toast.error("Please fill all required fields");
+      return;
+    }
     setActiveTab(1);
     setSelectedTab("operations-info");
   };
@@ -201,7 +208,7 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
         />
         <Input
           type="text"
-          label="Business Name"
+          label="Business Name (required)"
           name="businessName"
           value={formik.values.businessName}
           onChange={formik.handleChange}
@@ -214,7 +221,7 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
 
         <FlexColStart className="w-full mt-5 mb-3">
           <label className="text-[14px] font-semibold font-inter text-dark-100/60">
-            Describe your business
+            Describe your business (required)
           </label>
           <textarea
             name="description"
@@ -234,7 +241,7 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
           }
         />
         <Select
-          label="Business Category"
+          label="Business Category (required)"
           name="businessCategory"
           formikValue={formik.values.businessCategory}
           formik={formik}
@@ -252,7 +259,7 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
           }
         />
         <Select
-          label="Select Country"
+          label="Select Country (required)"
           name="country"
           formikValue={formik.values.country}
           formik={formik}
@@ -270,7 +277,7 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
           }
         />
         <Select
-          label="State and Province"
+          label="State and Province (required)"
           name="stateAndProvince"
           formikValue={formik.values.stateAndProvince}
           formik={formik}
@@ -286,7 +293,7 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
           }
         />
         <Select
-          label="Select City"
+          label="Select City (required)"
           name="city"
           formikValue={formik.values.city}
           formik={formik}
