@@ -1,10 +1,5 @@
-import InstagramIcon from "assets/icons/instagram-icon-2.svg?react";
-import FacebookIcon from "assets/icons/facebook-icon.svg?react";
-import TwitterIcon from "assets/icons/twitter-icon.svg?react";
-import LinkedInIcon from "assets/icons/linkedin-icon.svg?react";
-import TikTokIcon from "assets/icons/tiktok-icon.svg?react";
-import WebsiteIcon from "assets/icons/website-icon.svg?react";
-import { cn } from "utils";
+import { Globe } from "@components/icons";
+import { cn } from "@/utils";
 import { useEffect } from "react";
 
 interface SocialMediaProps {
@@ -45,27 +40,23 @@ const RenderSocialLinks = ({
 
   switch (name) {
     case "facebook":
-      icon = <FacebookIcon />;
+      icon = RenderSocialIcons({ name });
       break;
 
     case "instagram":
-      icon = <InstagramIcon />;
+      icon = RenderSocialIcons({ name });
       break;
 
     case "twitter":
-      icon = <TwitterIcon />;
+      icon = RenderSocialIcons({ name });
       break;
 
     case "linkedin":
-      icon = <LinkedInIcon />;
-      break;
-
-    case "tiktok":
-      icon = <TikTokIcon />;
+      icon = RenderSocialIcons({ name });
       break;
 
     case "website":
-      icon = <WebsiteIcon />;
+      icon = RenderSocialIcons({ name });
       break;
 
     default:
@@ -74,10 +65,10 @@ const RenderSocialLinks = ({
   }
 
   return (
-    <div className="social-links-tooltip-container">
+    <div className="w-auto relative">
       <button
         className={cn(
-          "w-[34px] h-[34px] flex flex-col items-center justify-center rounded-full",
+          "w-[34px] h-[34px] flex flex-col items-center justify-center rounded-full scale-[.90]",
           valid ? "cursor-pointer" : "cursor-not-allowed"
         )}
         style={{
@@ -93,10 +84,10 @@ const RenderSocialLinks = ({
       >
         {icon}
       </button>
-      {!valid && (
+      {true && (
         <span
           className={cn(
-            "tooltiptext w-[80px] text-center absolute bg-dark-105 font-inter text-white-100 px-[5px] py-[2px] rounded-[5px] top-10 left-0 z-10",
+            "tooltiptext text-[10px] w-[80px] text-center absolute bg-dark-105 font-inter text-white-100 px-[5px] py-[2px] rounded-[5px] top-10 -left-5 z-10",
             activeTtip === name ? "visible" : "hidden"
           )}
         >
@@ -117,3 +108,33 @@ const isUrlValid = (url: string) => {
     return { valid: false, obj: null };
   }
 };
+
+function RenderSocialIcons({ name }: { name: string }) {
+  let icon = null;
+  switch (name) {
+    case "instagram":
+      icon = (
+        <img className="w-[16px]" src={"/assets/images/logo/ig-logo.svg"} />
+      );
+      break;
+    case "facebook":
+      icon = (
+        <img
+          className="w-[10px]"
+          src={"/assets/images/logo/facebook-logo.svg"}
+        />
+      );
+      break;
+    case "twitter":
+      icon = (
+        <img className="w-[16px]" src={"/assets/images/logo/x-logo.svg"} />
+      );
+      break;
+    case "website":
+      icon = <Globe size={17} className="text-blue-200" />;
+      break;
+    default:
+      icon = null;
+  }
+  return icon;
+}

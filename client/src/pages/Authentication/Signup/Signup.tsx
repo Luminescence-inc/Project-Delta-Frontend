@@ -1,28 +1,25 @@
 /** @format */
 
 import { Link } from "react-router-dom";
-import EyeIcon from "assets/icons/eye-icon.svg?react";
-import ClosedEyeIcon from "assets/icons/closed-eye-icon.svg?react";
-import MailIcon from "assets/icons/mail-icon.svg?react";
-import ContactIcon from "assets/icons/contact-icon.svg?react";
-import Input from "components/Input/Input";
+import { Mail, ClosedEye, Eye, CircleUser } from "@components/icons";
+import Input from "@components/Input/Input";
 import { useFormik } from "formik";
 import {
   SignUpResponse,
   SignUpData,
   TOKEN_NAME,
   LogInResponse,
-} from "types/auth";
-import { registerUser } from "api/auth";
-import { useState } from "react";
+} from "@/types/auth";
+import { registerUser } from "@/api/auth";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import {
   FlexColStart,
   FlexColStartCenter,
   FlexRowStartBtw,
-} from "components/Flex";
-import Button from "components/ui/button";
+} from "@components/Flex";
+import Button from "@components/ui/button";
 import ErrorComponent from "../ErrorComponent";
 
 const validationSchema = yup.object({
@@ -49,6 +46,11 @@ const Signup = () => {
   const [showConfirmPassword, setShowConirmPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState<String | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    // remove this during code cleanup
+    setShowConirmPassword(false);
+  }, []);
 
   const onSubmit = async (values: SignUpData) => {
     const { confirmPassword, ...data } = values;
@@ -133,7 +135,7 @@ const Signup = () => {
             name="firstName"
             value={formik.values.firstName}
             onChange={formik.handleChange}
-            icon={<ContactIcon className="input-icon" />}
+            icon={<CircleUser className="stroke-none" />}
             onBlur={formik.handleBlur}
             placeholder="Enter First Name"
           />
@@ -152,7 +154,7 @@ const Signup = () => {
             value={formik.values.lastName}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            icon={<ContactIcon className="input-icon" />}
+            icon={<CircleUser className="stroke-none" />}
             placeholder="Enter Last Name"
           />
 
@@ -172,7 +174,13 @@ const Signup = () => {
             value={formik.values.email}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            icon={<MailIcon className="input-icon" />}
+            icon={
+              <Mail
+                strokeWidth={1}
+                size={20}
+                className="rounded-full stroke-white-100 fill-blue-200"
+              />
+            }
             placeholder="Enter Email Address"
           />
           <br />
@@ -192,14 +200,16 @@ const Signup = () => {
             onBlur={formik.handleBlur}
             icon={
               showPassword ? (
-                <EyeIcon
+                <Eye
+                  className="cursor-pointer"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="input-icon"
+                  size={20}
                 />
               ) : (
-                <ClosedEyeIcon
+                <ClosedEye
                   onClick={() => setShowPassword(!showPassword)}
-                  className="input-icon"
+                  size={20}
+                  className="cursor-pointer"
                 />
               )
             }
@@ -224,14 +234,16 @@ const Signup = () => {
             onBlur={formik.handleBlur}
             icon={
               showConfirmPassword ? (
-                <EyeIcon
-                  onClick={() => setShowConirmPassword(!showConfirmPassword)}
-                  className="input-icon"
+                <Eye
+                  className="cursor-pointer"
+                  onClick={() => setShowPassword(!showPassword)}
+                  size={20}
                 />
               ) : (
-                <ClosedEyeIcon
-                  onClick={() => setShowConirmPassword(!showConfirmPassword)}
-                  className="input-icon"
+                <ClosedEye
+                  onClick={() => setShowPassword(!showPassword)}
+                  size={20}
+                  className="cursor-pointer"
                 />
               )
             }

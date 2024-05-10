@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
-import ChevronDown from "assets/icons/chevron-down.svg?react";
-import { cn } from "utils";
-import { BusinessFilterType, MultiSearchType } from "types/business";
-import { FlexColStart, FlexRowStart } from "components/Flex";
+import { cn } from "@/utils";
+import { ChevronDown } from "@components/icons";
+import { BusinessFilterType, MultiSearchType } from "@/types/business";
+import { FlexColStart, FlexRowStart } from "@components/Flex";
 
 interface MultiSearchProps {
   rightIcon?: React.ReactNode;

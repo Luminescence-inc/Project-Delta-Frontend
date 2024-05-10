@@ -1,19 +1,14 @@
 import { useState } from "react";
-import ContactSupportIcon from "assets/icons/contact-support-icon.svg?react";
-import Spinner from "components/Spinner/Spinner";
 import Modal from "react-modal";
-import {
-  ContactSupportDataSchema,
-  // ContactSupportResponse,
-} from "types/business";
-import { BaseResponseMessage } from "types/auth";
-import { submitContactRequest } from "api/business";
+import { ContactSupportDataSchema } from "@/types/business";
+import { BaseResponseMessage } from "@/types/auth";
+import { submitContactRequest } from "@/api/business";
 import { useFormik, FormikHelpers } from "formik";
-
 import * as yup from "yup";
-import "./ContactSupport.scss";
-import Input from "components/Input/Input";
-import Button from "components/Button/Button";
+import Input from "@components/Input/Input";
+import Button from "@components/ui/button";
+import { FlexColCenter, FlexColStart, FlexRowCenter } from "@components/Flex";
+import ErrorComponent from "@pages/Authentication/ErrorComponent";
 
 const validationSchema = yup.object({
   personName: yup
@@ -42,7 +37,6 @@ const ContactSupport = () => {
     { resetForm }: FormikHelpers<ContactSupportDataSchema>
   ) => {
     setIsLoading(true);
-    console.log("Submission occured ", values);
     try {
       const res = await submitContactRequest(values).catch((err) => {
         const errorResponse: BaseResponseMessage = err.response.data;
@@ -61,7 +55,6 @@ const ContactSupport = () => {
       setSuccessMessage(resData?.message?.desc);
       resetForm();
       setIsModalOpen(true);
-      console.log(resData);
       setIsLoading(false);
     } catch (err) {
       setIsLoading(false);
@@ -82,12 +75,6 @@ const ContactSupport = () => {
     onSubmit,
     validationSchema: validationSchema,
   });
-  // Custom Styles
-  const errorMessageStyle = {
-    color: "red",
-    display: "flex",
-    fontSize: "13px",
-  };
 
   const customStyles = {
     content: {
@@ -104,34 +91,33 @@ const ContactSupport = () => {
     overlay: { backgroundColor: "rgba(0, 0, 0, 0.5)" },
   };
 
-  const submitErrorMessageStyle = {
-    color: "red",
-    fontSize: "13px",
-  };
   const closeModal = () => {
     setIsModalOpen(false);
   };
 
   return (
-    <div className="contact-support">
-      <header>
-        <h2>Contact Support</h2>
-      </header>
+    <div className="w-full p-[16px] bg-gray-200 ">
+      <h2 className="text-center mb-[16px] text-[32px] leading-[40px] font-bold font-inter">
+        Contact Support
+      </h2>
 
-      <div className="card_board">
-        <div className="card_board__contact-support-icon-container">
-          <div className="contact-support-icon-border">
-            <ContactSupportIcon />
-          </div>
-        </div>
-        <h4>Please complete support form</h4>
+      <FlexColCenter className="w-full pt-[24px] px-[16px] pb-[32px] rounded-[20px] text-center bg-white-100 ">
+        <FlexRowCenter className="mb-[24px]">
+          <FlexRowCenter className="w-[88px] h-[88px] rounded-[50%] p-[10px] bg-blue-202 ">
+            <img src="/assets/icons/contact-support.svg" className="w-[35px]" />
+          </FlexRowCenter>
+        </FlexRowCenter>
+
+        <h4 className="tetx-[16px] font-bold font-inter mb-[20px]">
+          Please complete support form
+        </h4>
 
         {/* Display Error message */}
-        {error && <span style={submitErrorMessageStyle}>{errorMessage}</span>}
-        <form onSubmit={formik.handleSubmit}>
-          <span style={errorMessageStyle}>
-            {formik.touched.personName ? formik.errors.personName : ""}
-          </span>
+        {error && <ErrorComponent value={errorMessage as string} />}
+
+        <form className="w-full" onSubmit={formik.handleSubmit}>
+          <ErrorComponent value={formik.errors.personName ?? ""} />
+
           <Input
             type="text"
             label="Name"
@@ -141,11 +127,14 @@ const ContactSupport = () => {
             onBlur={formik.handleBlur}
             placeholder="Enter Name"
           />
-          <span style={errorMessageStyle}>
-            {formik.touched.email && formik.errors.email
-              ? formik.errors.email
-              : ""}
-          </span>
+          <ErrorComponent
+            value={
+              formik.touched.email && formik.errors.email
+                ? formik.errors.email
+                : ""
+            }
+          />
+
           <Input
             type="text"
             label="Your Email Address"
@@ -155,11 +144,14 @@ const ContactSupport = () => {
             onBlur={formik.handleBlur}
             placeholder="Enter Your Email"
           />
-          <span style={errorMessageStyle}>
-            {formik.touched.phoneNumber && formik.errors.phoneNumber
-              ? formik.errors.phoneNumber
-              : ""}
-          </span>
+          <ErrorComponent
+            value={
+              formik.touched.phoneNumber && formik.errors.phoneNumber
+                ? formik.errors.phoneNumber
+                : ""
+            }
+          />
+
           <Input
             type="text"
             label="Your Phone Number"
@@ -169,61 +161,53 @@ const ContactSupport = () => {
             onBlur={formik.handleBlur}
             placeholder="Enter Your Phone Number"
           />
-          <span style={errorMessageStyle}>
-            {formik.touched.problemDescription &&
-            formik.errors.problemDescription
-              ? formik.errors.problemDescription
-              : ""}
-          </span>
-          <div className="form-group">
+          <ErrorComponent
+            value={
+              formik.touched.problemDescription &&
+              formik.errors.problemDescription
+                ? formik.errors.problemDescription
+                : ""
+            }
+          />
+
+          <FlexColStart className="w-full mb-[24px]">
             <label htmlFor="">Describe problem</label>
             <textarea
               name="problemDescription"
               value={formik.values.problemDescription}
               onChange={formik.handleChange}
               rows={4}
+              className="w-full px-3 py-2 font-inter font-normal text-[14px] bg-white-200/10 border-[1px] border-white-200/40 rounded-[5px]"
               placeholder="describe the issue you are having"
             />
-          </div>
-          {!isLoading && (
-            <Button
-              type="submit"
-              label="Submit Request"
-              variant="primary"
-              size="lg"
-            />
-          )}
-          {isLoading && (
-            <Button
-              type="submit"
-              label={Spinner()}
-              variant="primary"
-              size="lg"
-              disabled={true}
-            />
-          )}
+          </FlexColStart>
+
+          <Button
+            type="submit"
+            intent="primary"
+            size="lg"
+            disabled={isLoading}
+            isLoading={isLoading}
+            className="w-full rounded-[5px] mt-10"
+          >
+            <span className="font-inter font-medium text-[14px]">
+              Submit Request
+            </span>
+          </Button>
         </form>
-      </div>
+      </FlexColCenter>
       <Modal
         isOpen={isModalOpen}
         onRequestClose={closeModal}
         contentLabel="Success Modal"
         style={customStyles}
       >
-        <div className="modal">
-          <h2
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              fontSize: "16px",
-              fontWeight: "700",
-              marginBottom: "10px",
-            }}
-          >
+        <FlexRowCenter className="w-full">
+          <h2 className="text-[16px] mb-[10px] font-bold font-inter text-center">
             {successMessage && successMessage}
             {errorMessage && errorMessage}
           </h2>
-        </div>
+        </FlexRowCenter>
       </Modal>
     </div>
   );

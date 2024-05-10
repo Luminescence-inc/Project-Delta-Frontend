@@ -1,6 +1,9 @@
-import { BusinessCreationBody, ContactSupportDataSchema } from "types/business";
-import { bizConnectAPI } from "../config";
-import { IPaging, ISearch } from "types/business-profile";
+import {
+  BusinessCreationBody,
+  ContactSupportDataSchema,
+} from "@/types/business";
+import { bizConnectAPI } from "@/config";
+import { IPaging, ISearch } from "@/types/business-profile";
 import axios from "axios";
 
 export const allBusinessCategories = () => {

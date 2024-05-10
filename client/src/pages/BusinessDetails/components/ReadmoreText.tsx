@@ -1,4 +1,4 @@
-import { FlexRowStart } from "components/Flex";
+import { FlexRowStart } from "@components/Flex";
 import React from "react";
 
 type ReadMoreProps = {

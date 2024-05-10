@@ -1,10 +1,9 @@
-import { FlexColStart } from "components/Flex";
-import defaultBgImg from "assets/images/default-img.jpeg";
-import { IOption, UserBusinessList } from "types/business";
-import { CloudinaryConfig } from "config";
-import { constructDOP } from "utils";
+import { FlexColStart } from "@components/Flex";
+import { IOption, UserBusinessList } from "@/types/business";
+import { CloudinaryConfig } from "@/config";
+import { constructDOP } from "@/utils";
 import { ColLayoutCard, RowLayoutCard } from "./LayoutCards";
-import { useBusinessCtx } from "context/BusinessCtx";
+import { useBusinessCtx } from "@context/BusinessCtx";
 
 interface BusinessCardContainerProps {
   data: UserBusinessList[];
@@ -18,7 +17,7 @@ const BusinessCardContainer = ({
   const { layout } = useBusinessCtx();
   const constructLogoUrl = (url: string | null) => {
     return !url
-      ? defaultBgImg
+      ? "/assets/images/default-img.jpeg"
       : `https://res.cloudinary.com/${CloudinaryConfig.cloudName}/image/upload/c_fill,q_500/${url}.jpg`;
   };
 

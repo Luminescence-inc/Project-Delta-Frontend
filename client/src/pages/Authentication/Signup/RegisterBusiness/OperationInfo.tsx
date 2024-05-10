@@ -1,19 +1,18 @@
 /** @format */
 
-import { BusinessProfileFormikPropsValues } from "types/business";
+import { BusinessProfileFormikPropsValues } from "@/types/business";
 import { FormikProps } from "formik";
 import { FC } from "react";
 import {
   DAYS_OF_OPERATIONS_OPTIONS,
   OPERATING_TIME_OPTIONS,
-} from "utils/business-profile-utils";
-import PhoneIcon from "assets/icons/phone-icon.svg?react";
-import MailIcon from "assets/icons/mail-icon.svg?react";
-import Input from "components/Input/Input";
-import Button from "components/ui/button";
-import Select from "components/Input/Select";
-import MultiSelect from "components/Input/MultiSelect";
-import { FlexColStart, FlexColStartCenter } from "components/Flex";
+} from "@/utils/business-profile-utils";
+import Input from "@components/Input/Input";
+import Button from "@components/ui/button";
+import Select from "@components/Input/Select";
+import MultiSelect from "@components/Input/MultiSelect";
+import { FlexColStart, FlexColStartCenter } from "@components/Flex";
+import { Mail, Phone } from "@/components/icons";
 
 interface OperationInfoProps {
   formik: FormikProps<BusinessProfileFormikPropsValues>;
@@ -44,7 +43,7 @@ const OperationInfo: FC<OperationInfoProps> = ({
           value={formik.values.phoneNumber}
           onChange={formik.handleChange}
           label="Business Phone Number"
-          icon={<PhoneIcon className="input-icon" />}
+          icon={<Phone className="stroke-none fill-blue-200 scale-[.75]" />}
           placeholder="Enter Phone Number"
         />
 
@@ -54,7 +53,12 @@ const OperationInfo: FC<OperationInfoProps> = ({
           value={formik.values.businessEmail}
           onChange={formik.handleChange}
           label="Business Email"
-          icon={<MailIcon className="input-icon" />}
+          icon={
+            <Mail
+              strokeWidth={1}
+              className="stroke-white-100 fill-blue-200 rounded-md scale-[.85]"
+            />
+          }
           placeholder="Enter Business Email"
         />
 

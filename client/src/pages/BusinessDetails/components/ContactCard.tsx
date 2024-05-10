@@ -1,4 +1,4 @@
-import { FlexRowStartCenter, FlexColStart } from "components/Flex";
+import { FlexRowStartCenter, FlexColStart } from "@components/Flex";
 
 type ContactCardProps = {
   title: string;

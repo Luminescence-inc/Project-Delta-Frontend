@@ -1,6 +1,6 @@
 /** @format */
 
-import { FlexColStart, FlexRowCenter } from "components/Flex";
+import { FlexColStart, FlexRowCenter } from "@components/Flex";
 import React from "react";
 
 interface IInput {
@@ -28,7 +28,7 @@ const Input = ({
 }: IInput) => {
   return (
     <FlexColStart className="w-full gap-[4px] text-left pb-5">
-      <label className="text-[14px] font-semibold font-inter text-dark-100/60">
+      <label className="text-[14px] font-normal font-inter text-dark-100/60">
         {label}
       </label>
       <FlexRowCenter className="w-full relative">

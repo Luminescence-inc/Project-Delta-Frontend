@@ -4,19 +4,16 @@ import {
   FlexColStartCenter,
   FlexRowCenterBtw,
   FlexRowStartCenter,
-} from "components/Flex";
-import SearchIcon from "assets/icons/search-business.svg?react";
-import LayoutPanelTop from "../../../public/assets/icons/layout-panel-top.svg?react";
-import LayoutPanelLeft from "../../../public/assets/icons/layout-panel-left.svg?react";
+} from "@components/Flex";
+import { SearchIcon2 } from "@components/icons";
 import BusinessCardContainer from "./components/BusinessCard";
-import BusinessesFilterComponent from "components/BusinessFilter";
-import { UserBusinessList } from "types/business";
-import { FilterData, useBusinessCtx } from "context/BusinessCtx";
-import { IFilter } from "types/business-profile";
-import { cn } from "utils";
+import BusinessesFilterComponent from "@components/BusinessFilter";
+import { UserBusinessList } from "@/types/business";
+import { FilterData, useBusinessCtx } from "@context/BusinessCtx";
+import { IFilter } from "@/types/business-profile";
+import { cn } from "@/utils";
+import { LoaderComponent } from "@components/Loader";
 import { useEffect, useState } from "react";
-import { LoaderComponent } from "components/Loader";
-
 
 const ExploreBusiness = () => {
   const {
@@ -60,7 +57,7 @@ const ExploreBusiness = () => {
       setShowFilter(false);
     }
   }, [searchQuery]);
-    
+
   return (
     <FlexColStart className="w-full h-full">
       <FlexColStart className="w-full px-[20px] mt-10 gap-[15px]">
@@ -79,8 +76,12 @@ const ExploreBusiness = () => {
           disabled={allBusinessesLoading}
         >
           <FlexRowStartCenter className="w-full gap-1">
-            <SearchIcon />
-            <p className="text-[12px] text-gray-103 font-normal font-inter">
+            <SearchIcon2
+              size={20}
+              strokeWidth={1.2}
+              className="stroke-gray-103"
+            />
+            <p className="text-[12px] relative left-1 top-[1px] text-gray-103 font-normal font-inter">
               Search business
             </p>
           </FlexRowStartCenter>
@@ -89,13 +90,13 @@ const ExploreBusiness = () => {
           onClick={() =>
             setLayout && setLayout(layout === "col" ? "row" : "col")
           }
-          className="border-none outline-none cursor-pointer rounded-[10px]"
+          className="border-none outline-none cursor-pointer rounded-[10px] p-2 flex items-center justify-center"
         >
           <FlexColCenter>
             {layout === "col" ? (
-              <LayoutPanelTop fill="#130F26" />
+              <img src={"/assets/icons/layout-panel-top.svg"} />
             ) : (
-              <LayoutPanelLeft fill="#130F26" />
+              <img src={"/assets/icons/layout-panel-left.svg"} />
             )}
           </FlexColCenter>
         </button>

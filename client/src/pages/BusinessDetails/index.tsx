@@ -7,23 +7,30 @@ import {
   FlexRowStart,
   FlexRowStartBtw,
   FlexRowStartCenter,
-} from "components/Flex";
+} from "@components/Flex";
 import ContactCard from "./components/ContactCard";
 import ReadMoreText from "./components/ReadmoreText";
-import ChevronLeftIcon from "assets/icons/chevron-left.svg?react";
-import ChevronDownIcon from "assets/icons/chevron-down-2.svg?react";
-import LocationMarkerIcon from "assets/icons/location-marker-2.svg?react";
-import PhoneIcon from "assets/icons/phone.svg?react";
-import MailBoxIcon from "assets/icons/mailbox.svg?react";
-import CalendarIcon from "assets/icons/calendar.svg?react";
-import { cn, constructBizImgUrl, determineBusOpTime, removeAMPM } from "utils";
+import {
+  ChevronLeft,
+  ChevronDown,
+  Phone,
+  Mail,
+  Calendar,
+  MapPin,
+} from "@components/icons";
+import {
+  cn,
+  constructBizImgUrl,
+  determineBusOpTime,
+  removeAMPM,
+} from "@/utils";
 import RenderSocialLinks from "./components/RenderSocialLinks";
 import { useNavigate, useParams } from "react-router-dom";
-import { useBusinessCtx } from "context/BusinessCtx";
-import { IBusinessProfile } from "types/business-profile";
-import { getBusinessProfileById } from "api/business";
+import { useBusinessCtx } from "@context/BusinessCtx";
+import { IBusinessProfile } from "@/types/business-profile";
+import { getBusinessProfileById } from "@/api/business";
 import SimilarBusinesses from "./SimilarBusinesses";
-import { LoaderComponent } from "components/Loader";
+import { LoaderComponent } from "@components/Loader";
 import BusinessesNotfound from "./components/Notfound";
 
 const daysOfWeek = [
@@ -161,8 +168,8 @@ export default function BusinessDetails() {
         className="text-[12px] font-inter font-medium leading-[14px] underline bg-none outline-none border-none cursor-pointer text-gray-103"
         onClick={() => navigate("/explore-businesses")}
       >
-        <FlexRowStart className="w-auto gap-[15px]">
-          <ChevronLeftIcon />
+        <FlexRowStart className="w-auto gap-[4px]">
+          <ChevronLeft strokeWidth={1} />
           Explore Businesses
         </FlexRowStart>
       </button>
@@ -230,17 +237,35 @@ export default function BusinessDetails() {
                   `${businessDetails?.city}, ${businessDetails?.stateAndProvince}` ??
                   "N/A"
                 }
-                icon={<LocationMarkerIcon />}
+                icon={
+                  <MapPin
+                    size={18}
+                    strokeWidth={1.3}
+                    className="stroke-dark-100/90"
+                  />
+                }
               />
               <ContactCard
                 title="Mobile"
                 tagline={businessDetails?.phoneNumber ?? "N/A"}
-                icon={<PhoneIcon />}
+                icon={
+                  <Phone
+                    size={18}
+                    strokeWidth={1.3}
+                    className="stroke-dark-100/90"
+                  />
+                }
               />
               <ContactCard
                 title="Email"
                 tagline={businessDetails?.businessEmail ?? "N/A"}
-                icon={<MailBoxIcon />}
+                icon={
+                  <Mail
+                    size={18}
+                    strokeWidth={1.3}
+                    className="stroke-dark-100/90"
+                  />
+                }
               />
             </FlexColStart>
           </FlexColStart>
@@ -274,12 +299,12 @@ export default function BusinessDetails() {
               }}
             >
               <FlexRowStartCenter className="w-auto gap-1">
-                <CalendarIcon />
+                <Calendar size={15} className="stroke-dark-100/60 mr-1" />
                 <span className="text-[11px] font-semibold font-inter leading-[10px] mt-[1px] text-blue-200">
                   View opening hours
                 </span>
               </FlexRowStartCenter>
-              <ChevronDownIcon
+              <ChevronDown
                 style={{
                   transform: calendarOpened ? "rotate(180deg)" : "rotate(0deg)",
                 }}

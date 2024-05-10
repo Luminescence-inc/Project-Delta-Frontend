@@ -1,17 +1,15 @@
 /** @format */
 import { Link } from "react-router-dom";
-import EyeIcon from "assets/icons/eye-icon.svg?react";
-import ClosedEyeIcon from "assets/icons/closed-eye-icon.svg?react";
-import MailIcon from "assets/icons/mail-icon.svg?react";
-import Button from "components/ui/button";
-import Input from "components/Input/Input";
+import { Eye, ClosedEye, Mail } from "@components/icons";
+import Button from "@components/ui/button";
+import Input from "@components/Input/Input";
 import { useFormik } from "formik";
-import { LogInData, LogInResponse, TOKEN_NAME, JwtPayload } from "types/auth";
-import { loginUser } from "api/auth";
+import { LogInData, LogInResponse, TOKEN_NAME, JwtPayload } from "@/types/auth";
+import { loginUser } from "@/api/auth";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
-import { FlexColStart, FlexColStartCenter } from "components/Flex";
+import { FlexColStart, FlexColStartCenter } from "@components/Flex";
 import ErrorComponent from "../ErrorComponent";
 
 const validationSchema = yup.object({
@@ -119,7 +117,13 @@ const Login = () => {
             value={formik.values.email}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            icon={<MailIcon className="input-icon" />}
+            icon={
+              <Mail
+                strokeWidth={1}
+                size={20}
+                className="rounded-full stroke-white-100 fill-blue-200"
+              />
+            }
             placeholder="Enter Email Address"
           />
           <br />
@@ -140,14 +144,16 @@ const Login = () => {
             onBlur={formik.handleBlur}
             icon={
               showPassword ? (
-                <EyeIcon
+                <Eye
+                  className="cursor-pointer"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="input-icon"
+                  size={20}
                 />
               ) : (
-                <ClosedEyeIcon
+                <ClosedEye
                   onClick={() => setShowPassword(!showPassword)}
-                  className="input-icon"
+                  size={20}
+                  className="cursor-pointer"
                 />
               )
             }

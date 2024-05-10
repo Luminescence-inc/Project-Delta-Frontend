@@ -1,20 +1,21 @@
 import { useEffect, useState } from "react";
-import CloseIcon from "../../../public/assets/icons/close-icon.svg?react";
-import CloseIcon2 from "../../../public/assets/icons/close-icon-2.svg?react";
-import SearchIcon from "../../../public/assets/icons/search-icon-2.svg?react";
+// import CloseIcon from "../../../public/assets/icons/close-icon.svg?react";
+// import CloseIcon2 from "../../../public/assets/icons/close-icon-2.svg?react";
+// import SearchIcon from "../../../public/assets/icons/search-icon-2.svg?react";
+import { SearchIcon2, X } from "@components/icons";
 import MultiSearch from "./MultiSearch";
-import { FILTERED_COUNTRY } from "utils/business-profile-utils";
+import { FILTERED_COUNTRY } from "@/utils/business-profile-utils";
 import { Country, State, City } from "../../../country-sate-city";
-import { FilterData, useBusinessCtx } from "context/BusinessCtx";
-import { BusinessFilterType } from "types/business";
+import { FilterData, useBusinessCtx } from "@context/BusinessCtx";
+import { BusinessFilterType } from "@/types/business";
 import { useNavigate } from "react-router-dom";
-import { prevPageLocalKeyName } from "config";
+import { prevPageLocalKeyName } from "@/config";
 import {
   FlexColStart,
   FlexRowCenterBtw,
   FlexRowStart,
   FlexRowStartCenter,
-} from "components/Flex";
+} from "@components/Flex";
 
 interface OnfilterDataProps {
   uuid?: string | undefined;
@@ -269,7 +270,7 @@ const BusinessesFilterComponent = ({
               closeFilter();
             }}
           >
-            <CloseIcon />
+            <X size={25} />
           </button>
         </div>
 
@@ -285,7 +286,7 @@ const BusinessesFilterComponent = ({
           {/* SELECT BUSINESS CATEGORY */}
           <FlexColStart className="w-full">
             <MultiSearch
-              leftIcon={<SearchIcon fill="#fff" />}
+              leftIcon={<SearchIcon2 size={20} strokeWidth={1.4} />}
               label="Business Category"
               type={"multi"}
               listsData={businessesCategories}
@@ -323,7 +324,7 @@ const BusinessesFilterComponent = ({
                         });
                       }}
                     >
-                      <CloseIcon2 />
+                      <X size={15} />
                     </button>
                   </FlexRowStartCenter>
                 ))}

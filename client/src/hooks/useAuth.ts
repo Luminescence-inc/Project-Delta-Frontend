@@ -1,6 +1,6 @@
-import { getUserDetails } from "api/auth";
+import { getUserDetails } from "@/api/auth";
 import { useEffect, useState } from "react";
-import { TOKEN_NAME, UserDetails } from "types/auth";
+import { TOKEN_NAME, UserDetails } from "@/types/auth";
 
 export const useAuth = () => {
   const [userDetails, setUserDetails] = useState<UserDetails | null>(null);

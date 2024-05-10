@@ -1,7 +1,8 @@
 import { twMerge } from "tailwind-merge";
 import { type ClassValue, clsx } from "clsx";
-import defaultImg from "assets/images/default-img.jpeg";
-import { CloudinaryConfig } from "config";
+import { CloudinaryConfig } from "@/config";
+
+const defaultImg = "/assets/images/default-img.jpeg";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));

@@ -1,15 +1,12 @@
 /** @format */
-
-import PlusIcon from "assets/icons/plus-icon.svg?react";
-import BagIcon from "assets/icons/bag-icon.svg?react";
-import SearchIcon from "assets/icons/search-icon.svg?react";
+import { Plus, Bag, SearchIcon } from "@components/icons";
 import Pill from "./components/Pill";
-import { JwtPayload, TOKEN_NAME } from "types/auth";
-import { isAuthenticated } from "api/auth";
+import { JwtPayload, TOKEN_NAME } from "@/types/auth";
+import { isAuthenticated } from "@/api/auth";
 import { useNavigate } from "react-router-dom";
-import { prevPageLocalKeyName } from "config";
-import useTrackPagePath from "hooks/useTrackPagePath";
-import { FlexColStart } from "components/Flex";
+import { prevPageLocalKeyName } from "@/config";
+import useTrackPagePath from "@/hooks/useTrackPagePath";
+import { FlexColStart } from "@components/Flex";
 
 const Onboarding = () => {
   const navigate = useNavigate();
@@ -46,12 +43,16 @@ const Onboarding = () => {
 
         <Pill
           onClick={handleNewBusiness}
-          icon={<PlusIcon />}
+          icon={
+            <span className="w-[20px] h-[20px] rounded-sm flex items-center justify-center bg-orange-300">
+              <Plus strokeWidth={1} className=" stroke-none fill-white-100" />
+            </span>
+          }
           title="New Business? Signup"
           variant="red"
         />
         <Pill
-          icon={<BagIcon />}
+          icon={<Bag className="stroke-none" />}
           onClick={() => navigate("/login")}
           title="Existing Business? Login"
           variant="pink"
@@ -66,7 +67,7 @@ const Onboarding = () => {
 
             navigate("/explore-businesses");
           }}
-          icon={<SearchIcon />}
+          icon={<SearchIcon className="stroke-blue-102 fill-blue-102" />}
           title="Discover Business"
           variant="green"
         />

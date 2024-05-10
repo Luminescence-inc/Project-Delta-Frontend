@@ -1,10 +1,7 @@
-import './Spinner.scss';
-import Loader from "assets/icons/loader-icon.svg?react";
+import { Loader } from "@components/icons";
 
 const Spinner = () => {
-  return (
-    <Loader className="spinner" />
-  );
+  return <Loader className="animate-spin" />;
 };
 
 export default Spinner;

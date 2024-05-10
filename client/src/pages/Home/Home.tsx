@@ -1,34 +1,24 @@
 /** @format */
-import CtaArrow from "assets/icons/cta-btn-arrow.svg?react";
-import WorldMap from "assets/icons/world-map.svg?react";
-import SearchIcon from "assets/icons/mag-glass.svg?react";
-import PlusIcon from "assets/icons/uil_plus.svg?react";
-import VisibilityIcon from "assets/icons/visibility-icon.svg?react";
-import AudienceIcon from "assets/icons/audience-icon.svg?react";
-import GrowthIcon from "assets/icons/growth-icon.svg?react";
-import CustomerBgImage from "assets/images/customer-homebg.png";
-import ChoiceIcon from "assets/icons/choice-icon.svg?react";
-import ConvenienceIcon from "assets/icons/convenience-icon.svg?react";
-import CummunityIcon from "assets/icons/community-icon.svg?react";
-import Button from "components/ui/button";
+import { CtaArrow, Plus } from "@components/icons/index";
+import Button from "@components/ui/button";
 import TitleCard from "./components/TitleCard/TitleCard";
 import BusinessCard from "./components/BusinessCard/BusinessCard";
 import CustomerCard from "./components/CustomerCard/CustomerCard";
 import { useEffect, useState } from "react";
-import { JwtPayload, TOKEN_NAME } from "types/auth";
-import { isAuthenticated } from "api/auth";
+import { JwtPayload, TOKEN_NAME } from "@/types/auth";
+import { isAuthenticated } from "@/api/auth";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { getUserBusinessProfileList } from "api/business";
-import { UserBusinessListResponse } from "types/business";
+import { getUserBusinessProfileList } from "@/api/business";
+import { UserBusinessListResponse } from "@/types/business";
 import {
   FlexColCenter,
   FlexColStart,
   FlexRowStartCenter,
-} from "components/Flex";
-import SearchCompIcon from "assets/icons/search-icon-3.svg?react";
-import { useAuth } from "hooks/useAuth";
-import { prevPageLocalKeyName } from "config";
-import useTrackPagePath from "hooks/useTrackPagePath";
+} from "@components/Flex";
+import { SearchIcon2 } from "@components/icons";
+import { useAuth } from "@hooks/useAuth";
+import { prevPageLocalKeyName } from "@/config";
+import useTrackPagePath from "@hooks/useTrackPagePath";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -110,9 +100,13 @@ const Home = () => {
               }}
             >
               <FlexRowStartCenter className="w-full">
-                <SearchCompIcon />
+                <SearchIcon2
+                  size={20}
+                  className="stroke-gray-103"
+                  strokeWidth={1}
+                />
                 <span
-                  className="text-[12px] leading-[14px] font-hnL font-normal relative top-[2px]"
+                  className="text-[12px] leading-[14px] font-hnL font-normal relative top-[0px]"
                   style={{
                     color: "#9090A7",
                   }}
@@ -134,7 +128,9 @@ const Home = () => {
               <Button
                 intent="primary"
                 href="/onboarding"
-                rightIcon={<CtaArrow />}
+                rightIcon={
+                  <CtaArrow strokeWidth={1} className="stroke-white-100" />
+                }
                 className="w-full mt-8 rounded-md h-[55px]"
               >
                 <span className="font-hnM font-bold text-[14px] ">
@@ -151,7 +147,9 @@ const Home = () => {
               <Button
                 intent="primary"
                 href="/view-your-business"
-                leftIcon={<SearchIcon />}
+                leftIcon={
+                  <SearchIcon2 size={25} className="stroke-white-100" />
+                }
                 className="w-full mt-8 rounded-md h-[55px]"
               >
                 <span className="font-hnM font-bold text-[14px] ">
@@ -162,7 +160,13 @@ const Home = () => {
             <Button
               intent="transparent"
               href="/signup/register-business"
-              leftIcon={<PlusIcon />}
+              leftIcon={
+                <Plus
+                  strokeWidth={0.8}
+                  size={25}
+                  className="fill-blue-200 stroke-none"
+                />
+              }
               className="w-full mt-8 rounded-md h-[55px]"
             >
               <span className="font-hnM font-bold text-[14px] ">
@@ -175,7 +179,12 @@ const Home = () => {
         )}
 
         <div className="w-full mt-[40px] pb-20">
-          <WorldMap />
+          <img
+            src={"/assets/images/world-map.svg"}
+            alt="world map"
+            className="w-full h-auto"
+            style={{ height: "auto", width: "100%" }}
+          />
         </div>
       </header>
 
@@ -193,7 +202,12 @@ const Home = () => {
           <FlexColStart className="w-full mt-[20px] gap-5">
             <BusinessCard
               className={"business-card"}
-              icon={<VisibilityIcon />}
+              icon={
+                <img
+                  className="w-[60px]"
+                  src={"/assets/images/opportunities/visibility-icon.svg"}
+                />
+              }
               header={"Increased Visibility"}
               subTitle={
                 "With Bizconnect24, immigrant & Local business owners can showcase their products and services to a wider audience"
@@ -201,7 +215,12 @@ const Home = () => {
             />
             <BusinessCard
               className={"business-card"}
-              icon={<AudienceIcon />}
+              icon={
+                <img
+                  className="w-[60px]"
+                  src={"/assets/images/opportunities/audience-icon.svg"}
+                />
+              }
               header={"Access to Targeted Audience"}
               subTitle={
                 "Bizconnect24 caters specifically to immigrant & Local communities, allowing business owners to connect with a highly targeted audience that is actively seeking their products or services"
@@ -209,7 +228,12 @@ const Home = () => {
             />
             <BusinessCard
               className={"business-card"}
-              icon={<GrowthIcon />}
+              icon={
+                <img
+                  className="w-[60px]"
+                  src={"/assets/images/opportunities/growth-icon.svg"}
+                />
+              }
               header={"Business Growth"}
               subTitle={
                 "With access to a larger customer base and tools to expand their reach, immigrant & Local business owners can experience accelerated growth and increased revenue opportunities."
@@ -237,15 +261,20 @@ const Home = () => {
             <img
               width={349}
               height={357}
-              src={CustomerBgImage}
-              alt={CustomerBgImage}
+              src={"/assets/images/customer-homebg.jpeg"}
+              alt={"customer-homebg"}
             />
           </div>
 
           {/* Customer Card */}
-          <div style={{ marginTop: "35px" }}>
+          <div className="w-full mt-5">
             <CustomerCard
-              icon={<ChoiceIcon />}
+              icon={
+                <img
+                  className="w-[60px] mr-[20px]"
+                  src={"/assets/images/opportunities/choice-icon.svg"}
+                />
+              }
               header={"Choice"}
               subTitle={
                 "With Bizconnect24, customers have a myriad of options at their fingertips, empowering them to explore diverse businesses and find the perfect fit for their needs and preferences"
@@ -253,7 +282,12 @@ const Home = () => {
             />
 
             <CustomerCard
-              icon={<ConvenienceIcon />}
+              icon={
+                <img
+                  className="w-[60px] mr-[20px]"
+                  src={"/assets/images/opportunities/convenience-icon.svg"}
+                />
+              }
               header={"Convenience"}
               subTitle={
                 "Through the diverse options Bizconnect24 offers, customers are also effortlessly able to discover and engage with immigrant businesses closest to them"
@@ -261,7 +295,12 @@ const Home = () => {
             />
 
             <CustomerCard
-              icon={<CummunityIcon />}
+              icon={
+                <img
+                  className="w-[60px] mr-[20px]"
+                  src={"/assets/images/opportunities/community-icon.svg"}
+                />
+              }
               header={"Community"}
               subTitle={
                 "Through Bizconnect24, customers become part of a vibrant and supportive community, connecting with fellow enthusiasts who share a passion for diversity, entrepreneurship, and cultural exchange"
@@ -273,7 +312,9 @@ const Home = () => {
             <Button
               intent="primary"
               href="/explore-businesses"
-              rightIcon={<CtaArrow />}
+              rightIcon={
+                <CtaArrow strokeWidth={0.4} className="stroke-white-100" />
+              }
               className="w-full max-w-[303px] h-[55px] mt-8 rounded-md "
             >
               <span className="font-hnM font-bold text-[14px] leading-[14px] text-left text-white-100 ">
@@ -287,7 +328,7 @@ const Home = () => {
           className="w-full h-[497px]"
           style={{
             marginTop: "35px",
-            backgroundImage: `url("/assets/icons/join-network-bg.svg")`,
+            backgroundImage: `url("/assets/images/join-network-bg.svg")`,
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
@@ -334,7 +375,9 @@ const Home = () => {
               intent="primary"
               href="/explore-businesses"
               className="w-[303px] h-[55px] px-[15px] py-[15px] rounded-md border-[1px] border-white-100 "
-              rightIcon={<CtaArrow />}
+              rightIcon={
+                <CtaArrow strokeWidth={0.4} className="stroke-white-100" />
+              }
             >
               <span className="font-hnM font-bold text-[15px] leading-[14px] text-left text-white-100 ">
                 Explore Businesses
