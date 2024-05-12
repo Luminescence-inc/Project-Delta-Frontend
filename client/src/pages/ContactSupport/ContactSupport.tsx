@@ -5,7 +5,7 @@ import { BaseResponseMessage } from "@/types/auth";
 import { submitContactRequest } from "@/api/business";
 import { useFormik, FormikHelpers } from "formik";
 import * as yup from "yup";
-import Input from "@components/Input/Input";
+import Input from "@/components/ui/Input";
 import Button from "@components/ui/button";
 import { FlexColCenter, FlexColStart, FlexRowCenter } from "@components/Flex";
 import ErrorComponent from "@pages/Authentication/ErrorComponent";

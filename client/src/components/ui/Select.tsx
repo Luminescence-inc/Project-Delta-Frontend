@@ -2,7 +2,6 @@
 
 import { useRef, useState, useEffect } from "react";
 import { ChevronDown, X } from "@components/icons";
-import "./Input.scss";
 import { FormikProps } from "formik";
 import {
   FlexColStart,

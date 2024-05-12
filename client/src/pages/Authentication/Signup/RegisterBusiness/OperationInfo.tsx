@@ -7,10 +7,10 @@ import {
   DAYS_OF_OPERATIONS_OPTIONS,
   OPERATING_TIME_OPTIONS,
 } from "@/utils/business-profile-utils";
-import Input from "@components/Input/Input";
+import Input from "@/components/ui/Input";
 import Button from "@components/ui/button";
-import Select from "@components/Input/Select";
-import MultiSelect from "@components/Input/MultiSelect";
+import Select from "@/components/ui/Select";
+import MultiSelect from "@/components/ui/MultiSelect";
 import { FlexColStart, FlexColStartCenter } from "@components/Flex";
 import { Mail, Phone } from "@/components/icons";
 

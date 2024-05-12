@@ -2,7 +2,6 @@ import { useRef, useState, useEffect } from "react";
 import { ChevronDown } from "@components/icons";
 import { FormikProps } from "formik";
 import Button from "@components/ui/button";
-import "./Input.scss";
 import SelectedPlaceholder from "@components/SelectedPlaceholder";
 import { FlexColStart, FlexRowCenter } from "@components/Flex";
 import { cn } from "@/utils";
@@ -111,45 +110,45 @@ const MultiSelect = ({
       </FlexColStart>
 
       {showDropdown && (
-        <div ref={dropdownRef} className="dropdown-container">
+        <FlexColStart
+          ref={dropdownRef}
+          className="w-full gap-5 shadow-lg outline outline-[1px] outline-gray-100/10  px-3 py-3 rounded-md"
+        >
           <input
             type="text"
-            className="multiselect-search-inp"
+            className="outline-none border-none fcus:border-none focus:outline-none"
             placeholder="Search..."
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
           />
-          <div className="options-list">
-            <ul>
-              {options
-                ?.filter(
-                  (option) =>
-                    searchValue.length === 0 ||
-                    option.value
-                      .toLowerCase()
-                      .includes(searchValue.toLowerCase())
-                )
-                .map((option) => (
-                  <ListComponent
-                    key={option.uuid}
-                    option={option}
-                    isSelected={isSelected}
-                    handleSelect={handleSelect}
-                  />
-                ))}
-            </ul>
-          </div>
-          <div style={{ paddingTop: "10px" }}>
+          <ul>
+            {options
+              ?.filter(
+                (option) =>
+                  searchValue.length === 0 ||
+                  option.value.toLowerCase().includes(searchValue.toLowerCase())
+              )
+              .map((option) => (
+                <ListComponent
+                  key={option.uuid}
+                  option={option}
+                  isSelected={isSelected}
+                  handleSelect={handleSelect}
+                />
+              ))}
+          </ul>
+          <div className="w-full mt-2">
             <Button
               onClick={handleSave}
               type="button"
               intent="primary"
               size="md"
+              className="w-full"
             >
               Save
             </Button>
           </div>
-        </div>
+        </FlexColStart>
       )}
     </>
   );
@@ -173,12 +172,14 @@ function ListComponent({
 }: ListComponentProps) {
   return (
     <li
+      className="flex items-start justify-start gap-2 list-none cursor-pointer"
       key={option.uuid}
       onClick={() => handleSelect(option)}
-      style={{ listStyleType: "none", display: "flex" }}
     >
       <input type="checkbox" checked={isSelected(option)} onChange={() => {}} />
-      <label className="checkbox-value">{option.value}</label>
+      <label className="relative -top-1 font-inter font-normal cursor-pointer">
+        {option.value}
+      </label>
     </li>
   );
 }

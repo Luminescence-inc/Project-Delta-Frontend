@@ -18,7 +18,7 @@ import {
 } from "@components/Flex";
 import { LoaderComponent } from "@components/Loader";
 import ReadMoreText from "@/pages/BusinessDetails/components/ReadmoreText";
-import withAuth from "@/components/ProtectedRoutes/withAuth";
+import withAuth from "@/utils/auth-helpers/withAuth";
 
 const ViewBusiness = () => {
   const navigate = useNavigate();

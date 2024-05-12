@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import Footer from "@components/Footer/Footer";
-import Navbar from "@components/Navbar/Navbar";
+import Navbar from "@/components/Navbar";
 import Home from "@pages/Home/Home";
 import Onboarding from "@pages/Onboarding/Onboarding";
 import Login from "@pages/Authentication/Login/Login";
@@ -22,7 +22,7 @@ import BusinessContextProvider from "@context/BusinessCtx";
 import ExploreBusiness from "@pages/ExploreBusiness";
 import BusinessDetails from "@pages/BusinessDetails";
 import { DataCtxProvider } from "@context/DataCtx";
-import DefaultWebView from "@components/DefaultWebView/DefaultWebView";
+import DefaultWebView from "@/components/DefaultWebView";
 import { Toaster } from "react-hot-toast";
 
 function App() {

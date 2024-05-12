@@ -4,7 +4,7 @@ import { twMerge } from "tailwind-merge";
 import { Link } from "react-router-dom";
 
 const buttonVariants = cva(
-  "relative px-4 py-3 flex items-center justify-center gap-5 w-fit h-[48px] rounded-[6px] font-ppReg text-white-100",
+  "relative px-4 py-3 flex items-center justify-center gap-5 w-fit h-[48px] rounded-[6px] font-inter font-semibold text-white-100",
   {
     variants: {
       intent: {

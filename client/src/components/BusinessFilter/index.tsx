@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
-// import CloseIcon from "../../../public/assets/icons/close-icon.svg?react";
-// import CloseIcon2 from "../../../public/assets/icons/close-icon-2.svg?react";
-// import SearchIcon from "../../../public/assets/icons/search-icon-2.svg?react";
 import { SearchIcon2, X } from "@components/icons";
-import MultiSearch from "./MultiSearch";
+import MultiSearch from "../ui/MultiSearch";
 import { FILTERED_COUNTRY } from "@/utils/business-profile-utils";
 import { Country, State, City } from "../../../country-sate-city";
 import { FilterData, useBusinessCtx } from "@context/BusinessCtx";

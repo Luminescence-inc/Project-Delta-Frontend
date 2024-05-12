@@ -2,7 +2,7 @@
 
 import { Eye, ClosedEye } from "@components/icons";
 import Button from "@components/ui/button";
-import Input from "@components/Input/Input";
+import Input from "@/components/ui/Input";
 import * as yup from "yup";
 import { BaseResponseMessage, ResetPasswordData } from "@/types/auth";
 import { useFormik } from "formik";

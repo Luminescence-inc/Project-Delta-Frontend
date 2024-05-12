@@ -1,6 +1,6 @@
 /** @format */
 import { Eye, ClosedEye, Mail, Edit } from "@components/icons";
-import Input from "@components/Input/Input";
+import Input from "@/components/ui/Input";
 import Button from "@components/ui/button";
 import { useFormik } from "formik";
 import { SignUpData, TOKEN_NAME, BaseResponseMessage } from "@/types/auth";
@@ -11,7 +11,7 @@ import { useAuth } from "@hooks/useAuth";
 import { LoaderComponent } from "@components/Loader/index";
 import { FlexColCenter, FlexRowStartBtw } from "@/components/Flex";
 import { Link } from "react-router-dom";
-import withAuth from "@/components/ProtectedRoutes/withAuth";
+import withAuth from "@/utils/auth-helpers/withAuth";
 
 const validationSchema = yup.object({
   firstName: yup
