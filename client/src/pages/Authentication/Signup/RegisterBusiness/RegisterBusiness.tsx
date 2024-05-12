@@ -35,6 +35,7 @@ import { FlexRowCenter } from "@components/Flex";
 import { useAuth } from "@hooks/useAuth";
 import { LoaderComponent } from "@components/Loader";
 import toast from "react-hot-toast";
+import withAuth from "@/components/ProtectedRoutes/withAuth";
 
 const dayOrder: { [key: string]: number } = {
   Monday: 0,
@@ -573,4 +574,4 @@ const RegisterBusiness = () => {
   );
 };
 
-export default RegisterBusiness;
+export default withAuth(RegisterBusiness);

@@ -21,6 +21,7 @@ import {
 } from "@components/Flex";
 import Button from "@components/ui/button";
 import ErrorComponent from "../ErrorComponent";
+import withoutAuth from "@/components/ProtectedRoutes/withoutAuth";
 
 const validationSchema = yup.object({
   firstName: yup
@@ -296,4 +297,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default withoutAuth(Signup);

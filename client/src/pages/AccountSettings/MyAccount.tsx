@@ -1,18 +1,17 @@
 /** @format */
 import { Eye, ClosedEye, Mail, Edit } from "@components/icons";
 import Input from "@components/Input/Input";
-import Button from "@components/Button/Button";
+import Button from "@components/ui/button";
 import { useFormik } from "formik";
 import { SignUpData, TOKEN_NAME, BaseResponseMessage } from "@/types/auth";
 import { updateUserDetails } from "@/api/auth";
 import { useEffect, useState } from "react";
-import "./MyAccount.scss";
 import * as yup from "yup";
-import Spinner from "@components/Spinner/Spinner";
 import { useAuth } from "@hooks/useAuth";
 import { LoaderComponent } from "@components/Loader/index";
 import { FlexColCenter, FlexRowStartBtw } from "@/components/Flex";
 import { Link } from "react-router-dom";
+import withAuth from "@/components/ProtectedRoutes/withAuth";
 
 const validationSchema = yup.object({
   firstName: yup
@@ -272,24 +271,16 @@ const MyAccount = () => {
             }
             placeholder="Enter Password"
           />
-          <div style={{ marginTop: "40px" }}>
-            {!isLoading && (
-              <Button
-                type="submit"
-                label="Update profile"
-                variant="primary"
-                size="lg"
-              />
-            )}
-            {isLoading && (
-              <Button
-                type="submit"
-                label={Spinner()}
-                variant="primary"
-                size="lg"
-                disabled={true}
-              />
-            )}
+          <div className="mt-4 w-full">
+            <Button
+              type="submit"
+              intent="primary"
+              size="lg"
+              isLoading={isLoading}
+              className="w-full font-inter font-semibold text-[14px]"
+            >
+              Update profile
+            </Button>
           </div>
         </form>
       </FlexColCenter>
@@ -297,4 +288,4 @@ const MyAccount = () => {
   );
 };
 
-export default MyAccount;
+export default withAuth(MyAccount);

@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import { ChevronDown } from "@components/icons";
 import { FormikProps } from "formik";
-import Button from "@components/Button/Button";
+import Button from "@components/ui/button";
 import "./Input.scss";
 import SelectedPlaceholder from "@components/SelectedPlaceholder";
 import { FlexColStart, FlexRowCenter } from "@components/Flex";
@@ -142,10 +142,12 @@ const MultiSelect = ({
           <div style={{ paddingTop: "10px" }}>
             <Button
               onClick={handleSave}
-              label="Save"
-              variant="primary"
+              type="button"
+              intent="primary"
               size="md"
-            />
+            >
+              Save
+            </Button>
           </div>
         </div>
       )}

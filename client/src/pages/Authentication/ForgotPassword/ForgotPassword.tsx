@@ -1,16 +1,16 @@
 /** @format */
 
 import { Eye, ClosedEye } from "@components/icons";
-import Button from "@components/Button/Button";
+import Button from "@components/ui/button";
 import Input from "@components/Input/Input";
-import "./ForgotPassword.scss";
 import * as yup from "yup";
 import { BaseResponseMessage, ResetPasswordData } from "@/types/auth";
 import { useFormik } from "formik";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { resetUserPassword } from "@/api/auth";
-import Spinner from "@components/Spinner/Spinner";
+import { FlexColStart } from "@/components/Flex";
+import ErrorComponent from "../ErrorComponent";
 
 const validationSchema = yup.object({
   password: yup.string().required("Please Enter your password"),
@@ -84,14 +84,23 @@ const ForgotPassword = () => {
   });
 
   return (
-    <div className="forgot-password">
-      <div className="card">
-        <h4>Reset password</h4>
+    <div className="w-full px-[16px] py-[150px] bg-gray-50">
+      <FlexColStart className="w-full h-full rounded-[8px] bg-white-100 px-[16px] py-[32px] text-center">
+        <h4 className="text-[16px] font-semibold leading-[14px] font-inter">
+          Reset password
+        </h4>
 
         {/* Display Error message */}
-        {error && <span>{errorMessage}</span>}
+        {error && <ErrorComponent value={errorMessage as string} />}
 
-        <form onSubmit={formik.handleSubmit}>
+        <form className="w-full" onSubmit={formik.handleSubmit}>
+          <ErrorComponent
+            value={
+              formik.touched.password && formik.errors.password
+                ? formik.errors.password
+                : ""
+            }
+          />
           <Input
             type={!showPassword ? "password" : "text"}
             label="Enter new password"
@@ -116,12 +125,14 @@ const ForgotPassword = () => {
             }
             placeholder="Enter password"
           />
-          <span>
-            {formik.touched.password && formik.errors.password
-              ? formik.errors.password
-              : ""}
-          </span>
 
+          <ErrorComponent
+            value={
+              formik.touched.confirmPassword && formik.errors.confirmPassword
+                ? formik.errors.confirmPassword
+                : ""
+            }
+          />
           <Input
             type={!showConfirmPassword ? "password" : "text"}
             label="Re-enter Password"
@@ -146,31 +157,20 @@ const ForgotPassword = () => {
             }
             placeholder="Re-Enter Password"
           />
-          <span>
-            {formik.touched.confirmPassword && formik.errors.confirmPassword
-              ? formik.errors.confirmPassword
-              : ""}
-          </span>
 
-          {!isLoading && (
-            <Button
-              type="submit"
-              label="Confirm Password"
-              variant="primary"
-              size="lg"
-            />
-          )}
-          {isLoading && (
-            <Button
-              type="submit"
-              label={Spinner()}
-              variant="primary"
-              size="lg"
-              disabled={true}
-            />
-          )}
+          <br />
+
+          <Button
+            type="submit"
+            intent="primary"
+            size="lg"
+            isLoading={isLoading}
+            className="w-full font-inter font-semibold text-[14px]"
+          >
+            Confirm Password
+          </Button>
         </form>
-      </div>
+      </FlexColStart>
     </div>
   );
 };

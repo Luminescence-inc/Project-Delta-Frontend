@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { FlexColStart, FlexColStartCenter } from "@components/Flex";
 import ErrorComponent from "../ErrorComponent";
+import withoutAuth from "@/components/ProtectedRoutes/withoutAuth";
 
 const validationSchema = yup.object({
   email: yup.string().email("Enter valid email").required(),
@@ -187,4 +188,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default withoutAuth(Login);
