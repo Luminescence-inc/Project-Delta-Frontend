@@ -10,7 +10,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { resetUserPassword } from "@/api/auth";
 import { FlexColStart } from "@/components/Flex";
-import ErrorComponent from "../ErrorComponent";
+import ErrorComponent from "../../../components/ErrorComponent";
 
 const validationSchema = yup.object({
   password: yup.string().required("Please Enter your password"),

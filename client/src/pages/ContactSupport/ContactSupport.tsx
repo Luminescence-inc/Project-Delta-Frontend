@@ -8,7 +8,7 @@ import * as yup from "yup";
 import Input from "@/components/ui/Input";
 import Button from "@components/ui/button";
 import { FlexColCenter, FlexColStart, FlexRowCenter } from "@components/Flex";
-import ErrorComponent from "@pages/Authentication/ErrorComponent";
+import ErrorComponent from "@/components/ErrorComponent";
 
 const validationSchema = yup.object({
   personName: yup

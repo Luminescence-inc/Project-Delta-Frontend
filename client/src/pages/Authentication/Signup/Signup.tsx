@@ -20,7 +20,7 @@ import {
   FlexRowStartBtw,
 } from "@components/Flex";
 import Button from "@components/ui/button";
-import ErrorComponent from "../ErrorComponent";
+import ErrorComponent from "../../../components/ErrorComponent";
 import withoutAuth from "@/utils/auth-helpers/withoutAuth";
 
 const validationSchema = yup.object({

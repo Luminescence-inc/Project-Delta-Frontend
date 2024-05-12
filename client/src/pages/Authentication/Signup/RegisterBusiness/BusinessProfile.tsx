@@ -28,7 +28,7 @@ import {
   FlexColStartCenter,
   FlexRowCenter,
 } from "@/components/Flex";
-import ErrorComponent from "@pages/Authentication/ErrorComponent";
+import ErrorComponent from "@/components/ErrorComponent";
 import { cn } from "@/utils";
 import toast from "react-hot-toast";
 

@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { verifyUserAccount } from "@/api/auth";
 import { BaseResponseMessage } from "@/types/auth";
-import ErrorComponent from "../ErrorComponent";
+import ErrorComponent from "../../../components/ErrorComponent";
 import { FlexColCenter } from "@/components/Flex";
 
 const VerifiedEmail = () => {

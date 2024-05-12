@@ -10,7 +10,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { FlexColStart, FlexColStartCenter } from "@components/Flex";
-import ErrorComponent from "../ErrorComponent";
+import ErrorComponent from "../../../components/ErrorComponent";
 import withoutAuth from "@/utils/auth-helpers/withoutAuth";
 
 const validationSchema = yup.object({
