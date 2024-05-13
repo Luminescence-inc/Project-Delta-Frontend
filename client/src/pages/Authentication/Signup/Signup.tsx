@@ -2,7 +2,7 @@
 
 import { Link } from "react-router-dom";
 import { Mail, ClosedEye, Eye, CircleUser } from "@components/icons";
-import Input from "@components/Input/Input";
+import Input from "@/components/ui/Input";
 import { useFormik } from "formik";
 import {
   SignUpResponse,
@@ -20,7 +20,8 @@ import {
   FlexRowStartBtw,
 } from "@components/Flex";
 import Button from "@components/ui/button";
-import ErrorComponent from "../ErrorComponent";
+import ErrorComponent from "../../../components/ErrorComponent";
+import withoutAuth from "@/utils/auth-helpers/withoutAuth";
 
 const validationSchema = yup.object({
   firstName: yup
@@ -296,4 +297,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default withoutAuth(Signup);

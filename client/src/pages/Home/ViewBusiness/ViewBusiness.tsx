@@ -18,6 +18,7 @@ import {
 } from "@components/Flex";
 import { LoaderComponent } from "@components/Loader";
 import ReadMoreText from "@/pages/BusinessDetails/components/ReadmoreText";
+import withAuth from "@/utils/auth-helpers/withAuth";
 
 const ViewBusiness = () => {
   const navigate = useNavigate();
@@ -252,4 +253,4 @@ const ViewBusiness = () => {
   );
 };
 
-export default ViewBusiness;
+export default withAuth(ViewBusiness);

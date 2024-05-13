@@ -1,13 +1,13 @@
 import { Mail } from "@components/icons";
 import Button from "@components/ui/button";
-import Input from "@components/Input/Input";
+import Input from "@/components/ui/Input";
 import { useFormik } from "formik";
 import { LogInData, LogInResponse } from "@/types/auth";
 import { generateVerificationEmail } from "@/api/auth";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { FlexColCenter, FlexColStart, FlexRowCenter } from "@components/Flex";
-import ErrorComponent from "../ErrorComponent";
+import ErrorComponent from "../../../components/ErrorComponent";
 import toast from "react-hot-toast";
 
 const Email = () => {

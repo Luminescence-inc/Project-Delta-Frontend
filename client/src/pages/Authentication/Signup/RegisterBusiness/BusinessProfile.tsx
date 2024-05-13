@@ -19,16 +19,16 @@ import {
   ArrowBigUpDash,
   X,
 } from "@components/icons";
-import Input from "@/components/Input/Input";
+import Input from "@/components/ui/Input";
 import Button from "@/components/ui/button";
-import Select from "@/components/Input/Select";
+import Select from "@/components/ui/Select";
 import { CloudinaryConfig } from "@/config";
 import {
   FlexColStart,
   FlexColStartCenter,
   FlexRowCenter,
 } from "@/components/Flex";
-import ErrorComponent from "@pages/Authentication/ErrorComponent";
+import ErrorComponent from "@/components/ErrorComponent";
 import { cn } from "@/utils";
 import toast from "react-hot-toast";
 

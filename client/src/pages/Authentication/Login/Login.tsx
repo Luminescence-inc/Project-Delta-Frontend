@@ -2,7 +2,7 @@
 import { Link } from "react-router-dom";
 import { Eye, ClosedEye, Mail } from "@components/icons";
 import Button from "@components/ui/button";
-import Input from "@components/Input/Input";
+import Input from "@/components/ui/Input";
 import { useFormik } from "formik";
 import { LogInData, LogInResponse, TOKEN_NAME, JwtPayload } from "@/types/auth";
 import { loginUser } from "@/api/auth";
@@ -10,7 +10,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { FlexColStart, FlexColStartCenter } from "@components/Flex";
-import ErrorComponent from "../ErrorComponent";
+import ErrorComponent from "../../../components/ErrorComponent";
+import withoutAuth from "@/utils/auth-helpers/withoutAuth";
 
 const validationSchema = yup.object({
   email: yup.string().email("Enter valid email").required(),
@@ -187,4 +188,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default withoutAuth(Login);

@@ -1,5 +1,5 @@
 import { X } from "@components/icons";
-import "./placeholder.scss";
+import { FlexRowStart, FlexRowStartCenter } from "../Flex";
 
 type Props = {
   selectedValues: {
@@ -22,23 +22,26 @@ export default function SelectedPlaceholder({
   return (
     <>
       {selectedValues.length > 0 && !visible && (
-        <div className="days-of-operation-container">
+        <FlexRowStart className="">
           {selectedValues.map((d) => (
-            <div key={d.uuid} className="dop-placeholder">
-              <span>
+            <FlexRowStartCenter
+              key={d.uuid}
+              className="w-auto px-[10px] py-[7px] bg-gray-201 rounded-full"
+            >
+              <span className="text-[11px] font-inter tracking-normal leading-[13px] font-semibold text-blue-200 ml-[5px]">
                 {type === "daysOfOperation" ? d.value.slice(0, 3) : d.value}
               </span>
               <button
-                className="close-btn"
+                className="flex items-center justify-start border-none outline-none cursor-pointer transition-all p-0 m-0"
                 onClick={() => {
                   getSelectedHoler(d.uuid);
                 }}
               >
-                <X className="icon" />
+                <X size={15} className="text-[5px] text-gray-100" />
               </button>
-            </div>
+            </FlexRowStartCenter>
           ))}
-        </div>
+        </FlexRowStart>
       )}
     </>
   );

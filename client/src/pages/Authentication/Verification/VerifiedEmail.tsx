@@ -1,11 +1,12 @@
 /** @format */
 
-import Button from "@components/Button/Button";
-import "../ForgotPassword/ForgotPassword.scss";
+import Button from "@components/ui/button";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { verifyUserAccount } from "@/api/auth";
 import { BaseResponseMessage } from "@/types/auth";
+import ErrorComponent from "../../../components/ErrorComponent";
+import { FlexColCenter } from "@/components/Flex";
 
 const VerifiedEmail = () => {
   const { userId, uniqueString } = useParams();
@@ -42,20 +43,33 @@ const VerifiedEmail = () => {
   }, []);
 
   return (
-    <div className="login">
-      <div className="card">
+    <div className="pt-[80px] px-[16px] py-[150px] bg-gray-200">
+      <div className="w-full h-full rounded-[8px] bg-white-100 px-[16px] py-[32px] text-center">
         {verified && (
           <>
-            <h4>Your Account is Verified</h4>
-            <Button label="Login" variant="primary" size="lg" to="/login" />
+            <h4 className="text-[16px] font-semibold leading-[14px] font-inter ">
+              Your Account is Verified
+            </h4>
+
+            <Button
+              type="submit"
+              intent="primary"
+              size="lg"
+              href="/login"
+              className="w-full rounded-[5px] mt-3 font-inter font-semibold"
+            >
+              Login
+            </Button>
           </>
         )}
         {/* Display Error message */}
         {!verified && error && (
-          <>
-            <h4>Your Account is not Verified</h4>
-            <span>Error: {errorMessage}</span>
-          </>
+          <FlexColCenter className="w-full text-center">
+            <h4 className="text-[16px] font-semibold leading-[14px] font-inter ">
+              Your Account is not Verified
+            </h4>
+            <ErrorComponent value={errorMessage as string} />
+          </FlexColCenter>
         )}
       </div>
     </div>

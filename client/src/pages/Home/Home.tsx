@@ -117,7 +117,7 @@ const Home = () => {
             </button>
           </FlexColCenter>
           <br />
-          <h1 className="w-full text-[25px] font-bold leading-[38px] tracking-normal text-left text-blue-200 font-hnB">
+          <h1 className="w-full text-[30px] font-bold leading-[38px] tracking-normal text-left text-blue-200 font-hnB">
             Connecting Immigrant & Local Business Owners With Their Customers
           </h1>
           <p className="text-[15px] font-bold font-hnM leading-[25px] text-left text-gray-100 ">
