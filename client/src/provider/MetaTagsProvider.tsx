@@ -34,7 +34,7 @@ const MetaTagsProvider = (props: IMetaTagsProviderProps) => {
           content={props.keywords ?? SITE_CONFIG.keywords}
         />
         <meta name="author" content={props.author ?? SITE_CONFIG.name} />
-        <meta name="robots" content={props.robots} />
+        <meta name="robots" content={props.robots ?? "index, follow"} />
 
         <meta
           property="og:title"
