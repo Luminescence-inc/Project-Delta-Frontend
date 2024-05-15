@@ -241,7 +241,7 @@ const Home = () => {
             />
           </FlexColStart>
 
-          <div style={{ marginTop: "55px" }}>
+          <div className="w-full mt-5">
             <TitleCard
               className={"title-card"}
               title={"FOR CUSTOMERS"}
@@ -251,16 +251,9 @@ const Home = () => {
               }
             />
           </div>
-          <div
-            style={{
-              marginTop: "35px",
-              marginLeft: "25px",
-              marginRight: "25px",
-            }}
-          >
+          <div className="w-full h-auto mt-5 px-5">
             <img
-              width={349}
-              height={357}
+              style={{ width: "100%", height: "auto" }}
               src={"/assets/images/customer-homebg.jpeg"}
               alt={"customer-homebg"}
             />
