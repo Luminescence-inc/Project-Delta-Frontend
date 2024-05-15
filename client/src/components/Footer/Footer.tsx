@@ -1,5 +1,5 @@
 /** @format */
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { cn } from "@/utils";
 import { FlexColStart, FlexRowStart } from "@components/Flex";
 
@@ -29,7 +29,6 @@ const socialLinks = [
 ];
 
 const Footer = () => {
-  const navigate = useNavigate();
   const pathname = window.location.pathname.replace("/", "");
 
   return (
@@ -54,7 +53,8 @@ const Footer = () => {
       </div>
       <FlexColStart className="w-full gap-1">
         {navigations.map((n, i) => (
-          <p
+          <Link
+            to={n.link}
             key={i}
             className={cn(
               "text-[14px] cursor-pointer font-medium font-inter pb-[10px] text-gray-100",
@@ -62,10 +62,9 @@ const Footer = () => {
                 ? "text-teal-100"
                 : "text-gray-100"
             )}
-            onClick={() => navigate(n.link)}
           >
             {n.name}
-          </p>
+          </Link>
         ))}
       </FlexColStart>
 
