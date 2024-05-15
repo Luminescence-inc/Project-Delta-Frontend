@@ -112,11 +112,6 @@ const Navbar = () => {
     }
   };
 
-  const handleEditBusinessProfile = (id: string) => {
-    navigate(`/signup/register-business?update=${id}`);
-    setMenuOpen(false);
-  };
-
   return (
     <div className="w-full">
       <div className="w-full bg-white-105">
