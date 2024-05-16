@@ -21,6 +21,9 @@ interface IMetaTagsProviderProps {
 }
 
 const MetaTagsProvider = (props: IMetaTagsProviderProps) => {
+  const joinedKeywords = `${SITE_CONFIG?.keywords}${
+    props?.keywords ? "," : ""
+  }${props.keywords ?? ""}`;
   return (
     <>
       <Helmet>
@@ -29,10 +32,7 @@ const MetaTagsProvider = (props: IMetaTagsProviderProps) => {
           name="description"
           content={props.description ?? SITE_CONFIG.description}
         />
-        <meta
-          name="keywords"
-          content={props.keywords ?? SITE_CONFIG.keywords}
-        />
+        <meta name="keywords" content={joinedKeywords} />
         <meta name="author" content={props.author ?? SITE_CONFIG.name} />
         <meta name="robots" content={props.robots ?? "index, follow"} />
 
