@@ -5,6 +5,7 @@ const SITE_CONFIG = {
   description: "Seamlessly Connect Immigrant & Local Businesses",
   keywords: "businesses, immigrant, local, community, connect",
   domain: "https://www.bizconnect24.com/",
+  type: "website",
   //   remember to update the image below
   image: "https://veloz-zeus.tryveloz.com/images/og/og-image.png",
 };
