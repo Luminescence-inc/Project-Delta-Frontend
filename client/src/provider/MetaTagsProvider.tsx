@@ -48,8 +48,8 @@ const MetaTagsProvider = (props: IMetaTagsProviderProps) => {
           property="og:image"
           content={props.og?.image ?? SITE_CONFIG.image}
         />
-        <meta property="og:url" content={props.og?.url} />
-        <meta property="og:type" content={props.og?.type} />
+        <meta property="og:url" content={props.og?.url ?? SITE_CONFIG.domain} />
+        <meta property="og:type" content={props.og?.type ?? SITE_CONFIG.type} />
         <meta
           property="og:site_name"
           content={props.og?.site_name ?? SITE_CONFIG.name}

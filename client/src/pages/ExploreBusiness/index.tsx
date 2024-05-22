@@ -15,6 +15,10 @@ import { cn } from "@/utils";
 import { LoaderComponent } from "@components/Loader";
 import { useEffect, useState } from "react";
 import MetaTagsProvider from "@/provider/MetaTagsProvider";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+
+dayjs.extend(relativeTime);
 
 const ExploreBusiness = () => {
   const {
@@ -87,38 +91,63 @@ const ExploreBusiness = () => {
 
   const generateHeadlineText = () => {
     const { country, state, city } = generateHeadlineFromQuery();
+    const response = {
+      title: "",
+      busicnesses: "",
+    };
+
+    const top10_businesses_name = businesses
+      .map((b) => b.name)
+      .slice(0, 10)
+      .join(" - ");
+
+    response["busicnesses"] = top10_businesses_name;
+
     if (city && state) {
-      return `TOP 10 Businesses Near ${city}, ${state}`;
+      response["title"] = `TOP 10 Businesses Near ${city}, ${state}`;
+      return response;
     }
     if (country && state) {
-      return `TOP 10 Businesses Near ${state}, ${country}`;
+      response["title"] = `TOP 10 Businesses Near ${state}, ${country}`;
+      return response;
     }
     if (country) {
-      return `TOP 10 Businesses in ${country}`;
+      response["title"] = `TOP 10 Businesses in ${country}`;
+      return response;
     }
     if (state) {
-      return `TOP 10 Businesses Near ${state}`;
+      response["title"] = `TOP 10 Businesses Near ${state}`;
+      return response;
     }
     if (city) {
-      return `TOP 10 Businesses Near ${city}`;
+      response["title"] = `TOP 10 Businesses Near ${city}`;
+      return response;
     }
-    return "Explore Businesses Near You";
+    response["title"] = "Explore Businesses Near You";
+    return response;
   };
+
+  const date = dayjs().format("MMM DD YYYY");
+  const metaDescription = `${generateHeadlineText().title}, - ${date} - ${
+    generateHeadlineText().busicnesses
+  }`;
 
   return (
     <FlexColStart className="w-full h-full">
       <MetaTagsProvider
-        title={generateHeadlineText()}
-        description={generateHeadlineText()}
+        title={generateHeadlineText().title}
+        description={metaDescription}
+        url={window.location.href}
         og={{
-          title: generateHeadlineText(),
-          description: generateHeadlineText(),
+          title: generateHeadlineText().title,
+          description: metaDescription,
+          url: window.location.href,
         }}
       />
 
       <FlexColStart className="w-full px-[20px] mt-10 gap-[15px]">
         <h1 className="text-[20px] md:text-[30px] font-extrabold font-inter">
-          {generateHeadlineText()}
+          {generateHeadlineText().title}
         </h1>
         <p className="text-[15px] font-medium font-inter text-gray-103">
           Discover businesses within and beyond your community
