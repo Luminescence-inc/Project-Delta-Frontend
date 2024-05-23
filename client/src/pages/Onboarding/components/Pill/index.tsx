@@ -1,12 +1,14 @@
 import React from "react";
 import { cn } from "@/utils";
 import { FlexRowStartCenter } from "@components/Flex";
+import { Link } from "react-router-dom";
 
 interface IPill {
   icon: React.ReactNode;
   title: string;
   variant: "pink" | "red" | "green";
   onClick?: () => void;
+  path: string;
 }
 
 const variants = {
@@ -15,10 +17,10 @@ const variants = {
   green: "bg-green-102",
 };
 
-const Pill = ({ icon, title, variant, onClick }: IPill) => {
+const Pill = ({ icon, title, path, variant, onClick }: IPill) => {
   const variantBgColor = variants[variant];
   return (
-    <button onClick={onClick} className="w-full bg-none outline-none">
+    <Link to={path} onClick={onClick} className="w-full bg-none outline-none">
       <FlexRowStartCenter
         className={cn(
           `w-full gap-[12px] p-[16px] rounded-[6px] `,
@@ -30,7 +32,7 @@ const Pill = ({ icon, title, variant, onClick }: IPill) => {
           {title}
         </h3>
       </FlexRowStartCenter>
-    </button>
+    </Link>
   );
 };
 
