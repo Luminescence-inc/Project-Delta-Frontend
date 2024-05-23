@@ -66,7 +66,9 @@ const RenderSocialLinks = ({
 
   return (
     <div className="w-auto relative">
-      <button
+      <a
+        href={url}
+        target="_blank"
         className={cn(
           "w-[34px] h-[34px] flex flex-col items-center justify-center rounded-full scale-[.90]",
           valid ? "cursor-pointer" : "cursor-not-allowed"
@@ -76,14 +78,15 @@ const RenderSocialLinks = ({
           opacity: valid ? 1 : 0.6,
           filter: valid ? "grayscale(0)" : "grayscale(100%)",
         }}
-        onClick={() => {
+        onClick={(e) => {
+          e.preventDefault();
           setActiveTtip(name);
           if (!valid) return;
           window.open(url, "_blank");
         }}
       >
         {icon}
-      </button>
+      </a>
       {true && (
         <span
           className={cn(

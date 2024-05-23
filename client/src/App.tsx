@@ -1,3 +1,4 @@
+"use client";
 /** @format */
 
 import { useEffect, useState } from "react";
@@ -46,60 +47,69 @@ function App() {
     };
   }, [width]);
 
-  if (width > MobileConstraint) {
-    return <DefaultWebView />;
-  }
-
   return (
-    <div id="app-container" className={`font-hnM`}>
-      <DataCtxProvider>
-        <Navbar />
-        <BusinessContextProvider>
-          <main>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/onboarding" element={<Onboarding />} />
-              <Route path="/login" element={<Login />} />
-              <Route
-                path="/forgot-password/reset/:userId/:uniqueString"
-                element={<ForgotPassword />}
-              />
-              <Route
-                path="/verify-email/:userId/:uniqueString"
-                element={<VerifiedEmail />}
-              />
-              <Route path="/verify-account" element={<VerifiedAccount />} />
-              <Route path="/forgot-password/email" element={<Email />} />
-              <Route
-                path="/forgot-password-final"
-                element={<ForgotPasswordFinal />}
-              />
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/view-your-business" element={<ViewBusiness />} />
+    <>
+      <div className={width > MobileConstraint ? "visible" : "hidden"}>
+        <DefaultWebView />
+      </div>
+      <div
+        id="app-container"
+        className={
+          width > MobileConstraint ? "invisible" : "visible font-ppReg"
+        }
+      >
+        <DataCtxProvider>
+          <Navbar />
+          <BusinessContextProvider>
+            <main>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/onboarding" element={<Onboarding />} />
+                <Route path="/login" element={<Login />} />
+                <Route
+                  path="/forgot-password/reset/:userId/:uniqueString"
+                  element={<ForgotPassword />}
+                />
+                <Route
+                  path="/verify-email/:userId/:uniqueString"
+                  element={<VerifiedEmail />}
+                />
+                <Route path="/verify-account" element={<VerifiedAccount />} />
+                <Route path="/forgot-password/email" element={<Email />} />
+                <Route
+                  path="/forgot-password-final"
+                  element={<ForgotPasswordFinal />}
+                />
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/view-your-business" element={<ViewBusiness />} />
 
-              <Route path="/explore-businesses" element={<ExploreBusiness />} />
-              <Route
-                path="/business-details/:business_id"
-                element={<BusinessDetails />}
-              />
-              <Route
-                path="/signup/register-business"
-                element={<RegisterBusiness />}
-              />
-              <Route path="/account" element={<MyAccount />} />
-              <Route path="/about-us" element={<AboutUs />} />
-              <Route path="/contact-support" element={<ContactSupport />} />
-            </Routes>
-          </main>
-          <Toaster
-            toastOptions={{
-              position: "top-center",
-            }}
-          />
-        </BusinessContextProvider>
-        <Footer />
-      </DataCtxProvider>
-    </div>
+                <Route
+                  path="/explore-businesses"
+                  element={<ExploreBusiness />}
+                />
+                <Route
+                  path="/business-details/:business_id"
+                  element={<BusinessDetails />}
+                />
+                <Route
+                  path="/signup/register-business"
+                  element={<RegisterBusiness />}
+                />
+                <Route path="/account" element={<MyAccount />} />
+                <Route path="/about-us" element={<AboutUs />} />
+                <Route path="/contact-support" element={<ContactSupport />} />
+              </Routes>
+            </main>
+            <Toaster
+              toastOptions={{
+                position: "top-center",
+              }}
+            />
+          </BusinessContextProvider>
+          <Footer />
+        </DataCtxProvider>
+      </div>
+    </>
   );
 }
 

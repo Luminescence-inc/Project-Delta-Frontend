@@ -14,6 +14,11 @@ import { IFilter } from "@/types/business-profile";
 import { cn } from "@/utils";
 import { LoaderComponent } from "@components/Loader";
 import { useEffect, useState } from "react";
+import MetaTagsProvider from "@/provider/MetaTagsProvider";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+
+dayjs.extend(relativeTime);
 
 const ExploreBusiness = () => {
   const {
@@ -58,10 +63,92 @@ const ExploreBusiness = () => {
     }
   }, [searchQuery]);
 
+  const generateHeadlineFromQuery = () => {
+    let state = null,
+      country = null,
+      city = null;
+    if (!searchQuery) {
+      return {
+        country,
+        state,
+        city,
+      };
+    }
+    country = searchQuery?.filters.find(
+      (it) => it.targetFieldName === "country"
+    );
+    state = searchQuery?.filters.find(
+      (it) => it.targetFieldName === "stateAndProvince"
+    );
+    city = searchQuery?.filters.find((it) => it.targetFieldName === "city");
+
+    return {
+      country: country?.values[0],
+      state: state?.values[0],
+      city: city?.values[0],
+    };
+  };
+
+  const generateHeadlineText = () => {
+    const { country, state, city } = generateHeadlineFromQuery();
+    const response = {
+      title: "",
+      busicnesses: "",
+    };
+
+    const top10_businesses_name = businesses
+      .map((b) => b.name)
+      .slice(0, 10)
+      .join(" - ");
+
+    response["busicnesses"] = top10_businesses_name;
+
+    if (city && state) {
+      response["title"] = `TOP 10 Businesses Near ${city}, ${state}`;
+      return response;
+    }
+    if (country && state) {
+      response["title"] = `TOP 10 Businesses Near ${state}, ${country}`;
+      return response;
+    }
+    if (country) {
+      response["title"] = `TOP 10 Businesses in ${country}`;
+      return response;
+    }
+    if (state) {
+      response["title"] = `TOP 10 Businesses Near ${state}`;
+      return response;
+    }
+    if (city) {
+      response["title"] = `TOP 10 Businesses Near ${city}`;
+      return response;
+    }
+    response["title"] = "Explore Businesses Near You";
+    return response;
+  };
+
+  const date = dayjs().format("MMM DD YYYY");
+  const metaDescription = `${generateHeadlineText().title}, - ${date} - ${
+    generateHeadlineText().busicnesses
+  }`;
+
   return (
     <FlexColStart className="w-full h-full">
+      <MetaTagsProvider
+        title={generateHeadlineText().title}
+        description={metaDescription}
+        url={window.location.href}
+        og={{
+          title: generateHeadlineText().title,
+          description: metaDescription,
+          url: window.location.href,
+        }}
+      />
+
       <FlexColStart className="w-full px-[20px] mt-10 gap-[15px]">
-        <h1 className="text-[30px] font-bold font-inter">Explore Businesses</h1>
+        <h1 className="text-[20px] md:text-[30px] font-extrabold font-inter">
+          {generateHeadlineText().title}
+        </h1>
         <p className="text-[15px] font-medium font-inter text-gray-103">
           Discover businesses within and beyond your community
         </p>
