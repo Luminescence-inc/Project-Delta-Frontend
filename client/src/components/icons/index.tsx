@@ -308,3 +308,9 @@ export const Headset = (props: SvgIconProps) => (
     <path d="M21 16v2a4 4 0 0 1-4 4h-5" />
   </IconMarkup>
 );
+
+export const Filter = (props: SvgIconProps) => (
+  <IconMarkup {...props}>
+    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
+  </IconMarkup>
+);
