@@ -1,7 +1,4 @@
-import {
-  allBusinessCategories,
-  getListOfBusinsessProfile,
-} from "@/api/business";
+import { allBusinessCategories, searchForBusinesses } from "@/api/business";
 import React, { PropsWithChildren, useEffect, useState } from "react";
 import {
   BusinessCategories,
@@ -9,6 +6,7 @@ import {
   IOption,
 } from "@/types/business";
 import { IBusinessProfile, ISearch } from "@/types/business-profile";
+import { constructSearchUrl } from "@/utils";
 
 export const BusinessContext = React.createContext<ContextValues>({} as any);
 
@@ -103,15 +101,19 @@ export default function BusinessContextProvider({
 
   const getBusinesses = async (currPage: number, filterApplied: boolean) => {
     setAllBusinessesLoading(true);
-    const result = await getListOfBusinsessProfile(
+
+    const queryParams = constructSearchUrl(
+      searchQuery || { filters: [] },
+      businessCategory,
       {
         page: currPage,
+        limit: 10,
         sortBy: "createdUtc",
         sortDirection: "asc",
-        limit: 10,
-      },
-      searchQuery
+      }
     );
+
+    const result = await searchForBusinesses(queryParams);
     const data = result.data?.data.businessProfiles;
 
     setAllBusinessesLoading(false);
