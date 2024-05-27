@@ -107,7 +107,7 @@ export default function BusinessContextProvider({
       businessCategory,
       {
         page: currPage,
-        limit: 10,
+        limit: 5,
         sortBy: "createdUtc",
         sortDirection: "asc",
       }
