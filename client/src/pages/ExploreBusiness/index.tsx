@@ -10,13 +10,13 @@ import BusinessesFilterComponent from "@components/BusinessFilter";
 import { UserBusinessList } from "@/types/business";
 import { FilterData, useBusinessCtx } from "@context/BusinessCtx";
 import { IFilter } from "@/types/business-profile";
-import { cn } from "@/utils";
 import { LoaderComponent } from "@components/Loader";
 import { useEffect, useState } from "react";
 import MetaTagsProvider from "@/provider/MetaTagsProvider";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Input from "@/components/ui/Input";
+import { Pagination } from "@/components/Pagination";
 
 dayjs.extend(relativeTime);
 
@@ -24,8 +24,6 @@ const ExploreBusiness = () => {
   const {
     businessCategory,
     businesses,
-    getBusinesses,
-    currPage,
     allBusinessesLoading,
     totalPages,
     setSearchQuery,
@@ -228,35 +226,7 @@ const ExploreBusiness = () => {
         businessCategories={businessCategory}
       />
 
-      {/* Load more button */}
-      <FlexColCenter
-        className="w-full h-[100px] mt-4"
-        style={{
-          height: "100px",
-        }}
-      >
-        {currPage < totalPages && businesses.length > 0 && (
-          <button
-            className={cn(
-              "px-[20px] py-[10px] rounded-5 border-none outline-none flex items-center justify-center gap-[1px] cursor-pointer bg-white-105 transition-all",
-              allBusinessesLoading ? "bg-white-106 cursor-not-allowed" : ""
-            )}
-            onClick={() => {
-              if (!allBusinessesLoading) {
-                getBusinesses(currPage + 1, false);
-              }
-            }}
-          >
-            {allBusinessesLoading ? (
-              <LoaderComponent />
-            ) : (
-              <span className="text-[14px] font-normal font-inter text-dark-100">
-                Load more
-              </span>
-            )}
-          </button>
-        )}
-      </FlexColCenter>
+      {businesses.length > 0 && <Pagination totalPages={totalPages} />}
 
       {/* Filtering component */}
       {showFilter && (
