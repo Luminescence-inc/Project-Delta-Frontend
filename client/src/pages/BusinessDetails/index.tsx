@@ -162,18 +162,17 @@ export default function BusinessDetails() {
     );
   }
 
+  const categories = businessDetails?.categories?.join(" - ");
+  const metaDescription = `${businessDetails?.description}, ${businessDetails?.city}, ${businessDetails?.stateAndProvince}, ${categories}`;
+
   return (
     <>
       <MetaTagsProvider
-        title={`${businessDetails?.name!} | ${businessDetails?.city}, ${
-          businessDetails?.stateAndProvince
-        }`}
-        description={businessDetails?.description}
+        title={metaDescription}
+        description={metaDescription}
         og={{
-          title: `${businessDetails?.name!} | ${businessDetails?.city}, ${
-            businessDetails?.stateAndProvince
-          }`,
-          description: businessDetails?.description,
+          title: metaDescription,
+          description: metaDescription,
           image: constructBizImgUrl(businessDetails?.logoUrl!),
           url: window.location.href,
           type: "website",
