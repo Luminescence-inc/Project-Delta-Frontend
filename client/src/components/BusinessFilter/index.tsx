@@ -5,7 +5,6 @@ import { FILTERED_COUNTRY } from "@/utils/business-profile-utils";
 import { Country, State, City } from "../../../country-sate-city";
 import { FilterData, useBusinessCtx } from "@context/BusinessCtx";
 import { BusinessFilterType } from "@/types/business";
-import { useNavigate } from "react-router-dom";
 import {
   FlexColStart,
   FlexRowCenterBtw,
@@ -43,8 +42,6 @@ const BusinessesFilterComponent = ({
     setSearchQuery,
     setBusinesses,
   } = useBusinessCtx();
-  const navigate = useNavigate();
-
   const formatedCountries = () => {
     return FILTERED_COUNTRY.map((country) => {
       return {
