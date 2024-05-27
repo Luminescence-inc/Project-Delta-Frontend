@@ -11,23 +11,19 @@ export default function withoutAuth<P>(Component: React.ComponentType<P>) {
   const ComponentWithoutAuth = (props: P & any) => {
     const { setIsAuth } = useDataCtx();
     const [localIsAuth, setLocalIsAuth] = useState<boolean>(false);
-    const [authToken, setAuthToken] = useState<string | null>(
-      localStorage.getItem(TOKEN_NAME) || null
-    );
     const navigate = useNavigate();
 
     useEffect(() => {
       const token = localStorage.getItem(TOKEN_NAME);
       if (token) {
         const payload = JSON.parse(atob(token.split(".")[1]));
-        setAuthToken(token);
         checkIsAuthenticated(payload!);
       }
     }, []);
 
     const checkIsAuthenticated = async (parsedToken: JwtPayload) => {
       try {
-        await isAuthenticated(authToken!, parsedToken?.id);
+        await isAuthenticated(parsedToken?.id);
         setIsAuth(true);
         setLocalIsAuth(true);
 
