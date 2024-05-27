@@ -136,9 +136,11 @@ const Signup = () => {
             name="firstName"
             value={formik.values.firstName}
             onChange={formik.handleChange}
-            icon={<CircleUser className="stroke-none" />}
+            rightIcon={<CircleUser className="stroke-none" />}
             onBlur={formik.handleBlur}
             placeholder="Enter First Name"
+            parentClassname="w-full px-0 border border-white-400/50 px-4"
+            inputClassname="w-full px-3 outline-none border-none"
           />
           <br />
           <ErrorComponent
@@ -155,8 +157,10 @@ const Signup = () => {
             value={formik.values.lastName}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            icon={<CircleUser className="stroke-none" />}
+            rightIcon={<CircleUser className="stroke-none" />}
             placeholder="Enter Last Name"
+            parentClassname="w-full px-0 border border-white-400/50 px-4"
+            inputClassname="w-full px-3 outline-none border-none"
           />
 
           <br />
@@ -175,7 +179,7 @@ const Signup = () => {
             value={formik.values.email}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            icon={
+            rightIcon={
               <Mail
                 strokeWidth={1}
                 size={20}
@@ -183,6 +187,8 @@ const Signup = () => {
               />
             }
             placeholder="Enter Email Address"
+            parentClassname="w-full px-0 border border-white-400/50 px-4"
+            inputClassname="w-full px-3 outline-none border-none"
           />
           <br />
           <ErrorComponent
@@ -199,7 +205,7 @@ const Signup = () => {
             value={formik.values.password}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            icon={
+            rightIcon={
               showPassword ? (
                 <Eye
                   className="cursor-pointer"
@@ -215,6 +221,8 @@ const Signup = () => {
               )
             }
             placeholder="Enter Password"
+            parentClassname="w-full px-0 border border-white-400/50 px-4"
+            inputClassname="w-full px-3 outline-none border-none"
           />
 
           <br />
@@ -233,7 +241,7 @@ const Signup = () => {
             value={formik.values.confirmPassword}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            icon={
+            rightIcon={
               showConfirmPassword ? (
                 <Eye
                   className="cursor-pointer"
@@ -249,6 +257,8 @@ const Signup = () => {
               )
             }
             placeholder="Enter Password"
+            parentClassname="w-full px-0 border border-white-400/50 px-4"
+            inputClassname="w-full px-3 outline-none border-none"
           />
 
           <FlexRowStartBtw className="w-full py-10 mb-[24px]">
