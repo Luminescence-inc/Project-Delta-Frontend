@@ -212,10 +212,12 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
           name="businessName"
           value={formik.values.businessName}
           onChange={formik.handleChange}
-          icon={
+          rightIcon={
             // <ContactIcon className="input-icon" />
             null
           }
+          parentClassname="w-full px-0"
+          inputClassname="w-full px-3 border-white-400/50"
           placeholder="Enter Business Name"
         />
 
@@ -309,6 +311,8 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
           value={formik.values.street}
           onChange={formik.handleChange}
           placeholder="Enter Street Name"
+          parentClassname="w-full px-0"
+          inputClassname="w-full px-3 border-white-400/50"
         />
         <br />
 
@@ -319,6 +323,8 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
           value={formik.values.postalCode}
           onChange={formik.handleChange}
           placeholder="Enter Postal Code"
+          parentClassname="w-full px-0"
+          inputClassname="w-full px-3 border-white-400/50"
         />
         <br />
 

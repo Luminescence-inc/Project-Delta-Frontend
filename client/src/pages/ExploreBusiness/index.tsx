@@ -2,10 +2,9 @@ import {
   FlexColCenter,
   FlexColStart,
   FlexColStartCenter,
-  FlexRowCenterBtw,
   FlexRowStartCenter,
 } from "@components/Flex";
-import { SearchIcon2 } from "@components/icons";
+import { Filter, SearchIcon2 } from "@components/icons";
 import BusinessCardContainer from "./components/BusinessCard";
 import BusinessesFilterComponent from "@components/BusinessFilter";
 import { UserBusinessList } from "@/types/business";
@@ -14,6 +13,7 @@ import { IFilter } from "@/types/business-profile";
 import { cn } from "@/utils";
 import { LoaderComponent } from "@components/Loader";
 import { useEffect, useState } from "react";
+import Input from "@/components/ui/Input";
 
 const ExploreBusiness = () => {
   const {
@@ -28,7 +28,8 @@ const ExploreBusiness = () => {
     setLayout,
     searchQuery,
   } = useBusinessCtx();
-  const [showFilter, setShowFilter] = useState<boolean>(true);
+  const [showFilter, setShowFilter] = useState<boolean>(false);
+  const [search, setSearch] = useState<string>("");
 
   // construct the search query
   const constructQuery = (filterData: FilterData) => {
@@ -67,30 +68,45 @@ const ExploreBusiness = () => {
         </p>
       </FlexColStart>
       {/* search component */}
-      <FlexRowCenterBtw className="w-full px-[20px] mt-[10px] gap-[20px] bg-none">
-        <button
-          className={cn(
-            "w-full px-[15px] py-[12px] rounded-[10px] border-none outline-none bg-white-100 disabled:bg-white-106 disabled:cursor-not-allowed shadow-sm cursor-pointer"
-          )}
-          onClick={() => setShowFilter(true)}
-          disabled={allBusinessesLoading}
-        >
-          <FlexRowStartCenter className="w-full gap-1">
+      <FlexRowStartCenter className="w-full px-[20px] mt-8 gap-[5px] bg-none">
+        <Input
+          inputClassname="font-inter font-normal border-none tracking-[0]"
+          parentClassname="w-full outline outline-[1px] outline-white-400/20 bg-white-100 cursor-pointer rounded-[10px]"
+          type="text"
+          placeholder="Search business"
+          leftIcon={
             <SearchIcon2
               size={20}
               strokeWidth={1.2}
               className="stroke-gray-103"
             />
-            <p className="text-[12px] relative left-1 top-[1px] text-gray-103 font-normal font-inter">
-              Search business
-            </p>
-          </FlexRowStartCenter>
+          }
+          onChange={(e) => setSearch(e.target.value)}
+          onKeyUp={(e) => {
+            if (e.key === "Enter") {
+              setSearchQuery({
+                filters: [
+                  {
+                    targetFieldName: "query",
+                    values: [search],
+                  },
+                ],
+              });
+            }
+          }}
+          autoComplete="off"
+        />
+        <button
+          className="border-none outline-none cursor-pointer rounded-[5px] p-2 flex items-center justify-center bg-blue-50 -translate-y-2"
+          onClick={() => setShowFilter(true)}
+        >
+          <Filter size={15} className="stroke-blue-200" />
         </button>
         <button
           onClick={() =>
             setLayout && setLayout(layout === "col" ? "row" : "col")
           }
-          className="border-none outline-none cursor-pointer rounded-[10px] p-2 flex items-center justify-center"
+          className="border-none outline-none cursor-pointer rounded-[10px] p-2 flex items-center justify-center -translate-y-2"
         >
           <FlexColCenter>
             {layout === "col" ? (
@@ -100,7 +116,7 @@ const ExploreBusiness = () => {
             )}
           </FlexColCenter>
         </button>
-      </FlexRowCenterBtw>
+      </FlexRowStartCenter>
 
       <FlexColCenter className="w-full min-h-[20px]">
         {allBusinessesLoading && (
