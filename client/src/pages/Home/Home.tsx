@@ -7,7 +7,7 @@ import CustomerCard from "./components/CustomerCard/CustomerCard";
 import { useEffect, useState } from "react";
 import { JwtPayload, TOKEN_NAME } from "@/types/auth";
 import { isAuthenticated } from "@/api/auth";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { getUserBusinessProfileList } from "@/api/business";
 import { UserBusinessListResponse } from "@/types/business";
 import {
