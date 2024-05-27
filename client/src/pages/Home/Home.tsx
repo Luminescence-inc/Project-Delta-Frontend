@@ -72,8 +72,8 @@ const Home = () => {
         <div className="">
           {/* Search component */}
           <FlexColCenter className="w-full">
-            <Link
-              to="/search"
+            <a
+              href="/search"
               className="w-full h-[44px] rounded-[10px] flex flex-row items-center justify-start px-[15px] gap-5 cursor-pointer bg-white border-[1px] border-solid border-blue-200 shadow-md"
               onClick={() => {
                 // keep track of prev page route
@@ -98,7 +98,7 @@ const Home = () => {
                   Search businesses
                 </span>
               </FlexRowStartCenter>
-            </Link>
+            </a>
           </FlexColCenter>
           <br />
           <h1 className="w-full text-[30px] font-bold leading-[38px] tracking-normal text-left text-blue-200 font-hnB">
