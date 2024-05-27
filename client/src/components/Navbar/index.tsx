@@ -112,11 +112,6 @@ const Navbar = () => {
     }
   };
 
-  const handleEditBusinessProfile = (id: string) => {
-    navigate(`/signup/register-business?update=${id}`);
-    setMenuOpen(false);
-  };
-
   return (
     <div className="w-full">
       <div className="w-full bg-white-105">
@@ -160,7 +155,8 @@ const Navbar = () => {
                   const currPage = pathname.split("/").pop();
 
                   return (
-                    <li
+                    <Link
+                      to={nav.path}
                       key={i}
                       className={cn(
                         "w-full pb-[15px] font-hnM text-[20px] tracking-normal leading-14 text-gray-100 cursor-pointer",
@@ -168,13 +164,9 @@ const Navbar = () => {
                           ? "text-teal-100"
                           : ""
                       )}
-                      onClick={() => {
-                        navigate(nav.path);
-                        setMenuOpen(false);
-                      }}
                     >
                       {nav.title}
-                    </li>
+                    </Link>
                   );
                 })}
 
@@ -204,12 +196,14 @@ const Navbar = () => {
                       >
                         {userBusinessListData?.map((data) => {
                           return (
-                            <FlexRowStartBtw
+                            <Link
+                              to={`/signup/register-business?update=${data.uuid}`}
                               key={data.uuid}
-                              className="w-full mt-[4px] px-[18px] cursor-pointer"
-                              onClick={() =>
-                                handleEditBusinessProfile(data.uuid)
-                              }
+                              className="w-full mt-[4px] px-[18px] cursor-pointer flex items-start justify-between"
+                              onClick={() => {
+                                setMenuOpen(false);
+                                setEditProfileOpen(false);
+                              }}
                             >
                               <p className="text-[16px] font-normal font-hnL text-gray-100">
                                 {data.name}
@@ -219,7 +213,7 @@ const Navbar = () => {
                                 className="stroke-white-100 fill-blue-200"
                                 size={20}
                               />
-                            </FlexRowStartBtw>
+                            </Link>
                           );
                         })}
                       </FlexColStart>
@@ -269,15 +263,13 @@ const Navbar = () => {
                       <span className="font-hnM">Logout</span>
                     </Button>
                     <FlexRowCenter className="w-full">
-                      <p
-                        onClick={() => {
-                          navigate("/account");
-                          setMenuOpen(false);
-                        }}
-                        className=" text-center mt-[20px] cursor-pointer"
+                      <Link
+                        to="/account"
+                        onClick={() => setMenuOpen(false)}
+                        className="text-center font-inter font-semibold mt-[20px] cursor-pointer"
                       >
                         My Account
-                      </p>
+                      </Link>
                     </FlexRowCenter>
                   </>
                 )}

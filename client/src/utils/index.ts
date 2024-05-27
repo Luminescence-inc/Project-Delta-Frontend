@@ -22,6 +22,9 @@ interface DaysOfOperation {
 }
 
 export const determineBusOpTime = (daysOfOperation: DaysOfOperation[]) => {
+  if (!daysOfOperation || Object.entries(daysOfOperation).length === 0)
+    return { isOpened: false, closingTime: null };
+
   const daysOfWeeks = [
     "sunday",
     "monday",
@@ -37,7 +40,7 @@ export const determineBusOpTime = (daysOfOperation: DaysOfOperation[]) => {
   );
   if (day) {
     const currentTime = Math.abs(new Date().getHours() - 12);
-    const closingTime = parseInt(day.ct!.split(":")[0]);
+    const closingTime = parseInt(day?.ct!?.split(":")[0]);
     return currentTime < closingTime
       ? {
           isOpened: true,

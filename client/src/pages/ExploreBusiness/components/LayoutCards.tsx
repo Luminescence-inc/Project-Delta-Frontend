@@ -8,7 +8,7 @@ import {
 } from "@components/Flex";
 import { MapPin, Phone } from "@components/icons";
 import { cn, determineBusOpTime } from "@/utils";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 interface BusinessCardProps {
   name: string;
@@ -113,15 +113,16 @@ export const ColLayoutCard = ({
               )}
             </FlexRowStartCenter>
 
-            <a
-              href={`tel:${phone}`}
-              className="flex flex-row items-center justify-center text-blue-200 bg-blue-202 w-[81px] h-[25px] px-[5px] rounded-full gap-[5px] text-[12px]"
+            <button
+              // href={`tel:${phone}`}
+              onClick={() => window.open(`tel:${phone}`)}
+              className="flex flex-row items-center justify-center text-blue-200 bg-blue-202 w-[81px] h-[25px] px-[5px] rounded-full gap-[5px] text-[12px] businesss-call-line"
             >
               <Phone size={15} className="stroke-blue-200/80" />
               <span className="text-[12px] font-medium font-inter leading-[14px] mt-[2px]">
                 Call me
               </span>
-            </a>
+            </button>
           </FlexRowCenterBtw>
         </FlexColStart>
       </CardWrapper>
@@ -213,12 +214,13 @@ export const RowLayoutCard = ({
               </FlexRowStartCenter>
 
               <FlexRowEnd className="w-auto">
-                <a
-                  href={`tel:${phone}`}
-                  className="flex flex-row items-center justify-center text-blue-200 bg-blue-202 w-[35px] h-[25px] px-[5px] rounded-full gap-[5px] text-[12px]"
+                <button
+                  // href={`tel:${phone}`}
+                  onClick={() => window.open(`tel:${phone}`)}
+                  className="flex flex-row items-center justify-center text-blue-200 bg-blue-202 w-[35px] h-[25px] px-[5px] rounded-full gap-[5px] text-[12px] businesss-call-line"
                 >
                   <Phone size={15} className="stroke-blue-200/80" />
-                </a>
+                </button>
               </FlexRowEnd>
             </FlexRowCenterBtw>
           </FlexColStart>
@@ -256,9 +258,9 @@ const CardNavigateWrapper = ({
   id: string;
   children: React.ReactNode;
 }) => {
-  const navigate = useNavigate();
   return (
-    <button
+    <Link
+      to={`/business-details/${id}`}
       className="w-full outline-none border-none bg-none cursor-pointer"
       key={id}
       onClick={(e) => {
@@ -270,13 +272,13 @@ const CardNavigateWrapper = ({
 
         // prevent redirecting to specified page and opening the tel-phone number on that page
         if (target) {
-          e.stopPropagation();
+          console.log("target exiusts");
+          e.preventDefault();
           return;
         }
-        navigate(`/business-details/${id}`);
       }}
     >
       {children}
-    </button>
+    </Link>
   );
 };
