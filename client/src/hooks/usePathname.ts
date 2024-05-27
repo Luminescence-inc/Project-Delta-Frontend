@@ -39,7 +39,7 @@ const usePathname = () => {
       setFormattedPathname(`${name} | Bizconnect24`);
     } else {
       const formattedName = capitalizeFirstLetters(
-        pathname.replace("/", "").replace(/-/g, " ").split("/")[0]
+        pathname.replace("/", "").replace(/-/g, " ").split("/")[0],
       );
       setPathname(formattedName);
       setFormattedPathname(`${formattedName} | Bizconnect24`);
