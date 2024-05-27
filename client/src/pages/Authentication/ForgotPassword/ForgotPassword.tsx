@@ -108,7 +108,7 @@ const ForgotPassword = () => {
             value={formik.values.password}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            icon={
+            rightIcon={
               showPassword ? (
                 <Eye
                   className="cursor-pointer"
@@ -124,6 +124,8 @@ const ForgotPassword = () => {
               )
             }
             placeholder="Enter password"
+            parentClassname="w-full px-0 border border-white-400/50 px-4"
+            inputClassname="w-full px-3 outline-none border-none"
           />
 
           <ErrorComponent
@@ -140,7 +142,7 @@ const ForgotPassword = () => {
             value={formik.values.confirmPassword}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            icon={
+            rightIcon={
               showConfirmPassword ? (
                 <Eye
                   className="cursor-pointer"
@@ -156,6 +158,8 @@ const ForgotPassword = () => {
               )
             }
             placeholder="Re-Enter Password"
+            parentClassname="w-full px-0 border border-white-400/50 px-4"
+            inputClassname="w-full px-3 outline-none border-none"
           />
 
           <br />

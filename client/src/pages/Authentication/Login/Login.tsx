@@ -118,7 +118,7 @@ const Login = () => {
             value={formik.values.email}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            icon={
+            rightIcon={
               <Mail
                 strokeWidth={1}
                 size={20}
@@ -126,6 +126,8 @@ const Login = () => {
               />
             }
             placeholder="Enter Email Address"
+            parentClassname="w-full px-0 border border-white-400/50 px-4"
+            inputClassname="w-full px-3 outline-none border-none"
           />
           <br />
 
@@ -143,7 +145,7 @@ const Login = () => {
             value={formik.values.password}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            icon={
+            rightIcon={
               showPassword ? (
                 <Eye
                   className="cursor-pointer"
@@ -159,6 +161,8 @@ const Login = () => {
               )
             }
             placeholder="Enter Password"
+            parentClassname="w-full px-0 border border-white-400/50 px-4"
+            inputClassname="w-full px-3 outline-none border-none"
           />
 
           <Button

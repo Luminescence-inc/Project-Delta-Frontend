@@ -99,13 +99,15 @@ const Email = () => {
                 value={formik.values.email}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                icon={
+                rightIcon={
                   <Mail
                     strokeWidth={1}
                     className="rounded-full stroke-white-100 fill-blue-200"
                   />
                 }
                 placeholder="Enter Email Address"
+                parentClassname="w-full px-0 border border-white-400/50 px-4"
+                inputClassname="w-full px-3 outline-none border-none"
               />
 
               <Button
