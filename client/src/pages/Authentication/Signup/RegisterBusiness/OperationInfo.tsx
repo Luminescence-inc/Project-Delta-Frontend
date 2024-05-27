@@ -43,8 +43,12 @@ const OperationInfo: FC<OperationInfoProps> = ({
           value={formik.values.phoneNumber}
           onChange={formik.handleChange}
           label="Business Phone Number"
-          icon={<Phone className="stroke-none fill-blue-200 scale-[.75]" />}
+          rightIcon={
+            <Phone className="stroke-none fill-blue-200 scale-[.75]" />
+          }
           placeholder="Enter Phone Number"
+          parentClassname="w-full px-0 border border-white-400/50 px-4"
+          inputClassname="w-full px-3 outline-none border-none"
         />
 
         <Input
@@ -53,13 +57,15 @@ const OperationInfo: FC<OperationInfoProps> = ({
           value={formik.values.businessEmail}
           onChange={formik.handleChange}
           label="Business Email"
-          icon={
+          rightIcon={
             <Mail
               strokeWidth={1}
               className="stroke-white-100 fill-blue-200 rounded-md scale-[.85]"
             />
           }
           placeholder="Enter Business Email"
+          parentClassname="w-full px-0 border border-white-400/50 px-4"
+          inputClassname="w-full px-3 outline-none border-none"
         />
 
         <Select
