@@ -1,51 +1,60 @@
 /** @format */
-
+import * as React from "react";
+import { cn } from "@/utils";
 import { FlexColStart, FlexRowCenter } from "@components/Flex";
-import React from "react";
 
-interface IInput {
+interface IInputProps {
   label?: string;
-  icon?: React.ReactNode;
-  placeholder: string;
-  type: string;
-  name?: string;
-  value?: string;
-  disabled?: boolean;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onBlur?: (e: React.FocusEvent<any, Element>) => void;
+  inputClassname?: React.ComponentProps<"input">["className"];
+  parentClassname?: React.ComponentProps<"div">["className"];
+  leftIcon?: React.ReactNode;
+  rightIcon?: React.ReactNode;
 }
 
-const Input = ({
-  label,
-  type,
-  icon,
-  placeholder,
-  name,
-  value,
-  disabled,
-  onChange,
-  onBlur,
-}: IInput) => {
-  return (
-    <FlexColStart className="w-full gap-[4px] text-left pb-5">
-      <label className="text-[14px] font-semibold font-inter text-dark-100/60">
-        {label}
-      </label>
-      <FlexRowCenter className="w-full relative">
-        <input
-          name={name}
-          type={type}
-          placeholder={placeholder}
-          value={value}
-          onChange={onChange}
-          onBlur={onBlur}
-          disabled={disabled ? disabled : false}
-          className="w-full h-[46px] border-[1px] border-solid border-dark-103 tracking-[2px] text-[12px] text-blue-200 p-[16px] rounded-[5px] placeholder:text-dark-104"
-        />
-        <span className="absolute top-[13.5px] right-[20px]">{icon}</span>
-      </FlexRowCenter>
-    </FlexColStart>
-  );
-};
+export interface InputProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {}
+
+const Input = React.forwardRef<HTMLInputElement, InputProps & IInputProps>(
+  (
+    {
+      className,
+      type,
+      inputClassname,
+      parentClassname,
+      leftIcon,
+      rightIcon,
+      label,
+      ...props
+    },
+    ref
+  ) => {
+    return (
+      <FlexColStart className="w-full gap-[4px] text-left pb-5">
+        <label className="text-[14px] font-semibold font-inter text-dark-100/60">
+          {label}
+        </label>
+        <FlexRowCenter
+          className={cn(
+            "w-full h-[46px] relative p-[16px] rounded-[5px]",
+            parentClassname
+          )}
+        >
+          {leftIcon}
+          <input
+            type={type}
+            className={cn(
+              "flex h-10 w-full text-blue-200 placeholder:text-dark-104 rounded-md border border-input bg-background text-[12px] file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none  focus-visible:ring-white-100/20 focus-visible:ring-1 disabled:cursor-not-allowed disabled:opacity-50",
+              inputClassname
+            )}
+            ref={ref}
+            {...props}
+          />
+          {rightIcon}
+        </FlexRowCenter>
+      </FlexColStart>
+    );
+  }
+);
+Input.displayName = "Input";
 
 export default Input;
