@@ -124,19 +124,8 @@ export default function BusinessContextProvider({
     setAllBusinessesLoading(true);
 
     const queryParams = constructSearchUrl(
-<<<<<<< HEAD
-      searchQuery || { filters: [] },
-      businessCategory,
-      {
-        page: currPage,
-        limit: 5,
-        sortBy: "createdUtc",
-        sortDirection: "asc",
-      }
-=======
       filter || searchQuery || { filters: [] },
       businessCategory
->>>>>>> de81221c6c3a7f9e72c686ada7fc93364c5391e8
     );
 
     // update the address bar with the search query
