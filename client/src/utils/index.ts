@@ -106,6 +106,59 @@ const replacedFilterNames = {
   stateAndProvince: "st",
   city: "cty",
   country: "cn",
+  limit: "limit",
+  page: "page",
+  sortBy: "sortBy",
+  sortDirection: "sortDirection",
+  query: "query",
+};
+
+// extract query params from the address bar
+export const extractQueryParams = () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const filters: ISearch["filters"] = [];
+  const queryReplacements = ["cat", "st", "cty", "cn"];
+
+  for (const [key, value] of urlParams) {
+    if (queryReplacements.includes(key)) {
+      switch (key) {
+        case "cat":
+          filters.push({
+            targetFieldName: "businessCategoryUuid",
+            values: [value],
+          });
+          break;
+        case "st":
+          filters.push({
+            targetFieldName: "stateAndProvince",
+            values: [value],
+          });
+          break;
+        case "cty":
+          filters.push({
+            targetFieldName: "city",
+            values: [value],
+          });
+          break;
+        case "cn":
+          filters.push({
+            targetFieldName: "country",
+            values: [value],
+          });
+          break;
+      }
+      continue;
+    }
+
+    if (typeof key !== "undefined") {
+      filters.push({
+        targetFieldName: key as keyof ISearch,
+        values: value.split(","),
+      });
+    }
+  }
+
+  return { filters };
 };
 
 type QueryKey = keyof typeof replacedFilterNames;
@@ -115,9 +168,9 @@ export const constructSearchUrl = (
   categories: IOption[] | undefined,
   pagination?: {
     page: number;
-    limit: number;
-    sortBy: string;
-    sortDirection: string;
+    limit?: number;
+    sortBy?: string;
+    sortDirection?: string;
   }
 ) => {
   const query: string[] = [];
