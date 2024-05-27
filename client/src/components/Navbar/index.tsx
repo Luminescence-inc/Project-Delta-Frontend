@@ -32,7 +32,6 @@ const navigationRoute = [
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const [authenticated, setAuthenticated] = useState(false);
   const [tokenData, setTokenData] = useState<JwtPayload | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [editProfileOpen, setEditProfileOpen] = useState(false);
@@ -56,7 +55,6 @@ const Navbar = () => {
     logOut(tokenData?.id || "")
       .then(() => {
         localStorage.removeItem(TOKEN_NAME);
-        setAuthenticated(false);
         navigate("/?login=false");
         setMenuOpen(false);
 
@@ -74,9 +72,8 @@ const Navbar = () => {
         const resData: UserBusinessListResponse = res.data;
         setUserBusinessListData(resData.data.businessProfiles);
       });
-    } else {
-      setMenuOpen(true);
     }
+    setMenuOpen(true);
   };
 
   return (
@@ -220,7 +217,7 @@ const Navbar = () => {
                     </Button>
                   </FlexRowStart>
                 )}
-                {authenticated && (
+                {userDetails && (
                   <>
                     <Button
                       className="w-full h-[37px] py-[20px] rounded-[5px] mt-3"
