@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "@components/ui/button";
 import { JwtPayload, TOKEN_NAME } from "@/types/auth";
-import { isAuthenticated, logOut } from "@/api/auth";
+import { logOut } from "@/api/auth";
 import { useNavigate } from "react-router-dom";
 import { UserBusinessList, UserBusinessListResponse } from "@/types/business";
 import { getUserBusinessProfileList } from "@/api/business";
@@ -32,8 +32,6 @@ const navigationRoute = [
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const [parsedToken, setParsedToken] = useState<JwtPayload | null>(null);
-  const [authToken, setAuthToken] = useState<string | null>("");
   const [authenticated, setAuthenticated] = useState(false);
   const [tokenData, setTokenData] = useState<JwtPayload | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -48,35 +46,14 @@ const Navbar = () => {
     if (authToken === null) return;
     try {
       const parsedToken = JSON.parse(atob(authToken?.split(".")[1]));
-      setAuthToken(authToken);
-      setParsedToken(parsedToken);
       setTokenData(parsedToken);
     } catch (e: any) {
       console.error("Error parsing token: ", e);
     }
   }, []);
 
-  useEffect(() => {
-    try {
-      if (parsedToken?.id) {
-        isAuthenticated(authToken!, parsedToken.id)
-          .then(() => {
-            setAuthenticated(true);
-          })
-          .catch((err) => {
-            setAuthenticated(false);
-            console.error(err);
-          });
-      }
-    } catch (error) {
-      console.error("Error parsing token: ", error);
-    }
-  }, []);
-
   const handleLogOut = () => {
-    const authToken = localStorage.getItem(TOKEN_NAME) as string;
-    console.log("token-id: ", tokenData?.id);
-    logOut(authToken, tokenData?.id || "")
+    logOut(tokenData?.id || "")
       .then(() => {
         localStorage.removeItem(TOKEN_NAME);
         setAuthenticated(false);
@@ -92,21 +69,11 @@ const Navbar = () => {
   };
 
   const handleMenuIcon = () => {
-    if (parsedToken?.id) {
-      isAuthenticated(authToken!, parsedToken.id)
-        .then(() => {
-          setAuthenticated(true);
-          setMenuOpen(true);
-          getUserBusinessProfileList(authToken!).then((res) => {
-            const resData: UserBusinessListResponse = res.data;
-            setUserBusinessListData(resData.data.businessProfiles);
-          });
-        })
-        .catch((err) => {
-          setAuthenticated(false);
-          setMenuOpen(true);
-          console.error(err);
-        });
+    if (!loading && userDetails) {
+      getUserBusinessProfileList().then((res) => {
+        const resData: UserBusinessListResponse = res.data;
+        setUserBusinessListData(resData.data.businessProfiles);
+      });
     } else {
       setMenuOpen(true);
     }
