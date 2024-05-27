@@ -3,7 +3,7 @@ import { Eye, ClosedEye, Mail, Edit } from "@components/icons";
 import Input from "@/components/ui/Input";
 import Button from "@components/ui/button";
 import { useFormik } from "formik";
-import { SignUpData, TOKEN_NAME, BaseResponseMessage } from "@/types/auth";
+import { SignUpData, BaseResponseMessage } from "@/types/auth";
 import { updateUserDetails } from "@/api/auth";
 import { useEffect, useState } from "react";
 import * as yup from "yup";
@@ -47,7 +47,6 @@ const MyAccount = () => {
 
   const onSubmit = async (values: SignUpData) => {
     const { confirmPassword, email, ...data } = values;
-    const authToken = localStorage.getItem(TOKEN_NAME) as string;
     setIsLoading(true);
 
     let updateProfile = false;
@@ -66,9 +65,7 @@ const MyAccount = () => {
 
     if (updateProfile) {
       try {
-        const res: BaseResponseMessage = (
-          await updateUserDetails(authToken, data)
-        ).data;
+        const res: BaseResponseMessage = (await updateUserDetails(data)).data;
         if (res.success) {
           setSuccess(true);
           setIsLoading(false);
