@@ -6,7 +6,6 @@ import { Country, State, City } from "../../../country-sate-city";
 import { FilterData, useBusinessCtx } from "@context/BusinessCtx";
 import { BusinessFilterType } from "@/types/business";
 import { useNavigate } from "react-router-dom";
-import { prevPageLocalKeyName } from "@/config";
 import {
   FlexColStart,
   FlexRowCenterBtw,
@@ -254,16 +253,16 @@ const BusinessesFilterComponent = ({
             onClick={() => {
               // if there isn't any filter applied, navigate to unboarding page
               // else close the filter
-              if (!filterData.country) {
-                // get prev page visited from LS.
-                const prevPagePath = localStorage.getItem(prevPageLocalKeyName);
-                if (prevPagePath) {
-                  navigate(prevPagePath);
-                } else {
-                  navigate("/onboarding");
-                }
-                return;
-              }
+              // if (!filterData.country) {
+              //   // get prev page visited from LS.
+              //   const prevPagePath = localStorage.getItem(prevPageLocalKeyName);
+              //   if (prevPagePath) {
+              //     navigate(prevPagePath);
+              //   } else {
+              //     navigate("/onboarding");
+              //   }
+              //   return;
+              // }
               closeFilter();
             }}
           >
