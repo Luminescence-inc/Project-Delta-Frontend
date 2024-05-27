@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { FlexRowCenter, FlexRowStartCenter } from "./Flex";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { ChevronLeft, ChevronRight } from "./icons";
 import { cn } from "@/utils";
 
