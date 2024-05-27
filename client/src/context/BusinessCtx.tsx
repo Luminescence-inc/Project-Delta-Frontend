@@ -113,6 +113,9 @@ export default function BusinessContextProvider({
       }
     );
 
+    // update the address bar with the search query
+    window.history.pushState({}, "", `/search?${queryParams}`);
+
     const result = await searchForBusinesses(queryParams);
     const data = result.data?.data.businessProfiles;
 
