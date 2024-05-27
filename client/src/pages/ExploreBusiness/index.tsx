@@ -13,8 +13,12 @@ import { IFilter } from "@/types/business-profile";
 import { LoaderComponent } from "@components/Loader";
 import { useEffect, useState } from "react";
 import Input from "@/components/ui/Input";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 import { Pagination } from "@/components/Pagination";
+import MetaTagsProvider from "@/provider/MetaTagsProvider";
 
+dayjs.extend(relativeTime);
 
 const ExploreBusiness = () => {
   const {
