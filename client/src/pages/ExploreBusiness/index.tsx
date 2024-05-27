@@ -20,6 +20,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { Pagination } from "@/components/Pagination";
 import MetaTagsProvider from "@/provider/MetaTagsProvider";
+import { extractQueryParams } from "@/utils";
 
 dayjs.extend(relativeTime);
 
@@ -68,31 +69,24 @@ const ExploreBusiness = () => {
   const generateHeadlineFromQuery = () => {
     let state = null,
       country = null,
-      city = null;
-    if (!searchQuery) {
-      return {
-        country,
-        state,
-        city,
-      };
-    }
-    country = searchQuery?.filters.find(
-      (it) => it.targetFieldName === "country"
-    );
-    state = searchQuery?.filters.find(
-      (it) => it.targetFieldName === "stateAndProvince"
-    );
-    city = searchQuery?.filters.find((it) => it.targetFieldName === "city");
+      city = null,
+      query = null;
+    const { filters } = extractQueryParams();
+    country = filters.find((it) => it.targetFieldName === "country");
+    state = filters.find((it) => it.targetFieldName === "stateAndProvince");
+    city = filters.find((it) => it.targetFieldName === "city");
+    query = filters.find((it) => it.targetFieldName === "query");
 
     return {
       country: country?.values[0],
       state: state?.values[0],
       city: city?.values[0],
+      query: query?.values[0],
     };
   };
 
   const generateHeadlineText = () => {
-    const { country, state, city } = generateHeadlineFromQuery();
+    const { country, state, city, query } = generateHeadlineFromQuery();
     const response = {
       title: "",
       busicnesses: "",
@@ -106,26 +100,38 @@ const ExploreBusiness = () => {
     response["busicnesses"] = top10_businesses_name;
 
     if (city && state) {
-      response["title"] = `TOP 10 Businesses Near ${city}, ${state}`;
+      response["title"] = `TOP 10 ${
+        query ? `"${query}" Businesses` : "Businesses"
+      } Near ${city}, ${state}`;
       return response;
     }
     if (country && state) {
-      response["title"] = `TOP 10 Businesses Near ${state}, ${country}`;
+      response["title"] = `TOP 10 ${
+        query ? `"${query}" Businesses` : "Businesses"
+      } Near ${state}, ${country}`;
       return response;
     }
     if (country) {
-      response["title"] = `TOP 10 Businesses in ${country}`;
+      response["title"] = `TOP 10 ${
+        query ? `"${query}" Businesses` : "Businesses"
+      } in ${country}`;
       return response;
     }
     if (state) {
-      response["title"] = `TOP 10 Businesses Near ${state}`;
+      response["title"] = `TOP 10 ${
+        query ? `"${query}" Businesses` : "Businesses"
+      } Near ${state}`;
       return response;
     }
     if (city) {
-      response["title"] = `TOP 10 Businesses Near ${city}`;
+      response["title"] = `TOP 10 ${
+        query ? `"${query}" Businesses` : "Businesses"
+      } Near ${city}`;
       return response;
     }
-    response["title"] = "Explore Businesses Near You";
+    response["title"] = `Explore ${
+      query ? `"${query}" Businesses` : "Businesses"
+    } Near You`;
     return response;
   };
 
