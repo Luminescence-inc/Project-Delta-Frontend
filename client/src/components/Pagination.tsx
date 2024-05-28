@@ -121,6 +121,9 @@ export const Pagination = ({ totalPages }: IPaginationProps) => {
     return pages;
   };
 
+  // remove duplicate "page" param
+  query.delete("page");
+
   return (
     <FlexRowCenter className="w-full mt-10">
       <FlexRowStartCenter className="w-auto">
