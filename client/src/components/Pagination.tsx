@@ -96,6 +96,17 @@ export const Pagination = ({ totalPages }: IPaginationProps) => {
       );
     }
 
+    if (endPage < totalPages - 1) {
+      pages.push(
+        <span
+          key="end-ellipsis"
+          className="w-[40px] h-[40px] flex items-center justify-center"
+        >
+          ...
+        </span>
+      );
+    }
+
     // Always show the last page
     pages.push(
       <PaginationLink
