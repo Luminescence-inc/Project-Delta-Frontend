@@ -129,7 +129,12 @@ export default function BusinessContextProvider({
     );
 
     // update the address bar with the search query
-    window.history.pushState({}, "", `/search?${queryParams}`);
+    // only do this when in search page
+    const isSearchPage =
+      window.location.pathname.split("/")[1].toLowerCase() === "search";
+
+    if (isSearchPage)
+      window.history.pushState({}, "", `/search?${queryParams}`);
 
     const result = await searchForBusinesses(queryParams);
     const data = result.data?.data.businessProfiles;
