@@ -85,7 +85,7 @@ export const Pagination = ({ totalPages }: IPaginationProps) => {
     }
 
     // Show ellipsis if needed
-    if (startPage >= 2) {
+    if (startPage > 2) {
       pages.push(
         <span
           key="start-ellipsis"
