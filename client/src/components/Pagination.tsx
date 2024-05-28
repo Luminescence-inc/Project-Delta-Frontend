@@ -41,8 +41,6 @@ export const Pagination = ({ totalPages }: IPaginationProps) => {
   const query = new URLSearchParams(location.search);
   const [activePage, setActivePage] = React.useState<string>("1");
 
-  const MAX_PAGES = 10;
-
   useEffect(() => {
     const parsedPage = location.search.replace("?", "").split("&");
     const currPage =
@@ -53,6 +51,64 @@ export const Pagination = ({ totalPages }: IPaginationProps) => {
   const prevPage = Number(activePage) > 1 ? Number(activePage) - 1 : 1;
   const nextPage =
     Number(activePage) < totalPages ? Number(activePage) + 1 : totalPages;
+
+  const renderPageLinks = () => {
+    const pages = [];
+    const currentPage = Number(activePage);
+    const startPage = Math.max(2, currentPage - 1);
+    const endPage = Math.min(totalPages - 1, currentPage + 1);
+
+    // Always show the first page
+    if (totalPages > 1) {
+      pages.push(
+        <PaginationLink
+          key={1}
+          page={1}
+          activePage={activePage}
+          query={query}
+          location={location}
+        />
+      );
+    }
+
+    // Render the range of pages around the current page
+    for (let i = startPage; i <= endPage; i++) {
+      pages.push(
+        <PaginationLink
+          key={i}
+          page={i}
+          activePage={activePage}
+          query={query}
+          location={location}
+        />
+      );
+    }
+
+    // Show ellipsis if needed
+    if (startPage >= 2) {
+      pages.push(
+        <span
+          key="start-ellipsis"
+          className="w-[40px] h-[40px] flex items-center justify-center"
+        >
+          ...
+        </span>
+      );
+    }
+
+    // Always show the last page
+    pages.push(
+      <PaginationLink
+        key={totalPages}
+        page={totalPages}
+        activePage={activePage}
+        query={query}
+        location={location}
+      />
+    );
+
+    return pages;
+  };
 
   return (
     <FlexRowCenter className="w-full mt-10">
@@ -76,26 +132,7 @@ export const Pagination = ({ totalPages }: IPaginationProps) => {
           />
         </a>
 
-        {/* Pagination Links */}
-        {totalPages > MAX_PAGES
-          ? Array.from({ length: 3 }, (_, i) => (
-              <PaginationLink
-                key={i}
-                page={i + 1}
-                activePage={activePage}
-                query={query}
-                location={location}
-              />
-            ))
-          : Array.from({ length: totalPages }, (_, i) => (
-              <PaginationLink
-                key={i}
-                page={i + 1}
-                activePage={activePage}
-                query={query}
-                location={location}
-              />
-            ))}
+        {renderPageLinks()}
 
         {/* Next Button */}
         <a
