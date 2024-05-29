@@ -71,6 +71,18 @@ export const Pagination = ({ totalPages }: IPaginationProps) => {
       );
     }
 
+    // Show ellipsis if needed
+    if (startPage > 2) {
+      pages.push(
+        <span
+          key="start-ellipsis"
+          className="w-[40px] h-[40px] flex items-center justify-center"
+        >
+          ...
+        </span>
+      );
+    }
+
     // Render the range of pages around the current page
     for (let i = startPage; i <= endPage; i++) {
       pages.push(
@@ -81,18 +93,6 @@ export const Pagination = ({ totalPages }: IPaginationProps) => {
           query={query}
           location={location}
         />
-      );
-    }
-
-    // Show ellipsis if needed
-    if (startPage > 2) {
-      pages.push(
-        <span
-          key="start-ellipsis"
-          className="w-[40px] h-[40px] flex items-center justify-center"
-        >
-          ...
-        </span>
       );
     }
 
