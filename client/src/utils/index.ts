@@ -175,9 +175,11 @@ export const constructSearchUrl = (
   const query: string[] = [];
   searchQuery.filters.forEach((filter) => {
     const values = filter.values.join(",");
-    query.push(
-      `${replacedFilterNames[filter.targetFieldName as QueryKey]}=${values}`
-    );
+    if (values.length > 0) {
+      query.push(
+        `${replacedFilterNames[filter.targetFieldName as QueryKey]}=${values}`
+      );
+    }
   });
 
   // pagination
