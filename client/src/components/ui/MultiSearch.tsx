@@ -3,12 +3,14 @@ import { cn } from "@/utils";
 import { ChevronDown } from "@components/icons";
 import { BusinessFilterType, MultiSearchType } from "@/types/business";
 import { FlexColStart, FlexRowStart } from "@components/Flex";
+import { Link } from "react-router-dom";
 
 interface MultiSearchProps {
   rightIcon?: React.ReactNode;
   leftIcon?: React.ReactNode;
   label?: string;
   type?: MultiSearchType;
+  is_link?: boolean;
   listsData?: { uuid: string; value: string }[] | undefined | null;
   selectedListData?:
     | { uuid?: string | undefined; value?: string | undefined }
@@ -42,6 +44,7 @@ export default function MultiSearch({
   setActivePanel,
   placeholder,
   onClick,
+  is_link,
 }: MultiSearchProps) {
   const [searchValue, setSearchValue] = useState("");
   const [filterData, setFilterData] = useState<
@@ -184,30 +187,58 @@ export default function MultiSearch({
                   ))
                 : null
               : filterData && filterData.length > 0
-              ? filterData.map((listData) => (
-                  <button
-                    key={listData.uuid}
-                    className={cn(
-                      "w-full flex items-center justify-start gap-[2px] border-none outline-none px-[10px] py-[5px] rounded-[5px] cursor-pointer",
-                      getActiveList(listData.uuid!, dataType!) === listData.uuid
-                        ? "bg-blue-200 text-white-100"
-                        : "text-white-400"
-                    )}
-                    onClick={() => {
-                      // close panel
-                      onChange?.({
-                        uuid: listData.uuid,
-                        value: listData.value,
-                        type: dataType as BusinessFilterType,
-                      });
-                      setActivePanel("");
-                    }}
-                  >
-                    <span className="text-[15px] font-medium font-inter mt-[2px]">
-                      {listData.value}
-                    </span>
-                  </button>
-                ))
+              ? filterData.map((listData) =>
+                  is_link ? (
+                    <Link
+                      to={`/search?cat=${listData.value}`}
+                      key={listData.uuid}
+                      className={cn(
+                        "w-full flex items-center justify-start gap-[2px] border-none outline-none px-[10px] py-[5px] rounded-[5px] cursor-pointer",
+                        getActiveList(listData.uuid!, dataType!) ===
+                          listData.uuid
+                          ? "bg-blue-200 text-white-100"
+                          : "text-white-400"
+                      )}
+                      onClick={() => {
+                        // close panel
+                        onChange?.({
+                          uuid: listData.uuid,
+                          value: listData.value,
+                          type: dataType as BusinessFilterType,
+                        });
+                        setActivePanel("");
+                      }}
+                    >
+                      <span className="text-[15px] font-medium font-inter mt-[2px]">
+                        {listData.value}
+                      </span>
+                    </Link>
+                  ) : (
+                    <button
+                      key={listData.uuid}
+                      className={cn(
+                        "w-full flex items-center justify-start gap-[2px] border-none outline-none px-[10px] py-[5px] rounded-[5px] cursor-pointer",
+                        getActiveList(listData.uuid!, dataType!) ===
+                          listData.uuid
+                          ? "bg-blue-200 text-white-100"
+                          : "text-white-400"
+                      )}
+                      onClick={() => {
+                        // close panel
+                        onChange?.({
+                          uuid: listData.uuid,
+                          value: listData.value,
+                          type: dataType as BusinessFilterType,
+                        });
+                        setActivePanel("");
+                      }}
+                    >
+                      <span className="text-[15px] font-medium font-inter mt-[2px]">
+                        {listData.value}
+                      </span>
+                    </button>
+                  )
+                )
               : null}
           </FlexColStart>
         </FlexColStart>

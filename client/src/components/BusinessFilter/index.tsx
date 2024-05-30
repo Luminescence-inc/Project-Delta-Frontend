@@ -5,12 +5,7 @@ import { FILTERED_COUNTRY } from "@/utils/business-profile-utils";
 import { Country, State, City } from "../../../country-sate-city";
 import { FilterData, useBusinessCtx } from "@context/BusinessCtx";
 import { BusinessFilterType } from "@/types/business";
-import {
-  FlexColStart,
-  FlexRowCenterBtw,
-  FlexRowStart,
-  FlexRowStartCenter,
-} from "@components/Flex";
+import { FlexColStart, FlexRowCenterBtw } from "@components/Flex";
 
 interface OnfilterDataProps {
   uuid?: string | undefined;
@@ -281,48 +276,18 @@ const BusinessesFilterComponent = ({
             <MultiSearch
               leftIcon={<SearchIcon2 size={20} strokeWidth={1.4} />}
               label="Business Category"
-              type={"multi"}
+              type={"single"}
+              is_link={true}
               listsData={businessesCategories}
               selectedListData={filterData?.businessCategoryUuid}
               dataType="businessCategory"
-              onChange={({ type, uuid, value }) =>
-                onFilter({ type, uuid, value })
-              }
+              onChange={() => {
+                // close filter
+                closeFilter();
+              }}
               activePanel={activePanel}
               setActivePanel={setActivePanel}
             />
-
-            {/* categories placeholders */}
-            {filterData.businessCategoryUuid && (
-              <FlexRowStart className="flex-wrap mt-0 placeholder:bg-gray-201 gap-[3px] pb-[15px] transition-all">
-                {filterData.businessCategoryUuid?.map((categories) => (
-                  <FlexRowStartCenter
-                    key={categories.uuid}
-                    className="px-[12px] py-[5px] rounded-[30px] bg-gray-201 gap-2"
-                  >
-                    <span className="text-[12px] font-medium font-inter">
-                      {categories?.value ?? "CATEGORY"}
-                    </span>
-                    <button
-                      className="cursor-pointer border-none outline-none bg-none"
-                      onClick={() => {
-                        //  remove the selected category from filter
-                        const updatedFilter =
-                          filterData.businessCategoryUuid?.filter(
-                            (c) => c.uuid !== categories.uuid
-                          );
-                        setFilterData({
-                          ...filterData,
-                          businessCategoryUuid: updatedFilter,
-                        });
-                      }}
-                    >
-                      <X size={15} />
-                    </button>
-                  </FlexRowStartCenter>
-                ))}
-              </FlexRowStart>
-            )}
           </FlexColStart>
 
           {/* SELECT COUNTRY */}
