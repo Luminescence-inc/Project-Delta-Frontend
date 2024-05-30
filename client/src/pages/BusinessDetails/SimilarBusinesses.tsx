@@ -63,7 +63,6 @@ const SimilarBusinesses = ({
 
     const queryParams = constructSearchUrl(searchQuery || { filters: [] });
 
-    console.log({ queryParams });
     const result = await searchForBusinesses(queryParams);
     const data = result.data?.data.businessProfiles;
 
