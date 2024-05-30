@@ -152,54 +152,50 @@ export default function MultiSearch({
             {type === "multi"
               ? filterData && filterData.length > 0
                 ? filterData.map((listData) => (
-                    <button
+                    <RenderButtonOrLink
                       key={listData.uuid}
-                      className="flex items-center justify-start gap-[10px] outline-none border-none bg-none cursor-pointer"
-                      onClick={() => {
+                      type={type!}
+                      value={{
+                        uuid: listData.uuid!,
+                        text: listData.value!,
+                      }}
+                      checked={
+                        getActiveList(listData.uuid!, dataType!) ===
+                        listData.uuid
+                      }
+                      isActive={
+                        getActiveList(listData.uuid!, dataType!) ===
+                        listData.uuid
+                      }
+                      onChange={() => {
                         onChange?.({
                           uuid: listData.uuid,
                           value: listData.value,
                           type: dataType as BusinessFilterType,
                         });
                       }}
-                    >
-                      <input
-                        type="checkbox"
-                        name=""
-                        id=""
-                        value={listData.uuid}
-                        checked={
-                          getActiveList(listData?.uuid!, dataType!) ===
-                            listData.uuid ?? false
-                        }
-                        onChange={() => {
-                          onChange?.({
-                            uuid: listData.uuid,
-                            value: listData.value,
-                            type: dataType as BusinessFilterType,
-                          });
-                        }}
-                      />
-                      <span className="text-[15px] font-normal text-white-400 font-inter">
-                        {listData.value}
-                      </span>
-                    </button>
+                    />
                   ))
                 : null
               : filterData && filterData.length > 0
               ? filterData.map((listData) =>
                   is_link ? (
-                    <Link
-                      to={`/search?cat=${listData.value}`}
+                    <RenderButtonOrLink
                       key={listData.uuid}
-                      className={cn(
-                        "w-full flex items-center justify-start gap-[2px] border-none outline-none px-[10px] py-[5px] rounded-[5px] cursor-pointer",
+                      type={type!}
+                      value={{
+                        uuid: listData.uuid!,
+                        text: listData.value!,
+                      }}
+                      checked={
                         getActiveList(listData.uuid!, dataType!) ===
-                          listData.uuid
-                          ? "bg-blue-200 text-white-100"
-                          : "text-white-400"
-                      )}
-                      onClick={() => {
+                        listData.uuid
+                      }
+                      isActive={
+                        getActiveList(listData.uuid!, dataType!) ===
+                        listData.uuid
+                      }
+                      onChange={() => {
                         // close panel
                         onChange?.({
                           uuid: listData.uuid,
@@ -208,22 +204,25 @@ export default function MultiSearch({
                         });
                         setActivePanel("");
                       }}
-                    >
-                      <span className="text-[15px] font-medium font-inter mt-[2px]">
-                        {listData.value}
-                      </span>
-                    </Link>
+                      is_link={true}
+                    />
                   ) : (
-                    <button
+                    <RenderButtonOrLink
                       key={listData.uuid}
-                      className={cn(
-                        "w-full flex items-center justify-start gap-[2px] border-none outline-none px-[10px] py-[5px] rounded-[5px] cursor-pointer",
+                      type={type!}
+                      value={{
+                        uuid: listData.uuid!,
+                        text: listData.value!,
+                      }}
+                      checked={
                         getActiveList(listData.uuid!, dataType!) ===
-                          listData.uuid
-                          ? "bg-blue-200 text-white-100"
-                          : "text-white-400"
-                      )}
-                      onClick={() => {
+                        listData.uuid
+                      }
+                      isActive={
+                        getActiveList(listData.uuid!, dataType!) ===
+                        listData.uuid
+                      }
+                      onChange={() => {
                         // close panel
                         onChange?.({
                           uuid: listData.uuid,
@@ -232,11 +231,7 @@ export default function MultiSearch({
                         });
                         setActivePanel("");
                       }}
-                    >
-                      <span className="text-[15px] font-medium font-inter mt-[2px]">
-                        {listData.value}
-                      </span>
-                    </button>
+                    />
                   )
                 )
               : null}
@@ -246,3 +241,68 @@ export default function MultiSearch({
     </FlexColStart>
   );
 }
+
+interface RenderProps {
+  type: MultiSearchType;
+  onChange: () => void;
+  checked: boolean;
+  isActive: boolean;
+  is_link?: boolean;
+  value: {
+    uuid: string;
+    text: string;
+  };
+}
+
+const RenderButtonOrLink = ({
+  type,
+  value,
+  checked,
+  isActive,
+  onChange,
+  is_link,
+}: RenderProps) => {
+  return type === "multi" ? (
+    <button
+      className="flex items-center justify-start gap-[10px] outline-none border-none bg-none cursor-pointer"
+      onClick={onChange}
+    >
+      <input
+        type="checkbox"
+        name=""
+        id=""
+        value={value.uuid}
+        checked={checked}
+        onChange={onChange}
+      />
+      <span className="text-[15px] font-normal text-white-400 font-inter">
+        {value.text}
+      </span>
+    </button>
+  ) : is_link ? (
+    <Link
+      to={`/search?cat=${value.text}`}
+      className={cn(
+        "w-full flex items-center justify-start gap-[2px] border-none outline-none px-[10px] py-[5px] rounded-[5px] cursor-pointer",
+        isActive ? "bg-blue-200 text-white-100" : "text-white-400"
+      )}
+      onClick={onChange}
+    >
+      <span className="text-[15px] font-medium font-inter mt-[2px]">
+        {value.text}
+      </span>
+    </Link>
+  ) : (
+    <button
+      className={cn(
+        "w-full flex items-center justify-start gap-[2px] border-none outline-none px-[10px] py-[5px] rounded-[5px] cursor-pointer",
+        isActive ? "bg-blue-200 text-white-100" : "text-white-400"
+      )}
+      onClick={onChange}
+    >
+      <span className="text-[15px] font-medium font-inter mt-[2px]">
+        {value.text}
+      </span>
+    </button>
+  );
+};
