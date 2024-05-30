@@ -82,6 +82,7 @@ export default function BusinessContextProvider({
   const [socialLinksError, setSocialLinksError] = useState<string | null>(null);
 
   const location = useLocation();
+  const _loc = window.location;
 
   // all business categories
   useEffect(() => {
@@ -113,8 +114,14 @@ export default function BusinessContextProvider({
       });
     }
 
-    getBusinesses(1, applyFilter, { filters: searchQuery?.filters ?? filters });
-  }, [searchQuery]);
+    const comboFilters = [...(searchQuery?.filters ?? []), ...filters];
+    const uniqueFilters = comboFilters.filter(
+      (v, i, a) =>
+        a.findIndex((t) => t.targetFieldName === v.targetFieldName) === i
+    );
+
+    getBusinesses(1, applyFilter, { filters: uniqueFilters });
+  }, [_loc.pathname, _loc.search, searchQuery]);
 
   const getBusinesses = async (
     currPage: number,
@@ -124,8 +131,7 @@ export default function BusinessContextProvider({
     setAllBusinessesLoading(true);
 
     const queryParams = constructSearchUrl(
-      filter || searchQuery || { filters: [] },
-      businessCategory
+      filter || searchQuery || { filters: [] }
     );
 
     // update the address bar with the search query
