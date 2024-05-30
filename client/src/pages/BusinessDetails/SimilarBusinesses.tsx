@@ -41,12 +41,15 @@ const SimilarBusinesses = ({
 
   if (!businessCategory || !country) return null;
 
+  const categoryName = allBusinessCategories?.find(
+    (c) => c.uuid === businessCategory
+  )?.value;
   // construct searchQuery
   const searchQuery = {
     filters: [
       {
         targetFieldName: "businessCategoryUuid",
-        values: [businessCategory],
+        values: [categoryName],
       },
       {
         targetFieldName: "country",
@@ -58,11 +61,9 @@ const SimilarBusinesses = ({
   const getBusinesses = async () => {
     setLoading(true);
 
-    const queryParams = constructSearchUrl(
-      searchQuery || { filters: [] },
-      allBusinessCategories,
-      { page: 1, limit: 5, sortBy: "createdUtc", sortDirection: "asc" }
-    );
+    const queryParams = constructSearchUrl(searchQuery || { filters: [] });
+
+    console.log({ queryParams });
     const result = await searchForBusinesses(queryParams);
     const data = result.data?.data.businessProfiles;
 
