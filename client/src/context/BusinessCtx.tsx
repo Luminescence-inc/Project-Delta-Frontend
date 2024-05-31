@@ -58,7 +58,7 @@ export default function BusinessContextProvider({
 }: BusinessContextProviderProps) {
   const [businesses, setBusinesses] = useState<IBusinessProfile[] | []>([]);
   const [allBusinessesLoading, setAllBusinessesLoading] =
-    useState<boolean>(false);
+    useState<boolean>(true);
   const [currPage, setCurrPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [businessCategory, setBusinessCategory] = useState<IOption[]>();
@@ -130,8 +130,6 @@ export default function BusinessContextProvider({
     filterApplied: boolean,
     filter?: ISearch
   ) => {
-    setAllBusinessesLoading(true);
-
     const queryParams = constructSearchUrl(
       filter || searchQuery || { filters: [] }
     );
