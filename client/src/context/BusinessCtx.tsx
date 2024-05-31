@@ -8,6 +8,7 @@ import {
 import { IBusinessProfile, ISearch } from "@/types/business-profile";
 import { constructSearchUrl, extractQueryParams } from "@/utils";
 import { useLocation } from "@/hooks/useLocation";
+import countryHelpers from "@/helpers/country-sate-city/country";
 
 export const BusinessContext = React.createContext<ContextValues>({} as any);
 
@@ -110,9 +111,12 @@ export default function BusinessContextProvider({
 
     // if there is a country filter, then add it to the filter data
     if (!countryFilter) {
+      const countrySupported = countryHelpers.isCountrySupported(
+        location?.countryCode!
+      );
       filters.push({
         targetFieldName: "country",
-        values: [location?.country ?? "Canada"],
+        values: [countrySupported ? location?.country! : "Canada"],
       });
     }
 
