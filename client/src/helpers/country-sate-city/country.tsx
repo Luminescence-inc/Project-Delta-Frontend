@@ -1,29 +1,34 @@
-import countryList from './assets/country.json';
-import { compare, findEntryByCode } from './utils';
-import { ICountry } from './interface';
+import countryList from "./assets/country.json";
+import { compare, findEntryByCode } from "./utils";
+import { ICountry } from "./interface";
 
 // Get a country by isoCode.
 function getCountryByCode(isoCode: string): ICountry | undefined {
-	if (!isoCode) return undefined;
+  if (!isoCode) return undefined;
 
-	return findEntryByCode(countryList, isoCode);
+  return findEntryByCode(countryList, isoCode);
 }
 
 // Get a list of all countries.
 function getAllCountries(): ICountry[] {
-	return countryList;
+  return countryList;
 }
 
 function sortByIsoCode(countries: ICountry[]): ICountry[] {
-	return countries.sort((a, b) => {
-		return compare<ICountry>(a, b, (entity) => {
-			return entity.isoCode;
-		});
-	});
+  return countries.sort((a, b) => {
+    return compare<ICountry>(a, b, (entity) => {
+      return entity.isoCode;
+    });
+  });
+}
+
+function isCountrySupported(isoCode: string): boolean {
+  return countryList.some((country) => country.isoCode === isoCode);
 }
 
 export default {
-	getCountryByCode,
-	getAllCountries,
-	sortByIsoCode,
+  getCountryByCode,
+  getAllCountries,
+  sortByIsoCode,
+  isCountrySupported,
 };
