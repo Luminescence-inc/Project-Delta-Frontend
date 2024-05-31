@@ -9,7 +9,7 @@ import {
   IOption,
   RegisterBusinessTabs,
 } from "@/types/business";
-import { Country, State, City } from "../../../../../country-sate-city";
+import { Country, State, City } from "../../../../helpers/country-sate-city";
 import { FILE_TYPES, FILTERED_COUNTRY } from "@/utils/business-profile-utils";
 import {
   Instagram,
