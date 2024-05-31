@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { SearchIcon2, X } from "@components/icons";
 import MultiSearch from "../ui/MultiSearch";
 import { FILTERED_COUNTRY } from "@/utils/business-profile-utils";
-import { Country, State, City } from "../../../country-sate-city";
+import { Country, State, City } from "../../helpers/country-sate-city";
 import { FilterData, useBusinessCtx } from "@context/BusinessCtx";
 import { BusinessFilterType } from "@/types/business";
 import { FlexColStart, FlexRowCenterBtw } from "@components/Flex";

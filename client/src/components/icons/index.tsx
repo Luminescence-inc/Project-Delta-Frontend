@@ -308,3 +308,11 @@ export const Filter = (props: SvgIconProps) => (
     <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
   </IconMarkup>
 );
+
+export const TriangleAlert = (props: SvgIconProps) => (
+  <IconMarkup {...props}>
+    <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3" />
+    <path d="M12 9v4" />
+    <path d="M12 17h.01" />
+  </IconMarkup>
+);

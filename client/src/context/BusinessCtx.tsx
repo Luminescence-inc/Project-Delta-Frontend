@@ -81,7 +81,7 @@ export default function BusinessContextProvider({
   // businss registeration.
   const [socialLinksError, setSocialLinksError] = useState<string | null>(null);
 
-  const location = useLocation();
+  const { location, loading } = useLocation();
   const _loc = window.location;
 
   // all business categories
@@ -100,6 +100,8 @@ export default function BusinessContextProvider({
 
   // fetch all businesses initially with or without a filter
   useEffect(() => {
+    if (loading) return;
+
     const { filters } = extractQueryParams();
     const applyFilter = filters.length > 0 || searchQuery ? true : false;
 
@@ -121,7 +123,7 @@ export default function BusinessContextProvider({
     );
 
     getBusinesses(1, applyFilter, { filters: uniqueFilters });
-  }, [_loc.pathname, _loc.search, searchQuery]);
+  }, [_loc.pathname, _loc.search, searchQuery, loading]);
 
   const getBusinesses = async (
     currPage: number,
