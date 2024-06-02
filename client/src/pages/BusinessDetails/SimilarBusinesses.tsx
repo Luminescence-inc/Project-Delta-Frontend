@@ -1,4 +1,4 @@
-import { getListOfBusinsessProfile } from "@/api/business";
+import { searchForBusinesses } from "@/api/business";
 import { FlexColCenter, FlexColStart } from "@components/Flex";
 import { useBusinessCtx } from "@context/BusinessCtx";
 import {
@@ -8,7 +8,12 @@ import {
 import { useEffect, useState } from "react";
 import { IOption } from "@/types/business";
 import { IBusinessProfile, ISearch } from "@/types/business-profile";
-import { constructBizImgUrl, constructDOP, isImgUrlValid } from "@/utils";
+import {
+  constructBizImgUrl,
+  constructDOP,
+  constructSearchUrl,
+  isImgUrlValid,
+} from "@/utils";
 import { LoaderComponent } from "@components/Loader";
 import BusinessesNotfound from "./components/Notfound";
 
@@ -28,6 +33,7 @@ const SimilarBusinesses = ({
   currentBusinessId,
 }: SimilarBusinessesProps) => {
   const { layout } = useBusinessCtx();
+  const allBusinessCategories = useBusinessCtx().businessCategory;
   const [businesses, setBusinesses] = useState<CombBusinessesDataTypes[] | []>(
     []
   );
@@ -51,15 +57,13 @@ const SimilarBusinesses = ({
 
   const getBusinesses = async () => {
     setLoading(true);
-    const result = await getListOfBusinsessProfile(
-      {
-        page: 1,
-        sortBy: "createdUtc",
-        sortDirection: "asc",
-        limit: 5,
-      },
-      searchQuery
+
+    const queryParams = constructSearchUrl(
+      searchQuery || { filters: [] },
+      allBusinessCategories,
+      { page: 1, limit: 5, sortBy: "createdUtc", sortDirection: "asc" }
     );
+    const result = await searchForBusinesses(queryParams);
     const data = result.data?.data.businessProfiles;
 
     // filter out current business from similar businesses

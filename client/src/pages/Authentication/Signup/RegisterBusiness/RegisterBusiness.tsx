@@ -94,7 +94,7 @@ const RegisterBusiness = () => {
   useEffect(() => {
     if (userDetails && businessId) {
       setPageLoading(true);
-      getUserBusinessProfileDetail(authToken, businessId)
+      getUserBusinessProfileDetail(businessId)
         .then((res) => {
           setPageLoading(false);
           const resData: UserBusinessDetailsResponse = res.data;
@@ -343,7 +343,7 @@ const RegisterBusiness = () => {
       if (imageFile) {
         let cloudinaryResponseData: CloudinaryUploadResponse;
         const signature: UploadSignature = (
-          await getUploadSignature(authToken, folderPath)
+          await getUploadSignature(folderPath)
         ).data;
         const imageData = new FormData();
         imageData.append("file", imageFile as Blob);
@@ -376,7 +376,7 @@ const RegisterBusiness = () => {
 
     // Submit to BizConnect Create API if error doesn't exsist
     if (!error && !businessId) {
-      createBusinessProfile(authToken, payload)
+      createBusinessProfile(payload)
         .then(() => {
           setIsModalOpen(true);
           setSuccessfulSubmission(true);
@@ -392,7 +392,7 @@ const RegisterBusiness = () => {
 
     // Update Business details if error doesn't exsist
     if (!error && businessId) {
-      updateUserBusinessProfileDetail(authToken, businessId, payload)
+      updateUserBusinessProfileDetail(businessId, payload)
         .then(() => {
           setIsModalOpen(true);
           setSuccessfulSubmission(true);

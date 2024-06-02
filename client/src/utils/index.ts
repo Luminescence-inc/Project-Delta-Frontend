@@ -1,6 +1,8 @@
 import { twMerge } from "tailwind-merge";
 import { type ClassValue, clsx } from "clsx";
 import { CloudinaryConfig } from "@/config";
+import type { ISearch } from "@/types/business-profile";
+import type { IOption } from "@/types/business";
 
 const defaultImg = "/assets/images/default-img.jpeg";
 
@@ -97,4 +99,102 @@ export const constructBizImgUrl = (url: string | null) => {
   return !url
     ? defaultImg
     : `https://res.cloudinary.com/${CloudinaryConfig.cloudName}/image/upload/c_fill,q_500/${url}.jpg`;
+};
+
+const replacedFilterNames = {
+  businessCategoryUuid: "cat",
+  stateAndProvince: "st",
+  city: "cty",
+  country: "cn",
+  limit: "limit",
+  page: "page",
+  sortBy: "sortBy",
+  sortDirection: "sortDirection",
+  query: "query",
+};
+
+// extract query params from the address bar
+export const extractQueryParams = () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const filters: ISearch["filters"] = [];
+  const queryReplacements = ["cat", "st", "cty", "cn"];
+
+  for (const [key, value] of urlParams) {
+    if (queryReplacements.includes(key)) {
+      switch (key) {
+        case "cat":
+          filters.push({
+            targetFieldName: "businessCategoryUuid",
+            values: [value],
+          });
+          break;
+        case "st":
+          filters.push({
+            targetFieldName: "stateAndProvince",
+            values: [value],
+          });
+          break;
+        case "cty":
+          filters.push({
+            targetFieldName: "city",
+            values: [value],
+          });
+          break;
+        case "cn":
+          filters.push({
+            targetFieldName: "country",
+            values: [value],
+          });
+          break;
+      }
+      continue;
+    }
+
+    if (typeof key !== "undefined") {
+      filters.push({
+        targetFieldName: key as keyof ISearch,
+        values: value.split(","),
+      });
+    }
+  }
+
+  return { filters };
+};
+
+type QueryKey = keyof typeof replacedFilterNames;
+
+export const constructSearchUrl = (
+  searchQuery: ISearch,
+  categories: IOption[] | undefined,
+  pagination?: {
+    page: number;
+    limit?: number;
+    sortBy?: string;
+    sortDirection?: string;
+  }
+) => {
+  const query: string[] = [];
+  searchQuery.filters.forEach((filter) => {
+    const values = filter.values.join(",");
+
+    // get the category name from the categories
+    if (filter.targetFieldName === "businessCategoryUuid" && categories) {
+      const category = categories.find((cat) => cat.uuid === values);
+      query.push(`cat=${category?.value}`);
+      return;
+    }
+
+    query.push(
+      `${replacedFilterNames[filter.targetFieldName as QueryKey]}=${values}`
+    );
+  });
+
+  // pagination
+  if (pagination) {
+    for (const [key, value] of Object.entries(pagination)) {
+      query.push(`${key}=${value}`);
+    }
+  }
+
+  return query.join("&");
 };

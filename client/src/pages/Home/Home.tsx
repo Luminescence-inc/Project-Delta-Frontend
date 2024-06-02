@@ -7,7 +7,7 @@ import CustomerCard from "./components/CustomerCard/CustomerCard";
 import { useEffect, useState } from "react";
 import { JwtPayload, TOKEN_NAME } from "@/types/auth";
 import { isAuthenticated } from "@/api/auth";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { getUserBusinessProfileList } from "@/api/business";
 import { UserBusinessListResponse } from "@/types/business";
 import {
@@ -24,9 +24,7 @@ const Home = () => {
   const navigate = useNavigate();
   const [authenticated, setAuthenticated] = useState(false);
   const [tokenData, setTokenData] = useState<JwtPayload | null>(null);
-  const [searchParams] = useSearchParams();
   const [businessPresent, setBusinessPresent] = useState(false);
-  const login = searchParams.get("login");
   const { userDetails, loading } = useAuth();
 
   const authToken = localStorage.getItem(TOKEN_NAME) as string;
@@ -39,7 +37,7 @@ const Home = () => {
     try {
       setTokenData(parsedToken);
       if (parsedToken.id) {
-        isAuthenticated(authToken, parsedToken.id)
+        isAuthenticated(parsedToken.id)
           .then(() => {
             setAuthenticated(true);
           })
@@ -49,7 +47,7 @@ const Home = () => {
           });
       }
       if (authToken) {
-        getUserBusinessProfileList(authToken).then((res) => {
+        getUserBusinessProfileList().then((res) => {
           const businessListResponse: UserBusinessListResponse = res.data;
           setBusinessPresent(
             businessListResponse.data?.businessProfiles.length > 0 || false
@@ -68,26 +66,14 @@ const Home = () => {
     navigate("/verify-account");
   }
 
-  if (login === "true" || login === "false") {
-    if (parsedToken.id) {
-      isAuthenticated(authToken, parsedToken.id)
-        .then(() => {
-          setAuthenticated(true);
-        })
-        .catch((err) => {
-          setAuthenticated(false);
-          console.error(err);
-        });
-    }
-  }
-
   return (
     <div className="w-full h-full">
       <header className="w-full px-4 py-4">
         <div className="">
           {/* Search component */}
           <FlexColCenter className="w-full">
-            <button
+            <a
+              href="/search"
               className="w-full h-[44px] rounded-[10px] flex flex-row items-center justify-start px-[15px] gap-5 cursor-pointer bg-white border-[1px] border-solid border-blue-200 shadow-md"
               onClick={() => {
                 // keep track of prev page route
@@ -95,8 +81,6 @@ const Home = () => {
                   prevPageLocalKeyName,
                   window.location.pathname
                 );
-
-                navigate("/explore-businesses");
               }}
             >
               <FlexRowStartCenter className="w-full">
@@ -114,7 +98,7 @@ const Home = () => {
                   Search businesses
                 </span>
               </FlexRowStartCenter>
-            </button>
+            </a>
           </FlexColCenter>
           <br />
           <h1 className="w-full text-[30px] font-bold leading-[38px] tracking-normal text-left text-blue-200 font-hnB">

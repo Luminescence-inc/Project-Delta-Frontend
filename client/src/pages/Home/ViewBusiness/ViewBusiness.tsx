@@ -1,7 +1,7 @@
 /** @format */
 
 import Button from "@components/ui/button";
-import { TOKEN_NAME, BaseResponseMessage } from "@/types/auth";
+import { BaseResponseMessage } from "@/types/auth";
 import { useState, useEffect, Fragment } from "react";
 import Modal from "react-modal";
 import {
@@ -23,7 +23,6 @@ import withAuth from "@/utils/auth-helpers/withAuth";
 const ViewBusiness = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const authToken = localStorage.getItem(TOKEN_NAME) as string;
   const [userListOfBusinessProfile, setUserListOfBusinessProfile] = useState<
     UserBusinessList[] | []
   >([]);
@@ -60,7 +59,7 @@ const ViewBusiness = () => {
 
   const handleDeleteBusinessProfile = (businessProfileID: string) => {
     setIsLoading(true);
-    deleteUserBusinessProfile(authToken, businessProfileID)
+    deleteUserBusinessProfile(businessProfileID)
       .then((res) => {
         const deletedResponse: BaseResponseMessage = res.data;
         if (deletedResponse?.success) {
@@ -82,7 +81,7 @@ const ViewBusiness = () => {
 
   useEffect(() => {
     setBusinessesLoading(true);
-    getUserBusinessProfileList(authToken)
+    getUserBusinessProfileList()
       .then((res) => {
         setBusinessesLoading(false);
         const businessListResponse: UserBusinessListResponse = res.data;

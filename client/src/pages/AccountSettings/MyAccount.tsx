@@ -3,7 +3,7 @@ import { Eye, ClosedEye, Mail, Edit } from "@components/icons";
 import Input from "@/components/ui/Input";
 import Button from "@components/ui/button";
 import { useFormik } from "formik";
-import { SignUpData, TOKEN_NAME, BaseResponseMessage } from "@/types/auth";
+import { SignUpData, BaseResponseMessage } from "@/types/auth";
 import { updateUserDetails } from "@/api/auth";
 import { useEffect, useState } from "react";
 import * as yup from "yup";
@@ -47,7 +47,6 @@ const MyAccount = () => {
 
   const onSubmit = async (values: SignUpData) => {
     const { confirmPassword, email, ...data } = values;
-    const authToken = localStorage.getItem(TOKEN_NAME) as string;
     setIsLoading(true);
 
     let updateProfile = false;
@@ -66,9 +65,7 @@ const MyAccount = () => {
 
     if (updateProfile) {
       try {
-        const res: BaseResponseMessage = (
-          await updateUserDetails(authToken, data)
-        ).data;
+        const res: BaseResponseMessage = (await updateUserDetails(data)).data;
         if (res.success) {
           setSuccess(true);
           setIsLoading(false);
@@ -154,7 +151,7 @@ const MyAccount = () => {
             name="firstName"
             value={formik.values.firstName}
             onChange={formik.handleChange}
-            icon={
+            rightIcon={
               <Edit
                 strokeWidth={1}
                 className="stroke-white-100 fill-blue-200"
@@ -163,6 +160,8 @@ const MyAccount = () => {
             }
             onBlur={formik.handleBlur}
             placeholder="Enter First Name"
+            parentClassname="w-full px-0 border border-white-400/50 px-4"
+            inputClassname="w-full px-3 outline-none border-none"
           />
 
           <span style={errorMessageStyle}>
@@ -177,7 +176,7 @@ const MyAccount = () => {
             value={formik.values.lastName}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            icon={
+            rightIcon={
               <Edit
                 strokeWidth={1}
                 className="stroke-white-100 fill-blue-200"
@@ -185,6 +184,8 @@ const MyAccount = () => {
               />
             }
             placeholder="Enter Last Name"
+            parentClassname="w-full px-0 border border-white-400/50 px-4"
+            inputClassname="w-full px-3 outline-none border-none"
           />
 
           <Input
@@ -193,13 +194,15 @@ const MyAccount = () => {
             name="email"
             disabled={true}
             value={formik.values.email}
-            icon={
+            rightIcon={
               <Mail
                 strokeWidth={1}
                 className="rounded-full stroke-white-100 fill-blue-200"
               />
             }
             placeholder="Enter Email Address"
+            parentClassname="w-full px-0 border border-white-400/50 px-4"
+            inputClassname="w-full px-3 outline-none border-none"
           />
 
           <span style={errorMessageStyle}>
@@ -224,7 +227,7 @@ const MyAccount = () => {
             value={formik.values.password}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            icon={
+            rightIcon={
               showPassword ? (
                 <Eye
                   className="cursor-pointer"
@@ -240,6 +243,8 @@ const MyAccount = () => {
               )
             }
             placeholder="Enter Password"
+            parentClassname="w-full px-0 border border-white-400/50 px-4"
+            inputClassname="w-full px-3 outline-none border-none"
           />
 
           <span style={errorMessageStyle}>
@@ -254,7 +259,7 @@ const MyAccount = () => {
             value={formik.values.confirmPassword}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            icon={
+            rightIcon={
               showConfirmPassword ? (
                 <Eye
                   onClick={() => setShowConirmPassword(!showConfirmPassword)}
@@ -270,6 +275,8 @@ const MyAccount = () => {
               )
             }
             placeholder="Enter Password"
+            parentClassname="w-full px-0 border border-white-400/50 px-4"
+            inputClassname="w-full px-3 outline-none border-none"
           />
           <div className="mt-4 w-full">
             <Button

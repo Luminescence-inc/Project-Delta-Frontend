@@ -83,10 +83,10 @@ function App() {
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/view-your-business" element={<ViewBusiness />} />
 
-                <Route
-                  path="/explore-businesses"
-                  element={<ExploreBusiness />}
-                />
+                {/* New */}
+                <Route path="/search" element={<ExploreBusiness />} />
+                <Route path="/biz/:business_id" element={<BusinessDetails />} />
+
                 <Route
                   path="/business-details/:business_id"
                   element={<BusinessDetails />}

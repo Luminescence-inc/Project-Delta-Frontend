@@ -1,7 +1,4 @@
-import {
-  allBusinessCategories,
-  getListOfBusinsessProfile,
-} from "@/api/business";
+import { allBusinessCategories, searchForBusinesses } from "@/api/business";
 import React, { PropsWithChildren, useEffect, useState } from "react";
 import {
   BusinessCategories,
@@ -9,6 +6,8 @@ import {
   IOption,
 } from "@/types/business";
 import { IBusinessProfile, ISearch } from "@/types/business-profile";
+import { constructSearchUrl, extractQueryParams } from "@/utils";
+import { useLocation } from "@/hooks/useLocation";
 
 export const BusinessContext = React.createContext<ContextValues>({} as any);
 
@@ -82,6 +81,8 @@ export default function BusinessContextProvider({
   // businss registeration.
   const [socialLinksError, setSocialLinksError] = useState<string | null>(null);
 
+  const location = useLocation();
+
   // all business categories
   useEffect(() => {
     try {
@@ -98,20 +99,44 @@ export default function BusinessContextProvider({
 
   // fetch all businesses initially with or without a filter
   useEffect(() => {
-    getBusinesses(1, searchQuery ? true : false);
+    const { filters } = extractQueryParams();
+    const applyFilter = filters.length > 0 || searchQuery ? true : false;
+
+    // check if country is in the filters
+    const countryFilter = filters.find((f) => f.targetFieldName === "country");
+
+    // if there is a country filter, then add it to the filter data
+    if (!countryFilter) {
+      filters.push({
+        targetFieldName: "country",
+        values: [location?.country ?? "Canada"],
+      });
+    }
+
+    getBusinesses(1, applyFilter, { filters: searchQuery?.filters ?? filters });
   }, [searchQuery]);
 
-  const getBusinesses = async (currPage: number, filterApplied: boolean) => {
+  const getBusinesses = async (
+    currPage: number,
+    filterApplied: boolean,
+    filter?: ISearch
+  ) => {
     setAllBusinessesLoading(true);
-    const result = await getListOfBusinsessProfile(
-      {
-        page: currPage,
-        sortBy: "createdUtc",
-        sortDirection: "asc",
-        limit: 10,
-      },
-      searchQuery
+
+    const queryParams = constructSearchUrl(
+      filter || searchQuery || { filters: [] },
+      businessCategory
     );
+
+    // update the address bar with the search query
+    // only do this when in search page
+    const isSearchPage =
+      window.location.pathname.split("/")[1].toLowerCase() === "search";
+
+    if (isSearchPage)
+      window.history.pushState({}, "", `/search?${queryParams}`);
+
+    const result = await searchForBusinesses(queryParams);
     const data = result.data?.data.businessProfiles;
 
     setAllBusinessesLoading(false);

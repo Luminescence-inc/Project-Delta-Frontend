@@ -1,6 +1,6 @@
 import { getUserDetails } from "@/api/auth";
 import { useEffect, useState } from "react";
-import { TOKEN_NAME, UserDetails } from "@/types/auth";
+import { UserDetails } from "@/types/auth";
 
 export const useAuth = () => {
   const [userDetails, setUserDetails] = useState<UserDetails | null>(null);
@@ -12,8 +12,7 @@ export const useAuth = () => {
 
   const fetchUserInfo = async () => {
     try {
-      const authToken = localStorage.getItem(TOKEN_NAME) as string;
-      const response = await getUserDetails(authToken!);
+      const response = await getUserDetails();
       const resData = response.data?.data?.userDetails;
 
       setUserDetails(resData);

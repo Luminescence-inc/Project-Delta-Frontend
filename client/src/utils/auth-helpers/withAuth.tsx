@@ -1,46 +1,32 @@
-import { isAuthenticated } from "@/api/auth";
 import { useDataCtx } from "@context/DataCtx";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { JwtPayload, TOKEN_NAME } from "@/types/auth";
+import { useAuth } from "@/hooks/useAuth";
 
 // to be used in the route component that needs authentication
 
 export default function withAuth<P>(Component: React.ComponentType<P>) {
   const ComponentWithAuth = (props: P & any) => {
+    const { loading, userDetails } = useAuth();
     const { setIsAuth } = useDataCtx();
     const [localIsAuth, setLocalIsAuth] = useState<boolean>(false);
-    const [authToken, setAuthToken] = useState<string | null>(
-      localStorage.getItem(TOKEN_NAME) || null
-    );
     const navigate = useNavigate();
 
     useEffect(() => {
-      const token = localStorage.getItem(TOKEN_NAME);
-      if (token) {
-        const payload = JSON.parse(atob(token.split(".")[1]));
-        setAuthToken(token);
-        checkIsAuthenticated(payload!);
-      } else {
-        navigate("/login");
-      }
-    }, []);
-
-    const checkIsAuthenticated = async (parsedToken: JwtPayload) => {
-      try {
-        await isAuthenticated(authToken!, parsedToken?.id);
-        setIsAuth(true);
-        setLocalIsAuth(true);
-      } catch (e: any) {
-        console.log(`Error authenticating user: ${e}`);
+      if (!loading && !userDetails) {
+        console.log(`Error authenticating user`);
         setIsAuth(false);
         setLocalIsAuth(false);
 
         // redirect to login page
         localStorage.clear();
         window.location.href = "/login";
+        navigate("/login");
+      } else {
+        setIsAuth(true);
+        setLocalIsAuth(true);
       }
-    };
+    }, [userDetails, loading]);
 
     return localIsAuth ? <Component {...props} /> : null;
   };
