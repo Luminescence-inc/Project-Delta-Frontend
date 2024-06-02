@@ -16,10 +16,7 @@ import MetaTagsProvider from "@/provider/MetaTagsProvider";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Input from "@/components/ui/Input";
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
 import { Pagination } from "@/components/Pagination";
-import MetaTagsProvider from "@/provider/MetaTagsProvider";
 import { extractQueryParams } from "@/utils";
 
 dayjs.extend(relativeTime);
