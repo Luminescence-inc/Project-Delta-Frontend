@@ -10,13 +10,14 @@ import BusinessesFilterComponent from "@components/BusinessFilter";
 import { UserBusinessList } from "@/types/business";
 import { FilterData, useBusinessCtx } from "@context/BusinessCtx";
 import { IFilter } from "@/types/business-profile";
-import { cn } from "@/utils";
 import { LoaderComponent } from "@components/Loader";
 import { useEffect, useState } from "react";
 import MetaTagsProvider from "@/provider/MetaTagsProvider";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Input from "@/components/ui/Input";
+import { Pagination } from "@/components/Pagination";
+import { extractQueryParams } from "@/utils";
 
 dayjs.extend(relativeTime);
 
@@ -24,8 +25,6 @@ const ExploreBusiness = () => {
   const {
     businessCategory,
     businesses,
-    getBusinesses,
-    currPage,
     allBusinessesLoading,
     totalPages,
     setSearchQuery,
@@ -67,31 +66,24 @@ const ExploreBusiness = () => {
   const generateHeadlineFromQuery = () => {
     let state = null,
       country = null,
-      city = null;
-    if (!searchQuery) {
-      return {
-        country,
-        state,
-        city,
-      };
-    }
-    country = searchQuery?.filters.find(
-      (it) => it.targetFieldName === "country"
-    );
-    state = searchQuery?.filters.find(
-      (it) => it.targetFieldName === "stateAndProvince"
-    );
-    city = searchQuery?.filters.find((it) => it.targetFieldName === "city");
+      city = null,
+      query = null;
+    const { filters } = extractQueryParams();
+    country = filters.find((it) => it.targetFieldName === "country");
+    state = filters.find((it) => it.targetFieldName === "stateAndProvince");
+    city = filters.find((it) => it.targetFieldName === "city");
+    query = filters.find((it) => it.targetFieldName === "query");
 
     return {
       country: country?.values[0],
       state: state?.values[0],
       city: city?.values[0],
+      query: query?.values[0],
     };
   };
 
   const generateHeadlineText = () => {
-    const { country, state, city } = generateHeadlineFromQuery();
+    const { country, state, city, query } = generateHeadlineFromQuery();
     const response = {
       title: "",
       busicnesses: "",
@@ -105,26 +97,38 @@ const ExploreBusiness = () => {
     response["busicnesses"] = top10_businesses_name;
 
     if (city && state) {
-      response["title"] = `TOP 10 Businesses Near ${city}, ${state}`;
+      response["title"] = `TOP 10 ${
+        query ? `"${query}" Businesses` : "Businesses"
+      } Near ${city}, ${state}`;
       return response;
     }
     if (country && state) {
-      response["title"] = `TOP 10 Businesses Near ${state}, ${country}`;
+      response["title"] = `TOP 10 ${
+        query ? `"${query}" Businesses` : "Businesses"
+      } Near ${state}, ${country}`;
       return response;
     }
     if (country) {
-      response["title"] = `TOP 10 Businesses in ${country}`;
+      response["title"] = `TOP 10 ${
+        query ? `"${query}" Businesses` : "Businesses"
+      } in ${country}`;
       return response;
     }
     if (state) {
-      response["title"] = `TOP 10 Businesses Near ${state}`;
+      response["title"] = `TOP 10 ${
+        query ? `"${query}" Businesses` : "Businesses"
+      } Near ${state}`;
       return response;
     }
     if (city) {
-      response["title"] = `TOP 10 Businesses Near ${city}`;
+      response["title"] = `TOP 10 ${
+        query ? `"${query}" Businesses` : "Businesses"
+      } Near ${city}`;
       return response;
     }
-    response["title"] = "Explore Businesses Near You";
+    response["title"] = `Explore ${
+      query ? `"${query}" Businesses` : "Businesses"
+    } Near You`;
     return response;
   };
 
@@ -228,35 +232,7 @@ const ExploreBusiness = () => {
         businessCategories={businessCategory}
       />
 
-      {/* Load more button */}
-      <FlexColCenter
-        className="w-full h-[100px] mt-4"
-        style={{
-          height: "100px",
-        }}
-      >
-        {currPage < totalPages && businesses.length > 0 && (
-          <button
-            className={cn(
-              "px-[20px] py-[10px] rounded-5 border-none outline-none flex items-center justify-center gap-[1px] cursor-pointer bg-white-105 transition-all",
-              allBusinessesLoading ? "bg-white-106 cursor-not-allowed" : ""
-            )}
-            onClick={() => {
-              if (!allBusinessesLoading) {
-                getBusinesses(currPage + 1, false);
-              }
-            }}
-          >
-            {allBusinessesLoading ? (
-              <LoaderComponent />
-            ) : (
-              <span className="text-[14px] font-normal font-inter text-dark-100">
-                Load more
-              </span>
-            )}
-          </button>
-        )}
-      </FlexColCenter>
+      {businesses.length > 0 && <Pagination totalPages={totalPages} />}
 
       {/* Filtering component */}
       {showFilter && (
