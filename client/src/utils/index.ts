@@ -2,7 +2,6 @@ import { twMerge } from "tailwind-merge";
 import { type ClassValue, clsx } from "clsx";
 import { CloudinaryConfig } from "@/config";
 import type { ISearch } from "@/types/business-profile";
-import type { IOption } from "@/types/business";
 
 const defaultImg = "/assets/images/default-img.jpeg";
 
@@ -165,7 +164,7 @@ type QueryKey = keyof typeof replacedFilterNames;
 
 export const constructSearchUrl = (
   searchQuery: ISearch,
-  categories: IOption[] | undefined,
+  // categories: IOption[] | undefined,
   pagination?: {
     page: number;
     limit?: number;
@@ -176,17 +175,11 @@ export const constructSearchUrl = (
   const query: string[] = [];
   searchQuery.filters.forEach((filter) => {
     const values = filter.values.join(",");
-
-    // get the category name from the categories
-    if (filter.targetFieldName === "businessCategoryUuid" && categories) {
-      const category = categories.find((cat) => cat.uuid === values);
-      query.push(`cat=${category?.value}`);
-      return;
+    if (values.length > 0) {
+      query.push(
+        `${replacedFilterNames[filter.targetFieldName as QueryKey]}=${values}`
+      );
     }
-
-    query.push(
-      `${replacedFilterNames[filter.targetFieldName as QueryKey]}=${values}`
-    );
   });
 
   // pagination
