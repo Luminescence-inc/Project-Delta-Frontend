@@ -25,6 +25,7 @@ import BusinessDetails from "@pages/BusinessDetails";
 import { DataCtxProvider } from "@context/DataCtx";
 import DefaultWebView from "@/components/DefaultWebView";
 import { Toaster } from "react-hot-toast";
+import { NotsupportedCountryBanner } from "./components/NotsupportedCountryBanner";
 
 function App() {
   const { pathname } = useLocation();
@@ -59,6 +60,7 @@ function App() {
         }
       >
         <DataCtxProvider>
+          <NotsupportedCountryBanner />
           <Navbar />
           <BusinessContextProvider>
             <main>

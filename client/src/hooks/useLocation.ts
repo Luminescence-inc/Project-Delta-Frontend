@@ -1,23 +1,106 @@
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
+
+interface LocationResp {
+  status?: string;
+  country?: string;
+  countryCode?: string;
+  state?: string;
+  stateName?: string;
+  region?: string;
+  regionName?: string;
+  city?: string;
+}
+
+const DEFAULT_COUNTRY = "Canada";
 
 export const useLocation = () => {
-  const [location, setLocation] = React.useState<{ country: string } | null>(
-    null
-  );
+  const [locationData, setLocationData] = useState<{
+    location: LocationResp | null;
+    loading: boolean;
+  }>({
+    location: null,
+    loading: true,
+  });
 
-  // for now, supported location is default to Canada
   useEffect(() => {
-    // get location from local storage
-    const location = localStorage.getItem("location");
-    if (!location) {
-      // set canada in localstorage
-      const location = {
-        country: "Canada",
-      };
-      localStorage.setItem("location", JSON.stringify(location));
-      setLocation(location);
-    }
+    const fetchLocation = async () => {
+      try {
+        const ipAddress = await getIpAddress();
+        if (!ipAddress) {
+          setLocationData({
+            location: { country: DEFAULT_COUNTRY },
+            loading: false,
+          });
+          return;
+        }
+
+        const location = await getLocation(ipAddress);
+        if (!location) {
+          setLocationData({
+            location: { country: DEFAULT_COUNTRY },
+            loading: false,
+          });
+          return;
+        }
+
+        setLocationData({ location, loading: false });
+      } catch (error) {
+        console.error(error);
+        setLocationData({
+          location: { country: DEFAULT_COUNTRY },
+          loading: false,
+        });
+      }
+    };
+
+    fetchLocation();
   }, []);
 
-  return location;
+  useEffect(() => {
+    if (locationData.location) {
+      localStorage.setItem("location", JSON.stringify(locationData.location));
+    }
+  }, [locationData.location]);
+
+  return { location: locationData.location, loading: locationData.loading };
+};
+
+const getIpAddress = async () => {
+  try {
+    const apiUrl = "https://api.ipify.org";
+    const req = await fetch(apiUrl);
+    const resp = await req.text();
+
+    if (req.status !== 200) {
+      console.error("Failed to fetch IP address");
+      return null;
+    }
+
+    return resp;
+  } catch (e: any) {
+    console.error(e);
+    return null;
+  }
+};
+
+const getLocation = async (ip: string) => {
+  try {
+    const url = `http://ip-api.com/json/${ip}?fields=status,country,countryCode,region,regionName,city`;
+    const req = await fetch(url);
+    const resp = await req.json();
+
+    if (req.status !== 200) {
+      throw new Error("Failed to fetch location");
+    }
+
+    return {
+      country: resp.country,
+      countryCode: resp.countryCode,
+      state: resp.region,
+      stateName: resp.regionName,
+      city: resp.city,
+    } as LocationResp;
+  } catch (e: any) {
+    return null;
+  }
 };

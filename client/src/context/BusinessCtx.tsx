@@ -8,6 +8,7 @@ import {
 import { IBusinessProfile, ISearch } from "@/types/business-profile";
 import { constructSearchUrl, extractQueryParams } from "@/utils";
 import { useLocation } from "@/hooks/useLocation";
+import countryHelpers from "@/helpers/country-sate-city/country";
 
 export const BusinessContext = React.createContext<ContextValues>({} as any);
 
@@ -58,7 +59,7 @@ export default function BusinessContextProvider({
 }: BusinessContextProviderProps) {
   const [businesses, setBusinesses] = useState<IBusinessProfile[] | []>([]);
   const [allBusinessesLoading, setAllBusinessesLoading] =
-    useState<boolean>(false);
+    useState<boolean>(true);
   const [currPage, setCurrPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [businessCategory, setBusinessCategory] = useState<IOption[]>();
@@ -81,7 +82,7 @@ export default function BusinessContextProvider({
   // businss registeration.
   const [socialLinksError, setSocialLinksError] = useState<string | null>(null);
 
-  const location = useLocation();
+  const { location, loading } = useLocation();
   const _loc = window.location;
 
   // all business categories
@@ -100,6 +101,8 @@ export default function BusinessContextProvider({
 
   // fetch all businesses initially with or without a filter
   useEffect(() => {
+    if (loading) return;
+
     const { filters } = extractQueryParams();
     const applyFilter = filters.length > 0 || searchQuery ? true : false;
 
@@ -108,9 +111,12 @@ export default function BusinessContextProvider({
 
     // if there is a country filter, then add it to the filter data
     if (!countryFilter) {
+      const countrySupported = countryHelpers.isCountrySupported(
+        location?.countryCode!
+      );
       filters.push({
         targetFieldName: "country",
-        values: [location?.country ?? "Canada"],
+        values: [countrySupported ? location?.country! : "Canada"],
       });
     }
 
@@ -121,15 +127,13 @@ export default function BusinessContextProvider({
     );
 
     getBusinesses(1, applyFilter, { filters: uniqueFilters });
-  }, [_loc.pathname, _loc.search, searchQuery]);
+  }, [_loc.pathname, _loc.search, searchQuery, loading]);
 
   const getBusinesses = async (
     currPage: number,
     filterApplied: boolean,
     filter?: ISearch
   ) => {
-    setAllBusinessesLoading(true);
-
     const queryParams = constructSearchUrl(
       filter || searchQuery || { filters: [] }
     );
