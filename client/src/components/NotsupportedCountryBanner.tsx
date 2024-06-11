@@ -9,6 +9,8 @@ export const NotsupportedCountryBanner = () => {
   const { location, loading } = useLocation();
   const [isSupported, setIsSupported] = React.useState<boolean>(true);
 
+  const supportedRoutes = ["/search"];
+
   useEffect(() => {
     if (loading) return;
     // check if country is in supported locations
@@ -24,6 +26,8 @@ export const NotsupportedCountryBanner = () => {
   }, [location]);
 
   if (isSupported) return null;
+
+  if (!supportedRoutes.includes(window.location.pathname)) return null;
 
   return (
     <div className="w-full bg-white-105">
