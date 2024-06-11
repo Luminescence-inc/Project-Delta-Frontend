@@ -163,7 +163,7 @@ export default function BusinessDetails() {
   }
 
   const categories = businessDetails?.categories?.join(" - ");
-  const metaDescription = `${businessDetails?.description}, ${businessDetails?.city}, ${businessDetails?.stateAndProvince}, ${categories}`;
+  const metaDescription = `${businessDetails?.name} ${businessDetails?.description}, ${businessDetails?.city}, ${businessDetails?.stateAndProvince}, ${categories}`;
 
   return (
     <>

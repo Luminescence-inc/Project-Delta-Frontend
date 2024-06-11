@@ -86,6 +86,9 @@ export default function BusinessContextProvider({
   // location based filters
   useLocationBasedFilters({
     searchQuery,
+    setFilterData,
+    filterData,
+    bizCategories: businessCategory,
     getBusinesses: (currPage, filterApplied, searchQuery) => {
       getBusinesses(currPage, filterApplied, searchQuery);
     },
@@ -110,6 +113,8 @@ export default function BusinessContextProvider({
     filterApplied: boolean,
     filter?: ISearch
   ) => {
+    setAllBusinessesLoading(true);
+
     const queryParams = constructSearchUrl(
       filter || searchQuery || { filters: [] }
     );

@@ -27,26 +27,29 @@ const usePathname = () => {
   const [pathname, setPathname] = useState("");
   const [path, setPath] = useState("");
   const [formattedPathname, setFormattedPathname] = useState("");
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     const pathname = window.location.pathname;
     const name = routeNameMap[pathname] ?? null;
+    const search = window.location.search;
 
     setPath(pathname);
+    setSearch(search);
 
     if (name) {
       setPathname(name);
       setFormattedPathname(`${name} | Bizconnect24`);
     } else {
       const formattedName = capitalizeFirstLetters(
-        pathname.replace("/", "").replace(/-/g, " ").split("/")[0],
+        pathname.replace("/", "").replace(/-/g, " ").split("/")[0]
       );
       setPathname(formattedName);
       setFormattedPathname(`${formattedName} | Bizconnect24`);
     }
   });
 
-  return { pathname, path, formattedPathname };
+  return { pathname, path, formattedPathname, search };
 };
 
 export default usePathname;

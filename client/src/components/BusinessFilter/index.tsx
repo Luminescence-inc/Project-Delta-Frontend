@@ -235,6 +235,8 @@ const BusinessesFilterComponent = ({
     closeFilter();
   };
 
+  console.log(filterData);
+
   return (
     <FlexColStart className="w-full h-full fixed top-0 left-0 z-[999] bg-white-100">
       <div className="w-full h-auto flex flex-col items-start justify-start px-[20px] py-[50px] bg-white-100">
@@ -288,6 +290,39 @@ const BusinessesFilterComponent = ({
               activePanel={activePanel}
               setActivePanel={setActivePanel}
             />
+
+            {/* categories placeholder */}
+            {filterData.businessCategoryUuid && (
+              <div className="flex flex-row flex-wrap items-start justify-start mt-0 filter-placeholders gap-[3px] pb-[15px]">
+                {filterData.businessCategoryUuid?.map((categories) => (
+                  <div
+                    key={categories.uuid}
+                    className="ntw px-[12px] py-[5px] rounded-full flex flex-row items-center justify-start placeholder gap-[2px] bg-white-300/80"
+                  >
+                    <span className="text-[12px] font-inter font-normal">
+                      {/* @ts-ignore */}
+                      {categories?.value ?? "CATEGORY"}
+                    </span>
+                    <button
+                      className="cursor-pointer border-none outline-none close-btn"
+                      onClick={() => {
+                        //  remove the selected category from filter
+                        const updatedFilter =
+                          filterData.businessCategoryUuid?.filter(
+                            (c) => c.uuid !== categories.uuid
+                          );
+                        setFilterData({
+                          ...filterData,
+                          businessCategoryUuid: updatedFilter,
+                        });
+                      }}
+                    >
+                      <X size={15} />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
           </FlexColStart>
 
           {/* SELECT COUNTRY */}

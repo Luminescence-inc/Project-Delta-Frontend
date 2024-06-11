@@ -227,12 +227,16 @@ const ExploreBusiness = () => {
       </FlexColCenter>
 
       {/* business card lists */}
-      <BusinessCardContainer
-        data={businesses as UserBusinessList[]}
-        businessCategories={businessCategory}
-      />
+      {!allBusinessesLoading && (
+        <BusinessCardContainer
+          data={businesses as UserBusinessList[]}
+          businessCategories={businessCategory}
+        />
+      )}
 
-      {businesses.length > 0 && <Pagination totalPages={totalPages} />}
+      {businesses.length > 0 && !allBusinessesLoading && (
+        <Pagination totalPages={totalPages} />
+      )}
 
       {/* Filtering component */}
       {showFilter && (
