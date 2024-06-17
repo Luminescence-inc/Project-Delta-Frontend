@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import { FlexRowStart } from "./Flex";
-import { TriangleAlert } from "./icons";
+import { FlexRowStartCenter } from "./Flex";
+import { Info } from "./icons";
 import { useLocation } from "@/hooks/useLocation";
 import { cn } from "@/utils";
 import countryHelpers from "@/helpers/country-sate-city/country";
@@ -31,14 +31,14 @@ export const NotsupportedCountryBanner = () => {
 
   return (
     <div className="w-full bg-white-105">
-      <FlexRowStart
-        className={cn("w-full px-4 py-3 bg-red-305 text-white-100 gap-2")}
+      <FlexRowStartCenter
+        className={cn("w-full px-4 py-3 bg-yellow-100 text-white-102 gap-2")}
       >
-        <TriangleAlert size={15} color="#fff" />
-        <span className="text-white-100 text-xs font-semibold font-inter">
+        <Info size={20} color="#fff" />
+        <span className="text-white-100 text-xs font-semibold font-inter drop-shadow">
           Country not yet supported!.
         </span>
-      </FlexRowStart>
+      </FlexRowStartCenter>
     </div>
   );
 };

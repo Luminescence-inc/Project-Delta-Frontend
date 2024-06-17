@@ -316,3 +316,11 @@ export const TriangleAlert = (props: SvgIconProps) => (
     <path d="M12 17h.01" />
   </IconMarkup>
 );
+
+export const Info = (props: SvgIconProps) => (
+  <IconMarkup {...props}>
+    <circle cx="12" cy="12" r="10" />
+    <path d="M12 16v-4" />
+    <path d="M12 8h.01" />
+  </IconMarkup>
+);
