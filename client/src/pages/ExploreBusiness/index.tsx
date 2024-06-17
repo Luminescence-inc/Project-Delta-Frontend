@@ -4,7 +4,7 @@ import {
   FlexColStartCenter,
   FlexRowStartCenter,
 } from "@components/Flex";
-import { SearchIcon2 } from "@components/icons";
+import { Filter, SearchIcon2 } from "@components/icons";
 import BusinessCardContainer from "./components/BusinessCard";
 import BusinessesFilterComponent from "@components/BusinessFilter";
 import { UserBusinessList } from "@/types/business";
