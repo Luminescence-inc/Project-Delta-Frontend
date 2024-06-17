@@ -37,7 +37,6 @@ const BusinessesFilterComponent = ({
     filteredCities,
     setFilteredCities,
     filteredStates,
-    searchQuery,
     setFilteredStates,
     setSearchQuery,
     setBusinesses,

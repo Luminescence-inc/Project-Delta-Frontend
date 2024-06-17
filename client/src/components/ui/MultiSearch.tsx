@@ -3,8 +3,7 @@ import { cn } from "@/utils";
 import { ChevronDown } from "@components/icons";
 import { BusinessFilterType, MultiSearchType } from "@/types/business";
 import { FlexColStart, FlexRowStart } from "@components/Flex";
-import { Link, useLocation } from "react-router-dom";
-import { encode } from "punycode";
+import { useLocation } from "react-router-dom";
 
 interface MultiSearchProps {
   rightIcon?: React.ReactNode;
