@@ -85,7 +85,7 @@ export default function BusinessContextProvider({
   const [socialLinksError, setSocialLinksError] = useState<string | null>(null);
 
   // location based filters
-  const uniqueFilters = useLocationBasedFilters({
+  useLocationBasedFilters({
     searchQuery,
     setSearchQuery,
     setFilterData,
@@ -95,13 +95,6 @@ export default function BusinessContextProvider({
       getBusinesses(currPage, filterApplied, searchQuery);
     },
   });
-
-  useEffect(() => {
-    if (!uniqueFilters || uniqueFilters.length === 0) return;
-
-    // setSearchQuery({ filters: uniqueFilters });
-    // console.log(uniqueFilters);
-  }, [uniqueFilters]);
 
   // all business categories
   useEffect(() => {
