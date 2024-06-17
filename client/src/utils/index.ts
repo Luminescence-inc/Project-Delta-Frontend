@@ -172,12 +172,15 @@ export const constructSearchUrl = (
     sortDirection?: string;
   }
 ) => {
+  console.log(searchQuery);
   const query: string[] = [];
   searchQuery.filters.forEach((filter) => {
     const values = filter.values.join(",");
     if (values.length > 0) {
       query.push(
-        `${replacedFilterNames[filter.targetFieldName as QueryKey]}=${values}`
+        `${replacedFilterNames[filter.targetFieldName as QueryKey]}=${encodeURI(
+          values
+        )}`
       );
     }
   });

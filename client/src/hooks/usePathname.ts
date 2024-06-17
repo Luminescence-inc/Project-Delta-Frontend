@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 export const routeNameMap = {
   "/": "Home",
   "/about-us": "About",
-  "/explore-businesses": "Discover Businesses",
+  "/search": "Discover Businesses",
   "/contact-support": "Support",
   "/login": "Login",
   "/forgot-password": "Forgot Password",
@@ -11,7 +11,7 @@ export const routeNameMap = {
   "/verify-account": "Verify Account",
   "/signup": "Signup",
   "/view-your-business": "View Business",
-  "/business-details": "Business Details",
+  "/biz": "Business Details",
   "/signup/register-business": "Register Business",
   "/account": "My Account",
 } as Record<string, string>;

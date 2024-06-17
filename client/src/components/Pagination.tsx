@@ -38,7 +38,7 @@ const PaginationLink = ({
 
 export const Pagination = ({ totalPages }: IPaginationProps) => {
   const location = useLocation();
-  const query = new URLSearchParams(location.search);
+  const query = new URLSearchParams(window.location.search);
   const [activePage, setActivePage] = React.useState<string>("1");
 
   useEffect(() => {
@@ -124,49 +124,119 @@ export const Pagination = ({ totalPages }: IPaginationProps) => {
   // remove duplicate "page" param
   query.delete("page");
 
+  const isLastPage = Number(activePage) === totalPages;
+
   return (
-    <FlexRowCenter className="w-full mt-10">
+    <FlexRowCenter className="w-full mt-10 mb-20">
       <FlexRowStartCenter className="w-auto">
-        {/* Prev Button */}
+        <RenderNextPrevButton
+          direction="prev"
+          totalPages={totalPages}
+          activePage={activePage}
+          url={`${location.pathname}?page=${prevPage}&${query.toString()}`}
+          lastPage={isLastPage}
+        />
+
+        {totalPages > 1 && renderPageLinks()}
+
+        <RenderNextPrevButton
+          direction="next"
+          totalPages={totalPages}
+          activePage={activePage}
+          url={`${location.pathname}?page=${nextPage}&${query.toString()}`}
+          lastPage={isLastPage}
+        />
+      </FlexRowStartCenter>
+    </FlexRowCenter>
+  );
+};
+
+interface RenderNextPrevButtonProps {
+  direction: "next" | "prev";
+  totalPages: number;
+  activePage: string;
+  url: string;
+  lastPage?: boolean;
+}
+
+function RenderNextPrevButton({
+  direction,
+  activePage,
+  totalPages,
+  url,
+  lastPage,
+}: RenderNextPrevButtonProps) {
+  return (
+    <>
+      {lastPage ? (
+        direction === "prev" ? (
+          <a
+            href={url}
+            className={cn(
+              "w-[40px] h-[40px] rounded-[6px] flex items-center justify-center",
+              Number(activePage) > 1 ? "bg-white-300" : "bg-white-100"
+            )}
+          >
+            <ChevronLeft
+              size={20}
+              strokeWidth={2}
+              className={cn(
+                Number(activePage) > 1
+                  ? "stroke-dark-105"
+                  : "stroke-white-200 cursor-not-allowed"
+              )}
+            />
+          </a>
+        ) : (
+          <button
+            className={cn(
+              "w-[40px] h-[40px] rounded-[6px] flex items-center justify-center",
+              Number(activePage) > 1 ? "bg-white-300/50" : "bg-white-100"
+            )}
+            disabled={lastPage}
+          >
+            <ChevronRight
+              size={20}
+              strokeWidth={2}
+              className={cn(
+                Number(activePage) < totalPages
+                  ? "stroke-dark-105"
+                  : "stroke-white-200 cursor-not-allowed"
+              )}
+            />
+          </button>
+        )
+      ) : (
         <a
-          href={`${location.pathname}?page=${prevPage}&${query.toString()}`}
+          href={url}
           className={cn(
             "w-[40px] h-[40px] rounded-[6px] flex items-center justify-center",
             Number(activePage) > 1 ? "bg-white-300" : "bg-white-100"
           )}
         >
-          <ChevronLeft
-            size={20}
-            strokeWidth={2}
-            className={cn(
-              Number(activePage) > 1
-                ? "stroke-dark-105"
-                : "stroke-white-200 cursor-not-allowed"
-            )}
-          />
-        </a>
-
-        {renderPageLinks()}
-
-        {/* Next Button */}
-        <a
-          href={`${location.pathname}?page=${nextPage}&${query.toString()}`}
-          className={cn(
-            "w-[40px] h-[40px] rounded-[6px] flex items-center justify-center",
-            Number(activePage) < totalPages ? "bg-white-300" : "bg-white-100"
+          {direction === "prev" ? (
+            <ChevronLeft
+              size={20}
+              strokeWidth={2}
+              className={cn(
+                Number(activePage) > 1
+                  ? "stroke-dark-105"
+                  : "stroke-white-200 cursor-not-allowed"
+              )}
+            />
+          ) : (
+            <ChevronRight
+              size={20}
+              strokeWidth={2}
+              className={cn(
+                Number(activePage) < totalPages
+                  ? "stroke-dark-105"
+                  : "stroke-white-200 cursor-not-allowed"
+              )}
+            />
           )}
-        >
-          <ChevronRight
-            size={20}
-            strokeWidth={2}
-            className={cn(
-              Number(activePage) < totalPages
-                ? "stroke-dark-105"
-                : "stroke-white-200 cursor-not-allowed"
-            )}
-          />
         </a>
-      </FlexRowStartCenter>
-    </FlexRowCenter>
+      )}
+    </>
   );
-};
+}

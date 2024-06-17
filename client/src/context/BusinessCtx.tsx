@@ -6,10 +6,9 @@ import {
   IOption,
 } from "@/types/business";
 import { IBusinessProfile, ISearch } from "@/types/business-profile";
-import { constructSearchUrl, extractQueryParams } from "@/utils";
-import { useLocation } from "@/hooks/useLocation";
-import countryHelpers from "@/helpers/country-sate-city/country";
+import { constructSearchUrl } from "@/utils";
 import useLocationBasedFilters from "@/hooks/useLocationBasedFilters";
+import { useNavigate } from "react-router-dom";
 
 export const BusinessContext = React.createContext<ContextValues>({} as any);
 
@@ -23,6 +22,7 @@ export interface FilterData {
   stateAndProvince: { uuid: string } | undefined;
   city: { uuid: string } | undefined;
   country: { uuid: string } | undefined;
+  page?: { uuid: string } | undefined;
 }
 
 interface ContextValues {
@@ -58,6 +58,7 @@ interface BusinessContextProviderProps extends PropsWithChildren {}
 export default function BusinessContextProvider({
   children,
 }: BusinessContextProviderProps) {
+  const navigate = useNavigate();
   const [businesses, setBusinesses] = useState<IBusinessProfile[] | []>([]);
   const [allBusinessesLoading, setAllBusinessesLoading] =
     useState<boolean>(true);
@@ -84,8 +85,9 @@ export default function BusinessContextProvider({
   const [socialLinksError, setSocialLinksError] = useState<string | null>(null);
 
   // location based filters
-  useLocationBasedFilters({
+  const uniqueFilters = useLocationBasedFilters({
     searchQuery,
+    setSearchQuery,
     setFilterData,
     filterData,
     bizCategories: businessCategory,
@@ -93,6 +95,13 @@ export default function BusinessContextProvider({
       getBusinesses(currPage, filterApplied, searchQuery);
     },
   });
+
+  useEffect(() => {
+    if (!uniqueFilters || uniqueFilters.length === 0) return;
+
+    // setSearchQuery({ filters: uniqueFilters });
+    // console.log(uniqueFilters);
+  }, [uniqueFilters]);
 
   // all business categories
   useEffect(() => {
@@ -124,8 +133,11 @@ export default function BusinessContextProvider({
     const isSearchPage =
       window.location.pathname.split("/")[1].toLowerCase() === "search";
 
-    if (isSearchPage)
-      window.history.pushState({}, "", `/search?${queryParams}`);
+    if (isSearchPage) {
+      const url = `/search?${queryParams}`;
+      window.history.pushState({}, "", url);
+      navigate(url, { replace: true });
+    }
 
     const result = await searchForBusinesses(queryParams);
     const data = result.data?.data.businessProfiles;

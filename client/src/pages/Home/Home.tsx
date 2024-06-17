@@ -288,7 +288,7 @@ const Home = () => {
           <FlexColCenter className="w-full">
             <Button
               intent="primary"
-              href="/explore-businesses"
+              href="/search"
               rightIcon={
                 <CtaArrow strokeWidth={0.4} className="stroke-white-100" />
               }
@@ -350,7 +350,7 @@ const Home = () => {
           >
             <Button
               intent="primary"
-              href="/explore-businesses"
+              href="/search"
               className="w-[303px] h-[55px] px-[15px] py-[15px] rounded-md border-[1px] border-white-100 "
               rightIcon={
                 <CtaArrow strokeWidth={0.4} className="stroke-white-100" />

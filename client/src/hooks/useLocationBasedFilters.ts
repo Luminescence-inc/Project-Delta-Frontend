@@ -1,8 +1,8 @@
 import { extractQueryParams } from "@/utils";
-import { useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { useLocation } from "@/hooks/useLocation";
 import countryHelpers from "@/helpers/country-sate-city/country";
-import type { ISearch } from "@/types/business-profile";
+import type { IFilter, ISearch } from "@/types/business-profile";
 import { type FilterData } from "@/context/BusinessCtx";
 import type { IOption } from "@/types/business";
 import usePathname from "./usePathname";
@@ -110,9 +110,9 @@ import usePathname from "./usePathname";
 //     getBusinesses(1, applyFilter, { filters: uniqueFilters });
 //   }, [searchQuery, loading, location]);
 // }
-
 interface useLocBaseFilterProps {
   searchQuery: ISearch | null;
+  setSearchQuery: (searchQuery: ISearch | null) => void;
   setFilterData: (filterData: FilterData) => void;
   filterData: FilterData;
   bizCategories: IOption[] | undefined;
@@ -129,6 +129,7 @@ export default function useLocationBasedFilters({
   filterData,
   bizCategories,
   getBusinesses,
+  setSearchQuery,
 }: useLocBaseFilterProps) {
   const { location, loading } = useLocation();
   const { search } = usePathname();
@@ -137,92 +138,76 @@ export default function useLocationBasedFilters({
     if (loading) return [];
 
     const { filters } = extractQueryParams();
-
-    // const applyFilter = filters.length > 0 || searchQuery ? true : false;
-
-    // check if country is in the filters
+    // Check if country is in the filters
     const countryFilter = filters.find((f) => f.targetFieldName === "country");
 
-    // if there is no country filter, add the location details to the filters
     if (!countryFilter) {
       const countrySupported = countryHelpers.isCountrySupported(
         location?.countryCode!
       );
-
       if (!countrySupported) {
-        filters.push({
-          targetFieldName: "country",
-          values: ["Canada"],
-        });
+        filters.push({ targetFieldName: "country", values: ["Canada"] });
       } else if (location) {
         const { country, state, city } = location;
-        if (country) {
-          filters.push({
-            targetFieldName: "country",
-            values: [country],
-          });
-        }
-        if (state) {
+        if (country)
+          filters.push({ targetFieldName: "country", values: [country] });
+        if (state)
           filters.push({
             targetFieldName: "stateAndProvince",
             values: [state],
           });
-        }
-        if (city) {
-          filters.push({
-            targetFieldName: "city",
-            values: [city],
-          });
+        if (city) filters.push({ targetFieldName: "city", values: [city] });
+      }
+    } else {
+      const countryFilterIndex = filters.findIndex(
+        (f) => f.targetFieldName === "country"
+      );
+      if (countryFilterIndex > -1) {
+        const countrySupported = countryHelpers.isCountrySupported(
+          filters[countryFilterIndex].values[0]
+        );
+        const countrySupportedFromLocation = countryHelpers.isCountrySupported(
+          location?.countryCode!
+        );
+        if (!countrySupported && !countrySupportedFromLocation) {
+          filters[countryFilterIndex].values = ["Canada"];
+        } else {
+          filters[countryFilterIndex].values = [location?.country!];
         }
       }
     }
 
-    // Validate the country in the filters
-    const countryFilterIndex = filters.findIndex(
-      (f) => f.targetFieldName === "country"
-    );
-
-    if (countryFilterIndex > -1) {
-      const countrySupported = countryHelpers.isCountrySupported(
-        filters[countryFilterIndex].values[0]
-      );
-      const countrySupportedFromLocation = countryHelpers.isCountrySupported(
-        location?.countryCode!
-      );
-
-      if (!countrySupported && !countrySupportedFromLocation) {
-        filters[countryFilterIndex].values = ["Canada"];
-      } else {
-        filters[countryFilterIndex].values = [location?.country!];
-      }
-    }
-
-    const comboFilters = [...(searchQuery?.filters ?? []), ...filters];
+    // const comboFilters = [...(searchQuery?.filters ?? []), ...filters];
+    const comboFilters = [...(searchQuery?.filters ?? filters)];
     const nonDuplicateFilters = comboFilters.filter(
       (v, i, a) =>
         a.findIndex((t) => t.targetFieldName === v.targetFieldName) === i
     );
     return nonDuplicateFilters;
-  }, [searchQuery, loading, location, search]);
+  }, [searchQuery, loading, search, location]);
 
   useEffect(() => {
     if (loading) return;
-
     const currentFilters = searchQuery?.filters || [];
-    const applyFilter = uniqueFilters.length > 0 || searchQuery ? true : false;
-
-    // Check if the current filters and the unique filters are different
     const filtersChanged =
-      uniqueFilters.length !== currentFilters.length ||
+      currentFilters.length !== uniqueFilters.length ||
       uniqueFilters.some(
         (filter, index) =>
           filter.targetFieldName !== currentFilters[index]?.targetFieldName
       );
 
-    getBusinesses(1, applyFilter, { filters: uniqueFilters });
-  }, [uniqueFilters, loading, searchQuery, location, setFilterData]);
+    if (filtersChanged) {
+      console.log("Filters changed");
+      setSearchQuery({
+        filters: uniqueFilters,
+      });
+      getBusinesses(1, uniqueFilters.length > 0, { filters: uniqueFilters });
+    } else {
+      console.log("Filters not changed");
+      getBusinesses(1, uniqueFilters.length > 0, { filters: uniqueFilters });
+    }
+  }, [uniqueFilters, loading, location]);
 
-  // effect to update filter component
   useEffect(() => {
     const newFilterData = updateFilter(
       filterData,
@@ -231,6 +216,8 @@ export default function useLocationBasedFilters({
     );
     setFilterData(newFilterData);
   }, [uniqueFilters]);
+
+  return uniqueFilters;
 }
 
 function updateFilter(
@@ -254,19 +241,13 @@ function updateFilter(
         ];
         break;
       case "stateAndProvince":
-        newFilterData.stateAndProvince = {
-          uuid: filter.values[0],
-        };
+        newFilterData.stateAndProvince = { uuid: filter.values[0] };
         break;
       case "city":
-        newFilterData.city = {
-          uuid: filter.values[0],
-        };
+        newFilterData.city = { uuid: filter.values[0] };
         break;
       case "country":
-        newFilterData.country = {
-          uuid: filter.values[0],
-        };
+        newFilterData.country = { uuid: filter.values[0] };
         break;
     }
   });

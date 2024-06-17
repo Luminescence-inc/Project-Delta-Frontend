@@ -3,7 +3,8 @@ import { cn } from "@/utils";
 import { ChevronDown } from "@components/icons";
 import { BusinessFilterType, MultiSearchType } from "@/types/business";
 import { FlexColStart, FlexRowStart } from "@components/Flex";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { encode } from "punycode";
 
 interface MultiSearchProps {
   rightIcon?: React.ReactNode;
@@ -46,6 +47,8 @@ export default function MultiSearch({
   onClick,
   is_link,
 }: MultiSearchProps) {
+  const [search, setSearch] = useState("");
+  const location = useLocation();
   const [searchValue, setSearchValue] = useState("");
   const [filterData, setFilterData] = useState<
     { uuid?: string; value?: string }[]
@@ -84,6 +87,10 @@ export default function MultiSearch({
   useEffect(() => {
     setFilterData(listsData!);
   }, [listsData]);
+
+  useEffect(() => {
+    setSearch(location.search);
+  }, [location]);
 
   // array of allowed dataType that need to be shown on select input
   const allowedDataType = ["country", "stateAndProvince", "city"];
@@ -178,8 +185,45 @@ export default function MultiSearch({
                   ))
                 : null
               : filterData && filterData.length > 0
-              ? filterData.map((listData) =>
-                  is_link ? (
+              ? filterData.map((listData) => {
+                  if (is_link) {
+                    const params = new URLSearchParams(search);
+                    params.delete("cat");
+                    params.set("cat", encodeURI(listData.value!));
+
+                    const url = `${location.pathname}?${params.toString()}`;
+
+                    return (
+                      <RenderButtonOrLink
+                        key={listData.uuid}
+                        type={type!}
+                        url={url}
+                        value={{
+                          uuid: listData.uuid!,
+                          text: listData.value!,
+                        }}
+                        checked={
+                          getActiveList(listData.uuid!, dataType!) ===
+                          listData.uuid
+                        }
+                        isActive={
+                          getActiveList(listData.uuid!, dataType!) ===
+                          listData.uuid
+                        }
+                        onChange={() => {
+                          // close panel
+                          onChange?.({
+                            uuid: listData.uuid,
+                            value: listData.value,
+                            type: dataType as BusinessFilterType,
+                          });
+                          setActivePanel("");
+                        }}
+                        is_link={true}
+                      />
+                    );
+                  }
+                  return (
                     <RenderButtonOrLink
                       key={listData.uuid}
                       type={type!}
@@ -204,36 +248,9 @@ export default function MultiSearch({
                         });
                         setActivePanel("");
                       }}
-                      is_link={true}
                     />
-                  ) : (
-                    <RenderButtonOrLink
-                      key={listData.uuid}
-                      type={type!}
-                      value={{
-                        uuid: listData.uuid!,
-                        text: listData.value!,
-                      }}
-                      checked={
-                        getActiveList(listData.uuid!, dataType!) ===
-                        listData.uuid
-                      }
-                      isActive={
-                        getActiveList(listData.uuid!, dataType!) ===
-                        listData.uuid
-                      }
-                      onChange={() => {
-                        // close panel
-                        onChange?.({
-                          uuid: listData.uuid,
-                          value: listData.value,
-                          type: dataType as BusinessFilterType,
-                        });
-                        setActivePanel("");
-                      }}
-                    />
-                  )
-                )
+                  );
+                })
               : null}
           </FlexColStart>
         </FlexColStart>
@@ -248,6 +265,7 @@ interface RenderProps {
   checked: boolean;
   isActive: boolean;
   is_link?: boolean;
+  url?: string;
   value: {
     uuid: string;
     text: string;
@@ -261,6 +279,7 @@ const RenderButtonOrLink = ({
   isActive,
   onChange,
   is_link,
+  url,
 }: RenderProps) => {
   return type === "multi" ? (
     <button
@@ -280,8 +299,8 @@ const RenderButtonOrLink = ({
       </span>
     </button>
   ) : is_link ? (
-    <Link
-      to={`/search?cat=${value.text}`}
+    <a
+      href={url!}
       className={cn(
         "w-full flex items-center justify-start gap-[2px] border-none outline-none px-[10px] py-[5px] rounded-[5px] cursor-pointer",
         isActive ? "bg-blue-200 text-white-100" : "text-white-400"
@@ -291,7 +310,7 @@ const RenderButtonOrLink = ({
       <span className="text-[15px] font-medium font-inter mt-[2px]">
         {value.text}
       </span>
-    </Link>
+    </a>
   ) : (
     <button
       className={cn(

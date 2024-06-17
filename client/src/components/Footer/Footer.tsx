@@ -14,7 +14,7 @@ const navigations = [
   },
   {
     name: "Discover Businesses",
-    link: "/explore-businesses",
+    link: "/search",
   },
   {
     name: "Support",

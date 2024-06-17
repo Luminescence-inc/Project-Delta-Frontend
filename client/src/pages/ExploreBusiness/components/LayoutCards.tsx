@@ -260,7 +260,7 @@ const CardNavigateWrapper = ({
 }) => {
   return (
     <Link
-      to={`/business-details/${id}`}
+      to={`/biz/${id}`}
       className="w-full outline-none border-none bg-none cursor-pointer"
       key={id}
       onClick={(e) => {

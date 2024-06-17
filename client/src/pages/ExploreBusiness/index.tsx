@@ -17,7 +17,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { Pagination } from "@/components/Pagination";
 import MetaTagsProvider from "@/provider/MetaTagsProvider";
-import { extractQueryParams } from "@/utils";
+import { cn, extractQueryParams } from "@/utils";
 
 dayjs.extend(relativeTime);
 
@@ -42,13 +42,18 @@ const ExploreBusiness = () => {
       // @ts-expect-error
       const val = filterData[key];
       if (val) {
+        const isCategory = key === "businessCategoryUuid";
         const queryValues = Array.isArray(val)
-          ? val.map((it) => it.uuid)
-          : [val.uuid];
-        query.push({
-          targetFieldName: key,
-          values: queryValues,
-        });
+          ? val.map((it) => (isCategory ? it.value : it.uuid))
+          : [isCategory ? val.value : val.uuid];
+
+        // make sure the value isn't undefined
+        if (queryValues[0]) {
+          query.push({
+            targetFieldName: key,
+            values: queryValues,
+          });
+        }
       }
     }
     setSearchQuery({
@@ -239,13 +244,12 @@ const ExploreBusiness = () => {
       )}
 
       {/* Filtering component */}
-      {showFilter && (
-        <BusinessesFilterComponent
-          closeFilter={() => setShowFilter(false)}
-          getfilterData={(filter) => constructQuery(filter)}
-          businessesCategories={businessCategory}
-        />
-      )}
+      <BusinessesFilterComponent
+        closeFilter={() => setShowFilter(false)}
+        getfilterData={(filter) => constructQuery(filter)}
+        businessesCategories={businessCategory}
+        showFilter={showFilter}
+      />
     </FlexColStart>
   );
 };

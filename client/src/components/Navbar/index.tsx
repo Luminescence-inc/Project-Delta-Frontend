@@ -25,7 +25,7 @@ const navigationRoute = [
   {
     title: "Discover Businesses",
     name: "discover-business",
-    path: "/explore-businesses",
+    path: "/search",
   },
   { title: "Support", name: "", path: "/contact-support" },
 ];
@@ -128,6 +128,7 @@ const Navbar = () => {
                           ? "text-teal-100"
                           : ""
                       )}
+                      onClick={() => setMenuOpen(false)}
                     >
                       {nav.title}
                     </Link>
