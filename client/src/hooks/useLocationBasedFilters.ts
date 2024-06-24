@@ -33,8 +33,8 @@ export default function useLocationBasedFilters({
 
   const uniqueFilters = useMemo(() => {
     if (loading) return [];
-
     const { filters } = extractQueryParams();
+
     // Check if country is in the filters
     const countryFilter = filters.find((f) => f.targetFieldName === "country");
 
@@ -45,6 +45,7 @@ export default function useLocationBasedFilters({
       if (!countrySupported) {
         filters.push({ targetFieldName: "country", values: ["Canada"] });
       } else if (location) {
+        console.log("now country presern");
         const { country, state, city } = location;
         if (country)
           filters.push({ targetFieldName: "country", values: [country] });
@@ -59,6 +60,7 @@ export default function useLocationBasedFilters({
       const countryFilterIndex = filters.findIndex(
         (f) => f.targetFieldName === "country"
       );
+
       if (countryFilterIndex > -1) {
         const countrySupported = countryHelpers.isCountrySupported(
           filters[countryFilterIndex].values[0]
@@ -69,12 +71,13 @@ export default function useLocationBasedFilters({
         if (!countrySupported && !countrySupportedFromLocation) {
           filters[countryFilterIndex].values = ["Canada"];
         } else {
-          filters[countryFilterIndex].values = [location?.country!];
+          filters[countryFilterIndex].values = [
+            filters[countryFilterIndex].values[0] ?? location?.country!,
+          ];
         }
       }
     }
 
-    // const comboFilters = [...(searchQuery?.filters ?? []), ...filters];
     const comboFilters = [...(searchQuery?.filters ?? filters)];
     const nonDuplicateFilters = comboFilters.filter(
       (v, i, a) =>
@@ -84,7 +87,7 @@ export default function useLocationBasedFilters({
   }, [searchQuery, loading, search, location]);
 
   useEffect(() => {
-    if (loading) return;
+    if (loading || !uniqueFilters || !location) return;
     const currentFilters = searchQuery?.filters || [];
     const filtersChanged =
       currentFilters.length !== uniqueFilters.length ||

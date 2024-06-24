@@ -124,7 +124,7 @@ const ExploreBusiness = () => {
       .slice(0, 10)
       .join(" - ");
 
-    let title = `TOP 10 ${query ? `"${query}" Businesses` : "Businesses"}`;
+    let title = `Explore ${query ? `"${query}" Businesses` : "Businesses"}`;
 
     if (city && state) {
       title += ` Near ${city}, ${state}`;

@@ -163,6 +163,8 @@ export const extractQueryParams = () => {
     }
   }
 
+  console.log("filtA", filters);
+
   return { filters };
 };
 
@@ -178,7 +180,7 @@ export const constructSearchUrl = (
     sortDirection?: string;
   }
 ) => {
-  console.log(searchQuery);
+  console.log(searchQuery, "query");
   const query: string[] = [];
   searchQuery.filters.forEach((filter) => {
     const values = filter.values.join(",");

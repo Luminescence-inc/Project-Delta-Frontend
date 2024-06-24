@@ -128,6 +128,7 @@ const SimilarBusinesses = ({
                 _key={businesses.uuid!}
                 id={businesses.uuid}
                 key={businesses.uuid}
+                _urlLocation={`${businesses.country}-${businesses.stateAndProvince}`}
               />
             ) : (
               <RowLayoutCard
@@ -142,6 +143,7 @@ const SimilarBusinesses = ({
                 _key={businesses.uuid!}
                 id={businesses.uuid}
                 key={businesses.uuid}
+                _urlLocation={`${businesses.country}-${businesses.stateAndProvince}`}
               />
             );
           })
