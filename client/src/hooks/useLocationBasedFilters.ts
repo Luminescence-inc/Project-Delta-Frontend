@@ -138,6 +138,7 @@ function updateFilter(
         ];
         break;
       case "stateAndProvince":
+        console.log("stateAndProv", filter);
         newFilterData.stateAndProvince = { uuid: filter.values[0] };
         break;
       case "city":
