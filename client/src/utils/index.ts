@@ -163,8 +163,6 @@ export const extractQueryParams = () => {
     }
   }
 
-  console.log("filtA", filters);
-
   return { filters };
 };
 
