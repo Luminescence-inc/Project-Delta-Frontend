@@ -22,13 +22,22 @@ function sortByIsoCode(countries: ICountry[]): ICountry[] {
   });
 }
 
-function isCountrySupported(isoCode: string): boolean {
-  return countryList.some((country) => country.isoCode === isoCode);
+function isCountrySupportedByName(name: string): boolean {
+  return countryList.some(
+    (country) => country.name.toLowerCase() === name.toLowerCase()
+  );
+}
+
+function isCountrySupportedByIsoCode(isoCode: string): boolean {
+  return countryList.some(
+    (country) => country.isoCode.toLowerCase() === isoCode.toLowerCase()
+  );
 }
 
 export default {
   getCountryByCode,
   getAllCountries,
   sortByIsoCode,
-  isCountrySupported,
+  isCountrySupportedByName,
+  isCountrySupportedByIsoCode,
 };
