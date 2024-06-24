@@ -71,6 +71,26 @@ export default function BusinessDetails() {
     }
   }, [params, businessCategory]);
 
+  useEffect(() => {
+    if (params) {
+      // update the address bar with correct business details
+      // /biz/name-location( i.e country-state )/business_id
+      const { business_id } = params;
+      const business = businessDetails;
+      if (business) {
+        const { name, stateAndProvince, country } = business;
+        const urlLocation = `${name
+          .toLowerCase()
+          .replace(
+            /\s/gi,
+            "-"
+          )}-${country?.toLowerCase()}-${stateAndProvince?.toLowerCase()}`;
+        const url = `/biz/${urlLocation}/${business_id}`;
+        window.history.pushState({}, "", url);
+      }
+    }
+  }, [params, businessDetails]);
+
   const fetchBusinessProfile = async (id: string) => {
     try {
       setPageLoading(true);
@@ -163,16 +183,17 @@ export default function BusinessDetails() {
   }
 
   const categories = businessDetails?.categories?.join(" - ");
-  const metaDescription = `${businessDetails?.name} ${businessDetails?.description}, ${businessDetails?.city}, ${businessDetails?.stateAndProvince}, ${categories}`;
+  const metaOgDescription = `${businessDetails?.name} ${businessDetails?.description}, ${businessDetails?.city}, ${businessDetails?.stateAndProvince}, ${categories}`;
+  const metaOgTitle = `${businessDetails?.name} ${businessDetails?.city}, ${businessDetails?.stateAndProvince}, ${categories}`;
 
   return (
     <>
       <MetaTagsProvider
-        title={metaDescription}
-        description={metaDescription}
+        title={metaOgTitle}
+        description={metaOgDescription}
         og={{
-          title: metaDescription,
-          description: metaDescription,
+          title: metaOgTitle,
+          description: metaOgDescription,
           image: constructBizImgUrl(businessDetails?.logoUrl!),
           url: window.location.href,
           type: "website",
