@@ -96,8 +96,7 @@ const getLocation = async (ip: string) => {
     return {
       country: resp.country,
       countryCode: resp.countryCode,
-      state: resp.region,
-      stateName: resp.regionName,
+      state: resp.regionName,
       city: resp.city,
     } as LocationResp;
   } catch (e: any) {
