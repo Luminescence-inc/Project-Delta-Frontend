@@ -87,7 +87,10 @@ function App() {
 
                 {/* New */}
                 <Route path="/search" element={<ExploreBusiness />} />
-                <Route path="/biz/:business_id" element={<BusinessDetails />} />
+                <Route
+                  path="/biz/:loc/:business_id"
+                  element={<BusinessDetails />}
+                />
                 <Route
                   path="/signup/register-business"
                   element={<RegisterBusiness />}
