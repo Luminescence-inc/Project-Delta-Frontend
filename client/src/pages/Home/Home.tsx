@@ -293,6 +293,7 @@ const Home = () => {
                 <CtaArrow strokeWidth={0.4} className="stroke-white-100" />
               }
               className="w-full max-w-[303px] h-[55px] mt-8 rounded-md "
+              hardRefresh={true}
             >
               <span className="font-hnM font-bold text-[14px] leading-[14px] text-left text-white-100 ">
                 Explore Businesses
@@ -355,6 +356,7 @@ const Home = () => {
               rightIcon={
                 <CtaArrow strokeWidth={0.4} className="stroke-white-100" />
               }
+              hardRefresh={true}
             >
               <span className="font-hnM font-bold text-[15px] leading-[14px] text-left text-white-100 ">
                 Explore Businesses

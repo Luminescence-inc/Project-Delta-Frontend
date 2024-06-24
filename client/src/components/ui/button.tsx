@@ -52,6 +52,7 @@ export interface ButtonProps extends ButtonVariants {
   href?: string;
   spinnerColor?: string;
   spinnerSize?: string | number;
+  hardRefresh?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -64,18 +65,30 @@ const Button: React.FC<ButtonProps> = ({
   href,
   spinnerColor,
   spinnerSize,
+  hardRefresh,
   ...props
 }) => {
   const classNames = twMerge(buttonVariants(props), className);
 
   if (href) {
     return (
-      // @ts-expect-error
-      <Link to={href} relative="path" className={classNames} {...props}>
-        {leftIcon && leftIcon}
-        {children}
-        {rightIcon && rightIcon}
-      </Link>
+      <>
+        {hardRefresh ? (
+          // @ts-expect-error
+          <a href={href} className={classNames} {...props}>
+            {leftIcon && leftIcon}
+            {children}
+            {rightIcon && rightIcon}
+          </a>
+        ) : (
+          // @ts-expect-error
+          <Link to={href} relative="path" className={classNames} {...props}>
+            {leftIcon && leftIcon}
+            {children}
+            {rightIcon && rightIcon}
+          </Link>
+        )}
+      </>
     );
   }
 
