@@ -39,7 +39,7 @@ export default function useLocationBasedFilters({
     const countryFilter = filters.find((f) => f.targetFieldName === "country");
 
     if (!countryFilter) {
-      const countrySupported = countryHelpers.isCountrySupported(
+      const countrySupported = countryHelpers.isCountrySupportedByName(
         location?.countryCode!
       );
       if (!countrySupported) {
@@ -62,18 +62,28 @@ export default function useLocationBasedFilters({
       );
 
       if (countryFilterIndex > -1) {
-        const countrySupported = countryHelpers.isCountrySupported(
+        const countrySupported = countryHelpers.isCountrySupportedByName(
           filters[countryFilterIndex].values[0]
         );
-        const countrySupportedFromLocation = countryHelpers.isCountrySupported(
-          location?.countryCode!
-        );
-        if (!countrySupported && !countrySupportedFromLocation) {
-          filters[countryFilterIndex].values = ["Canada"];
-        } else {
+
+        // if the country passed in via address bar is supported
+        // then we only want to show businesses from that country
+        // otherwise we show businesses from Canada
+        // or the country from the user location
+        if (countrySupported) {
           filters[countryFilterIndex].values = [
-            filters[countryFilterIndex].values[0] ?? location?.country!,
+            filters[countryFilterIndex].values[0],
           ];
+        } else {
+          const countrySupportedFromLocation =
+            countryHelpers.isCountrySupportedByName(location?.countryCode!);
+          if (!countrySupportedFromLocation) {
+            filters[countryFilterIndex].values = ["Canada"];
+          } else {
+            filters[countryFilterIndex].values = [
+              filters[countryFilterIndex].values[0] ?? location?.country!,
+            ];
+          }
         }
       }
     }
