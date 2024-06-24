@@ -34,6 +34,10 @@ const ExploreBusiness = () => {
   } = useBusinessCtx();
   const [showFilter, setShowFilter] = useState<boolean>(false);
   const [search, setSearch] = useState<string>("");
+  const [headline, setHeadline] = useState({
+    title: "",
+    businesses: "",
+  });
 
   // construct the search query
   const constructQuery = (filterData: FilterData) => {
@@ -87,69 +91,112 @@ const ExploreBusiness = () => {
     };
   };
 
-  const generateHeadlineText = () => {
+  useEffect(() => {
+    if (allBusinessesLoading) return;
     const { country, state, city, query } = generateHeadlineFromQuery();
-    const response = {
-      title: "",
-      busicnesses: "",
-    };
 
-    const top10_businesses_name = businesses
+    if (businesses && businesses.length === 0) {
+      const locHeadline = (country: string, state: string, city: string) => {
+        if (country && state) {
+          return `Near '${city}, ${state}'`;
+        } else if (state && country) {
+          return `Near '${state}, ${country}'`;
+        } else if (city) {
+          return `Near '${city}'`;
+        } else if (state) {
+          return `Near '${state}'`;
+        } else if (country) {
+          return `In '${country}'`;
+        }
+      };
+
+      setHeadline({
+        title: `No result for${
+          query ? " '" + query + "'" : " businesses"
+        } ${locHeadline(country!, state!, city!)}`,
+        businesses: "",
+      });
+      return;
+    }
+
+    const top10BusinessesName = businesses
       .map((b) => b.name)
       .slice(0, 10)
       .join(" - ");
 
-    response["busicnesses"] = top10_businesses_name;
+    let title = `TOP 10 ${query ? `"${query}" Businesses` : "Businesses"}`;
 
     if (city && state) {
-      response["title"] = `TOP 10 ${
+      title += ` Near ${city}, ${state}`;
+    } else if (state && country) {
+      title += ` Near ${state}, ${country}`;
+    } else if (city) {
+      title += ` Near ${city}`;
+    } else if (state) {
+      title += ` Near ${state}`;
+    } else if (country) {
+      title += ` in ${country}`;
+    } else {
+      title = `Explore ${
         query ? `"${query}" Businesses` : "Businesses"
-      } Near ${city}, ${state}`;
-      return response;
+      } Near You`;
     }
-    if (country && state) {
-      response["title"] = `TOP 10 ${
-        query ? `"${query}" Businesses` : "Businesses"
-      } Near ${state}, ${country}`;
-      return response;
+
+    setHeadline({
+      title,
+      businesses: top10BusinessesName,
+    });
+  }, [businesses, allBusinessesLoading]);
+
+  // debounce the search query
+  useEffect(() => {
+    if (search.length < 1 || !search) {
+      // remove the query filter
+      // @ts-expect-error
+      setSearchQuery((prev: ISearch) => ({
+        filters: prev?.filters?.filter(
+          (f: IFilter) => f.targetFieldName !== "query"
+        ),
+      }));
+      return;
     }
-    if (country) {
-      response["title"] = `TOP 10 ${
-        query ? `"${query}" Businesses` : "Businesses"
-      } in ${country}`;
-      return response;
-    }
-    if (state) {
-      response["title"] = `TOP 10 ${
-        query ? `"${query}" Businesses` : "Businesses"
-      } Near ${state}`;
-      return response;
-    }
-    if (city) {
-      response["title"] = `TOP 10 ${
-        query ? `"${query}" Businesses` : "Businesses"
-      } Near ${city}`;
-      return response;
-    }
-    response["title"] = `Explore ${
-      query ? `"${query}" Businesses` : "Businesses"
-    } Near You`;
-    return response;
+    const debouncedSearch = debounceSearch((value: string) => {
+      // @ts-expect-error
+      setSearchQuery((prev: ISearch) => ({
+        filters: [
+          ...prev.filters.filter((f: IFilter) => f.targetFieldName !== "query"),
+          {
+            targetFieldName: "query",
+            values: [value],
+          },
+        ],
+      }));
+    }, 500);
+
+    debouncedSearch(search);
+  }, [search]);
+
+  const debounceSearch = (fn: Function, delay: number) => {
+    let timer: any;
+    return function (...args: any) {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        fn(...args);
+      }, delay);
+    };
   };
 
   const date = dayjs().format("MMM DD YYYY");
-  const metaDescription = `${generateHeadlineText().title}, - ${date} - ${
-    generateHeadlineText().busicnesses
-  }`;
+  const metaDescription = `${headline.title}, - ${date} - ${headline.businesses}`;
 
   return (
     <FlexColStart className="w-full h-full">
       <MetaTagsProvider
-        title={generateHeadlineText().title}
+        title={headline.title}
         description={metaDescription}
         url={window.location.href}
         og={{
-          title: generateHeadlineText().title,
+          title: headline.title,
           description: metaDescription,
           url: window.location.href,
         }}
@@ -157,7 +204,7 @@ const ExploreBusiness = () => {
 
       <FlexColStart className="w-full px-[20px] mt-10 gap-[15px]">
         <h1 className="text-[20px] md:text-[30px] font-extrabold font-inter">
-          {generateHeadlineText().title}
+          {headline.title}
         </h1>
         <p className="text-[15px] font-medium font-inter text-gray-103">
           Discover businesses within and beyond your community
@@ -177,20 +224,25 @@ const ExploreBusiness = () => {
               className="stroke-gray-103"
             />
           }
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) => setSearch(e.target.value.replace(/\s/g, ""))}
           onKeyUp={(e) => {
             if (e.key === "Enter") {
-              setSearchQuery({
+              if (search.length === 0 || !search) return;
+              // @ts-expect-error
+              setSearchQuery((prev: ISearch) => ({
                 filters: [
+                  ...prev.filters.filter(
+                    (f: IFilter) => f.targetFieldName !== "query"
+                  ),
                   {
                     targetFieldName: "query",
                     values: [search],
                   },
                 ],
-              });
+              }));
             }
           }}
-          autoComplete="off"
+          autoComplete="nope"
         />
         <button
           className="border-none outline-none cursor-pointer rounded-[5px] p-2 flex items-center justify-center bg-blue-50 -translate-y-2"
