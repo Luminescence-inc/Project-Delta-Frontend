@@ -25,6 +25,7 @@ interface BusinessCardProps {
   id: string;
   image: string;
   _key: string;
+  _urlLocation: string;
 }
 
 const NAME_CONSTRAINT = 30;
@@ -38,11 +39,12 @@ export const ColLayoutCard = ({
   image,
   id,
   _key,
+  _urlLocation,
 }: BusinessCardProps) => {
   const hasBusinessClosed = daysOfOps ? determineBusOpTime(daysOfOps) : null;
 
   return (
-    <CardNavigateWrapper id={id}>
+    <CardNavigateWrapper id={id} name={name} location={_urlLocation}>
       <CardWrapper
         key={_key}
         className="w-full max-h-[260px] px-[5px] py-[5px]"
@@ -138,11 +140,12 @@ export const RowLayoutCard = ({
   phone,
   image,
   id,
+  _urlLocation,
 }: BusinessCardProps) => {
   const hasBusinessClosed = daysOfOps ? determineBusOpTime(daysOfOps) : null;
 
   return (
-    <CardNavigateWrapper id={id}>
+    <CardNavigateWrapper id={id} name={name} location={_urlLocation}>
       <CardWrapper className="w-full max-h-[108px]">
         <FlexRowStart className="w-full px-[5px] py-[5px]">
           <div
@@ -254,13 +257,20 @@ const CardWrapper = ({ children, style, className, ...props }: CWProps) => {
 const CardNavigateWrapper = ({
   id,
   children,
+  location,
+  name,
 }: {
   id: string;
+  name: string;
+  location: string;
   children: React.ReactNode;
 }) => {
+  const loc = location.replace(/\s/gi, "-");
+  const _name = name.toLowerCase().replace(/\s/gi, "-");
+  const combinedUrl = `/biz/${_name}-${loc}/${id}`;
   return (
     <Link
-      to={`/biz/${id}`}
+      to={combinedUrl}
       className="w-full outline-none border-none bg-none cursor-pointer"
       key={id}
       onClick={(e) => {
