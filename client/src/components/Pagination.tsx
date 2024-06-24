@@ -126,6 +126,8 @@ export const Pagination = ({ totalPages }: IPaginationProps) => {
 
   const isLastPage = Number(activePage) === totalPages;
 
+  if (totalPages === 1) return null;
+
   return (
     <FlexRowCenter className="w-full mt-10 mb-20">
       <FlexRowStartCenter className="w-auto">
