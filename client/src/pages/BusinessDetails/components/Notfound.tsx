@@ -1,5 +1,5 @@
 import { FlexColCenter, FlexRowStart } from "@components/Flex";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { EmptyCart, ChevronRight } from "@components/icons";
 
 interface NotfoundProps {
@@ -8,6 +8,7 @@ interface NotfoundProps {
 
 const BusinessesNotfound = ({ message }: NotfoundProps) => {
   const navigate = useNavigate();
+  const location = useLocation();
   return (
     <FlexColCenter className="w-full gap-4 min-h-[250px]">
       <EmptyCart
@@ -20,11 +21,11 @@ const BusinessesNotfound = ({ message }: NotfoundProps) => {
       </p>
       <Link
         className="flex flex-row items-start justify-start gap-4 cursor-pointer border-none outline-none bg-none"
-        to="#"
-        onClick={() => {
-          // go back
-          navigate(-1);
-        }}
+        to={`/search?${location.state.prevQuery}`}
+        // onClick={() => {
+        //   // go back
+        //   navigate(-1);
+        // }}
       >
         <FlexRowStart className="w-full">
           <p className="text-[13px] font-normal font-inter underline text-teal-100">
