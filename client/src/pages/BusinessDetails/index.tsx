@@ -25,7 +25,7 @@ import {
   removeAMPM,
 } from "@/utils";
 import RenderSocialLinks from "./components/RenderSocialLinks";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useBusinessCtx } from "@context/BusinessCtx";
 import { IBusinessProfile } from "@/types/business-profile";
 import { getBusinessProfileById } from "@/api/business";
@@ -55,8 +55,7 @@ export default function BusinessDetails() {
 
   // active link tooltip
   const [activeLinkTt, setActiveLinkTt] = useState("");
-
-  const navigate = useNavigate();
+  const location = useLocation();
   const params = useParams();
 
   const prefixWithZero = (time: string) => {
@@ -202,15 +201,15 @@ export default function BusinessDetails() {
       />
       <FlexColStart className="w-full h-auto px-[28px]">
         {/* breadcrumb */}
-        <button
+        <Link
+          to={`/search?${location.state?.prevQuery}`}
           className="text-[12px] font-inter font-medium leading-[14px] underline bg-none outline-none border-none cursor-pointer text-gray-103 mt-5"
-          onClick={() => navigate(-1)}
         >
           <FlexRowStart className="w-auto gap-[4px]">
             <ChevronLeft strokeWidth={1} size={15} />
             Explore Businesses
           </FlexRowStart>
-        </button>
+        </Link>
 
         {businessDetails && !pageLoading ? (
           <>
