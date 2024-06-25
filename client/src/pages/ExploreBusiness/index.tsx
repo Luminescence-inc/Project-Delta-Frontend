@@ -20,6 +20,7 @@ import MetaTagsProvider from "@/provider/MetaTagsProvider";
 import { extractQueryParams } from "@/utils";
 import useTrackPageSearch from "@/hooks/useTrackSearch";
 import { prevPageSearchKeyName } from "@/config";
+import { useSearchDebounce } from "@/hooks/useSearchDebounce";
 
 dayjs.extend(relativeTime);
 
@@ -36,7 +37,8 @@ const ExploreBusiness = () => {
   } = useBusinessCtx();
 
   const [showFilter, setShowFilter] = useState<boolean>(false);
-  const [search, setSearch] = useState<string>("");
+  // const [search, setSearch] = useState<string>("");
+  const [debouncedSearch, setQuery] = useSearchDebounce(350);
   const [urlSearchQuery, setUrlSearchQuery] = useState<string>("");
   const [headline, setHeadline] = useState({
     title: "",
@@ -88,16 +90,6 @@ const ExploreBusiness = () => {
       state: state?.values[0],
       city: city?.values[0],
       query: query?.values[0],
-    };
-  };
-
-  const debounceSearch = (fn: Function, delay: number) => {
-    let timer: any;
-    return function (...args: any) {
-      clearTimeout(timer);
-      timer = setTimeout(() => {
-        fn(...args);
-      }, delay);
     };
   };
 
@@ -166,8 +158,7 @@ const ExploreBusiness = () => {
 
   // debounce the search query
   useEffect(() => {
-    if (search.length <= 0 || !search) {
-      // remove the query filter
+    if (!debouncedSearch) {
       // @ts-expect-error
       setSearchQuery((prev: ISearch) => ({
         filters: prev?.filters?.filter(
@@ -175,24 +166,20 @@ const ExploreBusiness = () => {
         ),
       }));
     } else {
-      const debouncedSearch = debounceSearch((value: string) => {
-        // @ts-expect-error
-        setSearchQuery((prev: ISearch) => ({
-          filters: [
-            ...prev?.filters?.filter(
-              (f: IFilter) => f.targetFieldName !== "query"
-            ),
-            {
-              targetFieldName: "query",
-              values: [value],
-            },
-          ],
-        }));
-      }, 100);
-
-      debouncedSearch(search);
+      // @ts-expect-error
+      setSearchQuery((prev: ISearch) => ({
+        filters: [
+          ...prev?.filters?.filter(
+            (f: IFilter) => f.targetFieldName !== "query"
+          ),
+          {
+            targetFieldName: "query",
+            values: [debouncedSearch],
+          },
+        ],
+      }));
     }
-  }, [search]);
+  }, [debouncedSearch]);
 
   // url search query
   useEffect(() => {
@@ -241,11 +228,15 @@ const ExploreBusiness = () => {
               className="stroke-gray-103"
             />
           }
-          value={search.length > 0 ? search : urlSearchQuery}
-          onChange={(e) => setSearch(e.target.value.trim())}
+          defaultValue={debouncedSearch ? debouncedSearch : urlSearchQuery}
+          onChange={(e) =>
+            setQuery(
+              e.target.value.trim().length > 0 ? e.target.value.trim() : null
+            )
+          }
           onKeyUp={(e) => {
             if (e.key === "Enter") {
-              if (search.length === 0 || !search) return;
+              if (!debouncedSearch) return;
               // @ts-expect-error
               setSearchQuery((prev: ISearch) => ({
                 filters: [
@@ -254,7 +245,7 @@ const ExploreBusiness = () => {
                   ),
                   {
                     targetFieldName: "query",
-                    values: [search],
+                    values: [debouncedSearch],
                   },
                 ],
               }));
