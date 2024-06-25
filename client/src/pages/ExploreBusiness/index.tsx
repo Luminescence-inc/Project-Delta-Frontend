@@ -224,7 +224,7 @@ const ExploreBusiness = () => {
               className="stroke-gray-103"
             />
           }
-          onChange={(e) => setSearch(e.target.value.replace(/\s/g, ""))}
+          onChange={(e) => setSearch(e.target.value.trim())}
           onKeyUp={(e) => {
             if (e.key === "Enter") {
               if (search.length === 0 || !search) return;
