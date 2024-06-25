@@ -35,54 +35,69 @@ export default function useLocationBasedFilters({
     if (loading) return [];
     const { filters } = extractQueryParams();
 
-    // Check if country is in the filters
+    // Check if country is in the filters (address bar)
     const countryFilter = filters.find((f) => f.targetFieldName === "country");
 
     if (!countryFilter) {
-      const countrySupported = countryHelpers.isCountrySupportedByName(
-        location?.countryCode!
-      );
-      if (!countrySupported) {
-        filters.push({ targetFieldName: "country", values: ["Canada"] });
-      } else if (location) {
-        console.log("now country presern");
-        const { country, state, city } = location;
-        if (country)
+      const country = location?.country;
+      const state = location?.state;
+      const city = location?.city;
+
+      if (country) {
+        const isCountrySupported =
+          countryHelpers.isCountrySupportedByName(country);
+
+        if (!isCountrySupported) {
+          filters.push({ targetFieldName: "country", values: ["Canada"] });
+        } else {
           filters.push({ targetFieldName: "country", values: [country] });
-        if (state)
-          filters.push({
-            targetFieldName: "stateAndProvince",
-            values: [state],
-          });
-        if (city) filters.push({ targetFieldName: "city", values: [city] });
+
+          if (state) {
+            filters.push({
+              targetFieldName: "stateAndProvince",
+              values: [state],
+            });
+          }
+          if (city) {
+            filters.push({ targetFieldName: "city", values: [city] });
+          }
+        }
       }
     } else {
-      const countryFilterIndex = filters.findIndex(
+      const countryIndex = filters.findIndex(
         (f) => f.targetFieldName === "country"
       );
 
-      if (countryFilterIndex > -1) {
-        const countrySupported = countryHelpers.isCountrySupportedByName(
-          filters[countryFilterIndex].values[0]
-        );
+      if (countryIndex !== -1) {
+        const countryValue = filters[countryIndex].values[0];
+        const isCountrySupported =
+          countryHelpers.isCountrySupportedByName(countryValue);
 
-        // if the country passed in via address bar is supported
-        // then we only want to show businesses from that country
-        // otherwise we show businesses from Canada
-        // or the country from the user location
-        if (countrySupported) {
-          filters[countryFilterIndex].values = [
-            filters[countryFilterIndex].values[0],
-          ];
+        if (isCountrySupported) {
+          //! This was commented out to prevent forcing the
+          // ! city and state from getting added to address bar
+          // ! when the user default location (country) is supported.
+          // if (location) {
+          //   const state = location.state;
+          //   const city = location.city;
+          //   if (state) {
+          //     filters.push({
+          //       targetFieldName: "stateAndProvince",
+          //       values: [state],
+          //     });
+          //   }
+          //   if (city) {
+          //     filters.push({ targetFieldName: "city", values: [city] });
+          //   }
+          // }
         } else {
-          const countrySupportedFromLocation =
-            countryHelpers.isCountrySupportedByName(location?.countryCode!);
-          if (!countrySupportedFromLocation) {
-            filters[countryFilterIndex].values = ["Canada"];
+          const isLocationCountrySupported =
+            countryHelpers.isCountrySupportedByName(location?.country!);
+
+          if (!isLocationCountrySupported) {
+            filters[countryIndex].values = ["Canada"];
           } else {
-            filters[countryFilterIndex].values = [
-              filters[countryFilterIndex].values[0] ?? location?.country!,
-            ];
+            filters[countryIndex].values = [location?.country ?? countryValue];
           }
         }
       }
@@ -151,7 +166,6 @@ function updateFilter(
         ];
         break;
       case "stateAndProvince":
-        console.log("stateAndProv", filter);
         newFilterData.stateAndProvince = { uuid: filter.values[0] };
         break;
       case "city":
