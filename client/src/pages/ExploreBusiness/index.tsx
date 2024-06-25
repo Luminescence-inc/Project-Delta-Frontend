@@ -114,7 +114,7 @@ const ExploreBusiness = () => {
     if (businesses && businesses.length === 0) {
       const locHeadline = (country: string, state: string, city: string) => {
         if (country && state) {
-          return `Near '${city}, ${state}'`;
+          return `Near '${country}, ${state}'`;
         } else if (state && country) {
           return `Near '${state}, ${country}'`;
         } else if (city) {
