@@ -25,7 +25,7 @@ import {
   removeAMPM,
 } from "@/utils";
 import RenderSocialLinks from "./components/RenderSocialLinks";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { useBusinessCtx } from "@context/BusinessCtx";
 import { IBusinessProfile } from "@/types/business-profile";
 import { getBusinessProfileById } from "@/api/business";
