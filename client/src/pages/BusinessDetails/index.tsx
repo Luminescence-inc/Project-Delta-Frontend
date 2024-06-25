@@ -25,7 +25,7 @@ import {
   removeAMPM,
 } from "@/utils";
 import RenderSocialLinks from "./components/RenderSocialLinks";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useBusinessCtx } from "@context/BusinessCtx";
 import { IBusinessProfile } from "@/types/business-profile";
 import { getBusinessProfileById } from "@/api/business";
@@ -33,6 +33,7 @@ import SimilarBusinesses from "./SimilarBusinesses";
 import { LoaderComponent } from "@components/Loader";
 import BusinessesNotfound from "./components/Notfound";
 import MetaTagsProvider from "@/provider/MetaTagsProvider";
+import useTrackPageSearch from "@/hooks/useTrackSearch";
 
 const daysOfWeek = [
   "Sunday",
@@ -52,10 +53,10 @@ export default function BusinessDetails() {
   const [businessDetails, setBusinessDetails] = useState<
     (IBusinessProfile & { categories: string[] }) | null
   >(null);
+  const prevPageSearch = useTrackPageSearch();
 
   // active link tooltip
   const [activeLinkTt, setActiveLinkTt] = useState("");
-  const location = useLocation();
   const params = useParams();
 
   const prefixWithZero = (time: string) => {
@@ -201,15 +202,15 @@ export default function BusinessDetails() {
       />
       <FlexColStart className="w-full h-auto px-[28px]">
         {/* breadcrumb */}
-        <Link
-          to={`/search?${location.state?.prevQuery}`}
+        <a
+          href={`/search${prevPageSearch}`}
           className="text-[12px] font-inter font-medium leading-[14px] underline bg-none outline-none border-none cursor-pointer text-gray-103 mt-5"
         >
           <FlexRowStart className="w-auto gap-[4px]">
             <ChevronLeft strokeWidth={1} size={15} />
             Explore Businesses
           </FlexRowStart>
-        </Link>
+        </a>
 
         {businessDetails && !pageLoading ? (
           <>
@@ -443,6 +444,8 @@ export default function BusinessDetails() {
                 businessCategory={businessDetails.businessCategoryUuid!}
                 allCategories={businessCategory}
                 country={businessDetails?.country!}
+                stateAndProvince={businessDetails?.stateAndProvince!}
+                city={businessDetails?.city!}
                 currentBusinessId={businessDetails.uuid!}
               />
             </FlexColStart>

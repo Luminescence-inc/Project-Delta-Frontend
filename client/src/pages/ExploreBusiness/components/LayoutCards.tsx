@@ -8,7 +8,7 @@ import {
 } from "@components/Flex";
 import { MapPin, Phone } from "@components/icons";
 import { cn, determineBusOpTime } from "@/utils";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 interface BusinessCardProps {
   name: string;
@@ -268,14 +268,15 @@ const CardNavigateWrapper = ({
   const _location = useLocation();
   const loc = location.replace(/\s/gi, "-");
   const _name = name.toLowerCase().replace(/\s/gi, "-");
-  const combinedUrl = `/biz/${_name}-${loc}/${id}`;
   const params = new URLSearchParams(_location.search);
+  const combinedUrl = `/biz/${_name}-${loc}/${id}?${params.toString()}`;
   return (
-    <Link
-      to={combinedUrl}
-      state={{
-        prevQuery: params.toString(),
-      }}
+    <a
+      // to={combinedUrl}
+      // state={{
+      //   prevQuery: params.toString(),
+      // }}
+      href={combinedUrl}
       className="w-full outline-none border-none bg-none cursor-pointer"
       key={id}
       onClick={(e) => {
@@ -294,6 +295,6 @@ const CardNavigateWrapper = ({
       }}
     >
       {children}
-    </Link>
+    </a>
   );
 };

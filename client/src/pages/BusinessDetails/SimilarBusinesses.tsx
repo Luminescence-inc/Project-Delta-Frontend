@@ -21,6 +21,8 @@ interface SimilarBusinessesProps {
   businessCategory: string;
   allCategories: IOption[] | undefined;
   country: string;
+  city: string;
+  stateAndProvince: string;
   currentBusinessId: string;
 }
 
@@ -30,6 +32,8 @@ const SimilarBusinesses = ({
   businessCategory,
   allCategories,
   country,
+  city,
+  stateAndProvince,
   currentBusinessId,
 }: SimilarBusinessesProps) => {
   const { layout } = useBusinessCtx();
@@ -67,9 +71,15 @@ const SimilarBusinesses = ({
     const data = result.data?.data.businessProfiles;
 
     // filter out current business from similar businesses
-    const businessData = data?.data.filter(
-      (business: IBusinessProfile) => business.uuid !== currentBusinessId
-    ) as CombBusinessesDataTypes[];
+    const businessData = data?.data
+      .filter(
+        (business: IBusinessProfile) => business.uuid !== currentBusinessId
+      )
+      .filter(
+        (business: IBusinessProfile) =>
+          business.city === city &&
+          business.stateAndProvince === stateAndProvince
+      ) as CombBusinessesDataTypes[];
 
     // recreate business data with categories
     const formattedBusinessData = [] as CombBusinessesDataTypes[];

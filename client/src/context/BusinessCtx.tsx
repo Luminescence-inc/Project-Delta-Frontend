@@ -8,7 +8,6 @@ import {
 import { IBusinessProfile, ISearch } from "@/types/business-profile";
 import { constructSearchUrl } from "@/utils";
 import useLocationBasedFilters from "@/hooks/useLocationBasedFilters";
-import { useNavigate } from "react-router-dom";
 
 export const BusinessContext = React.createContext<ContextValues>({} as any);
 
@@ -58,7 +57,6 @@ interface BusinessContextProviderProps extends PropsWithChildren {}
 export default function BusinessContextProvider({
   children,
 }: BusinessContextProviderProps) {
-  const navigate = useNavigate();
   const [businesses, setBusinesses] = useState<IBusinessProfile[] | []>([]);
   const [allBusinessesLoading, setAllBusinessesLoading] =
     useState<boolean>(true);
@@ -129,7 +127,6 @@ export default function BusinessContextProvider({
     if (isSearchPage) {
       const url = `/search?${queryParams}`;
       window.history.pushState({}, "", url);
-      navigate(url, { replace: true });
     }
 
     const result = await searchForBusinesses(queryParams);

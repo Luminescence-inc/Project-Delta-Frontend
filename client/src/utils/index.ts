@@ -109,6 +109,7 @@ export const constructBizImgUrl = (url: string | null) => {
 const replacedFilterNames = {
   businessCategoryUuid: "cat",
   stateAndProvince: "st",
+  state: "st",
   city: "cty",
   country: "cn",
   limit: "limit",
@@ -170,7 +171,6 @@ type QueryKey = keyof typeof replacedFilterNames;
 
 export const constructSearchUrl = (
   searchQuery: ISearch,
-  // categories: IOption[] | undefined,
   pagination?: {
     page: number;
     limit?: number;
@@ -178,7 +178,6 @@ export const constructSearchUrl = (
     sortDirection?: string;
   }
 ) => {
-  console.log(searchQuery, "query");
   const query: string[] = [];
   searchQuery.filters.forEach((filter) => {
     const values = filter.values.join(",");

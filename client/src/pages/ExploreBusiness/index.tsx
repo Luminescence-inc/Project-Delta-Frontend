@@ -18,6 +18,8 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import { Pagination } from "@/components/Pagination";
 import MetaTagsProvider from "@/provider/MetaTagsProvider";
 import { extractQueryParams } from "@/utils";
+import useTrackPageSearch from "@/hooks/useTrackSearch";
+import { prevPageSearchKeyName } from "@/config";
 
 dayjs.extend(relativeTime);
 
@@ -32,12 +34,17 @@ const ExploreBusiness = () => {
     setLayout,
     searchQuery,
   } = useBusinessCtx();
+
   const [showFilter, setShowFilter] = useState<boolean>(false);
   const [search, setSearch] = useState<string>("");
+  const [urlSearchQuery, setUrlSearchQuery] = useState<string>("");
   const [headline, setHeadline] = useState({
     title: "",
     businesses: "",
   });
+
+  // track the page location search query
+  const prevPageSearch = useTrackPageSearch();
 
   // construct the search query
   const constructQuery = (filterData: FilterData) => {
@@ -65,13 +72,6 @@ const ExploreBusiness = () => {
     });
   };
 
-  // ! Might be useful later
-  useEffect(() => {
-    if (searchQuery) {
-      setShowFilter(false);
-    }
-  }, [searchQuery]);
-
   const generateHeadlineFromQuery = () => {
     let state = null,
       country = null,
@@ -90,6 +90,22 @@ const ExploreBusiness = () => {
       query: query?.values[0],
     };
   };
+
+  const debounceSearch = (fn: Function, delay: number) => {
+    let timer: any;
+    return function (...args: any) {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        fn(...args);
+      }, delay);
+    };
+  };
+
+  useEffect(() => {
+    if (searchQuery) {
+      setShowFilter(false);
+    }
+  }, [searchQuery]);
 
   useEffect(() => {
     if (allBusinessesLoading) return;
@@ -150,7 +166,7 @@ const ExploreBusiness = () => {
 
   // debounce the search query
   useEffect(() => {
-    if (search.length < 1 || !search) {
+    if (search.length <= 0 || !search) {
       // remove the query filter
       // @ts-expect-error
       setSearchQuery((prev: ISearch) => ({
@@ -158,33 +174,34 @@ const ExploreBusiness = () => {
           (f: IFilter) => f.targetFieldName !== "query"
         ),
       }));
-      return;
-    }
-    const debouncedSearch = debounceSearch((value: string) => {
-      // @ts-expect-error
-      setSearchQuery((prev: ISearch) => ({
-        filters: [
-          ...prev.filters.filter((f: IFilter) => f.targetFieldName !== "query"),
-          {
-            targetFieldName: "query",
-            values: [value],
-          },
-        ],
-      }));
-    }, 500);
+    } else {
+      const debouncedSearch = debounceSearch((value: string) => {
+        // @ts-expect-error
+        setSearchQuery((prev: ISearch) => ({
+          filters: [
+            ...prev?.filters?.filter(
+              (f: IFilter) => f.targetFieldName !== "query"
+            ),
+            {
+              targetFieldName: "query",
+              values: [value],
+            },
+          ],
+        }));
+      }, 100);
 
-    debouncedSearch(search);
+      debouncedSearch(search);
+    }
   }, [search]);
 
-  const debounceSearch = (fn: Function, delay: number) => {
-    let timer: any;
-    return function (...args: any) {
-      clearTimeout(timer);
-      timer = setTimeout(() => {
-        fn(...args);
-      }, delay);
-    };
-  };
+  // url search query
+  useEffect(() => {
+    const search = localStorage.getItem(prevPageSearchKeyName) || "";
+    if (search.length > 0) {
+      const query = new URLSearchParams(search);
+      setUrlSearchQuery(query.get("query") || "");
+    }
+  }, [prevPageSearch]);
 
   const date = dayjs().format("MMM DD YYYY");
   const metaDescription = `${headline.title}, - ${date} - ${headline.businesses}`;
@@ -224,6 +241,7 @@ const ExploreBusiness = () => {
               className="stroke-gray-103"
             />
           }
+          value={search.length > 0 ? search : urlSearchQuery}
           onChange={(e) => setSearch(e.target.value.trim())}
           onKeyUp={(e) => {
             if (e.key === "Enter") {
