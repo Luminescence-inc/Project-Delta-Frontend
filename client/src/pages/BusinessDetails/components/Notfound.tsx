@@ -1,13 +1,14 @@
 import { FlexColCenter, FlexRowStart } from "@components/Flex";
-import { Link, useLocation } from "react-router-dom";
 import { EmptyCart, ChevronRight } from "@components/icons";
+import useTrackPageSearch from "@/hooks/useTrackSearch";
 
 interface NotfoundProps {
   message?: string;
 }
 
 const BusinessesNotfound = ({ message }: NotfoundProps) => {
-  const location = useLocation();
+  const prevPageSearch = useTrackPageSearch();
+
   return (
     <FlexColCenter className="w-full gap-4 min-h-[250px]">
       <EmptyCart
@@ -18,9 +19,9 @@ const BusinessesNotfound = ({ message }: NotfoundProps) => {
       <p className="text-[12px] font-normal font-inter text-gray-103">
         {message ?? "No similar businesses found."}
       </p>
-      <Link
+      <a
         className="flex flex-row items-start justify-start gap-4 cursor-pointer border-none outline-none bg-none"
-        to={`/search?${location.state.prevQuery}`}
+        href={`/search${prevPageSearch}`}
       >
         <FlexRowStart className="w-full">
           <p className="text-[13px] font-normal font-inter underline text-teal-100">
@@ -32,7 +33,7 @@ const BusinessesNotfound = ({ message }: NotfoundProps) => {
             className="relative stroke-teal-100"
           />
         </FlexRowStart>
-      </Link>
+      </a>
     </FlexColCenter>
   );
 };
