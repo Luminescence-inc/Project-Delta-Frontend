@@ -163,9 +163,7 @@ const config: Config = {
         },
         fontFamily: {
           pp: ["var(--font-pp)"],
-          hnL: ["var(--font-hn-light)"],
-          hnM: ["var(--font-hn-medium)"],
-          hnB: ["var(--font-hn-bold)"],
+          os: ["var(--font-os)"],
           inter: ["var(--font-inter)"],
         },
       },
