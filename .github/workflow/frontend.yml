@@ -1,0 +1,50 @@
+name: React CI
+
+on:
+  push:
+    branches:
+      - feature/TEC-151/dev-nextjs-v2
+  pull_request:
+    branches:
+      - feature/TEC-151/dev-nextjs-v2
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ github.ref == 'refs/heads/main' && 'Production' || 'Dev' }}
+      url: ${{ github.ref == 'refs/heads/main' && 'https://s3.console.aws.amazon.com/s3/buckets/www.bizconnect24.com?region=ca-central-1&bucketType=general&tab=objects' || 'https://s3.console.aws.amazon.com/s3/buckets/devmain.bizconnect24.com?region=ca-central-1&bucketType=general&tab=objects' }}
+    strategy:
+      matrix:
+        node-version: [16.15.1]
+
+    steps:
+      - uses: actions/checkout@v2 # This step checks out your repository
+      - name: Setup Symfony
+        working-directory: ./
+        run: |
+          touch .env 
+          echo VITE_BACKEND_URL=${{secrets.VITE_BACKEND_URL}} >> .env
+          echo VITE_CLOUDINARY_NAME=${{secrets.VITE_CLOUDINARY_NAME}} >> .env
+          echo VITE_CLOUDINARY_API_KEY=${{secrets.VITE_CLOUDINARY_API_KEY}} >> .env
+          yarn install
+          yarn build
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID}}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
+          aws-region: us-east-1
+      - name: Deploy static site to S3 bucket
+        # run: aws s3 sync ./dist s3://www.bizconnect24.com
+        run: |
+          if [ "${{ github.ref }}" = "refs/heads/main" ]; then
+            echo "Deploying to production environment..."
+            aws s3 sync ./dist s3://www.bizconnect24.com
+          elif [ "${{ github.ref }}" = "refs/heads/feature/TEC-77/dev-tailwind-css" ]; then
+            echo "Deploying to development environment..."
+            aws s3 sync ./dist s3://tailwindtesting.bizconnect24.com
+          else
+            echo "Not deploying to any environment."
+          fi
