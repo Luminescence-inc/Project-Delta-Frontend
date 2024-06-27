@@ -36,7 +36,7 @@ const Onboarding = () => {
           variant="pink"
         />
         <Pill
-          path="/explore-businesses"
+          path="/search"
           onClick={() => {
             // keep track of prev page
             localStorage.setItem(

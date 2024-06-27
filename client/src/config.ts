@@ -8,3 +8,4 @@ export const CloudinaryConfig = {
 };
 
 export const prevPageLocalKeyName = "bizconnect_prev_page";
+export const prevPageSearchKeyName = "bizconnect_prev_page_search";

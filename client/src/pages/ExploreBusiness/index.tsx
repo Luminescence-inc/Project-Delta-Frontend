@@ -12,12 +12,15 @@ import { FilterData, useBusinessCtx } from "@context/BusinessCtx";
 import { IFilter } from "@/types/business-profile";
 import { LoaderComponent } from "@components/Loader";
 import { useEffect, useState } from "react";
-import MetaTagsProvider from "@/provider/MetaTagsProvider";
-import relativeTime from "dayjs/plugin/relativeTime";
 import Input from "@/components/ui/Input";
 import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 import { Pagination } from "@/components/Pagination";
+import MetaTagsProvider from "@/provider/MetaTagsProvider";
 import { extractQueryParams } from "@/utils";
+import useTrackPageSearch from "@/hooks/useTrackSearch";
+import { prevPageSearchKeyName } from "@/config";
+import { useSearchDebounce } from "@/hooks/useSearchDebounce";
 
 dayjs.extend(relativeTime);
 
@@ -32,8 +35,18 @@ const ExploreBusiness = () => {
     setLayout,
     searchQuery,
   } = useBusinessCtx();
+
   const [showFilter, setShowFilter] = useState<boolean>(false);
-  const [search, setSearch] = useState<string>("");
+  // const [search, setSearch] = useState<string>("");
+  const [debouncedSearch, setQuery] = useSearchDebounce(350);
+  const [urlSearchQuery, setUrlSearchQuery] = useState<string>("");
+  const [headline, setHeadline] = useState({
+    title: "",
+    businesses: "",
+  });
+
+  // track the page location search query
+  const prevPageSearch = useTrackPageSearch();
 
   // construct the search query
   const constructQuery = (filterData: FilterData) => {
@@ -42,26 +55,24 @@ const ExploreBusiness = () => {
       // @ts-expect-error
       const val = filterData[key];
       if (val) {
+        const isCategory = key === "businessCategoryUuid";
         const queryValues = Array.isArray(val)
-          ? val.map((it) => it.uuid)
-          : [val.uuid];
-        query.push({
-          targetFieldName: key,
-          values: queryValues,
-        });
+          ? val.map((it) => (isCategory ? it.value : it.uuid))
+          : [isCategory ? val.value : val.uuid];
+
+        // make sure the value isn't undefined
+        if (queryValues[0]) {
+          query.push({
+            targetFieldName: key,
+            values: queryValues,
+          });
+        }
       }
     }
     setSearchQuery({
       filters: query,
     });
   };
-
-  // ! Might be useful later
-  useEffect(() => {
-    if (searchQuery) {
-      setShowFilter(false);
-    }
-  }, [searchQuery]);
 
   const generateHeadlineFromQuery = () => {
     let state = null,
@@ -82,69 +93,114 @@ const ExploreBusiness = () => {
     };
   };
 
-  const generateHeadlineText = () => {
-    const { country, state, city, query } = generateHeadlineFromQuery();
-    const response = {
-      title: "",
-      busicnesses: "",
-    };
+  useEffect(() => {
+    if (searchQuery) {
+      setShowFilter(false);
+    }
+  }, [searchQuery]);
 
-    const top10_businesses_name = businesses
+  useEffect(() => {
+    if (allBusinessesLoading) return;
+    const { country, state, city, query } = generateHeadlineFromQuery();
+
+    if (businesses && businesses.length === 0) {
+      const locHeadline = (country: string, state: string, city: string) => {
+        if (country && state) {
+          return `Near '${country}, ${state}'`;
+        } else if (state && country) {
+          return `Near '${state}, ${country}'`;
+        } else if (city) {
+          return `Near '${city}'`;
+        } else if (state) {
+          return `Near '${state}'`;
+        } else if (country) {
+          return `In '${country}'`;
+        }
+      };
+
+      setHeadline({
+        title: `No result for${
+          query ? " '" + query + "'" : " businesses"
+        } ${locHeadline(country!, state!, city!)}`,
+        businesses: "",
+      });
+      return;
+    }
+
+    const top10BusinessesName = businesses
       .map((b) => b.name)
       .slice(0, 10)
       .join(" - ");
 
-    response["busicnesses"] = top10_businesses_name;
+    let title = `Explore ${query ? `"${query}" Businesses` : "Businesses"}`;
 
     if (city && state) {
-      response["title"] = `TOP 10 ${
+      title += ` Near ${city}, ${state}`;
+    } else if (state && country) {
+      title += ` Near ${state}, ${country}`;
+    } else if (city) {
+      title += ` Near ${city}`;
+    } else if (state) {
+      title += ` Near ${state}`;
+    } else if (country) {
+      title += ` in ${country}`;
+    } else {
+      title = `Explore ${
         query ? `"${query}" Businesses` : "Businesses"
-      } Near ${city}, ${state}`;
-      return response;
+      } Near You`;
     }
-    if (country && state) {
-      response["title"] = `TOP 10 ${
-        query ? `"${query}" Businesses` : "Businesses"
-      } Near ${state}, ${country}`;
-      return response;
+
+    setHeadline({
+      title,
+      businesses: top10BusinessesName,
+    });
+  }, [businesses, allBusinessesLoading]);
+
+  // debounce the search query
+  useEffect(() => {
+    if (!debouncedSearch) {
+      // @ts-expect-error
+      setSearchQuery((prev: ISearch) => ({
+        filters: prev?.filters?.filter(
+          (f: IFilter) => f.targetFieldName !== "query"
+        ),
+      }));
+    } else {
+      // @ts-expect-error
+      setSearchQuery((prev: ISearch) => ({
+        filters: [
+          ...prev?.filters?.filter(
+            (f: IFilter) => f.targetFieldName !== "query"
+          ),
+          {
+            targetFieldName: "query",
+            values: [debouncedSearch],
+          },
+        ],
+      }));
     }
-    if (country) {
-      response["title"] = `TOP 10 ${
-        query ? `"${query}" Businesses` : "Businesses"
-      } in ${country}`;
-      return response;
+  }, [debouncedSearch]);
+
+  // url search query
+  useEffect(() => {
+    const search = localStorage.getItem(prevPageSearchKeyName) || "";
+    if (search.length > 0) {
+      const query = new URLSearchParams(search);
+      setUrlSearchQuery(query.get("query") || "");
     }
-    if (state) {
-      response["title"] = `TOP 10 ${
-        query ? `"${query}" Businesses` : "Businesses"
-      } Near ${state}`;
-      return response;
-    }
-    if (city) {
-      response["title"] = `TOP 10 ${
-        query ? `"${query}" Businesses` : "Businesses"
-      } Near ${city}`;
-      return response;
-    }
-    response["title"] = `Explore ${
-      query ? `"${query}" Businesses` : "Businesses"
-    } Near You`;
-    return response;
-  };
+  }, [prevPageSearch]);
 
   const date = dayjs().format("MMM DD YYYY");
-  const metaDescription = `${generateHeadlineText().title}, - ${date} - ${
-    generateHeadlineText().busicnesses
-  }`;
+  const metaDescription = `${headline.title}, - ${date} - ${headline.businesses}`;
 
   return (
     <FlexColStart className="w-full h-full">
       <MetaTagsProvider
-        title={generateHeadlineText().title}
+        title={headline.title}
         description={metaDescription}
         url={window.location.href}
         og={{
-          title: generateHeadlineText().title,
+          title: headline.title,
           description: metaDescription,
           url: window.location.href,
         }}
@@ -152,7 +208,7 @@ const ExploreBusiness = () => {
 
       <FlexColStart className="w-full px-[20px] mt-10 gap-[15px]">
         <h1 className="text-[20px] md:text-[30px] font-extrabold font-inter">
-          {generateHeadlineText().title}
+          {headline.title}
         </h1>
         <p className="text-[15px] font-medium font-inter text-gray-103">
           Discover businesses within and beyond your community
@@ -172,20 +228,30 @@ const ExploreBusiness = () => {
               className="stroke-gray-103"
             />
           }
-          onChange={(e) => setSearch(e.target.value)}
+          defaultValue={debouncedSearch ? debouncedSearch : urlSearchQuery}
+          onChange={(e) =>
+            setQuery(
+              e.target.value.trim().length > 0 ? e.target.value.trim() : null
+            )
+          }
           onKeyUp={(e) => {
             if (e.key === "Enter") {
-              setSearchQuery({
+              if (!debouncedSearch) return;
+              // @ts-expect-error
+              setSearchQuery((prev: ISearch) => ({
                 filters: [
+                  ...prev.filters.filter(
+                    (f: IFilter) => f.targetFieldName !== "query"
+                  ),
                   {
                     targetFieldName: "query",
-                    values: [search],
+                    values: [debouncedSearch],
                   },
                 ],
-              });
+              }));
             }
           }}
-          autoComplete="off"
+          autoComplete="nope"
         />
         <button
           className="border-none outline-none cursor-pointer rounded-[5px] p-2 flex items-center justify-center bg-blue-50 -translate-y-2"
@@ -227,21 +293,24 @@ const ExploreBusiness = () => {
       </FlexColCenter>
 
       {/* business card lists */}
-      <BusinessCardContainer
-        data={businesses as UserBusinessList[]}
-        businessCategories={businessCategory}
-      />
-
-      {businesses.length > 0 && <Pagination totalPages={totalPages} />}
-
-      {/* Filtering component */}
-      {showFilter && (
-        <BusinessesFilterComponent
-          closeFilter={() => setShowFilter(false)}
-          getfilterData={(filter) => constructQuery(filter)}
-          businessesCategories={businessCategory}
+      {!allBusinessesLoading && (
+        <BusinessCardContainer
+          data={businesses as UserBusinessList[]}
+          businessCategories={businessCategory}
         />
       )}
+
+      {businesses.length > 0 && !allBusinessesLoading && (
+        <Pagination totalPages={totalPages} />
+      )}
+
+      {/* Filtering component */}
+      <BusinessesFilterComponent
+        closeFilter={() => setShowFilter(false)}
+        getfilterData={(filter) => constructQuery(filter)}
+        businessesCategories={businessCategory}
+        showFilter={showFilter}
+      />
     </FlexColStart>
   );
 };

@@ -288,11 +288,12 @@ const Home = () => {
           <FlexColCenter className="w-full">
             <Button
               intent="primary"
-              href="/explore-businesses"
+              href="/search"
               rightIcon={
                 <CtaArrow strokeWidth={0.4} className="stroke-white-100" />
               }
               className="w-full max-w-[303px] h-[55px] mt-8 rounded-md "
+              hardRefresh={true}
             >
               <span className="font-hnM font-bold text-[14px] leading-[14px] text-left text-white-100 ">
                 Explore Businesses
@@ -350,11 +351,12 @@ const Home = () => {
           >
             <Button
               intent="primary"
-              href="/explore-businesses"
+              href="/search"
               className="w-[303px] h-[55px] px-[15px] py-[15px] rounded-md border-[1px] border-white-100 "
               rightIcon={
                 <CtaArrow strokeWidth={0.4} className="stroke-white-100" />
               }
+              hardRefresh={true}
             >
               <span className="font-hnM font-bold text-[15px] leading-[14px] text-left text-white-100 ">
                 Explore Businesses

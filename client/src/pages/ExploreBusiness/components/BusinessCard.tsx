@@ -46,6 +46,7 @@ const BusinessCardContainer = ({
                 image={constructLogoUrl(bd.logoUrl) || ""}
                 _key={bd.uuid}
                 key={bd.uuid}
+                _urlLocation={`${bd.country}-${bd.stateAndProvince}`}
               />
             ) : (
               <RowLayoutCard
@@ -58,6 +59,7 @@ const BusinessCardContainer = ({
                 image={constructLogoUrl(bd.logoUrl) || ""}
                 _key={bd.uuid}
                 key={bd.uuid}
+                _urlLocation={`${bd.country}-${bd.stateAndProvince}`}
               />
             );
           })

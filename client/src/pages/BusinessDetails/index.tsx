@@ -25,7 +25,7 @@ import {
   removeAMPM,
 } from "@/utils";
 import RenderSocialLinks from "./components/RenderSocialLinks";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useBusinessCtx } from "@context/BusinessCtx";
 import { IBusinessProfile } from "@/types/business-profile";
 import { getBusinessProfileById } from "@/api/business";
@@ -33,6 +33,7 @@ import SimilarBusinesses from "./SimilarBusinesses";
 import { LoaderComponent } from "@components/Loader";
 import BusinessesNotfound from "./components/Notfound";
 import MetaTagsProvider from "@/provider/MetaTagsProvider";
+import useTrackPageSearch from "@/hooks/useTrackSearch";
 
 const daysOfWeek = [
   "Sunday",
@@ -52,11 +53,10 @@ export default function BusinessDetails() {
   const [businessDetails, setBusinessDetails] = useState<
     (IBusinessProfile & { categories: string[] }) | null
   >(null);
+  const prevPageSearch = useTrackPageSearch();
 
   // active link tooltip
   const [activeLinkTt, setActiveLinkTt] = useState("");
-
-  const navigate = useNavigate();
   const params = useParams();
 
   const prefixWithZero = (time: string) => {
@@ -70,6 +70,26 @@ export default function BusinessDetails() {
       fetchBusinessProfile(params.business_id);
     }
   }, [params, businessCategory]);
+
+  useEffect(() => {
+    if (params) {
+      // update the address bar with correct business details
+      // /biz/name-location( i.e country-state )/business_id
+      const { business_id } = params;
+      const business = businessDetails;
+      if (business) {
+        const { name, stateAndProvince, country } = business;
+        const urlLocation = `${name
+          .toLowerCase()
+          .replace(
+            /\s/gi,
+            "-"
+          )}-${country?.toLowerCase()}-${stateAndProvince?.toLowerCase()}`;
+        const url = `/biz/${urlLocation}/${business_id}`;
+        window.history.pushState({}, "", url);
+      }
+    }
+  }, [params, businessDetails]);
 
   const fetchBusinessProfile = async (id: string) => {
     try {
@@ -163,16 +183,17 @@ export default function BusinessDetails() {
   }
 
   const categories = businessDetails?.categories?.join(" - ");
-  const metaDescription = `${businessDetails?.description}, ${businessDetails?.city}, ${businessDetails?.stateAndProvince}, ${categories}`;
+  const metaOgDescription = `${businessDetails?.name} ${businessDetails?.description}, ${businessDetails?.city}, ${businessDetails?.stateAndProvince}, ${categories}`;
+  const metaOgTitle = `${businessDetails?.name} ${businessDetails?.city}, ${businessDetails?.stateAndProvince}, ${categories}`;
 
   return (
     <>
       <MetaTagsProvider
-        title={metaDescription}
-        description={metaDescription}
+        title={metaOgTitle}
+        description={metaOgDescription}
         og={{
-          title: metaDescription,
-          description: metaDescription,
+          title: metaOgTitle,
+          description: metaOgDescription,
           image: constructBizImgUrl(businessDetails?.logoUrl!),
           url: window.location.href,
           type: "website",
@@ -181,15 +202,15 @@ export default function BusinessDetails() {
       />
       <FlexColStart className="w-full h-auto px-[28px]">
         {/* breadcrumb */}
-        <button
-          className="text-[12px] font-inter font-medium leading-[14px] underline bg-none outline-none border-none cursor-pointer text-gray-103"
-          onClick={() => navigate("/explore-businesses")}
+        <a
+          href={`/search${prevPageSearch}`}
+          className="text-[12px] font-inter font-medium leading-[14px] underline bg-none outline-none border-none cursor-pointer text-gray-103 mt-5"
         >
           <FlexRowStart className="w-auto gap-[4px]">
-            <ChevronLeft strokeWidth={1} />
+            <ChevronLeft strokeWidth={1} size={15} />
             Explore Businesses
           </FlexRowStart>
-        </button>
+        </a>
 
         {businessDetails && !pageLoading ? (
           <>
@@ -423,6 +444,8 @@ export default function BusinessDetails() {
                 businessCategory={businessDetails.businessCategoryUuid!}
                 allCategories={businessCategory}
                 country={businessDetails?.country!}
+                stateAndProvince={businessDetails?.stateAndProvince!}
+                city={businessDetails?.city!}
                 currentBusinessId={businessDetails.uuid!}
               />
             </FlexColStart>

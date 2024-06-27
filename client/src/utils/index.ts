@@ -69,6 +69,12 @@ export const constructDOP = (
   });
 };
 
+export const capitalizeFirstLetter = (str: string) => {
+  if (!str || str.length === 0) return str;
+
+  return str.slice(0, 1).toUpperCase() + str.slice(1);
+};
+
 export const isImgUrlValid = (url: string) => {
   try {
     new URL(url);
@@ -103,6 +109,7 @@ export const constructBizImgUrl = (url: string | null) => {
 const replacedFilterNames = {
   businessCategoryUuid: "cat",
   stateAndProvince: "st",
+  state: "st",
   city: "cty",
   country: "cn",
   limit: "limit",
@@ -124,25 +131,25 @@ export const extractQueryParams = () => {
         case "cat":
           filters.push({
             targetFieldName: "businessCategoryUuid",
-            values: [value],
+            values: [decodeURIComponent(value)],
           });
           break;
         case "st":
           filters.push({
             targetFieldName: "stateAndProvince",
-            values: [value],
+            values: [capitalizeFirstLetter(value)],
           });
           break;
         case "cty":
           filters.push({
             targetFieldName: "city",
-            values: [value],
+            values: [capitalizeFirstLetter(value)],
           });
           break;
         case "cn":
           filters.push({
             targetFieldName: "country",
-            values: [value],
+            values: [capitalizeFirstLetter(value)],
           });
           break;
       }
@@ -164,7 +171,6 @@ type QueryKey = keyof typeof replacedFilterNames;
 
 export const constructSearchUrl = (
   searchQuery: ISearch,
-  // categories: IOption[] | undefined,
   pagination?: {
     page: number;
     limit?: number;
@@ -177,7 +183,9 @@ export const constructSearchUrl = (
     const values = filter.values.join(",");
     if (values.length > 0) {
       query.push(
-        `${replacedFilterNames[filter.targetFieldName as QueryKey]}=${values}`
+        `${replacedFilterNames[filter.targetFieldName as QueryKey]}=${encodeURI(
+          values
+        )}`
       );
     }
   });

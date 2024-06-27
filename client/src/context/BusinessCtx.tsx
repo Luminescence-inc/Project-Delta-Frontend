@@ -6,9 +6,8 @@ import {
   IOption,
 } from "@/types/business";
 import { IBusinessProfile, ISearch } from "@/types/business-profile";
-import { constructSearchUrl, extractQueryParams } from "@/utils";
-import { useLocation } from "@/hooks/useLocation";
-import countryHelpers from "@/helpers/country-sate-city/country";
+import { constructSearchUrl } from "@/utils";
+import useLocationBasedFilters from "@/hooks/useLocationBasedFilters";
 
 export const BusinessContext = React.createContext<ContextValues>({} as any);
 
@@ -22,6 +21,7 @@ export interface FilterData {
   stateAndProvince: { uuid: string } | undefined;
   city: { uuid: string } | undefined;
   country: { uuid: string } | undefined;
+  page?: { uuid: string } | undefined;
 }
 
 interface ContextValues {
@@ -82,8 +82,17 @@ export default function BusinessContextProvider({
   // businss registeration.
   const [socialLinksError, setSocialLinksError] = useState<string | null>(null);
 
-  const { location, loading } = useLocation();
-  const _loc = window.location;
+  // location based filters
+  useLocationBasedFilters({
+    searchQuery,
+    setSearchQuery,
+    setFilterData,
+    filterData,
+    bizCategories: businessCategory,
+    getBusinesses: (currPage, filterApplied, searchQuery) => {
+      getBusinesses(currPage, filterApplied, searchQuery);
+    },
+  });
 
   // all business categories
   useEffect(() => {
@@ -99,41 +108,13 @@ export default function BusinessContextProvider({
     } catch (err) {}
   }, []);
 
-  // fetch all businesses initially with or without a filter
-  useEffect(() => {
-    if (loading) return;
-
-    const { filters } = extractQueryParams();
-    const applyFilter = filters.length > 0 || searchQuery ? true : false;
-
-    // check if country is in the filters
-    const countryFilter = filters.find((f) => f.targetFieldName === "country");
-
-    // if there is a country filter, then add it to the filter data
-    if (!countryFilter) {
-      const countrySupported = countryHelpers.isCountrySupported(
-        location?.countryCode!
-      );
-      filters.push({
-        targetFieldName: "country",
-        values: [countrySupported ? location?.country! : "Canada"],
-      });
-    }
-
-    const comboFilters = [...(searchQuery?.filters ?? []), ...filters];
-    const uniqueFilters = comboFilters.filter(
-      (v, i, a) =>
-        a.findIndex((t) => t.targetFieldName === v.targetFieldName) === i
-    );
-
-    getBusinesses(1, applyFilter, { filters: uniqueFilters });
-  }, [_loc.pathname, _loc.search, searchQuery, loading]);
-
   const getBusinesses = async (
     currPage: number,
     filterApplied: boolean,
     filter?: ISearch
   ) => {
+    setAllBusinessesLoading(true);
+
     const queryParams = constructSearchUrl(
       filter || searchQuery || { filters: [] }
     );
@@ -143,8 +124,10 @@ export default function BusinessContextProvider({
     const isSearchPage =
       window.location.pathname.split("/")[1].toLowerCase() === "search";
 
-    if (isSearchPage)
-      window.history.pushState({}, "", `/search?${queryParams}`);
+    if (isSearchPage) {
+      const url = `/search?${queryParams}`;
+      window.history.pushState({}, "", url);
+    }
 
     const result = await searchForBusinesses(queryParams);
     const data = result.data?.data.businessProfiles;

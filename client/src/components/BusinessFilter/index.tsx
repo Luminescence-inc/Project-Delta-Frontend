@@ -6,6 +6,8 @@ import { Country, State, City } from "../../helpers/country-sate-city";
 import { FilterData, useBusinessCtx } from "@context/BusinessCtx";
 import { BusinessFilterType } from "@/types/business";
 import { FlexColStart, FlexRowCenterBtw } from "@components/Flex";
+import type { IFilter, ISearch } from "@/types/business-profile";
+import { cn, extractQueryParams } from "@/utils";
 
 interface OnfilterDataProps {
   uuid?: string | undefined;
@@ -16,6 +18,7 @@ interface OnfilterDataProps {
 interface BusinessFilterComponentProps {
   getfilterData: (filterData: FilterData) => void;
   closeFilter: () => void;
+  showFilter: boolean;
   businessesCategories: { uuid: string; value: string }[] | null | undefined;
 }
 
@@ -23,6 +26,7 @@ const BusinessesFilterComponent = ({
   getfilterData,
   closeFilter,
   businessesCategories,
+  showFilter,
 }: BusinessFilterComponentProps) => {
   const [errorMsg, setErrorMsg] = useState<string>("");
   const {
@@ -92,7 +96,6 @@ const BusinessesFilterComponent = ({
     if (type === "stateAndProvince") {
       const valueExists = filterData.stateAndProvince?.uuid === uuid;
       if (valueExists) {
-        // remove the value
         setFilterData({
           ...filterData,
           stateAndProvince: undefined,
@@ -218,25 +221,46 @@ const BusinessesFilterComponent = ({
     });
     setErrorMsg("");
     setSearchQuery(null);
+
+    // clear the search query
+    window.location.href = "/search";
   };
 
   const applyFilter = () => {
+    const { filters } = extractQueryParams();
     // validate the filter
     if (!filterData.country) {
       setErrorMsg("Please select a country");
       return;
     }
 
-    // clear last businesses data
+    let mergedFilterData = { ...filterData };
+
+    for (const filter of filters) {
+      const { targetFieldName, values } = filter;
+      const keyExistsInFilterData =
+        Object.keys(mergedFilterData).includes(targetFieldName);
+
+      if (!keyExistsInFilterData) {
+        // @ts-expect-error
+        mergedFilterData[targetFieldName] = {
+          uuid: values[0],
+        };
+      }
+    }
+
     setBusinesses([]);
-    // apply the filter
-    getfilterData(filterData);
-    // hide the filter
     closeFilter();
+    getfilterData(mergedFilterData);
   };
 
   return (
-    <FlexColStart className="w-full h-full fixed top-0 left-0 z-[999] bg-white-100">
+    <FlexColStart
+      className={cn(
+        "w-full h-full fixed top-0 left-0 z-[999] bg-white-100",
+        showFilter ? "flex" : "hidden"
+      )}
+    >
       <div className="w-full h-auto flex flex-col items-start justify-start px-[20px] py-[50px] bg-white-100">
         <div className="w-full h-auto flex flex-row items-center justify-between ">
           <h2 className="text-[30px] font-bold font-inter">Search</h2>
@@ -288,6 +312,62 @@ const BusinessesFilterComponent = ({
               activePanel={activePanel}
               setActivePanel={setActivePanel}
             />
+
+            {/* categories placeholder */}
+            {filterData.businessCategoryUuid &&
+              filterData.businessCategoryUuid.find(
+                (d) =>
+                  typeof d.uuid !== "undefined" ||
+                  typeof d.value !== "undefined"
+              ) && (
+                <div className="flex flex-row flex-wrap items-start justify-start mt-0 filter-placeholders gap-[3px] pb-[15px]">
+                  {filterData.businessCategoryUuid?.map((categories) => (
+                    <div
+                      key={categories.uuid}
+                      className="ntw px-[12px] py-[5px] rounded-full flex flex-row items-center justify-start placeholder gap-[2px] bg-white-300/80"
+                    >
+                      <span className="text-[12px] font-inter font-normal">
+                        {/* @ts-ignore */}
+                        {categories?.value}
+                      </span>
+                      <button
+                        className="cursor-pointer border-none outline-none close-btn"
+                        onClick={() => {
+                          //  remove the selected category from filter
+                          const updatedFilter =
+                            filterData.businessCategoryUuid?.filter(
+                              (c) => c.uuid !== categories.uuid
+                            );
+                          setFilterData({
+                            ...filterData,
+                            businessCategoryUuid: updatedFilter,
+                          });
+
+                          // @ts-ignore
+                          // remove the selected category from search query
+                          setSearchQuery((prevSearchQuery: ISearch) => {
+                            const updatedFilters =
+                              prevSearchQuery?.filters?.filter(
+                                (filter: IFilter) =>
+                                  filter.targetFieldName !==
+                                  "businessCategoryUuid"
+                              );
+
+                            const combo = {
+                              ...prevSearchQuery,
+                              filters: updatedFilters,
+                            };
+
+                            return combo as ISearch;
+                          });
+                        }}
+                      >
+                        <X size={15} />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
           </FlexColStart>
 
           {/* SELECT COUNTRY */}
