@@ -11,7 +11,6 @@ import {
 import { ChevronDown } from "./icons";
 import { FlexColStart } from "./Flex";
 import { cn } from "@/lib/utils";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 interface MultiSearchProps {
@@ -60,13 +59,19 @@ export default function NMultiSearch({
     <Select
       onValueChange={(id) => {
         const value = listsData?.find((list) => list.uuid === id)?.value;
-        const params = new URLSearchParams(window.location.search);
-        params.delete("cat");
-        params.set("cat", encodeURI(value!));
+        onChange?.({
+          uuid: id,
+          value,
+          type: dataType as BusinessFilterType,
+        });
+        if (is_link) {
+          const params = new URLSearchParams(window.location.search);
+          params.delete("cat");
+          params.set("cat", encodeURI(value!));
 
-        const url = `${location.pathname}?${params.toString()}`;
-
-        router.push(url);
+          const url = `${location.pathname}?${params.toString()}`;
+          router.push(url);
+        }
       }}
     >
       <SelectTrigger className="w-full" rightIcon={<ChevronDown size={15} />}>
