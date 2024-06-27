@@ -1,13 +1,7 @@
-import { twMerge } from "tailwind-merge";
-import { type ClassValue, clsx } from "clsx";
 import { CloudinaryConfig } from "@/config";
 import type { ISearch } from "@/types/business-profile";
 
 const defaultImg = "/assets/images/default-img.jpeg";
-
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
 
 export const sleep = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms * 1000));
