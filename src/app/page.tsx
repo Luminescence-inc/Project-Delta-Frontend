@@ -25,11 +25,11 @@ export default function Home() {
         type="single"
         label="Location"
         listsData={[
-          { uuid: "1", value: "Location" },
-          { uuid: "2", value: "Location 2" },
-          { uuid: "3", value: "Location 3" },
+          { uuid: "1", value: "peter pan" },
+          { uuid: "2", value: "Brad james" },
+          { uuid: "3", value: "Boris lane" },
         ]}
-        is_link={true}
+        is_link={false}
       />
     </main>
   );

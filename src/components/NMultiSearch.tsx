@@ -12,6 +12,7 @@ import { ChevronDown } from "./icons";
 import { FlexColStart } from "./Flex";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
 
 interface MultiSearchProps {
   rightIcon?: React.ReactNode;
@@ -55,6 +56,35 @@ export default function NMultiSearch({
   is_link,
 }: MultiSearchProps) {
   const router = useRouter();
+  const [search, setSearch] = useState("");
+  const [searchValue, setSearchValue] = useState("");
+  const [filterData, setFilterData] = useState<
+    { uuid?: string; value?: string }[]
+  >(listsData!);
+
+  useEffect(() => {
+    if (searchValue.length > 0) {
+      const searchResult = listsData?.filter((data) =>
+        data.value.toLowerCase().includes(searchValue.toLowerCase())
+      );
+      setFilterData(searchResult!);
+    } else {
+      setFilterData(listsData!);
+    }
+  }, [searchValue]);
+
+  useEffect(() => {
+    setFilterData(listsData!);
+  }, [listsData]);
+
+  // array of allowed dataType that need to be shown on select input
+  const allowedDataType = ["country", "stateAndProvince", "city"];
+
+  const activeSelectedItem =
+    selectedListData && !Array.isArray(selectedListData)
+      ? selectedListData
+      : null;
+
   return (
     <Select
       onValueChange={(id) => {
@@ -74,41 +104,63 @@ export default function NMultiSearch({
         }
       }}
     >
-      <SelectTrigger className="w-full" rightIcon={<ChevronDown size={15} />}>
-        <SelectValue placeholder="Theme" />
+      <SelectTrigger
+        className="w-full h-[46px] disabled:bg-white-106 disabled:cursor-not-allowed border-[1px] border-solid border-white-200 bg-none text-xs font-pp"
+        rightIcon={
+          <ChevronDown size={20} color="#000" className="stroke-dark-100" />
+        }
+        // disabled={true}
+      >
+        <SelectValue placeholder={placeholder} />
       </SelectTrigger>
       <SelectContent>
         <FlexColStart className="px-3 pt-4">
           <input
             type="text"
-            className="w-full px-[3px] py-[2px] text-sm border-b-[1px] bordcer-b-solid border-b-white-40 outline-none font-os"
+            className="w-full px-[3px] py-[2px] text-sm border-b-[1px] bordcer-b-solid border-b-white-40 outline-none font-pp"
             placeholder="Search..."
-            //   value={searchValue}
-            //   onChange={(e) => setSearchValue(e.target.value)}
+            defaultValue={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+            autoFocus
           />
-          {listsData?.map((list) => {
-            if (is_link) {
-              return (
-                <SelectItem
-                  key={list.uuid}
-                  value={list.uuid}
-                  className=" hover:bg-white-400/30 cursor-pointer"
-                >
-                  {list.value}
-                </SelectItem>
-              );
-            } else {
-              return (
-                <SelectItem
-                  key={list.uuid}
-                  value={list.uuid}
-                  className=" hover:bg-white-400/30 cursor-pointer"
-                >
-                  {list.value}
-                </SelectItem>
-              );
-            }
-          })}
+          {filterData && filterData.length > 0 ? (
+            filterData?.map((d) => {
+              if (is_link) {
+                return (
+                  <SelectItem
+                    key={d.uuid}
+                    value={d.uuid!}
+                    className=" hover:bg-white-400/30 cursor-pointer"
+                  >
+                    {d.value}
+                  </SelectItem>
+                );
+                // filterData && filterData.length > 0 ? (
+                //   filterData.map((d) => {
+
+                //   })
+                // ) : (
+                //   <span className="text-xs font-pp text-white-400">
+                //     No data found
+                //   </span>
+                // );
+              } else {
+                return (
+                  <SelectItem
+                    key={d.uuid}
+                    value={d.uuid!}
+                    className=" hover:bg-white-400/30 cursor-pointer"
+                  >
+                    {d.value}
+                  </SelectItem>
+                );
+              }
+            })
+          ) : (
+            <span className="text-xs font-pp text-white-400">
+              No data found
+            </span>
+          )}
         </FlexColStart>
       </SelectContent>
     </Select>

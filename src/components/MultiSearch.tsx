@@ -87,11 +87,6 @@ export default function MultiSearch({
     setFilterData(listsData!);
   }, [listsData]);
 
-  useEffect(() => {
-    console.log(window.location);
-    // setSearch(location.search);
-  }, [window]);
-
   // array of allowed dataType that need to be shown on select input
   const allowedDataType = ["country", "stateAndProvince", "city"];
 
