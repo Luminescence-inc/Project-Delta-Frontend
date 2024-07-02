@@ -15,7 +15,7 @@ import {
 import { cn } from "@/lib/utils";
 import { useAuth } from "@hooks/useAuth";
 import { Cancel, ChevronDown, Edit, Menu, Plus } from "./icons";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 const navigationRoute = [
