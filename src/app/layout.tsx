@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { inter, open_sans, poppins } from "@/config/font";
 import { cn } from "@/lib/utils";
 import "./styles/global.css";
+import Footer from "@/components/Footer";
 
 export default function RootLayout({
   children,
@@ -15,6 +16,7 @@ export default function RootLayout({
         className={cn(inter.variable, poppins.variable, open_sans.variable)}
       >
         {children}
+        <Footer />
       </body>
     </html>
   );

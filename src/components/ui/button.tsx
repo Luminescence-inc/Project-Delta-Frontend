@@ -83,7 +83,7 @@ const Button: React.FC<ButtonProps> = ({
           </a>
         ) : (
           // @ts-expect-error
-          <Link to={href} relative="path" className={classNames} {...props}>
+          <Link href={href} relative="path" className={classNames} {...props}>
             {leftIcon && leftIcon}
             {children}
             {rightIcon && rightIcon}

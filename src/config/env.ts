@@ -1,7 +1,7 @@
 const env = {
-  apiKey: process.env.VITE_CLOUDINARY_API_KEY,
-  baseURL: process.env.VITE_BACKEND_URL,
-  cloudName: process.env.VITE_CLOUDINARY_NAME,
+  apiKey: process.env.CLOUDINARY_API_KEY,
+  baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
+  cloudName: process.env.CLOUDINARY_NAME,
 };
 
 export default env;
