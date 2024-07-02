@@ -1,7 +1,11 @@
 import MultiSearch from "@/components/MultiSearch";
 import NMultiSearch from "@/components/NMultiSearch";
 import NMultiSelect from "@/components/NMultiSelect";
-import { DAYS_OF_OPERATIONS_OPTIONS } from "@/utils/business-profile-utils";
+import NSelect from "@/components/NSelect";
+import {
+  DAYS_OF_OPERATIONS_OPTIONS,
+  OPERATING_TIME_OPTIONS,
+} from "@/utils/business-profile-utils";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -21,7 +25,7 @@ export default function Home() {
         disableTrigger
       />
       <br />
-      <h1>New MultiSearch</h1>
+      <br />
       {/* <NMultiSearch
         placeholder="Search for a location"
         type="single"
@@ -38,6 +42,14 @@ export default function Home() {
         placeholder={"Days of operation"}
         name="daysOfOperation"
         options={DAYS_OF_OPERATIONS_OPTIONS}
+      />
+      <NSelect
+        label="Business close time"
+        name="closeTime"
+        // formikValue={formik.values.closeTime}
+        // formik={formik}
+        placeholder={"Business close time"}
+        options={OPERATING_TIME_OPTIONS}
       />
     </main>
   );
