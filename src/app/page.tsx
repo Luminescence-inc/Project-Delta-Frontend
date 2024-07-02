@@ -1,11 +1,3 @@
-import MultiSearch from "@/components/MultiSearch";
-import NMultiSearch from "@/components/NMultiSearch";
-import NMultiSelect from "@/components/NMultiSelect";
-import NSelect from "@/components/NSelect";
-import {
-  DAYS_OF_OPERATIONS_OPTIONS,
-  OPERATING_TIME_OPTIONS,
-} from "@/utils/business-profile-utils";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -14,43 +6,5 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
-  return (
-    <main className="p-6">
-      Home page
-      <h1>Old MultiSearch</h1>
-      <MultiSearch
-        placeholder="Search for a location"
-        type="single"
-        label="Location"
-        disableTrigger
-      />
-      <br />
-      <br />
-      {/* <NMultiSearch
-        placeholder="Search for a location"
-        type="single"
-        label="Location"
-        listsData={[
-          { uuid: "1", value: "peter pan" },
-          { uuid: "2", value: "Brad james" },
-          { uuid: "3", value: "Boris lane" },
-        ]}
-        is_link={false}
-      /> */}
-      <NMultiSelect
-        label="Days of operation"
-        placeholder={"Days of operation"}
-        name="daysOfOperation"
-        options={DAYS_OF_OPERATIONS_OPTIONS}
-      />
-      <NSelect
-        label="Business close time"
-        name="closeTime"
-        // formikValue={formik.values.closeTime}
-        // formik={formik}
-        placeholder={"Business close time"}
-        options={OPERATING_TIME_OPTIONS}
-      />
-    </main>
-  );
+  return <main className="p-6"></main>;
 }
