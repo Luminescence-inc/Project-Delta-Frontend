@@ -1,5 +1,7 @@
 import MultiSearch from "@/components/MultiSearch";
 import NMultiSearch from "@/components/NMultiSearch";
+import NMultiSelect from "@/components/NMultiSelect";
+import { DAYS_OF_OPERATIONS_OPTIONS } from "@/utils/business-profile-utils";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -20,7 +22,7 @@ export default function Home() {
       />
       <br />
       <h1>New MultiSearch</h1>
-      <NMultiSearch
+      {/* <NMultiSearch
         placeholder="Search for a location"
         type="single"
         label="Location"
@@ -30,6 +32,12 @@ export default function Home() {
           { uuid: "3", value: "Boris lane" },
         ]}
         is_link={false}
+      /> */}
+      <NMultiSelect
+        label="Days of operation"
+        placeholder={"Days of operation"}
+        name="daysOfOperation"
+        options={DAYS_OF_OPERATIONS_OPTIONS}
       />
     </main>
   );
