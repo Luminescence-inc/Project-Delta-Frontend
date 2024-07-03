@@ -1,15 +1,12 @@
-import { allBusinessCategories } from "@/api/business";
 import {
   FlexColStart,
   FlexRowCenter,
   FlexRowCenterBtw,
   FlexRowStart,
-  FlexRowStartBtw,
 } from "@/components/Flex";
 import { Mail, MapPin, Phone } from "@/components/icons";
 import BusinessesNotfound from "@/components/NotFound";
 import ReadMoreText from "@/components/ReadMoreText";
-import RenderSocialLinks from "@/components/RenderSocialLink";
 import SimilarBusinesses from "@/components/SimilarBusinesses";
 import { bizConnectAPI } from "@/config";
 import BackBtn from "@/module/businessDetails/components/BackBtn";
@@ -26,8 +23,6 @@ interface BizPageProps {
   searchParams?: { [key: string]: string | string[] | undefined };
 }
 
-interface BusinessData {}
-
 const daysOfWeek = [
   "Sunday",
   "Monday",
@@ -38,10 +33,7 @@ const daysOfWeek = [
   "Saturday",
 ];
 
-export default async function BusinessPage({
-  params,
-  searchParams,
-}: BizPageProps) {
+export default async function BusinessPage({ params }: BizPageProps) {
   const loc = params["loc"];
   const business_id = params["business_id"];
   const {
