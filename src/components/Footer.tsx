@@ -29,8 +29,6 @@ const socialLinks = [
 ];
 
 const Footer = () => {
-  const pathname = window.location.pathname.replace("/", "");
-
   return (
     <footer
       className="text-white-100 px-7 py-10"
@@ -58,9 +56,7 @@ const Footer = () => {
             key={i}
             className={cn(
               "text-[14px] cursor-pointer font-medium font-inter pb-[10px] text-gray-100",
-              pathname === n.link.toLowerCase().replace("/", "")
-                ? "text-teal-100"
-                : "text-gray-100"
+              "text-gray-100"
             )}
           >
             {n.name}

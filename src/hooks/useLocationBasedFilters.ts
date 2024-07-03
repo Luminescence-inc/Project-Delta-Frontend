@@ -1,7 +1,8 @@
+"use client";
 import { extractQueryParams } from "@/utils";
 import { useEffect, useMemo } from "react";
 import { useLocation } from "@/hooks/useLocation";
-import countryHelpers from "@/helpers/country-sate-city/country";
+import countryHelpers from "@/helpers/countries-states-city/country";
 import type { ISearch } from "@/types/business-profile";
 import { type FilterData } from "@/context/BusinessCtx";
 import type { IOption } from "@/types/business";

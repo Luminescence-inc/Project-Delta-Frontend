@@ -5,6 +5,10 @@ import { cn } from "@/lib/utils";
 import "./styles/global.css";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import BusinessContextProvider, {
+  BusinessContext,
+} from "@/context/BusinessCtx";
+import { DataCtxProvider } from "@/context/DataCtx";
 
 export default function RootLayout({
   children,
@@ -17,7 +21,9 @@ export default function RootLayout({
         className={cn(inter.variable, poppins.variable, open_sans.variable)}
       >
         <Navbar />
-        {children}
+        <DataCtxProvider>
+          <BusinessContextProvider>{children}</BusinessContextProvider>
+        </DataCtxProvider>
         <Footer />
       </body>
     </html>

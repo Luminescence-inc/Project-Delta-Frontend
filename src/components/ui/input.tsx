@@ -1,6 +1,6 @@
 "use client";
 import * as React from "react";
-import { cn } from "@/utils";
+import { cn } from "@/lib/utils";
 import { FlexColStart, FlexRowCenter } from "@components/Flex";
 
 interface IInputProps {
