@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect } from "react";
 import { FlexRowStartCenter } from "./Flex";
 import { Info } from "./icons";

@@ -9,6 +9,7 @@ import BusinessContextProvider from "@/context/BusinessCtx";
 import { DataCtxProvider } from "@/context/DataCtx";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { NotsupportedCountryBanner } from "@/components/NotSupportedCountry";
 
 export default function RootLayout({
   children,
@@ -20,6 +21,7 @@ export default function RootLayout({
       <body
         className={cn(inter.variable, poppins.variable, open_sans.variable)}
       >
+        <NotsupportedCountryBanner />
         <Navbar />
         <DataCtxProvider>
           <BusinessContextProvider>{children}</BusinessContextProvider>
