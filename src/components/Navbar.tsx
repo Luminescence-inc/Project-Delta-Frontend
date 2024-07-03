@@ -15,7 +15,7 @@ import {
 import { cn } from "@/lib/utils";
 import { useAuth } from "@hooks/useAuth";
 import { Cancel, ChevronDown, Edit, Menu, Plus } from "./icons";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 const navigationRoute = [
@@ -122,7 +122,7 @@ const Navbar = () => {
                       href={nav.path}
                       key={i}
                       className={cn(
-                        "w-full pb-[15px] font-hnM text-[20px] tracking-normal leading-14 text-gray-100 cursor-pointer",
+                        "w-full pb-[15px] font-pp font-medium text-[15px] md:text-[18px] tracking-normal leading-14 text-gray-100 cursor-pointer",
                         currPage === nav.path.replace("/", "")
                           ? "text-teal-100"
                           : ""

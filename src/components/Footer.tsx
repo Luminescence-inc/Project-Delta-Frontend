@@ -1,7 +1,7 @@
 "use client";
-import { Link } from "react-router-dom";
-import { cn } from "@/utils";
+import { cn } from "@/lib/utils";
 import { FlexColStart, FlexRowStart } from "@components/Flex";
+import Link from "next/link";
 
 const navigations = [
   {
@@ -29,8 +29,6 @@ const socialLinks = [
 ];
 
 const Footer = () => {
-  const pathname = window.location.pathname.replace("/", "");
-
   return (
     <footer
       className="text-white-100 px-7 py-10"
@@ -40,7 +38,7 @@ const Footer = () => {
     >
       <div className="">
         <div className="">
-          <Link to="/">
+          <Link href="/">
             <img
               className="w-[200px]"
               src={"/assets/images/logo/logo-header.svg"}
@@ -54,13 +52,11 @@ const Footer = () => {
       <FlexColStart className="w-full gap-1">
         {navigations.map((n, i) => (
           <Link
-            to={n.link}
+            href={n.link}
             key={i}
             className={cn(
               "text-[14px] cursor-pointer font-medium font-inter pb-[10px] text-gray-100",
-              pathname === n.link.toLowerCase().replace("/", "")
-                ? "text-teal-100"
-                : "text-gray-100"
+              "text-gray-100"
             )}
           >
             {n.name}

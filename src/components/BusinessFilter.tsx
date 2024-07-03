@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useState } from "react";
 import { SearchIcon2, X } from "@components/icons";
 import MultiSearch from "./MultiSearch";
@@ -161,7 +162,7 @@ const BusinessesFilterComponent = ({
 
   // monitor when the country state gets changed
   useEffect(() => {
-    if (filterData.country) {
+    if (filterData?.country) {
       const formatedStates = getFilteredStates(filterData.country?.uuid);
       setFilteredStates(formatedStates);
 
@@ -184,11 +185,11 @@ const BusinessesFilterComponent = ({
         }));
       }
     }
-  }, [filterData.country]);
+  }, [filterData?.country]);
 
   //   monitor when the state and province gets changed
   useEffect(() => {
-    if (filterData.stateAndProvince) {
+    if (filterData?.stateAndProvince) {
       const formattedCities = getFilteredCities(filterData.country!?.uuid);
       setFilteredCities(formattedCities);
 
@@ -204,7 +205,7 @@ const BusinessesFilterComponent = ({
         }));
       }
     }
-  }, [filterData.stateAndProvince]);
+  }, [filterData?.stateAndProvince]);
 
   // clear err msg
   useEffect(() => {
@@ -317,14 +318,14 @@ const BusinessesFilterComponent = ({
             />
 
             {/* categories placeholder */}
-            {filterData.businessCategoryUuid &&
-              filterData.businessCategoryUuid.find(
+            {filterData?.businessCategoryUuid &&
+              filterData?.businessCategoryUuid.find(
                 (d) =>
                   typeof d.uuid !== "undefined" ||
                   typeof d.value !== "undefined"
               ) && (
                 <div className="flex flex-row flex-wrap items-start justify-start mt-0 filter-placeholders gap-[3px] pb-[15px]">
-                  {filterData.businessCategoryUuid?.map((categories) => (
+                  {filterData?.businessCategoryUuid?.map((categories) => (
                     <div
                       key={categories.uuid}
                       className="ntw px-[12px] py-[5px] rounded-full flex flex-row items-center justify-start placeholder gap-[2px] bg-white-300/80"
@@ -338,7 +339,7 @@ const BusinessesFilterComponent = ({
                         onClick={() => {
                           //  remove the selected category from filter
                           const updatedFilter =
-                            filterData.businessCategoryUuid?.filter(
+                            filterData?.businessCategoryUuid?.filter(
                               (c) => c.uuid !== categories.uuid
                             );
                           setFilterData({
