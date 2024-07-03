@@ -324,3 +324,10 @@ export const Info = (props: SvgIconProps) => (
     <path d="M12 8h.01" />
   </IconMarkup>
 );
+
+export const User = (props: SvgIconProps) => (
+  <IconMarkup {...props}>
+    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+    <circle cx="12" cy="7" r="4" />
+  </IconMarkup>
+);

@@ -5,7 +5,7 @@ export const bizConnectAPI = {
 };
 
 export const CloudinaryConfig = {
-  apiKey: env.apiKey,
+  apiKey: env.apiKey!,
   cloudName: env.cloudName,
 };
 

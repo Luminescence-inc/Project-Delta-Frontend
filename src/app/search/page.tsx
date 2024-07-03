@@ -217,8 +217,8 @@ const ExploreBusiness = () => {
       {/* search component */}
       <FlexRowStartCenter className="w-full px-[20px] mt-8 gap-[5px] bg-none">
         <Input
-          inputClassname="font-inter font-normal border-none tracking-[0]"
-          parentClassname="w-full outline outline-[1px] outline-white-400/20 bg-white-100 cursor-pointer rounded-[10px]"
+          inputClassname="font-pp px-0 font-normal border-none tracking-[0]"
+          parentClassname="w-full px-4 outline outline-[1px] outline-white-400/20 bg-white-100 cursor-pointer rounded-[10px] border-none"
           type="text"
           placeholder="Search business"
           leftIcon={

@@ -200,7 +200,7 @@ const Navbar = () => {
                 {!loading && !userDetails && (
                   <FlexRowStart className="w-full mt-[30px]">
                     <Button
-                      href={"/signup"}
+                      href={"/auth/signup"}
                       className="w-full max-w-[120px] h-[55px] p-[8px] rounded-[6px]"
                       intent={"primary"}
                       onClick={() => setMenuOpen(false)}
@@ -208,7 +208,7 @@ const Navbar = () => {
                       Signup
                     </Button>
                     <Button
-                      href={"/login"}
+                      href={"/auth/login"}
                       className="w-full max-w-[120px] h-[55px] p-[8px] rounded-[6px]"
                       intent={"transparent"}
                       onClick={() => setMenuOpen(false)}

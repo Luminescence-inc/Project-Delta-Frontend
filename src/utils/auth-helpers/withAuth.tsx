@@ -2,7 +2,7 @@
 import { useDataCtx } from "@context/DataCtx";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 // to be used in the route component that needs authentication
 
@@ -21,8 +21,8 @@ export default function withAuth<P>(Component: React.ComponentType<P>) {
 
         // redirect to login page
         localStorage.clear();
-        window.location.href = "/login";
-        router.push("/login");
+        window.location.href = "/auth/login";
+        router.push("/auth/login");
       } else {
         setIsAuth(true);
         setLocalIsAuth(true);
