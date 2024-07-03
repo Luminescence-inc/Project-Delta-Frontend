@@ -1,7 +1,8 @@
+"use client";
 import { useDataCtx } from "@context/DataCtx";
 import React, { useEffect, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 // to be used in the route component that
 // shouldn't be accessible after authentication

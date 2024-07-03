@@ -1,3 +1,4 @@
+"use client";
 import { getUserDetails } from "@/api/auth";
 import { useEffect, useState } from "react";
 import { UserDetails } from "@/types/auth";

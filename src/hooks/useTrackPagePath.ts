@@ -1,3 +1,4 @@
+"use client";
 import { prevPageLocalKeyName } from "@/config";
 import { useEffect } from "react";
 

@@ -1,3 +1,4 @@
+"use client";
 import { prevPageSearchKeyName } from "@/config";
 import { useEffect, useState } from "react";
 

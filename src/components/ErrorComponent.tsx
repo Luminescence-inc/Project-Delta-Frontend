@@ -9,7 +9,7 @@ interface IErrorComponent {
 const ErrorComponent = ({ value, _ref }: IErrorComponent) => {
   return (
     <FlexColStart className="w-auto">
-      <span ref={_ref} className="text-red-305 text-[13px]">
+      <span ref={_ref} className="text-red-305 font-pp text-[13px]">
         {value}
       </span>
     </FlexColStart>
