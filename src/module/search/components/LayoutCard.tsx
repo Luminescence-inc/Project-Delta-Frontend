@@ -64,7 +64,7 @@ export const ColLayoutCard = ({
           }}
         ></div>
         <FlexColStart className="w-full px-[4px] py-[2px] gap-0">
-          <h2 className="text-[15px] font-bold font-inter text-blue-200 leading-[18px] mt-[10px]">
+          <h2 className="text-[15px] font-bold font-pp text-blue-200 leading-[18px] mt-[10px]">
             {name.length > NAME_CONSTRAINT
               ? name.slice(0, NAME_CONSTRAINT) + "..."
               : name}
@@ -76,7 +76,7 @@ export const ColLayoutCard = ({
               categories.map((c) => {
                 return (
                   <FlexRowCenter className="gap-[2px]" key={c}>
-                    <span className="text-[11px] leading-[13px] font-light font-inter text-gray-103">
+                    <span className="text-[11px] leading-[13px] font-light font-pp text-gray-103">
                       {c}
                     </span>
                     {categories[categories.length - 1] !== c && (
@@ -90,7 +90,7 @@ export const ColLayoutCard = ({
           {/* location */}
           <FlexRowStartCenter className="gap-[5px] h-[16px] py-[15px]">
             <MapPin size={15} className="stroke-gray-100/70" />
-            <span className="text-[13px] font-normal font-inter text-blue-200 mt-[3px]">
+            <span className="text-[13px] font-normal font-pp text-blue-200 mt-[3px]">
               {location}
             </span>
           </FlexRowStartCenter>
@@ -100,17 +100,17 @@ export const ColLayoutCard = ({
             <FlexRowStartCenter className="gap-[10px]">
               {hasBusinessClosed && hasBusinessClosed.isOpened ? (
                 <>
-                  <span className="text-[11px] font-normal font-inter leading-[13px] text-teal-100">
+                  <span className="text-[11px] font-normal font-pp leading-[13px] text-teal-100">
                     Open
                   </span>
                   <span className="h-[3px] w-[3px] rounded-full text-[6px] bg-dark-105"></span>
 
-                  <span className="text-[11px] font-normal font-inter leading-[13px]">
+                  <span className="text-[11px] font-normal font-pp leading-[13px]">
                     Closes {hasBusinessClosed.closingTime}
                   </span>
                 </>
               ) : (
-                <span className="text-[11px] font-normal font-inter leading-[13px] text-red-301">
+                <span className="text-[11px] font-normal font-pp leading-[13px] text-red-301">
                   Closed
                 </span>
               )}
@@ -122,7 +122,7 @@ export const ColLayoutCard = ({
               className="flex flex-row items-center justify-center text-blue-200 bg-blue-202 w-[81px] h-[25px] px-[5px] rounded-full gap-[5px] text-[12px] businesss-call-line"
             >
               <Phone size={15} className="stroke-blue-200/80" />
-              <span className="text-[12px] font-medium font-inter leading-[14px] mt-[2px]">
+              <span className="text-[12px] font-medium font-pp leading-[14px] mt-[2px]">
                 Call me
               </span>
             </button>
@@ -165,7 +165,7 @@ export const RowLayoutCard = ({
             }}
           ></div>
           <FlexColStart className="w-full px-[5px] gap-0">
-            <h2 className="text-[15px] font-bold font-inter text-blue-200 leading-[18px] mt-[10px]">
+            <h2 className="text-[15px] font-bold font-pp text-blue-200 leading-[18px] mt-[10px]">
               {name.length > NAME_CONSTRAINT
                 ? name.slice(0, NAME_CONSTRAINT) + "..."
                 : name}
@@ -177,7 +177,7 @@ export const RowLayoutCard = ({
                 categories.map((c) => {
                   return (
                     <FlexRowCenter className="gap-[2px]" key={c}>
-                      <span className="text-[11px] leading-[13px] font-light font-inter text-gray-103">
+                      <span className="text-[11px] leading-[13px] font-light font-pp text-gray-103">
                         {c}
                       </span>
                       {categories[categories.length - 1] !== c && (
@@ -191,7 +191,7 @@ export const RowLayoutCard = ({
             {/* location */}
             <FlexRowStartCenter className="gap-[5px] h-[16px] py-[15px]">
               <MapPin size={15} className="stroke-gray-100/70" />
-              <span className="text-[13px] font-normal font-inter text-blue-200 mt-[3px]">
+              <span className="text-[13px] font-normal font-pp text-blue-200 mt-[3px]">
                 {location}
               </span>
             </FlexRowStartCenter>
@@ -201,17 +201,17 @@ export const RowLayoutCard = ({
               <FlexRowStartCenter className="w-auto gap-[10px]">
                 {hasBusinessClosed && hasBusinessClosed.isOpened ? (
                   <>
-                    <span className="text-[11px] font-normal font-inter leading-[13px] text-teal-100">
+                    <span className="text-[11px] font-normal font-pp leading-[13px] text-teal-100">
                       Open
                     </span>
                     <span className="h-[3px] w-[3px] rounded-full text-[6px] bg-dark-105"></span>
 
-                    <span className="text-[11px] font-normal font-inter leading-[13px]">
+                    <span className="text-[11px] font-normal font-pp leading-[13px]">
                       Closes {hasBusinessClosed.closingTime}
                     </span>
                   </>
                 ) : (
-                  <span className="text-[11px] font-normal font-inter leading-[13px] text-red-301">
+                  <span className="text-[11px] font-normal font-pp leading-[13px] text-red-301">
                     Closed
                   </span>
                 )}

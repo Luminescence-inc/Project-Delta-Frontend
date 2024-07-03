@@ -44,7 +44,7 @@ const Footer = () => {
               src={"/assets/images/logo/logo-header.svg"}
             />
           </Link>
-          <p className="text-[14px] font-normal font-inter py-[20px] text-blue-200 pb-[30px]">
+          <p className="text-[14px] font-normal font-pp py-[20px] text-blue-200 pb-[30px]">
             Connecting Immigrant and Local Business Owners with their Customers
           </p>
         </div>
@@ -55,7 +55,7 @@ const Footer = () => {
             href={n.link}
             key={i}
             className={cn(
-              "text-[14px] cursor-pointer font-medium font-inter pb-[10px] text-gray-100",
+              "text-[14px] cursor-pointer font-medium font-pp pb-[10px] text-gray-100",
               "text-gray-100"
             )}
           >
@@ -76,7 +76,7 @@ const Footer = () => {
         ))}
       </FlexRowStart>
 
-      <h5 className="text-center text-gray-100 leading-[14px] font-normal text-[12px] font-inter mt-10">
+      <h5 className="text-center text-gray-100 leading-[14px] font-normal text-[12px] font-pp mt-10">
         2024 Bizconnect24. All right reserved
       </h5>
     </footer>
