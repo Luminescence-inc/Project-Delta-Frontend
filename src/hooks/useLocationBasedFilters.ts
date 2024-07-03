@@ -30,7 +30,9 @@ export default function useLocationBasedFilters({
   setSearchQuery,
 }: useLocBaseFilterProps) {
   const { location, loading } = useLocation();
-  const { search } = usePathname();
+  const { search, path } = usePathname();
+
+  const isSearchPage = path.split("/").slice(-1);
 
   const uniqueFilters = useMemo(() => {
     if (loading) return [];
@@ -116,7 +118,7 @@ export default function useLocationBasedFilters({
     if (loading || !uniqueFilters || !location) return;
     const currentFilters = searchQuery?.filters || [];
     const filtersChanged =
-      currentFilters.length !== uniqueFilters.length ||
+      currentFilters?.length !== uniqueFilters?.length ||
       uniqueFilters.some(
         (filter, index) =>
           filter.targetFieldName !== currentFilters[index]?.targetFieldName
@@ -127,10 +129,10 @@ export default function useLocationBasedFilters({
       setSearchQuery({
         filters: uniqueFilters,
       });
-      getBusinesses(1, uniqueFilters.length > 0, { filters: uniqueFilters });
+      getBusinesses(1, uniqueFilters?.length > 0, { filters: uniqueFilters });
     } else {
       console.log("Filters not changed");
-      getBusinesses(1, uniqueFilters.length > 0, { filters: uniqueFilters });
+      getBusinesses(1, uniqueFilters?.length > 0, { filters: uniqueFilters });
     }
   }, [uniqueFilters, loading, location]);
 
