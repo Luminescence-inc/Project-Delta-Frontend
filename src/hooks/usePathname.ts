@@ -10,7 +10,7 @@ export const routeNameMap = {
   "/verify-email": "Verify Email",
   "/verify-account": "Verify Account",
   "/signup": "Signup",
-  "/view-your-business": "View Business",
+  "/view-business": "View Business",
   "/biz": "Business Details",
   "/signup/register-business": "Register Business",
   "/account": "My Account",

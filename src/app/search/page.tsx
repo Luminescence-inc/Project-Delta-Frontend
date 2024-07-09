@@ -6,7 +6,7 @@ import {
   FlexRowStartCenter,
 } from "@components/Flex";
 import { Filter, SearchIcon2 } from "@components/icons";
-import BusinessCardContainer from "@/module/search/components/BusinessCard";
+import BusinessCardContainer from "@/modules/search/components/BusinessCard";
 import BusinessesFilterComponent from "@components/BusinessFilter";
 import { UserBusinessList } from "@/types/business";
 import { FilterData, useBusinessCtx } from "@context/BusinessCtx";

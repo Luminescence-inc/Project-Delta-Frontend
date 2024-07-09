@@ -22,8 +22,8 @@ import {
 import { CloudinaryConfig } from "@/config";
 import { useSearchParams } from "next/navigation";
 import { useFormik } from "formik";
-import BusinessProfile from "@/module/register-business/components/BusinessProfile";
-import OperationInfo from "@/module/register-business/components/OperationInfo";
+import BusinessProfile from "@/modules/register-business/components/BusinessProfile";
+import OperationInfo from "@/modules/register-business/components/OperationInfo";
 import axios from "axios";
 import Modal from "react-modal";
 import Button from "@components/ui/button";

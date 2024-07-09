@@ -6,12 +6,12 @@ import {
   CustomerCard,
   HomeSignupBtn,
   TitleCard,
-} from "@/module/home/components";
+} from "@/modules/home/components";
 import {
   HeaderBusinessBtn,
   HeaderOnboardingComp,
   HeaderSearchComp,
-} from "@/module/home/components/HeaderComp";
+} from "@/modules/home/components/HeaderComp";
 
 const Home = () => {
   return (
