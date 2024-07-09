@@ -80,7 +80,7 @@ export function HeaderBusinessBtn() {
           {businessPresent && (
             <Button
               intent="primary"
-              href="/view-your-business"
+              href="/view-business"
               leftIcon={<SearchIcon2 size={25} className="stroke-white-100" />}
               className="w-full mt-8 rounded-md h-[55px]"
             >
