@@ -16,7 +16,7 @@ import BusinessesNotfound from "@/components/NotFound";
 import {
   ColLayoutCard,
   RowLayoutCard,
-} from "@/module/search/components/LayoutCard";
+} from "@/modules/search/components/LayoutCard";
 
 interface SimilarBusinessesProps {
   businessCategory: string;
