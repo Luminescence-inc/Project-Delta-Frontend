@@ -1,6 +1,7 @@
 import { FlexColCenter, FlexColStart } from "@/components/Flex";
 import { CtaArrow } from "@/components/icons";
 import Button from "@/components/ui/button";
+import SITE_CONFIG from "@/config/site";
 import {
   BusinessCard,
   CustomerCard,
@@ -12,6 +13,13 @@ import {
   HeaderOnboardingComp,
   HeaderSearchComp,
 } from "@/modules/home/components/HeaderComp";
+import type { Metadata } from "next";
+
+// SEO
+export const meta: Metadata = {
+  title: SITE_CONFIG.title,
+  description: SITE_CONFIG.description,
+};
 
 const Home = () => {
   return (
