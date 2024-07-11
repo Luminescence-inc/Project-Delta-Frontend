@@ -11,9 +11,25 @@ import "react-toastify/dist/ReactToastify.css";
 import { NotsupportedCountryBanner } from "@/components/NotSupportedCountry";
 import SITE_CONFIG from "@/config/site";
 
-export const meta: Metadata = {
+// SEO
+export const metadata: Metadata = {
   title: SITE_CONFIG.title,
   description: SITE_CONFIG.description,
+  authors: [
+    {
+      name: "Bizconnect24",
+    },
+  ],
+  keywords: SITE_CONFIG.keywords,
+  openGraph: {
+    title: SITE_CONFIG.title,
+    description: SITE_CONFIG.description,
+    images: [
+      {
+        url: SITE_CONFIG.image,
+      },
+    ],
+  },
 };
 
 export default function RootLayout({

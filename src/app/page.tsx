@@ -15,12 +15,6 @@ import {
 } from "@/modules/home/components/HeaderComp";
 import type { Metadata } from "next";
 
-// SEO
-export const meta: Metadata = {
-  title: SITE_CONFIG.title,
-  description: SITE_CONFIG.description,
-};
-
 const Home = () => {
   return (
     <div className="w-full h-full">
