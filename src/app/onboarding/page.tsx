@@ -16,7 +16,7 @@ const Onboarding = () => {
         <CSR
           render={({ userDetails, loading }) => (
             <Pill
-              path={userDetails ? "/signup/register-business" : "/signup"}
+              path={userDetails ? "/auth/register-business" : "/auth/signup"}
               icon={
                 <span className="w-[20px] h-[20px] rounded-sm flex items-center justify-center bg-orange-300">
                   <Plus
@@ -31,7 +31,7 @@ const Onboarding = () => {
           )}
         />
         <Pill
-          path="/login"
+          path="/auth/login"
           icon={<Bag className="stroke-none" />}
           title="Existing Business? Login"
           variant="pink"

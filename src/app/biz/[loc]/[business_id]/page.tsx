@@ -16,6 +16,8 @@ import SocialLinks from "@/modules/businessDetails/components/SocialLinks";
 import type { IOption } from "@/types/business";
 import type { IBusinessProfile } from "@/types/business-profile";
 import { constructBizImgUrl, determineBusOpTime, removeAMPM } from "@/utils";
+import type { Metadata } from "next";
+import { headers } from "next/headers";
 import React from "react";
 
 interface BizPageProps {
@@ -265,6 +267,32 @@ export default async function BusinessPage({ params }: BizPageProps) {
   );
 }
 
+type Props = {
+  params: { loc: string; business_id: string };
+  searchParams?: { [key: string]: string | string[] | undefined };
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const headersList = headers();
+  const header_url = headersList.get("x-url") || "";
+  const businessId = params["business_id"];
+  const { data } = await getBusinessById(businessId);
+
+  const categories = data?.businessDetails?.categories?.join(" - ");
+  const metaOgDescription = `${data?.businessDetails?.name} ${data?.businessDetails?.description}, ${data?.businessDetails?.city}, ${data?.businessDetails?.stateAndProvince}, ${categories}`;
+  const title = `${data.businessDetails?.name} - ${data.businessDetails?.city}, ${data.businessDetails?.stateAndProvince}, ${categories}`;
+
+  return {
+    title,
+    description: metaOgDescription,
+    url: header_url,
+    openGraph: {
+      title,
+      description: metaOgDescription,
+      url: header_url,
+    },
+  } as Metadata;
+}
 async function getBusinessById(bizId: string) {
   let error = null;
   let data: {
