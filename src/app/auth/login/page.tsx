@@ -11,7 +11,6 @@ import * as yup from "yup";
 import { FlexColStart, FlexColStartCenter } from "@components/Flex";
 import ErrorComponent from "../../../components/ErrorComponent";
 import withoutAuth from "@/utils/auth-helpers/withoutAuth";
-import Link from "next/link";
 
 const validationSchema = yup.object({
   email: yup.string().email("Enter valid email").required(),
@@ -177,18 +176,18 @@ const Login = () => {
           </Button>
         </form>
 
-        <Link
+        <a
           className="forgot font-pp text-sm underline"
           href="/forgot-password/email"
         >
           <p>Forgot password?</p>
-        </Link>
+        </a>
 
         <p className="text-dark-100/50 text-[14px] font-pp mt-[14px] ">
           Don't have an Account?{" "}
-          <Link href="/signup">
+          <a href="/signup">
             <span className="text-blue-200 underline">Sign up</span>
-          </Link>
+          </a>
         </p>
       </FlexColStartCenter>
     </FlexColStart>

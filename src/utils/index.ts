@@ -193,3 +193,12 @@ export const constructSearchUrl = (
 
   return query.join("&");
 };
+
+export const forceReloadClientPage = (time?: number) => {
+  // force reload the page to update the search query
+  // fetch business data
+  // apply dynamic seo.
+  setTimeout(() => {
+    window.location.reload();
+  }, time ?? 10);
+};

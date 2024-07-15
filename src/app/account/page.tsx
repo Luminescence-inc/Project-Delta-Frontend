@@ -11,7 +11,6 @@ import { useAuth } from "@hooks/useAuth";
 import { LoaderComponent } from "@components/Loader";
 import { FlexColCenter, FlexRowStartBtw } from "@/components/Flex";
 import withAuth from "@/utils/auth-helpers/withAuth";
-import Link from "next/link";
 
 const validationSchema = yup.object({
   firstName: yup
@@ -214,12 +213,12 @@ const MyAccount = () => {
             <p className="text-[14px] font-pp font-normal text-dark-100/60">
               Password
             </p>
-            <Link
-              href="/forgot-password/email"
+            <a
+              href="/auth/forgot-password/email"
               className="text-[12px] font-pp font-semibold text-dark-100/60 underline"
             >
               Reset Password
-            </Link>
+            </a>
           </FlexRowStartBtw>
           <Input
             type={!showPassword ? "password" : "text"}

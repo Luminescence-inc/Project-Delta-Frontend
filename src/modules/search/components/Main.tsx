@@ -17,11 +17,10 @@ import Input from "@/components/ui/input";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { Pagination } from "@/components/Pagination";
-import { extractQueryParams } from "@/utils";
+import { extractQueryParams, forceReloadClientPage } from "@/utils";
 import useTrackPageSearch from "@/hooks/useTrackSearch";
 import { prevPageSearchKeyName } from "@/config";
 import { useSearchDebounce } from "@/hooks/useSearchDebounce";
-import NextSeoProvider from "@/components/NextSeo";
 
 dayjs.extend(relativeTime);
 
@@ -38,8 +37,7 @@ export default function MainSearchPageComponent() {
   } = useBusinessCtx();
 
   const [showFilter, setShowFilter] = useState<boolean>(false);
-  // const [search, setSearch] = useState<string>("");
-  const [debouncedSearch, setQuery] = useSearchDebounce(350);
+  const [debouncedSearch, setQuery] = useSearchDebounce(100);
   const [urlSearchQuery, setUrlSearchQuery] = useState<string>("");
   const [headline, setHeadline] = useState({
     title: "",
@@ -73,6 +71,8 @@ export default function MainSearchPageComponent() {
     setSearchQuery({
       filters: query,
     });
+
+    forceReloadClientPage();
   };
 
   const generateHeadlineFromQuery = () => {
@@ -158,29 +158,6 @@ export default function MainSearchPageComponent() {
   }, [businesses, allBusinessesLoading]);
 
   // debounce the search query
-  useEffect(() => {
-    if (!debouncedSearch) {
-      // @ts-expect-error
-      setSearchQuery((prev: ISearch) => ({
-        filters: prev?.filters?.filter(
-          (f: IFilter) => f.targetFieldName !== "query"
-        ),
-      }));
-    } else {
-      // @ts-expect-error
-      setSearchQuery((prev: ISearch) => ({
-        filters: [
-          ...prev?.filters?.filter(
-            (f: IFilter) => f.targetFieldName !== "query"
-          ),
-          {
-            targetFieldName: "query",
-            values: [debouncedSearch],
-          },
-        ],
-      }));
-    }
-  }, [debouncedSearch]);
 
   // url search query
   useEffect(() => {
@@ -191,22 +168,8 @@ export default function MainSearchPageComponent() {
     }
   }, [prevPageSearch]);
 
-  const date = dayjs().format("MMM DD YYYY");
-  const metaDescription = `${headline.title}, - ${date} - ${headline.businesses}`;
-
   return (
     <FlexColStart className="w-full h-full">
-      {/* <NextSeoProvider
-        title={headline.title}
-        description={metaDescription}
-        // url={window && window.location.href}
-        og={{
-          title: headline.title,
-          description: metaDescription,
-          url: window.location.href,
-        }}
-      /> */}
-
       <FlexColStart className="w-full px-[20px] mt-10 gap-[15px]">
         <h1 className="text-[20px] md:text-[30px] font-extrabold font-inter">
           {headline.title}
@@ -250,6 +213,8 @@ export default function MainSearchPageComponent() {
                   },
                 ],
               }));
+
+              forceReloadClientPage();
             }
           }}
           autoComplete="nope"

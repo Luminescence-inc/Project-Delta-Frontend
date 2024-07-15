@@ -16,7 +16,6 @@ import { cn } from "@/lib/utils";
 import { useAuth } from "@hooks/useAuth";
 import { Cancel, ChevronDown, Edit, Menu, Plus } from "./icons";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 
 const navigationRoute = [
   { title: "Home", name: "home", path: "/" },
@@ -87,9 +86,9 @@ const Navbar = () => {
           <div className="w-full px-4 py-4 ">
             {!menuOpen && (
               <FlexRowStartBtw className="w-full bg-white-100 mt-[24px] rounded-[5px] px-[27px] py-[18px] shadow-sm">
-                <Link href="/">
+                <a href="/">
                   <img src={"/assets/images/logo/logo-header.svg"} />
-                </Link>
+                </a>
                 <Menu
                   size={30}
                   className="stroke-blue-200 cursor-pointer relative top-3"
@@ -118,7 +117,7 @@ const Navbar = () => {
                   const currPage = pathname.split("/").pop();
 
                   return (
-                    <Link
+                    <a
                       href={nav.path}
                       key={i}
                       className={cn(
@@ -130,7 +129,7 @@ const Navbar = () => {
                       onClick={() => setMenuOpen(false)}
                     >
                       {nav.title}
-                    </Link>
+                    </a>
                   );
                 })}
 
@@ -160,7 +159,7 @@ const Navbar = () => {
                       >
                         {userBusinessListData?.map((data) => {
                           return (
-                            <Link
+                            <a
                               href={`/signup/register-business?update=${data.uuid}`}
                               key={data.uuid}
                               className="w-full mt-[4px] px-[18px] cursor-pointer flex items-start justify-between"
@@ -177,7 +176,7 @@ const Navbar = () => {
                                 className="stroke-white-100 fill-blue-200"
                                 size={20}
                               />
-                            </Link>
+                            </a>
                           );
                         })}
                       </FlexColStart>
@@ -227,13 +226,13 @@ const Navbar = () => {
                       <span className="font-hnM">Logout</span>
                     </Button>
                     <FlexRowCenter className="w-full">
-                      <Link
+                      <a
                         href="/account"
                         onClick={() => setMenuOpen(false)}
                         className="text-center font-inter font-semibold mt-[20px] cursor-pointer"
                       >
                         My Account
-                      </Link>
+                      </a>
                     </FlexRowCenter>
                   </>
                 )}

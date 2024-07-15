@@ -1,7 +1,6 @@
 "use client";
 import { cn } from "@/lib/utils";
 import { FlexColStart, FlexRowStart } from "@components/Flex";
-import Link from "next/link";
 
 const navigations = [
   {
@@ -38,12 +37,12 @@ const Footer = () => {
     >
       <div className="">
         <div className="">
-          <Link href="/">
+          <a href="/">
             <img
               className="w-[200px]"
               src={"/assets/images/logo/logo-header.svg"}
             />
-          </Link>
+          </a>
           <p className="text-[14px] font-normal font-pp py-[20px] text-blue-200 pb-[30px]">
             Connecting Immigrant and Local Business Owners with their Customers
           </p>
@@ -51,7 +50,7 @@ const Footer = () => {
       </div>
       <FlexColStart className="w-full gap-1">
         {navigations.map((n, i) => (
-          <Link
+          <a
             href={n.link}
             key={i}
             className={cn(
@@ -60,7 +59,7 @@ const Footer = () => {
             )}
           >
             {n.name}
-          </Link>
+          </a>
         ))}
       </FlexColStart>
 
