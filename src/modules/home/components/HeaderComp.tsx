@@ -16,7 +16,7 @@ export function HeaderSearchComp() {
   return (
     <FlexColCenter className="w-full">
       <a
-        href="/search"
+        href="/search?cn=Canada"
         className="w-full h-[44px] rounded-[10px] flex flex-row items-center justify-start px-[15px] gap-5 cursor-pointer bg-white border-[1px] border-solid border-blue-200 shadow-md"
         onClick={() => {
           // keep track of prev page route
@@ -91,7 +91,7 @@ export function HeaderBusinessBtn() {
           )}
           <Button
             intent="transparent"
-            href="/signup/register-business"
+            href="/register-business"
             leftIcon={
               <Plus
                 strokeWidth={0.8}

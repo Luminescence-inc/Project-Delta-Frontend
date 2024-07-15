@@ -1,6 +1,5 @@
 import Button from "@components/ui/button";
 import { FlexColStartCenter } from "@components/Flex";
-import Link from "next/link";
 
 const AboutUs = () => {
   return (
@@ -30,14 +29,14 @@ const AboutUs = () => {
         numbers, BizConnect24 is for them.
       </p>
 
-      <Link href="/search" className="w-full flex items-center justify-center">
+      <a href="/search" className="w-full flex items-center justify-center">
         <Button
           intent="primary"
           className="w-[80%] mb-[1rem] text-[14px] font-pp font-semibold"
         >
           Search for business
         </Button>
-      </Link>
+      </a>
     </FlexColStartCenter>
   );
 };

@@ -1,7 +1,6 @@
 import React from "react";
 import { cn } from "@/lib/utils";
 import { FlexRowStartCenter } from "@components/Flex";
-import Link from "next/link";
 
 interface IPill {
   icon: React.ReactNode;
@@ -20,7 +19,7 @@ const variants = {
 const Pill = ({ icon, title, path, variant, onClick }: IPill) => {
   const variantBgColor = variants[variant];
   return (
-    <Link href={path} onClick={onClick} className="w-full bg-none outline-none">
+    <a href={path} onClick={onClick} className="w-full bg-none outline-none">
       <FlexRowStartCenter
         className={cn(
           `w-full gap-[12px] p-[16px] rounded-[6px] `,
@@ -32,7 +31,7 @@ const Pill = ({ icon, title, path, variant, onClick }: IPill) => {
           {title}
         </h3>
       </FlexRowStartCenter>
-    </Link>
+    </a>
   );
 };
 

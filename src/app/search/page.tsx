@@ -4,6 +4,7 @@ import {
   getBusinesses,
 } from "@/helpers/dynamic-seo";
 import MainSearchPageComponent from "@/modules/search/components/Main";
+import { sleep } from "@/utils";
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 
