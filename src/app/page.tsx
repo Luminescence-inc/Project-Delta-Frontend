@@ -13,7 +13,6 @@ import {
   HeaderOnboardingComp,
   HeaderSearchComp,
 } from "@/modules/home/components/HeaderComp";
-import type { Metadata } from "next";
 
 const Home = () => {
   return (
