@@ -160,7 +160,7 @@ const Navbar = () => {
                         {userBusinessListData?.map((data) => {
                           return (
                             <a
-                              href={`/signup/register-business?update=${data.uuid}`}
+                              href={`/register-business?update=${data.uuid}`}
                               key={data.uuid}
                               className="w-full mt-[4px] px-[18px] cursor-pointer flex items-start justify-between"
                               onClick={() => {
@@ -182,7 +182,7 @@ const Navbar = () => {
                       </FlexColStart>
                     )}
                     <Button
-                      href={"/signup/register-business"}
+                      href={"/register-business"}
                       className="w-full h-[37px] py-[22px] rounded-[5px] mt-5"
                       intent={"transparent"}
                       onClick={() => setMenuOpen(false)}

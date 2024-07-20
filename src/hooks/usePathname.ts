@@ -12,7 +12,7 @@ export const routeNameMap = {
   "/signup": "Signup",
   "/view-business": "View Business",
   "/biz": "Business Details",
-  "/signup/register-business": "Register Business",
+  "/register-business": "Register Business",
   "/account": "My Account",
 } as Record<string, string>;
 

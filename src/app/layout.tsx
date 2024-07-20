@@ -47,7 +47,7 @@ const routeNameMap = {
   "/auth/login": "Login",
   "/view-business": "View Business",
   "/biz": "Business Details",
-  "/signup/register-business": "Register Business",
+  "/register-business": "Register Business",
   "/account": "My Account",
   "/onboarding": "Onboarding",
 } as Record<string, string>;
