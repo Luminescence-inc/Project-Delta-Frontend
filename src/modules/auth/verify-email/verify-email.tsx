@@ -9,8 +9,13 @@ import { BaseResponseMessage } from "@/types/auth";
 import ErrorComponent from "@/components/ErrorComponent";
 import { FlexColCenter } from "@/components/Flex";
 
-const VerifiedEmail = () => {
-  const { userId, uniqueString } = useParams();
+interface VerifiedEmailPorps {
+    userId: string;
+    uniqueString: string;
+}
+
+const VerifiedEmail = ({ userId, uniqueString }:VerifiedEmailPorps ) => {
+//   const { userId, uniqueString } = useParams();
   const [error, setError] = useState(false);
   const [verified, setVerified] = useState(false);
   const [errorMessage, setErrorMessage] = useState<String | null>(null);

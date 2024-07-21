@@ -25,6 +25,10 @@ interface BizPageProps {
   searchParams?: { [key: string]: string | string[] | undefined };
 }
 
+export async function generateStaticParams() {
+  return [{loc: "estivaux-essence--canada-ontario", business_id: "ea2da124-c768-4a53-8fb8-450e3f38b9f8"}];
+}
+
 const daysOfWeek = [
   "Sunday",
   "Monday",

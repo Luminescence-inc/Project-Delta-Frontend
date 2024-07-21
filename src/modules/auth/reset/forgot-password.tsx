@@ -20,8 +20,14 @@ const validationSchema = yup.object({
     .required("Confirm Password is required"),
 });
 
-const ForgotPassword = () => {
-  let { userId, uniqueString } = useParams();
+interface ForgotPasswordPorps {
+    userId: string;
+    uniqueString: string;
+}
+
+
+const ForgotPassword = ({ userId, uniqueString }: ForgotPasswordPorps) => {
+//   let { userId, uniqueString } = useParams();
   const router = useRouter();
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState<String | null>(null);
