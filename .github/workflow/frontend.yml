@@ -42,7 +42,7 @@ jobs:
           if [ "${{ github.ref }}" = "refs/heads/main" ]; then
             echo "Deploying to production environment..."
             aws s3 sync ./dist s3://www.bizconnect24.com
-          elif [ "${{ github.ref }}" = "refs/heads/feature/TEC-77/dev-tailwind-css" ]; then
+          elif [ "${{ github.ref }}" = "refs/heads/feature/TEC-77/feature/TEC-151/dev-nextjs-v2" ]; then
             echo "Deploying to development environment..."
             aws s3 sync ./dist s3://tailwindtesting.bizconnect24.com
           else

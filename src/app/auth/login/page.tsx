@@ -23,9 +23,11 @@ const Login = () => {
   const [errorMessage, setErrorMessage] = useState<String | null>(null);
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const askForAccountString = "Don't have an Account? ";
 
   const onSubmit = async (values: LogInData) => {
     const { ...data } = values;
+
     setIsLoading(true);
     try {
       const res = await loginUser(data).catch((err) => {
@@ -184,7 +186,7 @@ const Login = () => {
         </a>
 
         <p className="text-dark-100/50 text-[14px] font-pp mt-[14px] ">
-          Don't have an Account?{" "}
+          {askForAccountString}
           <a href="/signup">
             <span className="text-blue-200 underline">Sign up</span>
           </a>

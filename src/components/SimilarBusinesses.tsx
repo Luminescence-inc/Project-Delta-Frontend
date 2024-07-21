@@ -44,124 +44,124 @@ const SimilarBusinesses = ({
   );
   const [loading, setLoading] = useState<boolean>(true);
 
-  if (!businessCategory || !country) return null;
-
-  const categoryName = allBusinessCategories?.find(
-    (c) => c.uuid === businessCategory
-  )?.value;
-  // construct searchQuery
-  const searchQuery = {
-    filters: [
-      {
-        targetFieldName: "businessCategoryUuid",
-        values: [categoryName],
-      },
-      {
-        targetFieldName: "country",
-        values: [country],
-      },
-    ],
-  } as ISearch;
-
-  const getBusinesses = async () => {
-    setLoading(true);
-
-    const queryParams = constructSearchUrl(searchQuery || { filters: [] });
-
-    const result = await searchForBusinesses(queryParams);
-    const data = result.data?.data.businessProfiles;
-
-    // filter out current business from similar businesses
-    const businessData = data?.data
-      .filter(
-        (business: IBusinessProfile) => business.uuid !== currentBusinessId
-      )
-      .filter(
-        (business: IBusinessProfile) =>
-          business.city === city &&
-          business.stateAndProvince === stateAndProvince
-      ) as CombBusinessesDataTypes[];
-
-    // recreate business data with categories
-    const formattedBusinessData = [] as CombBusinessesDataTypes[];
-
-    // append categories to business data
-    for (const business of businessData) {
-      const category = allCategories?.find(
-        (c) => c.uuid === business?.businessCategoryUuid
-      );
-      if (category) {
-        business["category"] = [category.value];
-      }
-      formattedBusinessData.push(business);
+  useEffect(() => {
+    if (!businessCategory || !country) {
+      setLoading(false);
+      return;
     }
 
-    setBusinesses(formattedBusinessData);
-    setLoading(false);
-  };
+    const categoryName = allBusinessCategories?.find(
+      (c) => c.uuid === businessCategory
+    )?.value;
 
-  useEffect(() => {
+    // construct searchQuery
+    const searchQuery = {
+      filters: [
+        {
+          targetFieldName: "businessCategoryUuid",
+          values: [categoryName],
+        },
+        {
+          targetFieldName: "country",
+          values: [country],
+        },
+      ],
+    } as ISearch;
+
+    const getBusinesses = async () => {
+      setLoading(true);
+
+      const queryParams = constructSearchUrl(searchQuery || { filters: [] });
+
+      const result = await searchForBusinesses(queryParams);
+      const data = result.data?.data.businessProfiles;
+
+      // filter out current business from similar businesses
+      const businessData = data?.data
+        .filter(
+          (business: IBusinessProfile) => business.uuid !== currentBusinessId
+        )
+        .filter(
+          (business: IBusinessProfile) =>
+            business.city === city &&
+            business.stateAndProvince === stateAndProvince
+        ) as CombBusinessesDataTypes[];
+
+      // recreate business data with categories
+      const formattedBusinessData = [] as CombBusinessesDataTypes[];
+
+      // append categories to business data
+      for (const business of businessData) {
+        const category = allCategories?.find(
+          (c) => c.uuid === business?.businessCategoryUuid
+        );
+        if (category) {
+          business["category"] = [category.value];
+        }
+        formattedBusinessData.push(business);
+      }
+
+      setBusinesses(formattedBusinessData);
+      setLoading(false);
+    };
+
     getBusinesses();
-  }, [currentBusinessId]);
+  }, [businessCategory, country, city, stateAndProvince, currentBusinessId]);
 
-  if (loading) {
-    return (
-      <FlexColCenter className="w-full">
-        <LoaderComponent />
-      </FlexColCenter>
-    );
-  }
+  if (!businessCategory || !country) return null;
 
   const defaultImg = "/assets/images/default-img.jpeg";
 
   return (
     <FlexColStart className="w-full mt-[20px]">
-      <FlexColStart className="w-full gap-[20px]">
-        {!loading && businesses.length > 0 ? (
-          businesses.map((businesses) => {
-            const daysOfOperation = constructDOP(
-              businesses?.daysOfOperation!,
-              businesses?.openTime!,
-              businesses?.closeTime!
-            );
+      {loading ? (
+        <FlexColCenter className="w-full">
+          <LoaderComponent />
+        </FlexColCenter>
+      ) : (
+        <FlexColStart className="w-full gap-[20px]">
+          {businesses.length > 0 ? (
+            businesses.map((business) => {
+              const daysOfOperation = constructDOP(
+                business?.daysOfOperation!,
+                business?.openTime!,
+                business?.closeTime!
+              );
 
-            const businessesImg = constructBizImgUrl(businesses.logoUrl!);
-            return layout === "col" ? (
-              <ColLayoutCard
-                name={businesses.name ?? "N/A"}
-                categories={businesses?.category as string[]}
-                location={`${businesses.city}, ${businesses.stateAndProvince}`}
-                daysOfOps={daysOfOperation}
-                phone={businesses.phoneNumber ?? "N/A"}
-                image={
-                  !isImgUrlValid(businessesImg) ? defaultImg : businessesImg
-                }
-                _key={businesses.uuid!}
-                id={businesses.uuid}
-                key={businesses.uuid}
-                _urlLocation={`${businesses.country}-${businesses.stateAndProvince}`}
-              />
-            ) : (
-              <RowLayoutCard
-                name={businesses.name ?? "N/A"}
-                categories={businesses?.category as string[]}
-                location={`${businesses.city}, ${businesses.stateAndProvince}`}
-                daysOfOps={daysOfOperation}
-                phone={businesses.phoneNumber ?? "N/A"}
-                image={
-                  !isImgUrlValid(businessesImg) ? defaultImg : businessesImg
-                }
-                _key={businesses.uuid!}
-                id={businesses.uuid}
-                key={businesses.uuid}
-                _urlLocation={`${businesses.country}-${businesses.stateAndProvince}`}
-              />
-            );
-          })
-        ) : (
-          <BusinessesNotfound />
-        )}
-      </FlexColStart>
+              const businessImg = constructBizImgUrl(business.logoUrl!);
+              return layout === "col" ? (
+                <ColLayoutCard
+                  name={business.name ?? "N/A"}
+                  categories={business?.category as string[]}
+                  location={`${business.city}, ${business.stateAndProvince}`}
+                  daysOfOps={daysOfOperation}
+                  phone={business.phoneNumber ?? "N/A"}
+                  image={!isImgUrlValid(businessImg) ? defaultImg : businessImg}
+                  _key={business.uuid!}
+                  id={business.uuid}
+                  key={business.uuid}
+                  _urlLocation={`${business.country}-${business.stateAndProvince}`}
+                />
+              ) : (
+                <RowLayoutCard
+                  name={business.name ?? "N/A"}
+                  categories={business?.category as string[]}
+                  location={`${business.city}, ${business.stateAndProvince}`}
+                  daysOfOps={daysOfOperation}
+                  phone={business.phoneNumber ?? "N/A"}
+                  image={!isImgUrlValid(businessImg) ? defaultImg : businessImg}
+                  _key={business.uuid!}
+                  id={business.uuid}
+                  key={business.uuid}
+                  _urlLocation={`${business.country}-${business.stateAndProvince}`}
+                />
+              );
+            })
+          ) : (
+            <BusinessesNotfound />
+          )}
+        </FlexColStart>
+      )}
     </FlexColStart>
   );
 };
