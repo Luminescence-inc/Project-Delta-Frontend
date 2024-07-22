@@ -22,13 +22,13 @@ export default function RootLayout({
       <body
         className={cn(inter.variable, poppins.variable, open_sans.variable)}
       >
-        <NotsupportedCountryBanner />
-        <Navbar />
         <DataCtxProvider>
+          <NotsupportedCountryBanner />
+          <Navbar />
           <BusinessContextProvider>{children}</BusinessContextProvider>
+          <Footer />
+          <ToastContainer />
         </DataCtxProvider>
-        <Footer />
-        <ToastContainer />
       </body>
     </html>
   );

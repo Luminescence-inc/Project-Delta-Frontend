@@ -1,5 +1,6 @@
 "use client";
 import {
+  FlexColEnd,
   FlexColStart,
   FlexRowCenter,
   FlexRowCenterBtw,
@@ -46,10 +47,7 @@ export const ColLayoutCard = ({
 
   return (
     <CardNavigateWrapper id={id} name={name} location={_urlLocation}>
-      <CardWrapper
-        key={_key}
-        className="w-full max-h-[260px] px-[5px] py-[5px]"
-      >
+      <CardWrapper key={_key} className="w-full max-h-[450px] pb-[10px]">
         <div
           className="w-full h-auto rounded-[10px]"
           style={{
@@ -60,11 +58,11 @@ export const ColLayoutCard = ({
             backgroundSize: "100% 100%",
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
-            height: "137px",
+            height: "328px",
           }}
         ></div>
-        <FlexColStart className="w-full px-[4px] py-[2px] gap-0">
-          <h2 className="text-[15px] font-bold font-pp text-blue-200 leading-[18px] mt-[10px]">
+        <FlexColStart className="w-full px-[4px] py-[2px] gap-0 mt-[10px]">
+          <h2 className="text-[15px] font-semibold font-pp text-blue-200 leading-[18.31px]">
             {name.length > NAME_CONSTRAINT
               ? name.slice(0, NAME_CONSTRAINT) + "..."
               : name}
@@ -122,7 +120,7 @@ export const ColLayoutCard = ({
               className="flex flex-row items-center justify-center text-blue-200 bg-blue-202 w-[81px] h-[25px] px-[5px] rounded-full gap-[5px] text-[12px] businesss-call-line"
             >
               <Phone size={15} className="stroke-blue-200/80" />
-              <span className="text-[12px] font-medium font-pp leading-[14px] mt-[2px]">
+              <span className="text-[12px] font-normal font-pp leading-[14px] mt-[2px]">
                 Call me
               </span>
             </button>
@@ -147,8 +145,8 @@ export const RowLayoutCard = ({
 
   return (
     <CardNavigateWrapper id={id} name={name} location={_urlLocation}>
-      <CardWrapper className="w-full max-h-[108px]">
-        <FlexRowStart className="w-full px-[5px] py-[5px]">
+      <CardWrapper className="w-full max-h-[110px] pb-[10px]">
+        <FlexRowStartCenter className="w-full px-[0px]">
           <div
             className="w-full h-auto rounded-[10px]"
             style={{
@@ -164,15 +162,15 @@ export const RowLayoutCard = ({
               height: "95px",
             }}
           ></div>
-          <FlexColStart className="w-full px-[5px] gap-0">
-            <h2 className="text-[15px] font-bold font-pp text-blue-200 leading-[18px] mt-[10px]">
+          <FlexColStart className="w-full px-[5px] gap-0 mt-2">
+            <h2 className="text-[15px] font-semibold font-pp text-blue-200 leading-[18.31px]">
               {name.length > NAME_CONSTRAINT
                 ? name.slice(0, NAME_CONSTRAINT) + "..."
                 : name}
             </h2>
 
             {/* categories */}
-            <FlexRowCenterBtw className="w-auto gap-2">
+            <FlexRowCenterBtw className="w-auto gap-2 mt-1">
               {categories &&
                 categories.map((c) => {
                   return (
@@ -198,7 +196,7 @@ export const RowLayoutCard = ({
 
             {/* opening time */}
             <FlexRowCenterBtw className="w-full">
-              <FlexRowStartCenter className="w-auto gap-[10px]">
+              <FlexRowStartCenter className="w-full gap-[10px]">
                 {hasBusinessClosed && hasBusinessClosed.isOpened ? (
                   <>
                     <span className="text-[11px] font-normal font-pp leading-[13px] text-teal-100">
@@ -217,7 +215,7 @@ export const RowLayoutCard = ({
                 )}
               </FlexRowStartCenter>
 
-              <FlexRowEnd className="w-auto">
+              <FlexRowEnd className="w-full">
                 <button
                   // href={`tel:${phone}`}
                   onClick={() => window.open(`tel:${phone}`)}
@@ -228,7 +226,7 @@ export const RowLayoutCard = ({
               </FlexRowEnd>
             </FlexRowCenterBtw>
           </FlexColStart>
-        </FlexRowStart>
+        </FlexRowStartCenter>
       </CardWrapper>
     </CardNavigateWrapper>
   );
@@ -243,7 +241,10 @@ interface CWProps {
 const CardWrapper = ({ children, style, className, ...props }: CWProps) => {
   return (
     <div
-      className={cn("w-full rounded-[10px] shadow-lg bg-white-100", className)}
+      className={cn(
+        "w-full rounded-[10px] shadow-white-300 shadow-md bg-white-100 pt-[6px] pr-[8px] pb-[6px] pl-[8px] gap-[10px] ",
+        className
+      )}
       style={{
         background: "#FFFFFF",
         ...style,

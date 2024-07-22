@@ -100,6 +100,7 @@ const config: Config = {
           201: "#f4fbfe",
           202: "#e7f2ff",
           203: "#f4f9ff",
+          204: "#F6F8FA",
         },
         green: {
           100: "#22C55E",

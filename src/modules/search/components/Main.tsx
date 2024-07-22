@@ -21,6 +21,7 @@ import { extractQueryParams, forceReloadClientPage } from "@/utils";
 import useTrackPageSearch from "@/hooks/useTrackSearch";
 import { prevPageSearchKeyName } from "@/config";
 import { useSearchDebounce } from "@/hooks/useSearchDebounce";
+import { useDataCtx } from "@/context/DataCtx";
 
 dayjs.extend(relativeTime);
 
@@ -35,6 +36,7 @@ export default function MainSearchPageComponent() {
     setLayout,
     searchQuery,
   } = useBusinessCtx();
+  const { setNavbarBgColor } = useDataCtx();
 
   const [showFilter, setShowFilter] = useState<boolean>(false);
   const [debouncedSearch, setQuery] = useSearchDebounce(100);
@@ -157,9 +159,6 @@ export default function MainSearchPageComponent() {
     });
   }, [businesses, allBusinessesLoading]);
 
-  // debounce the search query
-
-  // url search query
   useEffect(() => {
     const search = localStorage.getItem(prevPageSearchKeyName) || "";
     if (search.length > 0) {
@@ -168,21 +167,25 @@ export default function MainSearchPageComponent() {
     }
   }, [prevPageSearch]);
 
+  useEffect(() => {
+    setNavbarBgColor("#fff");
+  }, []);
+
   return (
-    <FlexColStart className="w-full h-full">
-      <FlexColStart className="w-full px-[20px] mt-10 gap-[15px]">
-        <h1 className="text-[20px] md:text-[30px] font-extrabold font-inter">
+    <FlexColStart className="w-full h-full bg-blue-204 pb-[2em]">
+      <FlexColStart className="w-full h-auto px-[20px] mt-3 gap-[5px]">
+        <h1 className="text-[25px] md:text-[30px] font-bold font-pp text-blue-200">
           {headline.title}
         </h1>
-        <p className="text-[15px] font-medium font-inter text-gray-103">
+        <p className="text-[15px] font-medium font-pp leading-[23px] text-gray-103">
           Discover businesses within and beyond your community
         </p>
       </FlexColStart>
       {/* search component */}
-      <FlexRowStartCenter className="w-full px-[20px] mt-8 gap-[5px] bg-none">
+      <FlexRowStartCenter className="w-full px-[20px] mt-8 gap-[5px] bg-transparent">
         <Input
-          inputClassname="font-pp px-0 font-normal border-none tracking-[0]"
-          parentClassname="w-full px-4 outline outline-[1px] outline-white-400/20 bg-white-100 cursor-pointer rounded-[10px] border-none"
+          inputClassname="font-pp px-0 font-normal border-none tracking-[0] placeholder:text-gray-103"
+          parentClassname="w-full h-[44px] px-4 bg-white-100 cursor-pointer rounded-[10px] border-none"
           type="text"
           placeholder="Search business"
           leftIcon={
@@ -241,7 +244,7 @@ export default function MainSearchPageComponent() {
         </button>
       </FlexRowStartCenter>
 
-      <FlexColCenter className="w-full min-h-[20px]">
+      <FlexColCenter className="w-full">
         {allBusinessesLoading && (
           <div className="mt-5">
             <LoaderComponent />
@@ -250,7 +253,7 @@ export default function MainSearchPageComponent() {
 
         {/* not found msg */}
         {!allBusinessesLoading && businesses?.length === 0 && (
-          <FlexColStartCenter className="w-full mt-[35px]">
+          <FlexColStartCenter className="w-full">
             <p className="text-[15px] font-semibold font-inter text-gray-103">
               No business found. Please modify your search
             </p>
