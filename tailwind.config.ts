@@ -99,6 +99,7 @@ const config: Config = {
           200: "#0e2d52",
           201: "#f4fbfe",
           202: "#e7f2ff",
+          203: "#f4f9ff",
         },
         green: {
           100: "#22C55E",
@@ -169,6 +170,26 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    // @ts-expect-error
+    ({ addUtilities }) => {
+      addUtilities({
+        ".enableBounceEffect": {
+          transition: "all 0.1s",
+          "&:target": {
+            transform: "scale(0.90)",
+          },
+          "&:active": {
+            transform: "scale(0.85)",
+          },
+        },
+        ".flex-center": {
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        },
+      });
+    },
+  ],
 };
 export default config;

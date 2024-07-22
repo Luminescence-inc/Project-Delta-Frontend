@@ -76,16 +76,16 @@ const Navbar = () => {
 
   return (
     <div className="w-full">
-      <div className="w-full bg-white-105">
+      <div className="w-full">
         <FlexColStart
           className="w-full h-full"
           onClick={(e) => {
             e.stopPropagation();
           }}
         >
-          <div className="w-full px-4 py-4 ">
+          <div className="w-full px-4 py-4 bg-blue-203">
             {!menuOpen && (
-              <FlexRowStartBtw className="w-full bg-white-100 mt-[24px] rounded-[5px] px-[27px] py-[18px] shadow-sm">
+              <FlexRowStartBtw className="w-full mt-[24px] rounded-[5px] px-[27px] py-[18px]">
                 <a href="/">
                   <img src={"/assets/images/logo/logo-header.svg"} />
                 </a>
