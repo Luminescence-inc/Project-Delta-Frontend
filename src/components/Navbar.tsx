@@ -16,6 +16,7 @@ import { cn } from "@/lib/utils";
 import { useAuth } from "@hooks/useAuth";
 import { Cancel, ChevronDown, Edit, Menu, Plus } from "./icons";
 import { useRouter } from "next/navigation";
+import { useDataCtx } from "@/context/DataCtx";
 
 const navigationRoute = [
   { title: "Home", name: "home", path: "/" },
@@ -29,6 +30,7 @@ const navigationRoute = [
 ];
 
 const Navbar = () => {
+  const { navbarBgColor } = useDataCtx();
   const router = useRouter();
   const [tokenData, setTokenData] = useState<JwtPayload | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -76,16 +78,21 @@ const Navbar = () => {
 
   return (
     <div className="w-full">
-      <div className="w-full bg-white-105">
+      <div className="w-full">
         <FlexColStart
           className="w-full h-full"
           onClick={(e) => {
             e.stopPropagation();
           }}
         >
-          <div className="w-full px-4 py-4 ">
+          <div className="w-full px-4 py-4 bg-blue-203">
             {!menuOpen && (
-              <FlexRowStartBtw className="w-full bg-white-100 mt-[24px] rounded-[5px] px-[27px] py-[18px] shadow-sm">
+              <FlexRowStartBtw
+                className="w-full mt-[24px] rounded-[5px] px-[27px] py-[18px]"
+                style={{
+                  backgroundColor: navbarBgColor ?? "",
+                }}
+              >
                 <a href="/">
                   <img src={"/assets/images/logo/logo-header.svg"} />
                 </a>

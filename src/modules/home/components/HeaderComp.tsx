@@ -17,16 +17,16 @@ export function HeaderSearchComp() {
     <FlexColCenter className="w-full">
       <a
         href="/search?cn=Canada"
-        className="w-full h-[44px] rounded-[10px] flex flex-row items-center justify-start px-[15px] gap-5 cursor-pointer bg-white border-[1px] border-solid border-blue-200 shadow-md"
+        className="w-full h-[44px] rounded-[10px] flex flex-row items-center justify-start px-[15px] gap-5 cursor-pointer bg-white border-[1px] border-solid border-blue-200 shadow-md bg-white-100"
         onClick={() => {
           // keep track of prev page route
           localStorage.setItem(prevPageLocalKeyName, window.location.pathname);
         }}
       >
-        <FlexRowStartCenter className="w-full">
+        <FlexRowStartCenter className="w-full gap-[4px]">
           <SearchIcon2 size={20} className="stroke-gray-103" strokeWidth={1} />
           <span
-            className="text-[12px] leading-[14px] font-hnL font-normal relative top-[0px]"
+            className="text-[12px] leading-[14.32px] font-pp font-normal relative top-[0px]"
             style={{
               color: "#9090A7",
             }}
@@ -48,9 +48,9 @@ export function HeaderOnboardingComp() {
         intent="primary"
         href="/onboarding"
         rightIcon={<CtaArrow strokeWidth={1} className="stroke-white-100" />}
-        className="w-full mt-8 rounded-md h-[55px]"
+        className="w-full h-44px mt-8 rounded-md pt-[10px] pr-[100px] pb-[10px] pl-[100px] "
       >
-        <span className="font-pp font-semibold text-[14px] ">
+        <span className="font-pp font-medium text-[14px] leading-[24px] text-white-100 ">
           Business Owner? Get Started
         </span>
       </Button>
@@ -82,9 +82,9 @@ export function HeaderBusinessBtn() {
               intent="primary"
               href="/view-business"
               leftIcon={<SearchIcon2 size={25} className="stroke-white-100" />}
-              className="w-full mt-8 rounded-md h-[55px]"
+              className="w-full mt-8 rounded-md h-[44px] pt-[10px] pr-[100px] pb-[10px] pl-[100px]"
             >
-              <span className="font-pp font-semibold text-[14px] ">
+              <span className="font-pp font-semibold text-[14px] leading-[24px] text-white-100 ">
                 View your business
               </span>
             </Button>
@@ -99,9 +99,9 @@ export function HeaderBusinessBtn() {
                 className="fill-blue-200 stroke-none"
               />
             }
-            className="w-full mt-8 rounded-md h-[55px]"
+            className="w-full mt-8 rounded-md h-[44px] pt-[10px] pr-[100px] pb-[10px] pl-[100px]"
           >
-            <span className="font-pp font-semibold text-[14px] ">
+            <span className="font-pp font-semibold text-[14px] leading-[24px] text-white-100 ">
               {businessPresent
                 ? "Create a new business profile"
                 : "Create your first business profile"}

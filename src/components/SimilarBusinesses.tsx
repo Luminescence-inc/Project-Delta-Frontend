@@ -49,7 +49,7 @@ const SimilarBusinesses = ({
   const categoryName = allBusinessCategories?.find(
     (c) => c.uuid === businessCategory
   )?.value;
-  // construct searchQuery
+
   const searchQuery = {
     filters: [
       {
@@ -101,7 +101,7 @@ const SimilarBusinesses = ({
   };
 
   useEffect(() => {
-    getBusinesses();
+    if (currentBusinessId) getBusinesses();
   }, [currentBusinessId]);
 
   if (loading) {

@@ -17,15 +17,17 @@ import {
 const Home = () => {
   return (
     <div className="w-full h-full">
-      <header className="w-full px-4 py-4">
+      <header className="w-full px-7 py-4 bg-blue-203">
         <HeaderSearchComp />
         <br />
-        <h1 className="w-full text-[30px] font-bold leading-[38px] tracking-normal text-left text-blue-200 font-pp">
-          Connecting Immigrant & Local Business Owners With Their Customers
-        </h1>
-        <p className="text-[15px] font-semibold font-pp leading-[25px] text-left text-gray-100 ">
-          Seamlessly do business within your area and on the go
-        </p>
+        <FlexColStart className="gap-[10px]">
+          <h1 className="w-full text-[25px] font-bold leading-[38px] tracking-normal text-left text-blue-200 font-pp">
+            Connecting Immigrant & Local Business Owners With Their Customers
+          </h1>
+          <p className="text-[15px] font-medium font-pp leading-[25px] text-left text-gray-103 ">
+            Seamlessly do business within your area and on the go
+          </p>
+        </FlexColStart>
 
         <HeaderOnboardingComp />
 
@@ -42,7 +44,7 @@ const Home = () => {
       </header>
 
       <section className="w-full h-auto py-4 pt-[40px] bg-white-100 ">
-        <div className="w-full px-4">
+        <div className="w-full px-4 pb-[3em]">
           <TitleCard
             title={"FOR BUSINESS OWNERS"}
             header={"Unlock Boundless Opportunities"}
@@ -52,7 +54,7 @@ const Home = () => {
           />
 
           {/* Businesses Card */}
-          <FlexColStart className="w-full mt-[20px] gap-5">
+          <FlexColStart className="w-full mt-[20px] gap-[13px] pb-[5em]">
             <BusinessCard
               className={"business-card"}
               icon={
@@ -94,7 +96,7 @@ const Home = () => {
             />
           </FlexColStart>
 
-          <div className="w-full mt-5">
+          <div className="w-full mt-5 h-[150px]">
             <TitleCard
               className={"title-card"}
               title={"FOR CUSTOMERS"}
@@ -104,7 +106,7 @@ const Home = () => {
               }
             />
           </div>
-          <div className="w-full h-auto mt-5 px-5">
+          <div className="w-full h-auto mt-5 px-[5px]">
             <img
               style={{ width: "100%", height: "auto" }}
               src={"/assets/images/customer-homebg.jpeg"}
@@ -113,7 +115,7 @@ const Home = () => {
           </div>
 
           {/* Customer Card */}
-          <div className="w-full mt-5">
+          <FlexColCenter className="w-full mt-10 gap-[31px]">
             <CustomerCard
               icon={
                 <img
@@ -152,21 +154,20 @@ const Home = () => {
                 "Through Bizconnect24, customers become part of a vibrant and supportive community, connecting with fellow enthusiasts who share a passion for diversity, entrepreneurship, and cultural exchange"
               }
             />
-          </div>
+          </FlexColCenter>
 
           <FlexColCenter className="w-full">
             <Button
               intent="primary"
               href="/search"
-              rightIcon={
-                <CtaArrow strokeWidth={0.4} className="stroke-white-100" />
-              }
-              className="w-full max-w-[303px] h-[55px] mt-8 rounded-md "
+              // rightIcon={}
+              className="w-full max-w-[400px] h-[55px] mt-4 rounded-md pt-[10px] pr-[72px] pb-[10px] pl-[62px] gap-[7px] flex-center"
               hardRefresh={true}
             >
-              <span className="font-hnM font-bold text-[14px] leading-[14px] text-left text-white-100 ">
+              <span className="font-pp font-medium text-[14px] leading-[14px] text-white-100 ">
                 Explore Businesses
               </span>
+              <CtaArrow strokeWidth={0.4} className="stroke-white-100" />
             </Button>
           </FlexColCenter>
         </div>
@@ -180,11 +181,11 @@ const Home = () => {
             backgroundPosition: "center",
           }}
         >
-          <FlexColCenter className="w-full px-8 pb-[20px] text-center">
-            <h1 className="text-[30px] text-white-100 text-center font-hnM font-bold leading-[37px] ">
+          <FlexColCenter className="w-full px-8 pb-[20px] text-center gap-[18px]">
+            <h1 className="text-[30px] text-white-100 text-center font-pp font-semibold leading-[36.63px] ">
               Join Our Growing Network
             </h1>
-            <p className="text-[15px] leading-[25px] font-hnL font-bold text-white-100 ">
+            <p className="text-[15px] leading-[25px] font-pp font-normal text-white-100 ">
               Join immigrant entrepreneurs leveraging BizConnect24 to unlock
               your business growth. Sign up now for greater visibility and
               experience record breaking earnings
