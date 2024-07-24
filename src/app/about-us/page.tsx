@@ -1,20 +1,22 @@
 import Button from "@components/ui/button";
 import { FlexColStartCenter } from "@components/Flex";
+import { UpdateNavbarBgColor } from "@/modules/about-us/components/updateNavbarBgColor";
 
 const AboutUs = () => {
   return (
-    <FlexColStartCenter className="w-full px-2">
-      <header className="text-center m-[24px]">
-        <h2 className="mb-[16px] text-[32px] font-pp leading-40px font-extrabold text-blue-200">
+    <FlexColStartCenter className="w-full gap-1 bg-blue-204">
+      <UpdateNavbarBgColor />
+      <header className="text-center mt-5">
+        <h2 className="mb-[16px] text-[32px] font-pp leading-40px font-semibold text-blue-200">
           About Us{" "}
         </h2>
       </header>
       <img
         src={"/assets/images/about-page-image.png"}
         alt={"about-page-image"}
-        className="w-full object-cover rounded-md"
+        className="w-full object-cover"
       />
-      <p className="font-normal p-[2rem] text-sm text-center font-pp leading-[24px]">
+      <p className="font-normal p-[1rem] text-sm text-center font-pp leading-[24px] mt-2">
         BizConnect24 is powered by
         <a
           className="mx-[5px] my-[5px] underline text-blue-200 font-pp font-medium hover:text-red-301"
