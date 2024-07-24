@@ -5,12 +5,14 @@ import Input from "@/components/ui/input";
 import { useFormik } from "formik";
 import { LogInData, LogInResponse, TOKEN_NAME, JwtPayload } from "@/types/auth";
 import { loginUser } from "@/api/auth";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import * as yup from "yup";
 import { FlexColStart, FlexColStartCenter } from "@components/Flex";
 import ErrorComponent from "../../../components/ErrorComponent";
 import withoutAuth from "@/utils/auth-helpers/withoutAuth";
+import { useDataCtx } from "@/context/DataCtx";
+import Link from "next/link";
 
 const validationSchema = yup.object({
   email: yup.string().email("Enter valid email").required(),
@@ -18,6 +20,7 @@ const validationSchema = yup.object({
 });
 
 const Login = () => {
+  const { setNavbarBgColor } = useDataCtx();
   const router = useRouter();
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState<String | null>(null);
@@ -80,6 +83,13 @@ const Login = () => {
     }
   };
 
+  useEffect(() => {
+    setNavbarBgColor({
+      parent: "#F6F8FA",
+      child: "#fff",
+    });
+  }, []);
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -93,7 +103,7 @@ const Login = () => {
   return (
     <FlexColStart className="w-full h-full px-[16px] pt-[24px] pb-[32px]">
       <FlexColStartCenter className="w-full px-[16px] pt-[24px] pb-[32px] bg-white-100 text-center ">
-        <h4 className="text-[16px] font-pp font-semibold leading-[24px] mb-[24px]">
+        <h4 className="text-[16px] font-pp font-semibold leading-[24px] mb-[24px] text-blue-200">
           Sign in
         </h4>
 
@@ -177,17 +187,17 @@ const Login = () => {
         </form>
 
         <a
-          className="forgot font-pp text-sm underline"
+          className="forgot font-pp text-sm underline text-blue-200"
           href="/forgot-password/email"
         >
           <p>Forgot password?</p>
         </a>
 
-        <p className="text-dark-100/50 text-[14px] font-pp mt-[14px] ">
+        <p className="text-blue-200/70 text-[14px] font-pp mt-[14px] ">
           Don't have an Account?{" "}
-          <a href="/signup">
-            <span className="text-blue-200 underline">Sign up</span>
-          </a>
+          <Link href="/auth/signup">
+            <span className="text-blue-200 underline font-medium">Sign up</span>
+          </Link>
         </p>
       </FlexColStartCenter>
     </FlexColStart>
