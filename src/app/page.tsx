@@ -12,9 +12,7 @@ import {
   HeaderBusinessBtn,
   HeaderOnboardingComp,
   HeaderSearchComp,
-} from "@/modules/home/components/HeaderComp"; 
-
-// gerald first branch and pr, make a small change
+} from "@/modules/home/components/HeaderComp";
 
 const Home = () => {
   return (
