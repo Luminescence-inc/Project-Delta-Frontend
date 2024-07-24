@@ -153,7 +153,7 @@ export default async function BusinessPage({ params }: BizPageProps) {
           </FlexColStart>
 
           {/* description */}
-          <FlexColStart className="mt-5 gap-1">
+          <FlexColStart className="mt-1 gap-1">
             <span className="ntw text-[11px] leading-[13px] font-normal font-pp text-gray-103">
               Description
             </span>
