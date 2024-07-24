@@ -20,7 +20,7 @@ export default function OpeningHoursDrd({
 }: IOpeningHoursProps) {
   const [calendarOpened, setCalendarOpened] = React.useState(false);
   return (
-    <FlexColStart className="w-full mt-[10px] bg-white-100 rounded-[5px] h-auto p-0  shadow-sm border-[.5px] border-gray-103/10">
+    <FlexColStart className="w-full mt-[10px] bg-white-100 rounded-[5px] h-auto p-0">
       <button
         className="w-full h-[40px] mt-[0px] outline-none border-none rounded-[5px] flex items-center justify-between px-[20px] bg-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
         onClick={() => {
@@ -30,11 +30,13 @@ export default function OpeningHoursDrd({
       >
         <FlexRowStartCenter className="w-auto gap-1">
           <Calendar size={15} className="stroke-dark-100/60 mr-1" />
-          <span className="text-[11px] font-semibold font-inter leading-[10px] mt-[1px] text-blue-200">
+          <span className="text-[11px] font-medium font-pp leading-[10px] mt-[1px] text-blue-200">
             View opening hours
           </span>
         </FlexRowStartCenter>
         <ChevronDown
+          strokeWidth={1.5}
+          className="stroke-gray-103"
           style={{
             transform: calendarOpened ? "rotate(180deg)" : "rotate(0deg)",
           }}
@@ -54,7 +56,7 @@ export default function OpeningHoursDrd({
                 <div className="w-full col-span-2 px-[20px] ">
                   <FlexRowStartBtw className="w-full">
                     <span
-                      className="text-[12px] font-normal font-inter leading-[14px]"
+                      className="text-[12px] font-normal font-pp leading-[14px]"
                       style={{
                         color:
                           getCurrentDay === day.day ? "#17BEBB" : "#0E2D52",
@@ -74,7 +76,7 @@ export default function OpeningHoursDrd({
                 <div className="w-full col-span-2 px-[20px]">
                   <FlexRowEnd className="w-full">
                     <span
-                      className="text-[12px] font-normal font-inter leading-[14px] mt-[3px]"
+                      className="text-[12px] font-normal font-pp leading-[14px] mt-[3px]"
                       style={{
                         color:
                           getCurrentDay === day.day ? "#17BEBB" : "#0E2D52",

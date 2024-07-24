@@ -17,7 +17,7 @@ const BusinessesNotfound = ({ message }: NotfoundProps) => {
         strokeWidth={1}
         className="fill-gray-100 stroke-none"
       />
-      <p className="text-[12px] font-normal font-inter text-gray-103">
+      <p className="text-[12px] font-normal font-pp text-gray-103">
         {message ?? "No similar businesses found."}
       </p>
       <a
@@ -25,7 +25,7 @@ const BusinessesNotfound = ({ message }: NotfoundProps) => {
         href={`/search${prevPageSearch}`}
       >
         <FlexRowStart className="w-full">
-          <p className="text-[13px] font-normal font-inter underline text-teal-100">
+          <p className="text-[13px] font-normal font-pp underline text-teal-100">
             Explore other business categories
           </p>
           <ChevronRight
