@@ -43,14 +43,14 @@ export function HeaderOnboardingComp() {
   const { userDetails } = useAuth();
   if (userDetails) return null;
   return (
-    <div className="w-full">
+    <div className="w-full pr-10">
       <Button
         intent="primary"
         href="/onboarding"
         rightIcon={<CtaArrow strokeWidth={1} className="stroke-white-100" />}
-        className="w-full h-44px mt-8 rounded-md pt-[10px] pb-[10px] "
+        className="w-full h-44px mt-4 rounded-md pt-[10px] pr-[100px] pb-[10px] pl-[100px]"
       >
-        <span className="font-pp font-medium text-[14px] leading-[24px] text-white-100 ">
+        <span className="font-pp font-medium text-[14px] leading-[24px] text-white-100">
           Business Owner? Get Started
         </span>
       </Button>
