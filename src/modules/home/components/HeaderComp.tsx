@@ -48,7 +48,7 @@ export function HeaderOnboardingComp() {
         intent="primary"
         href="/onboarding"
         rightIcon={<CtaArrow strokeWidth={1} className="stroke-white-100" />}
-        className="w-full h-44px mt-8 rounded-md pt-[10px] pr-[100px] pb-[10px] pl-[100px] "
+        className="w-full h-44px mt-8 rounded-md pt-[10px] pb-[10px] "
       >
         <span className="font-pp font-medium text-[14px] leading-[24px] text-white-100 ">
           Business Owner? Get Started

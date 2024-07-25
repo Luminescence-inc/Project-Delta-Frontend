@@ -109,7 +109,8 @@ export default async function BusinessPage({ params }: BizPageProps) {
   const socialLinks = constructSocialLinks();
 
   return (
-    <FlexColStart className="w-full h-auto px-[28px]">
+    // Navbar bg-color is being changed within <BackBtn />
+    <FlexColStart className="w-full h-auto px-[28px] bg-blue-204">
       <BackBtn />
       {businessDetails ? (
         <>
@@ -118,25 +119,25 @@ export default async function BusinessPage({ params }: BizPageProps) {
             <img
               src={constructBizImgUrl(businessDetails?.logoUrl!)}
               alt="business"
-              className="w-full h-[183px] rounded-[10px]"
+              className="w-full h-[217px] rounded-[10px]"
             />
           </FlexRowStart>
 
           {/* categories and business name */}
-          <FlexColStart className="h-[44px] mt-[20px]">
+          <FlexColStart className="h-[44px] mt-[20px] gap-2">
             {/* business name */}
-            <h2 className="text-[20px] font-bold font-inter text-dark-105 leading-[20px]">
+            <h2 className="text-[20px] font-semibold font-pp text-blue-200 leading-[20px]">
               {businessDetails?.name ?? "N/A"}
             </h2>
 
             {/* categories */}
-            <FlexRowCenterBtw className="w-full gap-[10px] mt-1 mb-5">
+            <FlexRowCenterBtw className="w-full gap-[10px] mb-5">
               {typeof businessDetails.categories !== "undefined" &&
               businessDetails?.categories.length > 0
                 ? businessDetails?.categories?.map((c) => {
                     return (
                       <FlexRowCenter className="gap-[10px]" key={c}>
-                        <span className="ntw text-[11px] leading-[13px] font-normal font-inter text-gray-103">
+                        <span className="ntw text-[11px] leading-[13px] font-normal font-pp text-gray-103">
                           {c}
                         </span>
                         {businessDetails.categories[
@@ -152,8 +153,8 @@ export default async function BusinessPage({ params }: BizPageProps) {
           </FlexColStart>
 
           {/* description */}
-          <FlexColStart className="mt-5">
-            <span className="ntw text-[11px] leading-[13px] font-semibold font-inter text-gray-103">
+          <FlexColStart className="mt-1 gap-1">
+            <span className="ntw text-[11px] leading-[13px] font-normal font-pp text-gray-103">
               Description
             </span>
 
@@ -161,7 +162,7 @@ export default async function BusinessPage({ params }: BizPageProps) {
             <ReadMoreText text={businessDetails?.description ?? "N/A"} />
             {/* contact info */}
             <FlexColStart className="mt-[15px]">
-              <span className="text-[11px] leading-[13px] font-semibold font-inter text-gray-103">
+              <span className="text-[11px] leading-[13px] font-semibold font-pp text-gray-103">
                 Contact Info
               </span>
 
@@ -210,17 +211,17 @@ export default async function BusinessPage({ params }: BizPageProps) {
           <FlexRowCenter className="gap-[5px] mt-5">
             {hasBusinessClosed && hasBusinessClosed.isOpened ? (
               <>
-                <span className="text-[11px] font-normal font-inter leading-[13px] text-teal-100">
+                <span className="text-[11px] font-normal font-pp leading-[13px] text-teal-100">
                   Open
                 </span>
                 <span className="h-[3px] w-[3px] rounded-full text-[6px] bg-dark-105"></span>
 
-                <span className="text-[11px] font-normal font-inter leading-[13px] text-dark-105">
+                <span className="text-[11px] font-normal font-pp leading-[13px] text-dark-105">
                   Closes {removeAMPM(hasBusinessClosed.closingTime!)}PM
                 </span>
               </>
             ) : (
-              <span className="text-[11px] font-normal font-inter leading-[13px] text-red-301">
+              <span className="text-[11px] font-normal font-pp leading-[13px] text-red-301">
                 Closed
               </span>
             )}
@@ -246,7 +247,7 @@ export default async function BusinessPage({ params }: BizPageProps) {
 
           {/* Similar businesses */}
           <FlexColStart className="w-full mt-5 h-auto pb-[200px]">
-            <h3 className="text-[15px] leading-[18px] font-bold font-inter text-blue-200">
+            <h3 className="text-[15px] leading-[18px] font-bold font-pp text-blue-200">
               Similar Businesses
             </h3>
 
