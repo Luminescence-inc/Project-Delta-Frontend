@@ -41,6 +41,7 @@ import { LoaderComponent } from "@components/Loader";
 import { toast } from "react-toastify";
 import withAuth from "@/utils/auth-helpers/withAuth";
 import { useRouter } from "next/navigation";
+import { useDataCtx } from "@/context/DataCtx";
 
 const dayOrder: { [key: string]: number } = {
   Monday: 0,
@@ -69,7 +70,7 @@ const tabs = [
 ] as { name: RegisterBusinessTabs; title: string }[];
 
 const RegisterBusiness = () => {
-  const router = useRouter();
+  const { setNavbarBgColor } = useDataCtx();
   const [searchParams] = useSearchParams();
   const { setSocialLinksError } = useBusinessCtx();
   const [pageLoading, setPageLoading] = useState(false);
@@ -101,6 +102,10 @@ const RegisterBusiness = () => {
   useEffect(() => {
     const param = new URLSearchParams(window.location.search);
     setBusinessId(param.get("update"));
+    setNavbarBgColor({
+      child: "#fff",
+      parent: "#fff",
+    });
   }, [window]);
 
   useEffect(() => {
@@ -471,27 +476,37 @@ const RegisterBusiness = () => {
       "stateAndProvince",
       "city",
     ];
-    let error = false;
+    let resp = {
+      error: false,
+      field: "",
+    };
     for (let field of requiredFields) {
       // @ts-expect-error
       if (!formik.values[field]) {
-        error = true;
+        resp = {
+          error: true,
+          field: field,
+        };
+        break;
       }
     }
-    return error;
+    return resp;
   };
 
   return (
-    <div ref={tabsRef} className="w-full pt-[30px] px-[16px] pb-[150px] ">
+    <div
+      ref={tabsRef}
+      className="w-full pt-[30px] px-[16px] pb-[150px] bg-blue-204 "
+    >
       <FlexRowCenter className="w-full h-full gap-10">
         {tabs.map((tab, idx) => (
           <span
             key={idx}
             className={cn(
-              "text-[16px] font-bold font-pp cursor-pointer leading-[24px]",
+              "text-[16px] font-medium font-pp cursor-pointer leading-[24px]",
               selectedTab?.toLowerCase() === tab.name.toLowerCase()
-                ? "border-b-2 border-blue-200 text-blue-200"
-                : "text-blue-200/60"
+                ? "border-b-[1px] border-blue-200 text-blue-200"
+                : "text-blue-200/40 font-semibold"
             )}
             onClick={() => {
               if (isRequiredFieldEmpty() && idx === 1) {
