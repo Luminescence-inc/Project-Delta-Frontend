@@ -47,12 +47,8 @@ export function HeaderOnboardingComp() {
       <Button
         intent="primary"
         href="/onboarding"
-        rightIcon={
-          <span>
-        <CtaArrow strokeWidth={1} className="stroke-white-100 inline-block" />
-          </span>
-      }
-        className="w-full h-44px mt-4 rounded-md pt-[10px] pr-[100px] pb-[10px] pl-[100px]"
+        rightIcon={<CtaArrow strokeWidth={1} className="stroke-white-100" />}
+        className="w-full h-44px mt-8 rounded-md pt-[10px] pb-[10px] "
       >
         <span className="font-pp font-medium text-[14px] leading-[24px] text-white-100">
           Business Owner? Get Started
@@ -105,7 +101,11 @@ export function HeaderBusinessBtn() {
             }
             className="w-full mt-8 rounded-md h-[44px]"
           >
-            <span className={`font-pp font-semibold text-[14px] leading-[24px] ${!businessPresent && 'text-blue-200' }`}>
+            <span
+              className={`font-pp font-semibold text-[14px] leading-[24px] ${
+                !businessPresent && "text-blue-200"
+              }`}
+            >
               {businessPresent
                 ? "Create a new business profile"
                 : "Create your first business profile"}
