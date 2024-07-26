@@ -21,7 +21,7 @@ const Home = () => {
         <HeaderSearchComp />
         <br />
         <FlexColStart className="gap-[10px]">
-          <h1 className="w-full text-[25px] font-bold leading-[38px] tracking-normal text-left text-blue-200 font-pp">
+          <h1 className="w-full text-[25px] font-bold leading-[38px] tracking-normal text-left text-[##0E2D52] font-pp">
             Connecting Immigrant & Local Business Owners With Their Customers
           </h1>
           <p className="text-[13px] font-medium font-pp leading-[25px] text-left text-gray-103 ">
