@@ -1,6 +1,7 @@
 import { Globe } from "@components/icons";
 import { cn } from "@/lib/utils";
 import { useEffect } from "react";
+import TooltipComp from "./TooltipComp";
 
 interface SocialMediaProps {
   url: string;
@@ -11,33 +12,11 @@ interface SocialMediaProps {
     | "linkedin"
     | "tiktok"
     | "website";
-  activeTtip: string;
-  setActiveTtip: (name: string) => void;
 }
 
-const RenderSocialLinks = ({
-  url,
-  name,
-  setActiveTtip,
-  activeTtip,
-}: SocialMediaProps) => {
+const RenderSocialLinks = ({ url, name }: SocialMediaProps) => {
   const { valid } = isUrlValid(url);
-
   let icon = null;
-
-  useEffect(() => {
-    let timeout;
-    if (activeTtip === name) {
-      timeout = setTimeout(() => {
-        setActiveTtip("");
-      }, 2000);
-    }
-
-    return () => {
-      clearTimeout(timeout!);
-    };
-  }, [activeTtip]);
-
   switch (name) {
     case "facebook":
       icon = RenderSocialIcons({ name });
@@ -66,28 +45,46 @@ const RenderSocialLinks = ({
 
   return (
     <div className="w-auto relative">
-      <a
-        href={url}
-        target="_blank"
-        className={cn(
-          "w-[34px] h-[34px] flex flex-col items-center justify-center rounded-full scale-[.90]",
-          valid ? "cursor-pointer" : "cursor-not-allowed"
-        )}
-        style={{
-          background: valid ? "#E7F2FF" : "#eee",
-          opacity: valid ? 1 : 0.6,
-          filter: valid ? "grayscale(0)" : "grayscale(100%)",
-        }}
-        onClick={(e) => {
-          e.preventDefault();
-          setActiveTtip(name);
-          if (!valid) return;
-          window.open(url, "_blank");
-        }}
-      >
-        {icon}
-      </a>
-      {true && (
+      {valid ? (
+        <a
+          href={url}
+          target="_blank"
+          className={cn(
+            "w-[34px] h-[34px] flex flex-col items-center justify-center rounded-full scale-[.90]",
+            valid ? "cursor-pointer" : "cursor-not-allowed"
+          )}
+          style={{
+            background: "#E7F2FF",
+          }}
+          onClick={(e) => {
+            if (!valid) return;
+            window.open(url, "_blank");
+          }}
+        >
+          {icon}
+        </a>
+      ) : (
+        <TooltipComp text="No link found">
+          <a
+            target="_blank"
+            className={cn(
+              "w-[34px] h-[34px] flex flex-col items-center justify-center rounded-full scale-[.90]",
+              "cursor-not-allowed"
+            )}
+            style={{
+              background: "#eee",
+              opacity: 0.6,
+              filter: "grayscale(100%)",
+            }}
+            onClick={(e) => {
+              e.preventDefault();
+            }}
+          >
+            {icon}
+          </a>
+        </TooltipComp>
+      )}
+      {/* {true && (
         <span
           className={cn(
             "tooltiptext text-[10px] w-[80px] text-center absolute bg-dark-105 font-inter text-white-100 px-[5px] py-[2px] rounded-[5px] top-10 -left-5 z-10",
@@ -96,7 +93,7 @@ const RenderSocialLinks = ({
         >
           No link found
         </span>
-      )}
+      )} */}
     </div>
   );
 };

@@ -85,12 +85,17 @@ const Navbar = () => {
             e.stopPropagation();
           }}
         >
-          <div className="w-full px-4 py-4 bg-blue-203">
+          <div
+            className="w-full px-4 py-4 bg-blue-203"
+            style={{
+              backgroundColor: navbarBgColor?.parent ?? "",
+            }}
+          >
             {!menuOpen && (
               <FlexRowStartBtw
                 className="w-full mt-[24px] rounded-[5px] px-[27px] py-[18px]"
                 style={{
-                  backgroundColor: navbarBgColor ?? "",
+                  backgroundColor: navbarBgColor?.child ?? "",
                 }}
               >
                 <a href="/">

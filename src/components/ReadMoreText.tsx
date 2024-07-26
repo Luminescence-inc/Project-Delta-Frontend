@@ -17,7 +17,7 @@ export default function ReadMoreText({ text }: ReadMoreProps) {
 
   return (
     <FlexRowStart className="w-auto flex-wrap">
-      <span className="text-[12px] font-light font-hnL text-gray-100 leading-[18px]">
+      <span className="text-[12px] font-normal font-pp text-blue-200 leading-[18px]">
         {isReadmore ? text : formattedText}
         {showReadmore && (
           <button

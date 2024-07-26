@@ -1,4 +1,5 @@
 import ContactSupportForm from "@/modules/contact-support/components/Form";
+import { UpdateNavbarBgColor } from "@/modules/contact-support/components/updateNavbarBgColor";
 import { FlexColCenter, FlexRowCenter } from "@components/Flex";
 import type { Metadata } from "next";
 
@@ -8,8 +9,9 @@ export const metadata: Metadata = {
 
 const ContactSupport = () => {
   return (
-    <div className="w-full p-[16px] bg-gray-200 ">
-      <h2 className="text-center mb-[16px] text-[32px] leading-[40px] font-bold font-pp">
+    <div className="w-full p-[16px] bg-blue-204 ">
+      <UpdateNavbarBgColor />
+      <h2 className="text-center mb-[16px] text-[32px] leading-[40px] text-blue-200 font-semibold font-pp">
         Contact Support
       </h2>
 
@@ -20,7 +22,7 @@ const ContactSupport = () => {
           </FlexRowCenter>
         </FlexRowCenter>
 
-        <h4 className="tetx-[16px] font-bold font-pp mb-[20px]">
+        <h4 className="tetx-[16px] font-semibold font-pp mb-[20px] text-blue-200">
           Please complete support form
         </h4>
 

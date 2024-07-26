@@ -168,7 +168,9 @@ export default function MainSearchPageComponent() {
   }, [prevPageSearch]);
 
   useEffect(() => {
-    setNavbarBgColor("#fff");
+    setNavbarBgColor({
+      child: "#fff",
+    });
   }, []);
 
   return (
@@ -182,7 +184,7 @@ export default function MainSearchPageComponent() {
         </p>
       </FlexColStart>
       {/* search component */}
-      <FlexRowStartCenter className="w-full px-[20px] mt-8 gap-[5px] bg-transparent">
+      <FlexRowStartCenter className="w-full px-[20px] gap-[5px] bg-transparent">
         <Input
           inputClassname="font-pp px-0 font-normal border-none tracking-[0] placeholder:text-gray-103"
           parentClassname="w-full h-[44px] px-4 bg-white-100 cursor-pointer rounded-[10px] border-none"

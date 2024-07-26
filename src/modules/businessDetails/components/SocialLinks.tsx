@@ -8,10 +8,9 @@ interface SocialLinkProps {
 }
 
 export default function SocialLinks({ socialLinks }: SocialLinkProps) {
-  const [activeLinkTt, setActiveLinkTt] = useState("");
   return (
-    <FlexColStart className="w-full mt-[15px] pb-[100px]">
-      <h3 className="text-[13px] leading-[15px] font-bold font-inter">
+    <FlexColStart className="w-full mt-[15px] pb-[30px]">
+      <h3 className="text-[13px] leading-[15px] font-semibold font-pp text-blue-200">
         Follow our social media
       </h3>
       <FlexRowStartBtw className="w-auto gap-[20px] mt-[10px]">
@@ -19,8 +18,6 @@ export default function SocialLinks({ socialLinks }: SocialLinkProps) {
           <RenderSocialLinks
             url={link.url!}
             name={link.name as any}
-            activeTtip={activeLinkTt}
-            setActiveTtip={setActiveLinkTt}
             key={link.name}
           />
         ))}
