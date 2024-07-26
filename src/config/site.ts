@@ -6,8 +6,8 @@ const SITE_CONFIG = {
   keywords: "businesses, immigrant, local, community, connect",
   domain: "https://www.bizconnect24.com/",
   type: "website",
-  //   remember to update the image below
-  image: "https://veloz-zeus.tryveloz.com/images/og/og-image.png",
+  image:
+    "https://res.cloudinary.com/drwt2qqf9/image/upload/v1721488552/BizConnectLogo-bg_ouimgc.png",
 };
 
 export default SITE_CONFIG;
