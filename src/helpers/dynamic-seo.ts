@@ -58,16 +58,6 @@ export function generateLocationSuffix(
 
 // Function to extract query parameters from URL
 const replacedFilterNamesReverse = {
-  // businessCategoryUuid: "cat",
-  // stateAndProvince: "st",
-  // state: "st",
-  // city: "cty",
-  // country: "cn",
-  // limit: "limit",
-  // page: "page",
-  // sortBy: "sortBy",
-  // sortDirection: "sortDirection",
-  // query: "query",
   cn: "country",
   st: "state",
   cty: "city",

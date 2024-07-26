@@ -4,18 +4,52 @@ import {
   getBusinesses,
 } from "@/helpers/dynamic-seo";
 import MainSearchPageComponent from "@/modules/search/components/Main";
-import { sleep } from "@/utils";
+import type { IBusinessProfile, ISearch } from "@/types/business-profile";
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 
-const ExploreBusiness = () => {
+const ExploreBusiness = async () => {
+  const data: IBusinessProfile[] = await getBusinessesBasedOnQueryParams();
+
   return (
     <>
       <MainSearchPageComponent />
+      {/* render hidden link with businesses data for seo purposes */}
+      <div className="hidden" data-name="hidden-businesses-seo-data">
+        <h1>Top Businesses</h1>
+        <div>
+          {data.map((business) => {
+            const id = business.uuid;
+            const name = business.name;
+            const loc = `${business.city}, ${business.stateAndProvince}`;
+            const combinedUrl = `/biz/${name}-${loc}/${id}`;
+            return (
+              <a
+                key={business.uuid}
+                href={combinedUrl}
+                aria-label={`View ${business.name}`}
+              >
+                <h1>{business.name}</h1>
+                <p>{business.description}</p>
+                <p>{loc}</p>
+              </a>
+            );
+          })}
+        </div>
+      </div>
     </>
   );
 };
 export default ExploreBusiness;
+
+export async function getBusinessesBasedOnQueryParams() {
+  const headersList = headers();
+  const header_url = headersList.get("x-url") || "";
+  const { search } = extractQueryParam(header_url);
+  const businesses = await getBusinesses(search);
+
+  return businesses;
+}
 
 // Generate Dynamic Metadata
 export async function generateMetadata() {
