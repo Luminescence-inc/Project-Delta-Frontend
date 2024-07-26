@@ -298,9 +298,9 @@ export default function MainSearchPageComponent() {
         />
       )}
 
-      {businesses?.length > 0 && !allBusinessesLoading && (
+      {/* {businesses?.length > 0 && !allBusinessesLoading && (
         <Pagination totalPages={totalPages} />
-      )}
+      )} */}
 
       {/* Filtering component */}
       <BusinessesFilterComponent

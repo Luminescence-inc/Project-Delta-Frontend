@@ -102,3 +102,20 @@ export async function getBusinesses(queryParams: string) {
   const result = await axios.get(url);
   return result.data?.data.businessProfiles.data || [];
 }
+
+export async function getBusinessesWithPagination(queryParams: string) {
+  const url = `${bizConnectAPI.baseURL}/api/businesses/search${queryParams}`;
+  const result = await axios.get(url);
+  return {
+    businesses: result.data?.data.businessProfiles.data || [],
+    pagination: {
+      totalPages: result.data?.data?.businessProfiles.totalPages,
+      total: result.data?.data?.businessProfiles.total,
+      limit: result.data?.data?.businessProfiles.limit,
+      page:
+        result.data?.data?.businessProfiles.page === 0
+          ? 1
+          : result.data?.data?.businessProfiles.page,
+    },
+  };
+}
