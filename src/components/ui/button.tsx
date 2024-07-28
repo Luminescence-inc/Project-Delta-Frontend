@@ -84,9 +84,9 @@ const Button: React.FC<ButtonProps> = ({
         ) : (
           // @ts-expect-error
           <Link href={href} relative="path" className={classNames} {...props}>
-            <span>{leftIcon && leftIcon}</span>
-            <span>{children}</span>
-            <span>{rightIcon && rightIcon}</span>
+           {leftIcon && leftIcon}
+            {children}
+            {rightIcon && rightIcon}
           </Link>
         )}
       </>
@@ -122,8 +122,8 @@ const Button: React.FC<ButtonProps> = ({
           isLoading ? "opacity-0" : "opacity-1"
         )}
       >
-        <span>{leftIcon}</span>
-        <span>{children}</span>
+        {leftIcon}
+        {children}
         {rightIcon && (
           <span
             style={{
