@@ -122,8 +122,8 @@ const Button: React.FC<ButtonProps> = ({
           isLoading ? "opacity-0" : "opacity-1"
         )}
       >
-        <span>{leftIcon}</span>
-        <span>{children}</span>
+        {leftIcon}
+        {children}
         {rightIcon && (
           <span
             style={{
