@@ -18,6 +18,8 @@ import {
 import { LoaderComponent } from "@components/Loader";
 import ReadMoreText from "@/components/ReadMoreText";
 import withAuth from "@/utils/auth-helpers/withAuth";
+import Input from "@/components/ui/input";
+import { SearchIcon2 } from "@/components/icons";
 
 const ViewBusiness = () => {
   const router = useRouter();
@@ -97,15 +99,30 @@ const ViewBusiness = () => {
   return (
     <>
       <div className="w-full p-[16px] bg-gray-202">
-        <header className="w-full text-center mt-[64px] mb-[64px]">
-          <h2 className="mb-[16px] text-[32px] leading-[40px] font-semibold font-pp">
-            Business
+        <header className="w-full text- mt-[64px] mb-[64px]">
+          <h2 className="mb-[16px] text-[32px] leading-[40px] font-semibold font-pp text-blue-200">
+          My Businesses
           </h2>
-          <p className="text-[13px] font-pp leading-[24px]">
-            Here is a list of all business associated with your account. you can
-            update or delete your business
+          <p className="text-[13px] font-pp leading-[24px] text-gray-103">
+            Here is a list of all business associated with your account.
           </p>
         </header>
+
+        <div>
+        <Input
+            type="search"
+            label="Search business name"
+            name="search"
+            // value={formik.values.email}
+            // onChange={formik.handleChange}
+            // onBlur={formik.handleBlur}
+            
+            leftIcon={<SearchIcon2 size={20} className="stroke-gray-103" strokeWidth={1} />}
+            placeholder="Enter Email Address"
+            parentClassname="w-full px-0 border border-white-400/50 px-4"
+            inputClassname="w-full px-3 outline-none border-none"
+          />
+        </div>
 
         {businessesLoading && (
           <FlexColCenter className="w-full">
