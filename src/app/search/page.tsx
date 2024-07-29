@@ -57,7 +57,7 @@ const ExploreBusiness = async () => {
 };
 export default ExploreBusiness;
 
-export async function getBusinessesBasedOnQueryParams() {
+async function getBusinessesBasedOnQueryParams() {
   const headersList = headers();
   const header_url = headersList.get("x-url") || "";
   const { search } = extractQueryParam(header_url);
