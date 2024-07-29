@@ -233,7 +233,7 @@ export const RowLayoutCard = ({
               <FlexRowEnd className="w-full">
                 <button
                   // href={`tel:${phone}`}
-                  onClick={() => window.open(`tel:${phone}`)}
+                  onClick={() => null}
                   className="flex flex-row items-center justify-center text-blue-200 bg-blue-202 w-[35px] h-[25px] px-[5px] rounded-full gap-[5px] text-[12px] businesss-call-line"
                 >
                   <Phone size={15} className="stroke-blue-200/80" />
