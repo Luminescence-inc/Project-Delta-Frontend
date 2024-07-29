@@ -11,8 +11,8 @@ export default function BlockDesktopView({
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    const { innerWidth } = window;
     window.addEventListener("resize", (e) => {
-      const { innerWidth } = window;
       if (innerWidth > 700) {
         setIsMobile(true);
       } else {
@@ -23,7 +23,7 @@ export default function BlockDesktopView({
     return () => {
       window.removeEventListener("resize", () => {});
     };
-  });
+  }, [window]);
 
   if (!isMobile) return null;
   if (override) return null;

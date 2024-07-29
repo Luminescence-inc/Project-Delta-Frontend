@@ -106,12 +106,10 @@ const Login = () => {
         <h4 className="text-[16px] font-pp font-semibold leading-[24px] mb-[24px] text-blue-200">
           Sign in
         </h4>
-
         {/* Display Error message */}
         {error && (
           <span className="text-red-100 text-[13px]">{errorMessage}</span>
         )}
-
         <form className="w-full" onSubmit={formik.handleSubmit}>
           <ErrorComponent
             value={
@@ -185,7 +183,6 @@ const Login = () => {
             <span className="text-[14px] font-pp">Submit</span>
           </Button>
         </form>
-
         <a
           className="forgot font-pp text-sm underline text-blue-200"
           href="/forgot-password/email"
