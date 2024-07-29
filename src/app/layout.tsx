@@ -11,6 +11,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { NotsupportedCountryBanner } from "@/components/NotSupportedCountry";
 import SITE_CONFIG from "@/config/site";
 import { headers } from "next/headers";
+import NextTopLoader from "@/components/Toploader";
+import BlockDesktopView from "@/components/BlockDesktopView";
 
 export default function RootLayout({
   children,
@@ -24,10 +26,12 @@ export default function RootLayout({
       >
         <DataCtxProvider>
           <NotsupportedCountryBanner />
+          <BlockDesktopView override={false} />
           <Navbar />
           <BusinessContextProvider>{children}</BusinessContextProvider>
           <Footer />
           <ToastContainer />
+          <NextTopLoader color="#0e2d52" />
         </DataCtxProvider>
       </body>
     </html>

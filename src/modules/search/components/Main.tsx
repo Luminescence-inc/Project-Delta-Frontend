@@ -37,9 +37,8 @@ export default function MainSearchPageComponent() {
     searchQuery,
   } = useBusinessCtx();
   const { setNavbarBgColor } = useDataCtx();
-
   const [showFilter, setShowFilter] = useState<boolean>(false);
-  const [debouncedSearch, setQuery] = useSearchDebounce(100);
+  const [query, setQuery] = useState<string | null>(null);
   const [urlSearchQuery, setUrlSearchQuery] = useState<string>("");
   const [headline, setHeadline] = useState({
     title: "",
@@ -168,7 +167,14 @@ export default function MainSearchPageComponent() {
   }, [prevPageSearch]);
 
   useEffect(() => {
-    setNavbarBgColor("#fff");
+    const searchParam = new URLSearchParams(window.location.search);
+    const _query = searchParam.get("query");
+
+    if (_query && !query) setQuery(_query);
+
+    setNavbarBgColor({
+      child: "#fff",
+    });
   }, []);
 
   return (
@@ -182,7 +188,7 @@ export default function MainSearchPageComponent() {
         </p>
       </FlexColStart>
       {/* search component */}
-      <FlexRowStartCenter className="w-full px-[20px] mt-8 gap-[5px] bg-transparent">
+      <FlexRowStartCenter className="w-full px-[20px] gap-[5px] bg-transparent">
         <Input
           inputClassname="font-pp px-0 font-normal border-none tracking-[0] placeholder:text-gray-103"
           parentClassname="w-full h-[44px] px-4 bg-white-100 cursor-pointer rounded-[10px] border-none"
@@ -195,15 +201,38 @@ export default function MainSearchPageComponent() {
               className="stroke-gray-103"
             />
           }
-          defaultValue={debouncedSearch ? debouncedSearch : urlSearchQuery}
-          onChange={(e) =>
+          defaultValue={query ? query : urlSearchQuery}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            const target = e.target as HTMLInputElement;
             setQuery(
-              e.target.value.trim().length > 0 ? e.target.value.trim() : null
-            )
-          }
-          onKeyUp={(e) => {
+              target.value.trim().length > 0 ? target.value.trim() : null
+            );
+          }}
+          onKeyUp={(e: React.KeyboardEvent<HTMLInputElement>) => {
+            // Detect full text delete
+            const target = e.target as HTMLInputElement;
+            if (target.value.trim().length === 0) setQuery(null);
+
             if (e.key === "Enter") {
-              if (!debouncedSearch) return;
+              const params = new URLSearchParams(window.location.search);
+              if (!query && params.get("query") !== null) {
+                params.delete("query");
+                window.history.pushState(
+                  {},
+                  "",
+                  `${window.location.pathname}?${params.toString()}`
+                );
+                // @ts-expect-error
+                setSearchQuery((prev: ISearch) => ({
+                  filters: [
+                    ...prev.filters.filter(
+                      (f: IFilter) => f.targetFieldName !== "query"
+                    ),
+                  ],
+                }));
+                forceReloadClientPage();
+                return;
+              }
               // @ts-expect-error
               setSearchQuery((prev: ISearch) => ({
                 filters: [
@@ -212,7 +241,7 @@ export default function MainSearchPageComponent() {
                   ),
                   {
                     targetFieldName: "query",
-                    values: [debouncedSearch],
+                    values: [query],
                   },
                 ],
               }));
@@ -229,9 +258,9 @@ export default function MainSearchPageComponent() {
           <Filter size={15} className="stroke-blue-200" />
         </button>
         <button
-          onClick={() =>
-            setLayout && setLayout(layout === "col" ? "row" : "col")
-          }
+          onClick={() => {
+            setLayout && setLayout(layout === "col" ? "row" : "col");
+          }}
           className="border-none outline-none cursor-pointer rounded-[10px] p-2 flex items-center justify-center -translate-y-2"
         >
           <FlexColCenter>
@@ -269,9 +298,9 @@ export default function MainSearchPageComponent() {
         />
       )}
 
-      {businesses?.length > 0 && !allBusinessesLoading && (
+      {/* {businesses?.length > 0 && !allBusinessesLoading && (
         <Pagination totalPages={totalPages} />
-      )}
+      )} */}
 
       {/* Filtering component */}
       <BusinessesFilterComponent

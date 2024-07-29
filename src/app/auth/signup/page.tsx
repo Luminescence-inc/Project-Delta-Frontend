@@ -22,6 +22,7 @@ import Button from "@components/ui/button";
 import ErrorComponent from "../../../components/ErrorComponent";
 import withoutAuth from "@/utils/auth-helpers/withoutAuth";
 import Link from "next/link";
+import { useDataCtx } from "@/context/DataCtx";
 
 const validationSchema = yup.object({
   firstName: yup
@@ -41,6 +42,7 @@ const validationSchema = yup.object({
 });
 
 const Signup = () => {
+  const { setNavbarBgColor } = useDataCtx();
   const router = useRouter();
   const [error, setError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -51,6 +53,12 @@ const Signup = () => {
   useEffect(() => {
     // remove this during code cleanup
     setShowConirmPassword(false);
+
+    // UPDATE NAVBAR BG COLOR
+    setNavbarBgColor({
+      parent: "#f4f9ff",
+      child: "#fff",
+    });
   }, []);
 
   const onSubmit = async (values: SignUpData) => {
@@ -113,7 +121,7 @@ const Signup = () => {
   return (
     <FlexColStart className="w-full h-full bg-gray-200 pt-[40px] px-[16px] pb-[150px] ">
       <FlexColStartCenter className="w-full h-auto text-center bg-white-100 rounded-[8px] pt-[24px] px-[16px] pb-[23px] ">
-        <h4 className="text-[16px] text-center font-semibold font-pp leading-[24px] mb-[24px] ">
+        <h4 className="text-[16px] text-center font-semibold font-pp leading-[24px] mb-[24px] text-blue-200">
           Create An Account
         </h4>
 
@@ -268,16 +276,15 @@ const Signup = () => {
               <a
                 target="_blank"
                 href="/docs/BizConnect24-Terms-of-Agreement.pdf"
-                className="text-teal-100"
-                // pointing to the public dir
+                className="text-teal-100 underline cursor-pointer"
               >
                 Terms and Conditions
               </a>{" "}
-              and that you have read our
+              and that you have read our{" "}
               <a
                 target="_blank"
                 href="/docs/BizConnect24-Terms-of-Agreement.pdf" // pointing to the public dir
-                className="text-teal-100"
+                className="text-teal-100 underline cursor-pointer"
               >
                 Privacy Policy
               </a>
@@ -296,10 +303,10 @@ const Signup = () => {
           </Button>
         </form>
 
-        <p className="text-dark-100/50 text-[14px] font-pp mt-[14px] ">
+        <p className="text-blue-200/70 text-[14px] font-pp mt-[14px] ">
           Have an Account?{" "}
-          <Link href="/login">
-            <span className="text-blue-200 underline">Sign in</span>
+          <Link href="/auth/login">
+            <span className="text-blue-200 underline font-medium">Sign in</span>
           </Link>
         </p>
       </FlexColStartCenter>

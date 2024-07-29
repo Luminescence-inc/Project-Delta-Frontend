@@ -111,6 +111,7 @@ const replacedFilterNames = {
   sortBy: "sortBy",
   sortDirection: "sortDirection",
   query: "query",
+  layout: "layout",
 };
 
 // extract query params from the address bar

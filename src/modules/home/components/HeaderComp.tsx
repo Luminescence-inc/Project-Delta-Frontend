@@ -43,14 +43,18 @@ export function HeaderOnboardingComp() {
   const { userDetails } = useAuth();
   if (userDetails) return null;
   return (
-    <div className="w-full">
+    <div className="w-full pr-10">
       <Button
         intent="primary"
         href="/onboarding"
-        rightIcon={<CtaArrow strokeWidth={1} className="stroke-white-100" />}
-        className="w-full h-44px mt-8 rounded-md pt-[10px] pr-[100px] pb-[10px] pl-[100px] "
+        rightIcon={
+          <span>
+        <CtaArrow strokeWidth={1} className="stroke-white-100 inline-block" />
+          </span>
+      }
+        className="w-full h-44px mt-4 rounded-md pt-[10px] pr-[100px] pb-[10px] pl-[100px]"
       >
-        <span className="font-pp font-medium text-[14px] leading-[24px] text-white-100 ">
+        <span className="font-pp font-medium text-[14px] leading-[24px] text-white-100">
           Business Owner? Get Started
         </span>
       </Button>
@@ -81,7 +85,7 @@ export function HeaderBusinessBtn() {
             <Button
               intent="primary"
               href="/view-business"
-              leftIcon={<SearchIcon2 size={25} className="stroke-white-100" />}
+              leftIcon={<SearchIcon2 size={20} className="stroke-white-100" />}
               className="w-full mt-8 rounded-md h-[44px] pt-[10px] pr-[100px] pb-[10px] pl-[100px]"
             >
               <span className="font-pp font-semibold text-[14px] leading-[24px] text-white-100 ">
@@ -99,9 +103,9 @@ export function HeaderBusinessBtn() {
                 className="fill-blue-200 stroke-none"
               />
             }
-            className="w-full mt-8 rounded-md h-[44px] pt-[10px] pr-[100px] pb-[10px] pl-[100px]"
+            className="w-full mt-8 rounded-md h-[44px]"
           >
-            <span className="font-pp font-semibold text-[14px] leading-[24px] text-white-100 ">
+            <span className={`font-pp font-semibold text-[14px] leading-[24px] ${!businessPresent && 'text-blue-200' }`}>
               {businessPresent
                 ? "Create a new business profile"
                 : "Create your first business profile"}

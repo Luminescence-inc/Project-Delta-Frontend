@@ -30,7 +30,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps & IInputProps>(
   ) => {
     return (
       <FlexColStart className="w-full gap-[4px] text-left pb-5">
-        <label className="text-[14px] font-semibold font-pp text-dark-100/60">
+        <label className="text-[14px] font-medium font-pp text-dark-100/60">
           {label}
         </label>
         <FlexRowCenter

@@ -1,11 +1,14 @@
-"use client";
-import React, { useEffect } from "react";
 import { FlexRowCenter, FlexRowStartCenter } from "./Flex";
 import { ChevronLeft, ChevronRight } from "./icons";
 import { cn } from "@/lib/utils";
 
 interface IPaginationProps {
   totalPages: number;
+  urlSearchParam: URLSearchParams;
+  activePage: string;
+  location: {
+    pathname: string;
+  };
 }
 
 const PaginationLink = ({
@@ -21,6 +24,8 @@ const PaginationLink = ({
 }) => {
   query.set("page", String(page));
   const link = `${location.pathname}?${query.toString()}`;
+
+  console.log({ activePage, page });
   return (
     <a
       href={link}
@@ -36,18 +41,12 @@ const PaginationLink = ({
   );
 };
 
-export const Pagination = ({ totalPages }: IPaginationProps) => {
-  const location = window.location;
-  const query = new URLSearchParams(window.location.search);
-  const [activePage, setActivePage] = React.useState<string>("1");
-
-  useEffect(() => {
-    const parsedPage = location.search.replace("?", "").split("&");
-    const currPage =
-      parsedPage.find((page) => page.includes("page"))?.split("=")[1] ?? "1";
-    setActivePage(currPage);
-  }, [location.search]);
-
+export const Pagination = ({
+  totalPages,
+  urlSearchParam,
+  activePage,
+  location,
+}: IPaginationProps) => {
   const prevPage = Number(activePage) > 1 ? Number(activePage) - 1 : 1;
   const nextPage =
     Number(activePage) < totalPages ? Number(activePage) + 1 : totalPages;
@@ -65,7 +64,7 @@ export const Pagination = ({ totalPages }: IPaginationProps) => {
           key={1}
           page={1}
           activePage={activePage}
-          query={query}
+          query={urlSearchParam}
           location={location}
         />
       );
@@ -90,7 +89,7 @@ export const Pagination = ({ totalPages }: IPaginationProps) => {
           key={i}
           page={i}
           activePage={activePage}
-          query={query}
+          query={urlSearchParam}
           location={location}
         />
       );
@@ -113,7 +112,7 @@ export const Pagination = ({ totalPages }: IPaginationProps) => {
         key={totalPages}
         page={totalPages}
         activePage={activePage}
-        query={query}
+        query={urlSearchParam}
         location={location}
       />
     );
@@ -122,7 +121,7 @@ export const Pagination = ({ totalPages }: IPaginationProps) => {
   };
 
   // remove duplicate "page" param
-  query.delete("page");
+  urlSearchParam.delete("page");
 
   const isLastPage = Number(activePage) === totalPages;
 
@@ -135,7 +134,9 @@ export const Pagination = ({ totalPages }: IPaginationProps) => {
           direction="prev"
           totalPages={totalPages}
           activePage={activePage}
-          url={`${location.pathname}?page=${prevPage}&${query.toString()}`}
+          url={`${
+            location.pathname
+          }?page=${prevPage}&${urlSearchParam.toString()}`}
           lastPage={isLastPage}
         />
 
@@ -145,7 +146,9 @@ export const Pagination = ({ totalPages }: IPaginationProps) => {
           direction="next"
           totalPages={totalPages}
           activePage={activePage}
-          url={`${location.pathname}?page=${nextPage}&${query.toString()}`}
+          url={`${
+            location.pathname
+          }?page=${nextPage}&${urlSearchParam.toString()}`}
           lastPage={isLastPage}
         />
       </FlexRowStartCenter>
