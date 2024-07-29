@@ -11,6 +11,7 @@ interface BusinessCardContainerProps {
   businessCategories: IOption[] | undefined;
 }
 
+
 const BusinessCardContainer = ({
   data,
   businessCategories,
@@ -23,7 +24,7 @@ const BusinessCardContainer = ({
   };
 
   return (
-    <FlexColStart className="w-full -translate-y-8 px-[20px] business-card-container gap-[20px]">
+    <FlexColStart className="w-full -translate-y-8 business-card-container gap-[20px]">
       {data?.length > 0
         ? data.map((bd) => {
             const daysOfOperation = constructDOP(

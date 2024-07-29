@@ -8,9 +8,10 @@ import {
   FlexRowStart,
   FlexRowStartCenter,
 } from "@components/Flex";
-import { MapPin, Phone } from "@components/icons";
+import { MapPin, Phone, Share } from "@components/icons";
 import { determineBusOpTime } from "@/utils";
 import { cn } from "@/lib/utils";
+import { usePathname } from "next/navigation";
 
 interface BusinessCardProps {
   name: string;
@@ -43,11 +44,13 @@ export const ColLayoutCard = ({
   _key,
   _urlLocation,
 }: BusinessCardProps) => {
+  const pathname = usePathname()
+
   const hasBusinessClosed = daysOfOps ? determineBusOpTime(daysOfOps) : null;
 
   return (
     <CardNavigateWrapper id={id} name={name} location={_urlLocation}>
-      <CardWrapper key={_key} className="w-full max-h-[450px] pb-[10px]">
+      <CardWrapper key={_key} className="w-full min-h-[450px]">
         <div
           className="w-full h-auto rounded-[10px]"
           style={{
@@ -94,8 +97,8 @@ export const ColLayoutCard = ({
           </FlexRowStartCenter>
 
           {/* opening time */}
-          <FlexRowCenterBtw className="w-full">
-            <FlexRowStartCenter className="gap-[10px]">
+          {pathname != '/view-business' &&  <FlexRowCenterBtw className="w-full">
+           <FlexRowStartCenter className="gap-[10px]">
               {hasBusinessClosed && hasBusinessClosed.isOpened ? (
                 <>
                   <span className="text-[11px] font-normal font-pp leading-[13px] text-teal-100">
@@ -124,7 +127,19 @@ export const ColLayoutCard = ({
                 Call me
               </span>
             </button>
-          </FlexRowCenterBtw>
+          </FlexRowCenterBtw>}
+          {/* share */}
+          {pathname == '/view-business' &&  <FlexRowCenterBtw className="gap-[10px] w-full">
+           <button className="flex flex-row items-center justify-center w-full bg-blue-202 px-[5px] py-[10px] rounded-[5px] gap-[5px] text-[12px] businesss-call-line">
+              <span className="text-[12px] font-normal font-pp leading-[14.53px] mt-[2px] text-blue-200">
+              Update Business Details
+              </span>
+            </button>
+
+            <div className="bg-blue-204 p-3 round-[5px]">
+              <Share size={15} className="stroke-blue-200/80" />
+            </div>
+           </FlexRowCenterBtw>}
         </FlexColStart>
       </CardWrapper>
     </CardNavigateWrapper>
