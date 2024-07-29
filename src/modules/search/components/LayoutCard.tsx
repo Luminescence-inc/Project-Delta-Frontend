@@ -116,7 +116,7 @@ export const ColLayoutCard = ({
 
             <button
               // href={`tel:${phone}`}
-              onClick={() => window.open(`tel:${phone}`)}
+              // onClick={() => window.open(`tel:${phone}`)}
               className="flex flex-row items-center justify-center text-blue-200 bg-blue-202 w-[81px] h-[25px] px-[5px] rounded-full gap-[5px] text-[12px] businesss-call-line"
             >
               <Phone size={15} className="stroke-blue-200/80" />
@@ -218,7 +218,7 @@ export const RowLayoutCard = ({
               <FlexRowEnd className="w-full">
                 <button
                   // href={`tel:${phone}`}
-                  onClick={() => window.open(`tel:${phone}`)}
+                  // onClick={() => window.open(`tel:${phone}`)}
                   className="flex flex-row items-center justify-center text-blue-200 bg-blue-202 w-[35px] h-[25px] px-[5px] rounded-full gap-[5px] text-[12px] businesss-call-line"
                 >
                   <Phone size={15} className="stroke-blue-200/80" />
@@ -271,7 +271,7 @@ const CardNavigateWrapper = ({
   const loc = location.replace(/\s/gi, "-");
   const _name = name.toLowerCase().replace(/\s/gi, "-");
   const params = new URLSearchParams(_location.search);
-  const combinedUrl = `/biz/${_name}-${loc}/${id}?${params.toString()}`;
+  const combinedUrl = `/biz/${_name}-${loc}/${id}`;
   return (
     <a
       // to={combinedUrl}
@@ -287,7 +287,6 @@ const CardNavigateWrapper = ({
             "businesss-call-line"
           ) ||
           (e.target as HTMLElement)?.classList.contains("businesss-call-line");
-
         // prevent redirecting to specified page and opening the tel-phone number on that page
         if (target) {
           console.log("target exiusts");
