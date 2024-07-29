@@ -57,8 +57,8 @@ const Select = ({ label, options, name, formikValue, formik }: ISelect) => {
 
   return (
     <>
-      <FlexColStart className="w-full gap-[4px] text-left pb-5">
-        <label className="text-[14px] font-semibold font-inter text-dark-100/60">
+      <FlexColStart className="w-full gap-[4px] text-left pb-1">
+        <label className="text-[14px] font-medium font-pp text-dark-100/60">
           {label}
         </label>
         <button
@@ -68,7 +68,7 @@ const Select = ({ label, options, name, formikValue, formik }: ISelect) => {
           <FlexRowCenter className="w-full relative">
             <input
               className={cn(
-                "w-full h-[46px] border-[1px] border-solid border-dark-103 tracking-[2px] text-[12px] text-blue-200 p-[16px] rounded-[5px] placeholder:text-dark-104 placeholder:text-[12px]",
+                "w-full h-[46px] border-[1px] border-solid border-dark-103 tracking-[0px] text-[12px] text-blue-200 p-[16px] rounded-[5px] placeholder:text-dark-104 placeholder:text-[12px] font-pp font-medium",
                 showDropdown ? "cursor-text" : "cursor-pointer"
               )}
               type="text"
@@ -97,8 +97,8 @@ const Select = ({ label, options, name, formikValue, formik }: ISelect) => {
         >
           <FlexColStart className="w-full border-b-[1px] border-b-white-300 py-1">
             {selectedValue ? (
-              <FlexRowCenterBtw className="w-full py-3 mb-2 border-b-[1px] border-b-gray-102/50 ">
-                <span>{selectedValue.value}</span>
+              <FlexRowCenterBtw className="w-full py-3 mb-2 border-b-[1px] border-b-gray-102/50 font-pp">
+                <span className="text-[12px]">{selectedValue.value}</span>
                 <X
                   className="cursor-pointer"
                   onClick={handleCancel}
@@ -107,7 +107,7 @@ const Select = ({ label, options, name, formikValue, formik }: ISelect) => {
                 />
               </FlexRowCenterBtw>
             ) : (
-              <span className="px-3 font-hnM text-[14px] text-dark-104">
+              <span className="px-3 font-pp text-[12px] text-dark-104">
                 Select...
               </span>
             )}
@@ -126,7 +126,7 @@ const Select = ({ label, options, name, formikValue, formik }: ISelect) => {
                       key={option.uuid}
                       onClick={() => handleSelect(option)}
                       className={cn(
-                        "w-full py-[8px] px-3 text-left cursor-pointer leading-[20px] tracking-normal text-dark-103 text-[14px] font-inter font-medium rounded-md ",
+                        "w-full py-[8px] px-3 text-left cursor-pointer leading-[20px] tracking-normal text-dark-103 text-[14px] font-pp font-medium rounded-md ",
                         isSelected
                           ? "bg-blue-200 text-white-100"
                           : "text-dark-106"
