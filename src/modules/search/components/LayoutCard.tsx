@@ -130,8 +130,8 @@ export const ColLayoutCard = ({
           </FlexRowCenterBtw>}
           {/* share */}
           {pathname == '/view-business' &&  <FlexRowCenterBtw className="gap-[10px] w-full">
-           <button className="flex flex-row items-center justify-center w-full bg-blue-202 px-[5px] py-[10px] rounded-[5px] gap-[5px] text-[12px] businesss-call-line">
-              <span className="text-[12px] font-normal font-pp leading-[14.53px] mt-[2px] text-blue-200">
+           <button className="flex flex-row items-center justify-center w-full bg-blue-202 px-[5px] py-[13px] rounded-[5px] gap-[5px] text-[12px] businesss-call-line">
+              <span className="text-[12px] font-medium font-pp leading-[14.53px] mt-[2px] text-blue-200">
               Update Business Details
               </span>
             </button>
