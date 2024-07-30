@@ -10,20 +10,25 @@ export default function BlockDesktopView({
 }) {
   const [isMobile, setIsMobile] = useState(false);
 
+  const checkMobile = () => {
+    const { innerWidth } = window;
+    if (innerWidth > 700) {
+      setIsMobile(true);
+    } else {
+      setIsMobile(false);
+    }
+  };
+
   useEffect(() => {
-    window.addEventListener("resize", (e) => {
-      const { innerWidth } = window;
-      if (innerWidth > 700) {
-        setIsMobile(true);
-      } else {
-        setIsMobile(false);
-      }
-    });
+    // Initial check
+    checkMobile();
+
+    window.addEventListener("resize", (e) => checkMobile());
 
     return () => {
       window.removeEventListener("resize", () => {});
     };
-  });
+  }, []);
 
   if (!isMobile) return null;
   if (override) return null;
