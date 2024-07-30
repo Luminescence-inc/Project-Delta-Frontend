@@ -16,12 +16,11 @@ import { useEffect, useState } from "react";
 import Input from "@/components/ui/input";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import { Pagination } from "@/components/Pagination";
 import { extractQueryParams, forceReloadClientPage } from "@/utils";
 import useTrackPageSearch from "@/hooks/useTrackSearch";
 import { prevPageSearchKeyName } from "@/config";
-import { useSearchDebounce } from "@/hooks/useSearchDebounce";
 import { useDataCtx } from "@/context/DataCtx";
+import { useRouter } from "next/navigation";
 
 dayjs.extend(relativeTime);
 
@@ -37,6 +36,7 @@ export default function MainSearchPageComponent() {
     searchQuery,
   } = useBusinessCtx();
   const { setNavbarBgColor } = useDataCtx();
+  const router = useRouter();
   const [showFilter, setShowFilter] = useState<boolean>(false);
   const [query, setQuery] = useState<string | null>(null);
   const [urlSearchQuery, setUrlSearchQuery] = useState<string>("");
@@ -260,6 +260,11 @@ export default function MainSearchPageComponent() {
         <button
           onClick={() => {
             setLayout && setLayout(layout === "col" ? "row" : "col");
+
+            // update query param with layout
+            const search = new URLSearchParams(window.location.search);
+            search.set("layout", layout === "col" ? "row" : "col");
+            router.push(`${window.location.pathname}?${search.toString()}`);
           }}
           className="border-none outline-none cursor-pointer rounded-[10px] p-2 flex items-center justify-center -translate-y-2"
         >
