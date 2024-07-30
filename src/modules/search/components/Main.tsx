@@ -187,7 +187,7 @@ export default function MainSearchPageComponent() {
       <FlexRowStartCenter className="w-full gap-[5px] bg-transparent">
         <Input
           inputClassname="font-pp px-0 font-normal border-none tracking-[0] placeholder:text-gray-103"
-          parentClassname="w-full h-[44px] px-4 bg-white-100 cursor-pointer rounded-[10px] border-none"
+          parentClassname="w-full px-4 bg-white-100 cursor-pointer rounded-[10px] border-none"
           type="text"
           placeholder="Search business"
           leftIcon={
@@ -224,27 +224,28 @@ export default function MainSearchPageComponent() {
           }}
           autoComplete="nope"
         />
+        <div className="flex items-center gap-2 pt-5">
         <button
           className="border-none outline-none cursor-pointer rounded-[5px] p-2 flex items-center justify-center bg-blue-50 -translate-y-2"
           onClick={() => setShowFilter(true)}
-        >
+          >
           <Filter size={15} className="stroke-blue-200" />
         </button>
         <button
-          onClick={() =>
-            setLayout && setLayout(layout === "col" ? "row" : "col")
-          }
+          onClick={() => setLayout && setLayout(layout === "col" ? "row" : "col")}
           className="border-none outline-none cursor-pointer rounded-[10px] p-2 flex items-center justify-center -translate-y-2"
         >
           <FlexColCenter>
             {layout === "col" ? (
-              <img src={"/assets/icons/layout-panel-top.svg"} />
+              <img src={"/assets/icons/layout-panel-top.svg"} className="w-14" />
             ) : (
-              <img src={"/assets/icons/layout-panel-left.svg"} />
+              <img src={"/assets/icons/layout-panel-left.svg"} className="w-14" />
             )}
           </FlexColCenter>
         </button>
+        </div>
       </FlexRowStartCenter>
+      <br />
 
       <FlexColCenter className="w-full">
         {allBusinessesLoading && (

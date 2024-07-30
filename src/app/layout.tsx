@@ -12,6 +12,7 @@ import { NotsupportedCountryBanner } from "@/components/NotSupportedCountry";
 import SITE_CONFIG from "@/config/site";
 import { headers } from "next/headers";
 import NextTopLoader from "@/components/Toploader";
+import Head from "next/head"; // Import Head from next/head
 
 export default function RootLayout({
   children,
@@ -20,8 +21,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+       <Head>
+        <link
+          // href="https://your-font-provider.com/path/to/helvetica-neue.css" // Replace with your font URL
+          // rel="stylesheet"
+          rel="preload"
+          href="/fonts/HelveticaNeueBlack.otf"
+          as="font"
+          type="font/otf"
+          crossOrigin="anonymous"
+        />
+      </Head>
       <body
-        className={cn(inter.variable, poppins.variable, open_sans.variable)}
+        // className={cn(inter.variable, poppins.variable, open_sans.variable)}
       >
         <DataCtxProvider>
           <NotsupportedCountryBanner />

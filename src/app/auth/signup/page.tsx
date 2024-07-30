@@ -112,8 +112,8 @@ const Signup = () => {
 
   return (
     <FlexColStart className="w-full h-full bg-gray-200 pt-[40px] px-[16px] pb-[150px] ">
-      <FlexColStartCenter className="w-full h-auto text-center bg-white-100 rounded-[8px] pt-[24px] px-[16px] pb-[23px] ">
-        <h4 className="text-[16px] text-center font-semibold font-pp leading-[24px] mb-[24px] ">
+      <FlexColStartCenter className="w-full h-auto text-center bg-white-100 rounded-[8px] pt-[24px] px-3 pb-[23px] ">
+        <h4 className="text-lg text-center font-bold font-pp leading-[24px] mb-[24px] text-blue-200">
           Create An Account
         </h4>
 
@@ -136,13 +136,12 @@ const Signup = () => {
             name="firstName"
             value={formik.values.firstName}
             onChange={formik.handleChange}
-            rightIcon={<CircleUser className="stroke-none" />}
+            rightIcon={<CircleUser width={"24px"} height={'24px'} className="stroke-none mt-1" />}
             onBlur={formik.handleBlur}
             placeholder="Enter First Name"
             parentClassname="w-full px-0 border border-white-400/50 px-4"
             inputClassname="w-full px-3 outline-none border-none"
           />
-          <br />
           <ErrorComponent
             value={
               formik.touched.lastName && formik.errors.lastName
@@ -157,13 +156,11 @@ const Signup = () => {
             value={formik.values.lastName}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            rightIcon={<CircleUser className="stroke-none" />}
+            rightIcon={<CircleUser width={"24px"} height={'24px'} className="stroke-none mt-1" />}
             placeholder="Enter Last Name"
             parentClassname="w-full px-0 border border-white-400/50 px-4"
             inputClassname="w-full px-3 outline-none border-none"
           />
-
-          <br />
           <ErrorComponent
             value={
               formik.touched.email && formik.errors.email
@@ -190,7 +187,6 @@ const Signup = () => {
             parentClassname="w-full px-0 border border-white-400/50 px-4"
             inputClassname="w-full px-3 outline-none border-none"
           />
-          <br />
           <ErrorComponent
             value={
               formik.touched.password && formik.errors.password
@@ -225,7 +221,6 @@ const Signup = () => {
             inputClassname="w-full px-3 outline-none border-none"
           />
 
-          <br />
           <ErrorComponent
             value={
               formik.touched.confirmPassword && formik.errors.confirmPassword

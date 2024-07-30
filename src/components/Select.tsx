@@ -57,7 +57,7 @@ const Select = ({ label, options, name, formikValue, formik }: ISelect) => {
 
   return (
     <>
-      <FlexColStart className="w-full gap-[4px] text-left pb-5">
+      <FlexColStart className="w-full gap-[4px] text-left pb-4">
         <label className="text-[14px] font-semibold font-inter text-dark-100/60">
           {label}
         </label>

@@ -195,8 +195,8 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
   };
 
   return (
-    <FlexColStart className="w-full h-full bg-gray-200 pt-[40px] px-[16px] pb-[150px] ">
-      <FlexColStartCenter className="w-full h-auto text-center bg-white-100 rounded-[8px] pt-[24px] px-[16px] pb-[23px] gap-0">
+    <FlexColStart className="w-full h-full bg-gray-200 pt-[40px] px-0 pb-[150px] ">
+      <FlexColStartCenter className="w-full h-auto text-center bg-white-100 rounded-[8px] pt-[24px] px-3 pb-[23px] gap-0">
         <h4 className="text-[16px] text-center font-semibold font-pp leading-[24px] mb-[24px] ">
           Complete Business Profile
         </h4>
@@ -223,8 +223,8 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
           placeholder="Enter Business Name"
         />
 
-        <FlexColStart className="w-full mt-5 mb-3">
-          <label className="text-[14px] font-semibold font-pp text-dark-100/60">
+        <div className="flex flex-col items-start w-full mb-4">
+          <label className="mb-1 text-sm font-normal leading-[140%] tracking-[0] font-pp text-red-700">
             Describe your business (required)
           </label>
           <textarea
@@ -235,8 +235,8 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
             rows={4}
             placeholder="Short sentence about your business"
           />
-        </FlexColStart>
-        <br />
+        </div>
+
         <ErrorComponent
           value={
             formik.touched.businessCategory && formik.errors.businessCategory
@@ -252,8 +252,6 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
           placeholder={"Business Category"}
           options={businessCategory}
         />
-
-        <br />
 
         <ErrorComponent
           value={
@@ -271,8 +269,6 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
           options={country}
         />
 
-        <br />
-
         <ErrorComponent
           value={
             formik.touched.stateAndProvince && formik.errors.stateAndProvince
@@ -289,8 +285,6 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
           options={stateAndProvince}
         />
 
-        <br />
-
         <ErrorComponent
           value={
             formik.touched.city && formik.errors.city ? formik.errors.city : ""
@@ -305,7 +299,6 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
           options={city}
         />
 
-        <br />
         <Input
           name="street"
           type="text"
@@ -316,7 +309,7 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
           parentClassname="w-full px-0"
           inputClassname="w-full px-3 border-white-400/50"
         />
-        <br />
+
 
         <Input
           type="text"
@@ -328,7 +321,7 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
           parentClassname="w-full px-0"
           inputClassname="w-full px-3 border-white-400/50"
         />
-        <br />
+
 
         {error && (
           <span style={errorMessageStyle}>File Type not Supported</span>

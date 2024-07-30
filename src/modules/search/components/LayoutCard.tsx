@@ -160,7 +160,7 @@ export const RowLayoutCard = ({
 
   return (
     <CardNavigateWrapper id={id} name={name} location={_urlLocation}>
-      <CardWrapper className="w-full max-h-[110px] pb-[10px]">
+      <CardWrapper className="w-full pb-[10px]">
         <FlexRowStartCenter className="w-full px-[0px]">
           <div
             className="w-full h-auto rounded-[10px]"
@@ -211,7 +211,7 @@ export const RowLayoutCard = ({
 
             {/* opening time */}
             <FlexRowCenterBtw className="w-full">
-              <FlexRowStartCenter className="w-full gap-[10px]">
+              <FlexRowStartCenter className="w-full gap-[10px] whitespace-nowrap">
                 {hasBusinessClosed && hasBusinessClosed.isOpened ? (
                   <>
                     <span className="text-[11px] font-normal font-pp leading-[13px] text-teal-100">
