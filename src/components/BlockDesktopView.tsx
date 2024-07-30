@@ -23,7 +23,7 @@ export default function BlockDesktopView({
     return () => {
       window.removeEventListener("resize", () => {});
     };
-  }, [window]);
+  }, []);
 
   if (!isMobile) return null;
   if (override) return null;
