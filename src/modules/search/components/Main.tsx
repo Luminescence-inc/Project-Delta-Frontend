@@ -204,10 +204,13 @@ export default function MainSearchPageComponent() {
           const page = params.get("page");
           if (page && parseInt(page) > 1) {
             params.delete("page");
+            params.set("query", query!);
             updateURLAndSearch(params);
             updateSearch("query", query, "page", true);
           } else {
-            updateSearch("query", query);
+            params.set("query", query!);
+            updateURLAndSearch(params);
+            updateSearch("query", query, null, true);
           }
         }
       }
@@ -222,22 +225,25 @@ export default function MainSearchPageComponent() {
       "",
       `${window.location.pathname}?${params.toString()}`
     );
-    updateSearch("query", null);
   }, []);
 
   const updateSearch = useCallback(
     (
       fieldName: string | null,
       value: string | null,
-      removedFieldName?: string,
+      removedFieldName?: string | null,
       timeout?: boolean
     ) => {
       // @ts-expect-error
       setSearchQuery((prev) => ({
         filters: [
-          ...prev.filters.filter(
-            (f: IFilter) => f.targetFieldName !== removedFieldName
-          ),
+          ...(removedFieldName
+            ? [
+                prev.filters.filter(
+                  (f: IFilter) => f.targetFieldName !== removedFieldName
+                ),
+              ]
+            : [prev.filters.filter]),
           ...(value ? [{ targetFieldName: fieldName, values: [value] }] : []),
         ],
       }));
@@ -245,7 +251,7 @@ export default function MainSearchPageComponent() {
       if (timeout) {
         setTimeout(() => {
           forceReloadClientPage();
-        }, 100);
+        }, 500);
       } else {
         forceReloadClientPage();
       }
