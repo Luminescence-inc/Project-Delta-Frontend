@@ -21,11 +21,8 @@ import ReadMoreText from "@/components/ReadMoreText";
 import withAuth from "@/utils/auth-helpers/withAuth";
 import Input from "@/components/ui/input";
 import { SearchIcon2 } from "@/components/icons";
-<<<<<<< HEAD
 import { useBusinessCtx } from "@/context/BusinessCtx";
 import BusinessCardContainer from "@/modules/search/components/BusinessCard";
-=======
->>>>>>> origin/dev
 
 const ViewBusiness = () => {
   const {
