@@ -34,19 +34,20 @@ const ExploreBusiness = async () => {
         <h1>Top Businesses</h1>
         <div>
           {businesses.map((business) => {
-            const id = business.uuid;
-            const name = business.name;
-            const loc = `${business.city}, ${business.stateAndProvince}`;
-            const combinedUrl = `/biz/${name}-${loc}/${id}`;
+            const { uuid, name, city, stateAndProvince, description } =
+              business;
+            const _name = name.toLowerCase().replace(/\s/gi, "-");
+            const _loc = `${city}-${stateAndProvince}`.replace(/\s/gi, "-");
+            const combinedUrl = `/biz/${_name}-${_loc}/${uuid}`;
             return (
               <a
-                key={business.uuid}
-                href={combinedUrl}
-                aria-label={`View ${business.name}`}
+                key={uuid}
+                href={encodeURI(combinedUrl)}
+                aria-label={`View ${name}`}
               >
-                <h1>{business.name}</h1>
-                <p>{business.description}</p>
-                <p>{loc}</p>
+                <h1>{name}</h1>
+                <p>{description}</p>
+                <p>{`${city}, ${stateAndProvince}`}</p>
               </a>
             );
           })}
