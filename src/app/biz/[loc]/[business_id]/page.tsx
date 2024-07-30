@@ -9,13 +9,19 @@ import BusinessesNotfound from "@/components/NotFound";
 import ReadMoreText from "@/components/ReadMoreText";
 import SimilarBusinesses from "@/components/SimilarBusinesses";
 import { bizConnectAPI } from "@/config";
+import { extractQueryParam } from "@/helpers/dynamic-seo";
 import BackBtn from "@/modules/businessDetails/components/BackBtn";
 import ContactCard from "@/modules/businessDetails/components/ContactCard";
 import OpeningHoursDrd from "@/modules/businessDetails/components/OpeningHoursDrd";
 import SocialLinks from "@/modules/businessDetails/components/SocialLinks";
 import type { IOption } from "@/types/business";
-import type { IBusinessProfile } from "@/types/business-profile";
-import { constructBizImgUrl, determineBusOpTime, removeAMPM } from "@/utils";
+import type { IBusinessProfile, ISearch } from "@/types/business-profile";
+import {
+  constructBizImgUrl,
+  constructSearchUrl,
+  determineBusOpTime,
+  removeAMPM,
+} from "@/utils";
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import React from "react";
@@ -36,12 +42,20 @@ const daysOfWeek = [
 ];
 
 export default async function BusinessPage({ params }: BizPageProps) {
-  const loc = params["loc"];
   const business_id = params["business_id"];
   const {
     data: { categories, businessDetails },
     error,
   } = await getBusinessById(business_id);
+
+  const similarBusinesses = await getSimilarBusinesses({
+    businessCategory: businessDetails?.businessCategoryUuid!,
+    allCategories: categories,
+    country: businessDetails?.country!,
+    city: businessDetails?.city!,
+    stateAndProvince: businessDetails?.stateAndProvince!,
+    currentBusinessId: business_id,
+  });
 
   const prefixWithZero = (time: string) => {
     return time.split(":")[0].length > 1 ? time : "0" + time;
@@ -169,10 +183,7 @@ export default async function BusinessPage({ params }: BizPageProps) {
               <FlexColStart className="gap-2">
                 <ContactCard
                   title="Address"
-                  tagline={
-                    `${businessDetails?.city}, ${businessDetails?.stateAndProvince}` ??
-                    "N/A"
-                  }
+                  tagline={`${businessDetails?.city}, ${businessDetails?.stateAndProvince}`}
                   icon={
                     <MapPin
                       size={18}
@@ -252,12 +263,9 @@ export default async function BusinessPage({ params }: BizPageProps) {
             </h3>
 
             <SimilarBusinesses
-              businessCategory={businessDetails.businessCategoryUuid!}
-              allCategories={categories!}
-              country={businessDetails?.country!}
-              stateAndProvince={businessDetails?.stateAndProvince!}
-              city={businessDetails?.city!}
-              currentBusinessId={businessDetails.uuid!}
+              businesses={similarBusinesses.data?.businesses}
+              layout={similarBusinesses.data?.layout as "col" | "row"}
+              windowLocation={similarBusinesses.data?.windowLocation!}
             />
           </FlexColStart>
         </>
@@ -373,3 +381,96 @@ async function getCategories() {
     error,
   };
 }
+
+// SIMILAR BUSINESSES SECTION
+type SimilarBusinessesProps = {
+  businessCategory: string;
+  allCategories: IOption[] | undefined | null;
+  country: string;
+  city: string;
+  stateAndProvince: string;
+  currentBusinessId: string;
+};
+
+async function getSimilarBusinesses(props: SimilarBusinessesProps) {
+  const { businessCategory, allCategories, country, stateAndProvince } = props;
+
+  const header_url = headers().get("x-url") || "";
+  const searchParams = extractQueryParam(header_url);
+
+  const queryParams = constructSimilarBusinessesQueryParam({
+    allBusinessCategories: allCategories,
+    businessCategory,
+    country,
+    stateAndProvince,
+  });
+
+  const url = `${bizConnectAPI.baseURL}/api/businesses/search?${queryParams}`;
+
+  try {
+    const req = await fetch(url);
+    const resp = await req.json();
+    const bizProfiles = resp.data?.businessProfiles.data || [];
+
+    bizProfiles.forEach((biz: any) => {
+      const category = allCategories?.find(
+        (c) => c.uuid === biz.businessCategoryUuid
+      )?.value;
+      if (category) biz["category"] = [category];
+    });
+
+    return {
+      data: {
+        businesses: bizProfiles,
+        layout: searchParams.filters.layout ?? "col",
+        windowLocation: header_url,
+      },
+      error: null,
+    };
+  } catch (e: any) {
+    return {
+      data: null,
+      error: e?.message ?? "An error occurred",
+    };
+  }
+}
+
+type CombBusinessesDataTypes = {
+  allBusinessCategories: IOption[] | undefined | null;
+  businessCategory: string;
+  country?: string;
+  stateAndProvince?: string;
+};
+
+const constructSimilarBusinessesQueryParam = (
+  props: CombBusinessesDataTypes
+): string => {
+  const { allBusinessCategories, businessCategory, country, stateAndProvince } =
+    props;
+
+  const categoryUuid = allBusinessCategories?.find(
+    (c) => c.uuid === businessCategory
+  )?.value;
+
+  const searchQuery: ISearch = { filters: [] };
+
+  if (country) {
+    searchQuery.filters.push({ targetFieldName: "country", values: [country] });
+  }
+
+  if (stateAndProvince) {
+    searchQuery.filters.push({
+      targetFieldName: "state",
+      values: [stateAndProvince],
+    });
+  }
+
+  if (categoryUuid) {
+    searchQuery.filters.push({
+      targetFieldName: "businessCategoryUuid",
+      values: [categoryUuid],
+    });
+  }
+
+  return constructSearchUrl(searchQuery);
+};
