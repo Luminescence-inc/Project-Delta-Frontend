@@ -119,7 +119,7 @@ export const ColLayoutCard = ({
 
             <button
               // href={`tel:${phone}`}
-              onClick={() => window.open(`tel:${phone}`)}
+              // onClick={() => window.open(`tel:${phone}`)}
               className="flex flex-row items-center justify-center text-blue-200 bg-blue-202 w-[81px] h-[25px] px-[5px] rounded-full gap-[5px] text-[12px] businesss-call-line"
             >
               <Phone size={15} className="stroke-blue-200/80" />
@@ -130,13 +130,8 @@ export const ColLayoutCard = ({
           </FlexRowCenterBtw>}
           {/* share */}
           {pathname == '/view-business' &&  <FlexRowCenterBtw className="gap-[10px] w-full">
-<<<<<<< HEAD
            <button className="flex flex-row items-center justify-center w-full bg-blue-202 px-[5px] py-[13px] rounded-[5px] gap-[5px] text-[12px] businesss-call-line">
               <span className="text-[12px] font-medium font-pp leading-[14.53px] mt-[2px] text-blue-200">
-=======
-           <button className="flex flex-row items-center justify-center w-full bg-blue-202 px-[5px] py-[10px] rounded-[5px] gap-[5px] text-[12px] businesss-call-line">
-              <span className="text-[12px] font-normal font-pp leading-[14.53px] mt-[2px] text-blue-200">
->>>>>>> 672421f (business card)
               Update Business Details
               </span>
             </button>
@@ -291,7 +286,7 @@ const CardNavigateWrapper = ({
   const loc = location.replace(/\s/gi, "-");
   const _name = name.toLowerCase().replace(/\s/gi, "-");
   const params = new URLSearchParams(_location.search);
-  const combinedUrl = `/biz/${_name}-${loc}/${id}?${params.toString()}`;
+  const combinedUrl = `/biz/${_name}-${loc}/${id}`;
   return (
     <a
       // to={combinedUrl}
@@ -307,7 +302,6 @@ const CardNavigateWrapper = ({
             "businesss-call-line"
           ) ||
           (e.target as HTMLElement)?.classList.contains("businesss-call-line");
-
         // prevent redirecting to specified page and opening the tel-phone number on that page
         if (target) {
           console.log("target exiusts");

@@ -74,13 +74,13 @@ const MultiSelect = ({
   return (
     <>
       <FlexColStart className="w-full">
-        <label className="text-[14px] font-inter font-semibold text-dark-100/60">
+        <label className="text-[14px] font-medium font-pp text-dark-100/60">
           {label}
         </label>
         <FlexRowCenter className="w-full relative">
           <input
             className={cn(
-              "w-full h-[46px] border-[1px] border-solid border-dark-103 tracking-[2px] text-[12px] text-blue-200 p-[16px] rounded-[5px] placeholder:text-dark-104 placeholder:text-[12px]",
+              "w-full h-[46px] border-[1px] border-solid border-dark-103 tracking-[0px] text-[12px] text-blue-200 p-[16px] font-pp rounded-[5px] placeholder:text-dark-104 placeholder:text-[12px]",
               showDropdown ? "cursor-text" : "cursor-pointer"
             )}
             type="text"
@@ -176,8 +176,13 @@ function ListComponent({
       key={option.uuid}
       onClick={() => handleSelect(option)}
     >
-      <input type="checkbox" checked={isSelected(option)} onChange={() => {}} />
-      <label className="relative -top-1 font-inter font-normal cursor-pointer">
+      <input
+        id="default-checkbox"
+        type="checkbox"
+        className="w-4 h-4 text-blue-600 bg-white-100 border-blue-200 rounded focus:ring-blue-500 focus:ring-2"
+        checked={isSelected(option)}
+      />
+      <label className="relative text-dark-100/50 -top-1 font-pp font-medium cursor-pointer">
         {option.value}
       </label>
     </li>
