@@ -46,7 +46,7 @@ const ViewBusiness = () => {
   const [businessesLoading, setBusinessesLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const closeModal = () => {
+  const closeModal = () => { 
     setIsModalOpen(false);
   };
   const customStyles = {
