@@ -31,11 +31,12 @@ const OperationInfo: FC<OperationInfoProps> = ({
   });
 
   return (
-    <FlexColStart className="w-full h-full bg-gray-200 pt-[40px] px-[16px] pb-[150px] ">
-      <FlexColStartCenter className="w-full h-auto text-center bg-white-100 rounded-[8px] pt-[24px] px-[16px] pb-[23px] ">
-        <h4 className="text-[16px] text-center font-semibold font-pp leading-[24px] mb-[24px] ">
-          Operation Info
-        </h4>
+    <FlexColStart className="w-full h-full bg-gray-200  pb-[150px] ">
+      <FlexColStartCenter className="w-full h-auto text-center bg-white-100 rounded-[8px] py-[24px] px-3 pb-[23px] ">
+      <div className="flex flex-col items-center justify-center my-[24px]">
+        <h4 className="text-[16px] text-center font-bold font-pp leading-[24px] text-blue-200">Setup your business Profile</h4>
+        <h6 className="text-[15px] text-gray-103">Operation Info</h6>
+      </div>
 
         <Input
           type="tel"
@@ -43,6 +44,7 @@ const OperationInfo: FC<OperationInfoProps> = ({
           value={formik.values.phoneNumber}
           onChange={formik.handleChange}
           label="Business Phone Number"
+          required
           rightIcon={
             <Phone className="stroke-none fill-blue-200 scale-[.75]" />
           }
@@ -57,6 +59,7 @@ const OperationInfo: FC<OperationInfoProps> = ({
           value={formik.values.businessEmail}
           onChange={formik.handleChange}
           label="Business Email"
+          required
           rightIcon={
             <Mail
               strokeWidth={1}
