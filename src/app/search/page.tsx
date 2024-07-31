@@ -1,4 +1,5 @@
 import { Pagination } from "@/components/Pagination";
+import SITE_CONFIG from "@/config/site";
 import {
   extractQueryParam,
   generateTitle,
@@ -105,6 +106,7 @@ export async function generateMetadata() {
     openGraph: {
       title,
       description: metaDescription,
+      images: [{ url: SITE_CONFIG.image }],
     },
   } as Metadata;
 }
