@@ -8,6 +8,7 @@ import {
 import { MapPin, Phone } from "@components/icons";
 import { determineBusOpTime } from "@/utils";
 import { cn } from "@/lib/utils";
+import { usePathname } from "next/navigation";
 
 interface BusinessCardProps {
   name: string;
@@ -42,16 +43,13 @@ export const ColLayoutCard = ({
   _urlLocation,
   windowLocation,
 }: BusinessCardProps) => {
+  const pathname = usePathname()
+
   const hasBusinessClosed = daysOfOps ? determineBusOpTime(daysOfOps) : null;
 
   return (
-    <CardWrapper key={_key} className="w-full max-h-[450px] pb-[10px]">
-      <CardNavigateWrapper
-        id={id}
-        name={name}
-        location={_urlLocation}
-        windowLocation={windowLocation}
-      >
+    <CardNavigateWrapper id={id} name={name} location={_urlLocation} windowLocation={windowLocation}>
+      <CardWrapper key={_key} className="w-full min-h-[450px]">
         <div
           className="w-full h-auto rounded-[10px]"
           style={{
@@ -65,7 +63,6 @@ export const ColLayoutCard = ({
             height: "328px",
           }}
         ></div>
-      </CardNavigateWrapper>
       <FlexColStart className="w-full px-[4px] py-[2px] gap-0 mt-[10px]">
         <h2 className="text-[15px] font-semibold font-pp text-blue-200 leading-[18.31px]">
           {name.length > NAME_CONSTRAINT
@@ -131,6 +128,7 @@ export const ColLayoutCard = ({
         </FlexRowCenterBtw>
       </FlexColStart>
     </CardWrapper>
+    </CardNavigateWrapper>
   );
 };
 
@@ -148,7 +146,7 @@ export const RowLayoutCard = ({
   const hasBusinessClosed = daysOfOps ? determineBusOpTime(daysOfOps) : null;
 
   return (
-    <CardWrapper className="w-full max-h-[110px] pb-[10px] gap-1">
+    <CardWrapper className="w-full max-h-[110px] pb-[10px]">
       <FlexRowStartCenter className="w-full px-[0px] gap-1">
         <CardNavigateWrapper
           id={id}
@@ -205,8 +203,8 @@ export const RowLayoutCard = ({
           </FlexRowStartCenter>
 
           {/* opening time */}
-          <FlexRowStartCenter className="w-full gap-1">
-            <FlexRowStartCenter className="w-full gap-[10px]">
+          <FlexRowStartCenter className="w-full">
+            <FlexRowStartCenter className="w-full gap-[10px] whitespace-nowrap">
               {hasBusinessClosed && hasBusinessClosed.isOpened ? (
                 <>
                   <span className="text-[11px] font-normal font-pp leading-[13px] text-teal-100">
