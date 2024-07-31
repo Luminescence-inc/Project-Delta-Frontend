@@ -34,7 +34,6 @@ export const useLocation = () => {
           });
           return;
         }
-
         const location = await getLocation(ipAddress);
         if (!location) {
           setLocationData({
