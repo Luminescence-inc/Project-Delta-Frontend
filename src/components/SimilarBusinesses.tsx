@@ -27,7 +27,7 @@ const SimilarBusinesses = ({
   return (
     <FlexColStart className="w-full mt-[20px]">
       <FlexColStart className="w-full gap-[20px]">
-        {businesses.length > 0 ? (
+        {businesses?.length > 0 ? (
           businesses.map((businesses) => {
             const daysOfOperation = constructDOP(
               businesses?.daysOfOperation!,
