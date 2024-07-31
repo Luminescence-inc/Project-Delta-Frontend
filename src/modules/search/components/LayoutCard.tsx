@@ -12,26 +12,29 @@ import { MapPin, Phone, Share } from "@components/icons";
 import { determineBusOpTime } from "@/utils";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
+import ReadMoreText from "@/components/ReadMoreText";
 
 interface BusinessCardProps {
   name: string;
   categories: string[] | undefined;
   location: string;
   daysOfOps:
-    | {
-        day: string | null;
-        ot: string | null;
-        ct: string | null;
-      }[]
-    | undefined;
+  | {
+    day: string | null;
+    ot: string | null;
+    ct: string | null;
+  }[]
+  | undefined;
   phone: string;
   id: string;
   image: string;
   _key: string;
   _urlLocation: string;
+  description: string
 }
 
 const NAME_CONSTRAINT = 30;
+const DESCRIPTION_CONSTRAINT = 150;
 
 export const ColLayoutCard = ({
   name,
@@ -43,21 +46,19 @@ export const ColLayoutCard = ({
   id,
   _key,
   _urlLocation,
+  description
 }: BusinessCardProps) => {
-  const pathname = usePathname()
 
   const hasBusinessClosed = daysOfOps ? determineBusOpTime(daysOfOps) : null;
-
   return (
     <CardNavigateWrapper id={id} name={name} location={_urlLocation}>
-      <CardWrapper key={_key} className="w-full min-h-[450px]">
+      <CardWrapper key={_key} className="w-full ">
         <div
           className="w-full h-auto rounded-[10px]"
           style={{
             background: "#e2efff",
-            backgroundImage: `url(${
-              image ?? "/assets/images/default-img.jpeg"
-            })`,
+            backgroundImage: `url(${image ?? "/assets/images/default-img.jpeg"
+              })`,
             backgroundSize: "100% 100%",
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
@@ -65,81 +66,31 @@ export const ColLayoutCard = ({
           }}
         ></div>
         <FlexColStart className="w-full px-[4px] py-[2px] gap-0 mt-[10px]">
-          <h2 className="text-[15px] font-semibold font-pp text-blue-200 leading-[18.31px]">
+          <h2 className="text-[15px] font-bold font-pp text-blue-200 leading-[18.31px]">
             {name.length > NAME_CONSTRAINT
               ? name.slice(0, NAME_CONSTRAINT) + "..."
               : name}
           </h2>
 
-          {/* categories */}
-          <FlexRowCenterBtw className="gap-[2px] mt-1">
-            {categories &&
-              categories.map((c) => {
-                return (
-                  <FlexRowCenter className="gap-[2px]" key={c}>
-                    <span className="text-[11px] leading-[13px] font-light font-pp text-gray-103">
-                      {c}
-                    </span>
-                    {categories[categories.length - 1] !== c && (
-                      <span className="h-[3px] w-[3px] rounded-full text-[6px] bg-teal-100"></span>
-                    )}
-                  </FlexRowCenter>
-                );
-              })}
+          {/* description */}
+           <FlexRowCenterBtw className="w-full overflow-hidden mt-1">
+            <span className="text-[11px] text-gray-103 leading-[13.12px] my-1 text-ellipsis truncate text-wrap">
+            {description.length > DESCRIPTION_CONSTRAINT
+              ? description.slice(0, DESCRIPTION_CONSTRAINT) + "..."
+              : description}
+              {/* {description} */}
+              </span>
           </FlexRowCenterBtw>
-
-          {/* location */}
-          <FlexRowStartCenter className="gap-[5px] h-[16px] py-[15px]">
-            <MapPin size={15} className="stroke-gray-100/70" />
-            <span className="text-[13px] font-normal font-pp text-blue-200 mt-[3px]">
-              {location}
-            </span>
-          </FlexRowStartCenter>
-
-          {/* opening time */}
-          {pathname != '/view-business' &&  <FlexRowCenterBtw className="w-full">
-           <FlexRowStartCenter className="gap-[10px]">
-              {hasBusinessClosed && hasBusinessClosed.isOpened ? (
-                <>
-                  <span className="text-[11px] font-normal font-pp leading-[13px] text-teal-100">
-                    Open
-                  </span>
-                  <span className="h-[3px] w-[3px] rounded-full text-[6px] bg-dark-105"></span>
-
-                  <span className="text-[11px] font-normal font-pp leading-[13px]">
-                    Closes {hasBusinessClosed.closingTime}
-                  </span>
-                </>
-              ) : (
-                <span className="text-[11px] font-normal font-pp leading-[13px] text-red-301">
-                  Closed
-                </span>
-              )}
-            </FlexRowStartCenter>
-
-            <button
-              // href={`tel:${phone}`}
-              // onClick={() => window.open(`tel:${phone}`)}
-              className="flex flex-row items-center justify-center text-blue-200 bg-blue-202 w-[81px] h-[25px] px-[5px] rounded-full gap-[5px] text-[12px] businesss-call-line"
-            >
-              <Phone size={15} className="stroke-blue-200/80" />
-              <span className="text-[12px] font-normal font-pp leading-[14px] mt-[2px]">
-                Call me
-              </span>
-            </button>
-          </FlexRowCenterBtw>}
           {/* share */}
-          {pathname == '/view-business' &&  <FlexRowCenterBtw className="gap-[10px] w-full">
-           <button className="flex flex-row items-center justify-center w-full bg-blue-202 px-[5px] py-[13px] rounded-[5px] gap-[5px] text-[12px] businesss-call-line">
-              <span className="text-[12px] font-medium font-pp leading-[14.53px] mt-[2px] text-blue-200">
-              Update Business Details
-              </span>
+          <FlexRowCenterBtw className="gap-[10px] w-full">
+            <button className="flex flex-row items-center justify-center w-full bg-blue-202 px-[5px] py-[13px] rounded-[5px] gap-[5px] text-[12px] businesss-call-line">
+              <span className="text-[12px] font-medium font-pp leading-[14.53px] mt-[2px] text-blue-200">Update Business Details</span>
             </button>
 
             <div className="bg-blue-204 p-3 round-[5px]">
-              <Share size={15} className="stroke-blue-200/80" />
+              <Share size={16} className="stroke-blue-200/80" />
             </div>
-           </FlexRowCenterBtw>}
+          </FlexRowCenterBtw>
         </FlexColStart>
       </CardWrapper>
     </CardNavigateWrapper>
@@ -155,6 +106,7 @@ export const RowLayoutCard = ({
   image,
   id,
   _urlLocation,
+  description,
 }: BusinessCardProps) => {
   const hasBusinessClosed = daysOfOps ? determineBusOpTime(daysOfOps) : null;
 
@@ -168,9 +120,8 @@ export const RowLayoutCard = ({
               width: "64px",
               minWidth: "64px",
               background: "#e2efff",
-              backgroundImage: `url(${
-                image ?? "/assets/images/default-img.jpeg"
-              })`,
+              backgroundImage: `url(${image ?? "/assets/images/default-img.jpeg"
+                })`,
               backgroundSize: "cover",
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",
@@ -178,67 +129,21 @@ export const RowLayoutCard = ({
             }}
           ></div>
           <FlexColStart className="w-full px-[5px] gap-0 mt-2">
-            <h2 className="text-[15px] font-semibold font-pp text-blue-200 leading-[18.31px]">
+            <h2 className="text-[15px] font-bold font-pp text-blue-200 leading-[18.31px]">
               {name.length > NAME_CONSTRAINT
                 ? name.slice(0, NAME_CONSTRAINT) + "..."
                 : name}
             </h2>
 
-            {/* categories */}
-            <FlexRowCenterBtw className="w-auto gap-2 mt-1">
-              {categories &&
-                categories.map((c) => {
-                  return (
-                    <FlexRowCenter className="gap-[2px]" key={c}>
-                      <span className="text-[11px] leading-[13px] font-light font-pp text-gray-103">
-                        {c}
-                      </span>
-                      {categories[categories.length - 1] !== c && (
-                        <span className="h-[3px] w-[3px] rounded-full text-[6px] bg-teal-100"></span>
-                      )}
-                    </FlexRowCenter>
-                  );
-                })}
-            </FlexRowCenterBtw>
 
             {/* location */}
-            <FlexRowStartCenter className="gap-[5px] h-[16px] py-[15px]">
-              <MapPin size={15} className="stroke-gray-100/70" />
-              <span className="text-[13px] font-normal font-pp text-blue-200 mt-[3px]">
-                {location}
-              </span>
+            <FlexRowStartCenter className="gap-[5px] mt-1 text-ellipsis overflow-hidden">
+              <span className="text-[11px] text-gray-103 leading-[13.12px] font-normal text-ellipsis text-wrap">{description.length > DESCRIPTION_CONSTRAINT
+              ? description.slice(0, DESCRIPTION_CONSTRAINT) + "..."
+              : description}</span>
             </FlexRowStartCenter>
 
-            {/* opening time */}
-            <FlexRowCenterBtw className="w-full">
-              <FlexRowStartCenter className="w-full gap-[10px] whitespace-nowrap">
-                {hasBusinessClosed && hasBusinessClosed.isOpened ? (
-                  <>
-                    <span className="text-[11px] font-normal font-pp leading-[13px] text-teal-100">
-                      Open
-                    </span>
-                    <span className="h-[3px] w-[3px] rounded-full text-[6px] bg-dark-105"></span>
 
-                    <span className="text-[11px] font-normal font-pp leading-[13px]">
-                      Closes {hasBusinessClosed.closingTime}
-                    </span>
-                  </>
-                ) : (
-                  <span className="text-[11px] font-normal font-pp leading-[13px] text-red-301">
-                    Closed
-                  </span>
-                )}
-              </FlexRowStartCenter>
-
-              <FlexRowEnd className="w-full">
-                <button
-                  onClick={() => null}
-                  className="flex flex-row items-center justify-center text-blue-200 bg-blue-202 w-[35px] h-[25px] px-[5px] rounded-full gap-[5px] text-[12px] businesss-call-line"
-                >
-                  <Phone size={15} className="stroke-blue-200/80" />
-                </button>
-              </FlexRowEnd>
-            </FlexRowCenterBtw>
           </FlexColStart>
         </FlexRowStartCenter>
       </CardWrapper>

@@ -113,7 +113,7 @@ const SimilarBusinesses = ({
   }
 
   const defaultImg = "/assets/images/default-img.jpeg";
-
+  
   return (
     <FlexColStart className="w-full mt-[20px]">
       <FlexColStart className="w-full gap-[20px]">
@@ -133,6 +133,7 @@ const SimilarBusinesses = ({
                 location={`${businesses.city}, ${businesses.stateAndProvince}`}
                 daysOfOps={daysOfOperation}
                 phone={businesses.phoneNumber ?? "N/A"}
+                description={businesses?.description}
                 image={
                   !isImgUrlValid(businessesImg) ? defaultImg : businessesImg
                 }
@@ -140,9 +141,9 @@ const SimilarBusinesses = ({
                 id={businesses.uuid}
                 key={businesses.uuid}
                 _urlLocation={`${businesses.country}-${businesses.stateAndProvince}`}
-              />
-            ) : (
-              <RowLayoutCard
+                />
+              ) : (
+                <RowLayoutCard
                 name={businesses.name ?? "N/A"}
                 categories={businesses?.category as string[]}
                 location={`${businesses.city}, ${businesses.stateAndProvince}`}
@@ -151,6 +152,7 @@ const SimilarBusinesses = ({
                 image={
                   !isImgUrlValid(businessesImg) ? defaultImg : businessesImg
                 }
+                description={businesses?.description}
                 _key={businesses.uuid!}
                 id={businesses.uuid}
                 key={businesses.uuid}
