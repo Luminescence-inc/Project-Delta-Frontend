@@ -65,7 +65,7 @@ async function getBusinessesBasedOnQueryParams() {
   const { search } = extractQueryParam(header_url);
   const { businesses, pagination } = await getBusinessesWithPagination(search);
   const urlSearchParam = new URLSearchParams(search);
-
+  try {
     return {
       businesses,
       pagination: {
