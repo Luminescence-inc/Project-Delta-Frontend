@@ -78,7 +78,7 @@ export interface UserBusinessList {
   uuid: string;
   userUuid: string;
   name: string;
-  description: string | null;
+  description: string;
   businessCategoryUuid: string;
   country: string;
   stateAndProvince: string;
