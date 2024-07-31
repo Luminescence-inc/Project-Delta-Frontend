@@ -191,11 +191,11 @@ const Login = () => {
           <p>Forgot password?</p>
         </a>
 
-        <p className="text-blue-200/70 text-[14px] font-pp mt-[14px] ">
-          Don't have an Account?{" "}
-          <Link href="/auth/signup">
-            <span className="text-blue-200 underline font-medium">Sign up</span>
-          </Link>
+        <p className="text-dark-100/50 text-[14px] font-pp mt-[14px] ">
+          {noAccount}
+          <a href="/signup">
+            <span className="text-blue-200 underline">Sign up</span>
+          </a>
         </p>
       </FlexColStartCenter>
     </FlexColStart>
