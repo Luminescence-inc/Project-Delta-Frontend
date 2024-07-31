@@ -60,12 +60,12 @@ const ExploreBusiness = async () => {
 export default ExploreBusiness;
 
 async function getBusinessesBasedOnQueryParams() {
-  const headersList = headers();
-  const header_url = headersList.get("x-url") || "";
-  const { search } = extractQueryParam(header_url);
-  const { businesses, pagination } = await getBusinessesWithPagination(search);
-  const urlSearchParam = new URLSearchParams(search);
   try {
+    const headersList = headers();
+    const header_url = headersList.get("x-url") || "";
+    const { search } = extractQueryParam(header_url);
+    const { businesses, pagination } = await getBusinessesWithPagination(search);
+    const urlSearchParam = new URLSearchParams(search);
     return {
       businesses,
       pagination: {
