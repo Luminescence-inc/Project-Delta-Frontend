@@ -73,12 +73,11 @@ export const ColLayoutCard = ({
           </h2>
 
           {/* description */}
-           <FlexRowCenterBtw className="w-full overflow-hidden mt-1">
+           <FlexRowCenterBtw className="w-full overflow-hidden my-2">
             <span className="text-[11px] text-gray-103 leading-[13.12px] my-1 text-ellipsis truncate text-wrap">
             {description.length > DESCRIPTION_CONSTRAINT
               ? description.slice(0, DESCRIPTION_CONSTRAINT) + "..."
               : description}
-              {/* {description} */}
               </span>
           </FlexRowCenterBtw>
           {/* share */}
