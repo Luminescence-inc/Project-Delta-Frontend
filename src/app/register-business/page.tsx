@@ -41,6 +41,8 @@ import { LoaderComponent } from "@components/Loader";
 import { toast } from "react-toastify";
 import withAuth from "@/utils/auth-helpers/withAuth";
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
+
 
 const dayOrder: { [key: string]: number } = {
   Monday: 0,
@@ -482,15 +484,18 @@ const RegisterBusiness = () => {
   };
 
   return (
-    <div ref={tabsRef} className="w-full pt-[30px] px-[16px] pb-[150px] ">
-      <FlexRowCenter className="w-full h-full gap-10">
+    <div ref={tabsRef} className="w-full pt-[30px] px-3 pb-[150px] bg-blue-205 rounded-[8px]">
+      <FlexRowCenter className="w-full h-full gap-[10px] px-3 white-100 ">
+
         {tabs.map((tab, idx) => (
-          <span
+          <motion.span
+            layoutId="pill-tab"
+            transition={{ type: "spring", duration: 0.5 }}
             key={idx}
             className={cn(
               "text-[16px] font-bold font-pp cursor-pointer leading-[24px]",
               selectedTab?.toLowerCase() === tab.name.toLowerCase()
-                ? "border-b-2 border-blue-200 text-blue-200"
+                ? "border-b-4 border-[#1ABEBB] text-blue-200"
                 : "text-blue-200/60"
             )}
             onClick={() => {
@@ -503,7 +508,8 @@ const RegisterBusiness = () => {
             }}
           >
             {tab.title}
-          </span>
+            <motion.span  className="inset-0 z-0 bg-gradient-to- border-b-2 border-[#1ABEBB]"></motion.span>
+          </motion.span>
         ))}
       </FlexRowCenter>
 

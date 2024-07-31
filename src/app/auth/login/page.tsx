@@ -91,8 +91,8 @@ const Login = () => {
   });
 
   return (
-    <FlexColStart className="w-full h-full px-[16px] pt-[24px] pb-[32px]">
-      <FlexColStartCenter className="w-full px-[16px] pt-[24px] pb-[32px] bg-white-100 text-center ">
+    <FlexColStart className="w-full h-full px-3 pt-[24px] pb-[32px] bg-blue-205">
+      <FlexColStartCenter className="w-full px-3 pt-[24px] pb-[32px] bg-white-100 text-center rounded-[8px]">
         <h4 className="text-[16px] font-pp font-semibold leading-[24px] mb-[24px]">
           Sign in
         </h4>
@@ -117,6 +117,7 @@ const Login = () => {
             value={formik.values.email}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
+            required
             rightIcon={
               <Mail
                 strokeWidth={1}
@@ -128,7 +129,6 @@ const Login = () => {
             parentClassname="w-full px-0 border border-white-400/50 px-4"
             inputClassname="w-full px-3 outline-none border-none"
           />
-          <br />
 
           <ErrorComponent
             value={
@@ -144,6 +144,7 @@ const Login = () => {
             value={formik.values.password}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
+            required
             rightIcon={
               showPassword ? (
                 <Eye
@@ -185,7 +186,7 @@ const Login = () => {
 
         <p className="text-dark-100/50 text-[14px] font-pp mt-[14px] ">
           Don't have an Account?{" "}
-          <a href="/signup">
+          <a href="/auth/signup">
             <span className="text-blue-200 underline">Sign up</span>
           </a>
         </p>

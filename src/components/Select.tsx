@@ -16,6 +16,7 @@ interface ISelect {
   formik: FormikProps<any>;
   options: IOption[] | undefined;
   placeholder: string;
+  required?: boolean
 }
 
 interface IOption {
@@ -23,7 +24,7 @@ interface IOption {
   value: string;
 }
 
-const Select = ({ label, options, name, formikValue, formik }: ISelect) => {
+const Select = ({ label, options, name, formikValue, formik, required }: ISelect) => {
   //Based on the values(string) find the corresponding option (object)
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [value, setValue] = useState(formikValue || "");
@@ -59,7 +60,7 @@ const Select = ({ label, options, name, formikValue, formik }: ISelect) => {
     <>
       <FlexColStart className="w-full gap-[4px] text-left pb-4">
         <label className="text-[14px] font-semibold font-inter text-dark-100/60">
-          {label}
+          {label}{required &&(<span className="text-[#F75B4E]">*</span>)}
         </label>
         <button
           className="w-full border-none outline-none bg-none cursor-pointer"

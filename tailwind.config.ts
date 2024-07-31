@@ -107,6 +107,7 @@ module.exports = {
           202: "#e7f2ff",
           203: "#f4f9ff",
           204: "#F6F8FA",
+          205: "#F7F8FA",
         },
         green: {
           100: "#22C55E",

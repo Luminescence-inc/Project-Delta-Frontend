@@ -22,15 +22,8 @@ export default function RootLayout({
   return (
     <html lang="en">
        <Head>
-        <link
-          // href="https://your-font-provider.com/path/to/helvetica-neue.css" // Replace with your font URL
-          // rel="stylesheet"
-          rel="preload"
-          href="/fonts/HelveticaNeueBlack.otf"
-          as="font"
-          type="font/otf"
-          crossOrigin="anonymous"
-        />
+        <link rel="preload"
+          href="/fonts/HelveticaNeueRegular.otf" as="font" type="font/otf" crossOrigin="anonymous" />
       </Head>
       <body
         // className={cn(inter.variable, poppins.variable, open_sans.variable)}

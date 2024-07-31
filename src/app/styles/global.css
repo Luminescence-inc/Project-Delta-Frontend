@@ -5,9 +5,6 @@
 @font-face {
   font-family: 'Helvetica Neue' !important;
   src: url('/fonts/HelveticaNeueRegular.otf') format('opentype');
-
-  /* src: url('/fonts/HelveticaNeue.otf') format('otf'),
-       url('/fonts/HelveticaNeue.otf') format('otf'); */
   font-weight: normal;
   font-style: normal;
 }

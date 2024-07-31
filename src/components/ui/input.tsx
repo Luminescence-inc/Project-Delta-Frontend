@@ -9,6 +9,7 @@ interface IInputProps {
   parentClassname?: React.ComponentProps<"div">["className"];
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
+  required?: boolean
 }
 
 export interface InputProps
@@ -24,6 +25,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps & IInputProps>(
       leftIcon,
       rightIcon,
       label,
+      required,
       ...props
     },
     ref
@@ -31,7 +33,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps & IInputProps>(
     return (
       <FlexColStart className="w-full gap-[4px] text-left mb-4">
         <label className="text-sm font-normal leading-[140%] tracking-[0] font-pp text-red-700">
-          {label}
+          {label}{required &&(<span className="text-[#F75B4E]">*</span>)}
         </label>
         <FlexRowCenter
           className={cn(

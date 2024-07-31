@@ -20,6 +20,7 @@ import {
   Globe,
   ArrowBigUpDash,
   X,
+  CircleUser,
 } from "@components/icons";
 import Input from "@/components/ui/input";
 import Button from "@/components/ui/button";
@@ -195,11 +196,12 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
   };
 
   return (
-    <FlexColStart className="w-full h-full bg-gray-200 pt-[40px] px-0 pb-[150px] ">
-      <FlexColStartCenter className="w-full h-auto text-center bg-white-100 rounded-[8px] pt-[24px] px-3 pb-[23px] gap-0">
-        <h4 className="text-[16px] text-center font-semibold font-pp leading-[24px] mb-[24px] ">
-          Complete Business Profile
-        </h4>
+    <FlexColStart className="w-full h-full bg-blue-205 pt-[px] px-0 pb-[150px] ">
+      <FlexColStartCenter className="w-full h-auto text-center bg-white-100 rounded-[8px] px-3 pb-[23px] gap-0">
+        <div className="flex flex-col items-center justify-center my-[24px]">
+          <h4 className="text-[16px] text-center font-semibold font-pp leading-[24px] text-blue-200">Setup your business Profile</h4>
+          <span className="text-[15px] text-gray-103">Tell Us about your business</span>
+        </div>
 
         <ErrorComponent
           value={
@@ -210,14 +212,12 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
         />
         <Input
           type="text"
-          label="Business Name (required)"
+          label="Business Name"
           name="businessName"
           value={formik.values.businessName}
           onChange={formik.handleChange}
-          rightIcon={
-            // <ContactIcon className="input-icon" />
-            null
-          }
+          required
+          rightIcon={<CircleUser width={"24px"} height={'24px'} className="stroke-none mt-1 mr-2" />}
           parentClassname="w-full px-0"
           inputClassname="w-full px-3 border-white-400/50"
           placeholder="Enter Business Name"
@@ -225,7 +225,7 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
 
         <div className="flex flex-col items-start w-full mb-4">
           <label className="mb-1 text-sm font-normal leading-[140%] tracking-[0] font-pp text-red-700">
-            Describe your business (required)
+            Describe your business
           </label>
           <textarea
             name="description"
@@ -245,12 +245,13 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
           }
         />
         <Select
-          label="Business Category (required)"
+          label="Business Category"
           name="businessCategory"
           formikValue={formik.values.businessCategory}
           formik={formik}
           placeholder={"Business Category"}
           options={businessCategory}
+          required
         />
 
         <ErrorComponent
@@ -261,12 +262,13 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
           }
         />
         <Select
-          label="Select Country (required)"
+          label="Select Country"
           name="country"
           formikValue={formik.values.country}
           formik={formik}
           placeholder={"Select Country"}
           options={country}
+          required
         />
 
         <ErrorComponent
@@ -277,12 +279,13 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
           }
         />
         <Select
-          label="State and Province (required)"
+          label="State and Province"
           name="stateAndProvince"
           formikValue={formik.values.stateAndProvince}
           formik={formik}
           placeholder={"State and Province"}
           options={stateAndProvince}
+          required
         />
 
         <ErrorComponent
@@ -291,12 +294,13 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
           }
         />
         <Select
-          label="Select City (required)"
+          label="Select City"
           name="city"
           formikValue={formik.values.city}
           formik={formik}
           placeholder={"Select City"}
           options={city}
+          required
         />
 
         <Input

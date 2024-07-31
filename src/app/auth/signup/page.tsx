@@ -111,7 +111,7 @@ const Signup = () => {
   });
 
   return (
-    <FlexColStart className="w-full h-full bg-gray-200 pt-[40px] px-[16px] pb-[150px] ">
+    <FlexColStart className="w-full h-full bg-blue-205 pt-[40px] px-3 pb-[150px] ">
       <FlexColStartCenter className="w-full h-auto text-center bg-white-100 rounded-[8px] pt-[24px] px-3 pb-[23px] ">
         <h4 className="text-lg text-center font-bold font-pp leading-[24px] mb-[24px] text-blue-200">
           Create An Account
@@ -138,6 +138,7 @@ const Signup = () => {
             onChange={formik.handleChange}
             rightIcon={<CircleUser width={"24px"} height={'24px'} className="stroke-none mt-1" />}
             onBlur={formik.handleBlur}
+            required
             placeholder="Enter First Name"
             parentClassname="w-full px-0 border border-white-400/50 px-4"
             inputClassname="w-full px-3 outline-none border-none"
@@ -157,6 +158,7 @@ const Signup = () => {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             rightIcon={<CircleUser width={"24px"} height={'24px'} className="stroke-none mt-1" />}
+            required
             placeholder="Enter Last Name"
             parentClassname="w-full px-0 border border-white-400/50 px-4"
             inputClassname="w-full px-3 outline-none border-none"
@@ -176,6 +178,7 @@ const Signup = () => {
             value={formik.values.email}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
+            required
             rightIcon={
               <Mail
                 strokeWidth={1}
@@ -201,6 +204,7 @@ const Signup = () => {
             value={formik.values.password}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
+            required
             rightIcon={
               showPassword ? (
                 <Eye
@@ -236,6 +240,7 @@ const Signup = () => {
             value={formik.values.confirmPassword}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
+            required
             rightIcon={
               showConfirmPassword ? (
                 <Eye
@@ -293,7 +298,7 @@ const Signup = () => {
 
         <p className="text-dark-100/50 text-[14px] font-pp mt-[14px] ">
           Have an Account?{" "}
-          <Link href="/login">
+          <Link href="/auth/login">
             <span className="text-blue-200 underline">Sign in</span>
           </Link>
         </p>

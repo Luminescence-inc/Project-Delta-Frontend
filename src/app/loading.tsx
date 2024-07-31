@@ -2,16 +2,29 @@ import React from 'react'
 
 const loading = () => {
   return (
-    <div className='flex items-center justify-center h-[80hv]'>
-      <div role="status" className="max-w-sm animate-pulse">
-        <div className="h-2 bg-blue-200 rounded-full w-48 mb-4"></div>
-        <div className="h-2 bg-blue-200 rounded-full max-w-[360px] mb-2.5"></div>
-        <div className="h-2 bg-blue-200 rounded-full mb-2.5"></div>
-        <div className="h-2 bg-blue-200 rounded-full max-w-[330px] mb-2.5"></div>
-        <div className="h-2 bg-blue-200 rounded-full max-w-[300px] mb-2.5"></div>
-        <div className="h-2 bg-blue-200 rounded-full max-w-[360px]"></div>
-        <span className="sr-only">Loading...</span>
-      </div>
+    <div className="flex items-center justify-center w-full h-full">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="154"
+        height="154"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="animate-spin"
+      >
+        <line x1="12" x2="12" y1="2" y2="6" />
+        <line x1="12" x2="12" y1="18" y2="22" />
+        <line x1="4.93" x2="7.76" y1="4.93" y2="7.76" />
+        <line x1="16.24" x2="19.07" y1="16.24" y2="19.07" />
+        <line x1="2" x2="6" y1="12" y2="12" />
+        <line x1="18" x2="22" y1="12" y2="12" />
+        <line x1="4.93" x2="7.76" y1="19.07" y2="16.24" />
+        <line x1="16.24" x2="19.07" y1="7.76" y2="4.93" />
+      </svg>
+      <span className="ml-2 text-blue-200">Loading...</span>
     </div>
   )
 }

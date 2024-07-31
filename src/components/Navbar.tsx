@@ -86,14 +86,14 @@ const Navbar = () => {
           }}
         >
           <div
-            className="w-full px-4 py-4 bg-blue-203"
+            className="w-full px-4 py-4 bg-blue-205"
             style={{
               backgroundColor: navbarBgColor?.parent ?? "",
             }}
           >
             {!menuOpen && (
               <FlexRowStartBtw
-                className="w-full mt-[24px] rounded-[5px] px-[27px] py-[18px]"
+                className="w-full mt-[24px] rounded-[5px] px-[27px] py-[18px] bg-white-100"
                 style={{
                   backgroundColor: navbarBgColor?.child ?? "",
                 }}
@@ -113,7 +113,7 @@ const Navbar = () => {
           </div>
 
           {menuOpen && (
-            <div className="w-full h-full fixed md:absolute top-0 left-0 shadow-md px-[32px] py-[4em] bg-white-100 z-[999]">
+            <div className={`${menuOpen ? 'ease-in-out duration-500 w-full h-full fixed md:absolute top-0 left-0 shadow-md px-[32px] py-[4em] bg-white-100 z-[999]' : "ease-in-out duration-500" }`}>
               <img
                 className="w-[180px]"
                 src={"/assets/images/logo/logo-header.svg"}
@@ -148,7 +148,7 @@ const Navbar = () => {
                 {!loading && userDetails && (
                   <>
                     <FlexRowCenterBtw
-                      className="w-full mt-[24px] cursor-pointer"
+                      className="ease-in-out duration-500 w-full mt-[24px] cursor-pointer"
                       onClick={() => setEditProfileOpen((prev) => !prev)}
                     >
                       <p className="text-gray-100 text-[18px] font-hnM select-none cursor-pointer">
