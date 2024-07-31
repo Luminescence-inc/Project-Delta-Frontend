@@ -97,7 +97,7 @@ export default function MultiSearch({
 
   return (
     <FlexColStart className="w-full gap-2 relative pb-[20px]">
-      <label className="text-[14px] font-normal font-inter leading-[19px]">
+      <label className="text-sm font-normal font-inter leading-[19px] text-blue-200">
         {label}
       </label>
       <button

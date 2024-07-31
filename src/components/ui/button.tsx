@@ -5,7 +5,7 @@ import { twMerge } from "tailwind-merge";
 import Link from "next/link";
 
 const buttonVariants = cva(
-  "relative px-4 py-3 flex items-center justify-center gap-5 w-fit h-[48px] rounded-[6px] font-inter font-semibold text-white-100",
+  "relative px-4 py-3 flex items-center justify-center gap-5 w-fit h-[48px] rounded-[6px] font-inter font-semibold text-white-100 whitespace-nowrap",
   {
     variants: {
       intent: {
@@ -84,7 +84,7 @@ const Button: React.FC<ButtonProps> = ({
         ) : (
           // @ts-expect-error
           <Link href={href} relative="path" className={classNames} {...props}>
-            {leftIcon && leftIcon}
+           {leftIcon && leftIcon}
             {children}
             {rightIcon && rightIcon}
           </Link>

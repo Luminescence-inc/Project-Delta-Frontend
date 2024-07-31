@@ -1,4 +1,5 @@
 import { Pagination } from "@/components/Pagination";
+import SITE_CONFIG from "@/config/site";
 import {
   extractQueryParam,
   generateTitle,
@@ -57,7 +58,7 @@ const ExploreBusiness = async () => {
 };
 export default ExploreBusiness;
 
-export async function getBusinessesBasedOnQueryParams() {
+async function getBusinessesBasedOnQueryParams() {
   const headersList = headers();
   const header_url = headersList.get("x-url") || "";
   const { search } = extractQueryParam(header_url);
@@ -105,6 +106,7 @@ export async function generateMetadata() {
     openGraph: {
       title,
       description: metaDescription,
+      images: [{ url: SITE_CONFIG.image }],
     },
   } as Metadata;
 }
