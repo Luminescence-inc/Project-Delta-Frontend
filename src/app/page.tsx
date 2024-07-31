@@ -12,7 +12,9 @@ import {
   HeaderBusinessBtn,
   HeaderOnboardingComp,
   HeaderSearchComp,
-} from "@/modules/home/components/HeaderComp";
+} from "@/modules/home/components/HeaderComp"; 
+
+// gerald first branch and pr, make a small change
 
 const Home = () => {
   return (
@@ -24,7 +26,7 @@ const Home = () => {
           <h1 className="w-full text-[25px] font-bold leading-[38px] tracking-normal text-left text-blue-200 font-pp">
             Connecting Immigrant & Local Business Owners With Their Customers
           </h1>
-          <p className="text-[15px] font-medium font-pp leading-[25px] text-left text-gray-103 ">
+          <p className="text-[13px] font-medium font-pp leading-[25px] text-left text-gray-103 ">
             Seamlessly do business within your area and on the go
           </p>
         </FlexColStart>

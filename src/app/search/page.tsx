@@ -59,16 +59,13 @@ const ExploreBusiness = async () => {
 };
 export default ExploreBusiness;
 
-export async function getBusinessesBasedOnQueryParams() {
+async function getBusinessesBasedOnQueryParams() {
+  const headersList = headers();
+  const header_url = headersList.get("x-url") || "";
+  const { search } = extractQueryParam(header_url);
+  const { businesses, pagination } = await getBusinessesWithPagination(search);
+  const urlSearchParam = new URLSearchParams(search);
   try {
-    const headersList = headers();
-    const header_url = headersList.get("x-url") || "";
-    const { search } = extractQueryParam(header_url);
-    const { businesses, pagination } = await getBusinessesWithPagination(
-      search
-    );
-    const urlSearchParam = new URLSearchParams(search);
-
     return {
       businesses,
       pagination: {
@@ -129,6 +126,7 @@ export async function generateMetadata() {
       openGraph: {
         title,
         description: metaDescription,
+        images: [{ url: SITE_CONFIG.image }],
       },
     } as Metadata;
   } catch (e: any) {
@@ -137,6 +135,7 @@ export async function generateMetadata() {
     return {
       title: "Explore Businesses",
       description: SITE_CONFIG.description,
+      images: [{ url: SITE_CONFIG.image }],
       openGraph: {
         title: "Explore Businesses",
         description: SITE_CONFIG.description,

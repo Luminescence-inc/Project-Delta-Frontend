@@ -26,6 +26,7 @@ const Login = () => {
   const [errorMessage, setErrorMessage] = useState<String | null>(null);
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const noAccount = "Don't have an Account? ";
 
   const onSubmit = async (values: LogInData) => {
     const { ...data } = values;
@@ -106,12 +107,10 @@ const Login = () => {
         <h4 className="text-[16px] font-pp font-semibold leading-[24px] mb-[24px] text-blue-200">
           Sign in
         </h4>
-
         {/* Display Error message */}
         {error && (
           <span className="text-red-100 text-[13px]">{errorMessage}</span>
         )}
-
         <form className="w-full" onSubmit={formik.handleSubmit}>
           <ErrorComponent
             value={
@@ -185,7 +184,6 @@ const Login = () => {
             <span className="text-[14px] font-pp">Submit</span>
           </Button>
         </form>
-
         <a
           className="forgot font-pp text-sm underline text-blue-200"
           href="/auth/forgot-password/email"
@@ -193,11 +191,11 @@ const Login = () => {
           <p>Forgot password?</p>
         </a>
 
-        <p className="text-blue-200/70 text-[14px] font-pp mt-[14px] ">
-          Don't have an Account?{" "}
-          <Link href="/auth/signup">
-            <span className="text-blue-200 underline font-medium">Sign up</span>
-          </Link>
+        <p className="text-dark-100/50 text-[14px] font-pp mt-[14px] ">
+          {noAccount}
+          <a href="/signup">
+            <span className="text-blue-200 underline">Sign up</span>
+          </a>
         </p>
       </FlexColStartCenter>
     </FlexColStart>
