@@ -506,7 +506,7 @@ const RegisterBusiness = () => {
               setSelectedTab(tab.name as any);
             }}
           >
-            {tab.title}
+            {/* {tab.title} */}
             <motion.span  className="inset-0 z-0 bg-gradient-to- border-b-2 border-[#1ABEBB]"></motion.span>
           </motion.span>
         ))}

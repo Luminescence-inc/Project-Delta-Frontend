@@ -2,11 +2,11 @@ import React from 'react'
 
 const loading = () => {
   return (
-    <div className="flex items-center justify-center w-full h-full">
+    <div className="flex items-center justify-center w-full h-full py-20">
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="154"
-        height="154"
+        width="24"
+        height="24"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
