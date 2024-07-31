@@ -24,8 +24,6 @@ const PaginationLink = ({
 }) => {
   query.set("page", String(page));
   const link = `${location.pathname}?${query.toString()}`;
-
-  console.log({ activePage, page });
   return (
     <a
       href={link}
