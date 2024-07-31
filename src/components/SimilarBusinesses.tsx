@@ -133,7 +133,6 @@ const SimilarBusinesses = ({
                 location={`${businesses.city}, ${businesses.stateAndProvince}`}
                 daysOfOps={daysOfOperation}
                 phone={businesses.phoneNumber ?? "N/A"}
-                description={businesses.description}
                 image={
                   !isImgUrlValid(businessesImg) ? defaultImg : businessesImg
                 }
@@ -149,7 +148,6 @@ const SimilarBusinesses = ({
                 location={`${businesses.city}, ${businesses.stateAndProvince}`}
                 daysOfOps={daysOfOperation}
                 phone={businesses.phoneNumber ?? "N/A"}
-                description={businesses.description}
                 image={
                   !isImgUrlValid(businessesImg) ? defaultImg : businessesImg
                 }

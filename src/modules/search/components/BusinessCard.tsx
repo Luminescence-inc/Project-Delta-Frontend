@@ -45,7 +45,6 @@ const BusinessCardContainer = ({
                 location={`${bd.city}, ${bd.stateAndProvince}`}
                 daysOfOps={daysOfOperation}
                 phone={bd.phoneNumber || ""}
-                description={bd.description}
                 image={
                   constructLogoUrl(bd.logoUrl) ||
                   "https://res.cloudinary.com/drwt2qqf9/image/upload/v1721488956/default-img_vhxk4d.jpg"
@@ -62,7 +61,6 @@ const BusinessCardContainer = ({
                 location={`${bd.city}, ${bd.stateAndProvince}`}
                 daysOfOps={daysOfOperation}
                 phone={bd.phoneNumber || ""}
-                description={bd.description}
                 image={constructLogoUrl(bd.logoUrl) || ""}
                 _key={bd.uuid}
                 key={bd.uuid}
