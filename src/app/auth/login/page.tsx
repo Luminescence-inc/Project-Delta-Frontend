@@ -188,7 +188,7 @@ const Login = () => {
 
         <a
           className="forgot font-pp text-sm underline text-blue-200"
-          href="/forgot-password/email"
+          href="/auth/forgot-password/email"
         >
           <p>Forgot password?</p>
         </a>
