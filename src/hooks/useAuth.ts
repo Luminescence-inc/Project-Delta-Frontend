@@ -10,9 +10,6 @@ export const useAuth = () => {
     try {
       const response = await getUserDetails();
       const resData = response.data?.data?.userDetails;
-
-      console.log({ resData });
-
       setUserDetails(resData);
       setLoading(false);
     } catch (e: any) {
