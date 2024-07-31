@@ -197,7 +197,7 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
 
   return (
     <FlexColStart className="w-full h-full bg-blue-205 px-0 pb-[150px] ">
-      <FlexColStartCenter className="w-full h-auto text-center bg-white-100 rounded-[8px] px-3 pb-[23px] gap-0">
+      <FlexColStartCenter className="w-full h-auto text-center bg-white-100 px-3 pb-[23px] gap-0">
         <div className="flex flex-col items-center justify-center my-[24px]">
           <h4 className="text-[16px] text-center font-bold font-pp leading-[24px] text-blue-200">Setup your business Profile</h4>
           <h6 className="text-[15px] text-gray-103">Tell Us about your business</h6>

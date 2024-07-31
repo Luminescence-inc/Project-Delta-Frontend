@@ -485,8 +485,7 @@ const RegisterBusiness = () => {
 
   return (
     <div ref={tabsRef} className="w-full  px-3 pb-[150px] bg-blue-205 rounded-[8px]">
-      <FlexRowCenter className="w-full h-full gap-[10px] pt-[33px] px-3 bg-white-100 rounded-[8px]">
-
+      <FlexRowCenter className="w-full h-full gap-[10px] pt-[33px] px-3 bg-white-100 rounded-t-[8px]">
         {tabs.map((tab, idx) => (
           <motion.span
             layoutId="pill-tab"
@@ -499,12 +498,12 @@ const RegisterBusiness = () => {
                 : "text-blue-200/60"
             )}
             onClick={() => {
-              // if (isRequiredFieldEmpty() && idx === 1) {
-              //   toast.error("Please fill in all required business details.");
-              //   return;
-              // }
+              if (isRequiredFieldEmpty() && idx === 1) {
+                toast.error("Please fill in all required business details.");
+                return;
+              }
               switchTab(idx);
-              // setSelectedTab(tab.name as any);
+              setSelectedTab(tab.name as any);
             }}
           >
             {tab.title}

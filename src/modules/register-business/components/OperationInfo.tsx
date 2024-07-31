@@ -32,7 +32,7 @@ const OperationInfo: FC<OperationInfoProps> = ({
 
   return (
     <FlexColStart className="w-full h-full bg-gray-200  pb-[150px] ">
-      <FlexColStartCenter className="w-full h-auto text-center bg-white-100 rounded-[8px] py-[24px] px-3 pb-[23px] ">
+      <FlexColStartCenter className="w-full h-auto text-center bg-white-100 rounded-[8px]] px-3 pb-[23px] ">
       <div className="flex flex-col items-center justify-center my-[24px]">
         <h4 className="text-[16px] text-center font-bold font-pp leading-[24px] text-blue-200">Setup your business Profile</h4>
         <h6 className="text-[15px] text-gray-103">Operation Info</h6>
