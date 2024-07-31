@@ -187,7 +187,7 @@ const BusinessesFilterComponent = ({
     }
   }, [filterData?.country]);
 
-  //   monitor when the state and province gets changed
+  // monitor when the state and province gets changed
   useEffect(() => {
     if (filterData?.stateAndProvince) {
       const formattedCities = getFilteredCities(filterData.country!?.uuid);

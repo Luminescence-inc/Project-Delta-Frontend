@@ -13,6 +13,7 @@ import SITE_CONFIG from "@/config/site";
 import { headers } from "next/headers";
 import NextTopLoader from "@/components/Toploader";
 import Head from "next/head"; // Import Head from next/head
+import BlockDesktopView from "@/components/BlockDesktopView";
 
 export default function RootLayout({
   children,
@@ -30,6 +31,7 @@ export default function RootLayout({
       >
         <DataCtxProvider>
           <NotsupportedCountryBanner />
+          <BlockDesktopView override={false} />
           <Navbar />
           <BusinessContextProvider>{children}</BusinessContextProvider>
           <Footer />

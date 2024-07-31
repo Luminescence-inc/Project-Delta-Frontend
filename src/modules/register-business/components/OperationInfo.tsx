@@ -49,7 +49,7 @@ const OperationInfo: FC<OperationInfoProps> = ({
             <Phone className="stroke-none fill-blue-200 scale-[.75]" />
           }
           placeholder="Enter Phone Number"
-          parentClassname="w-full px-0 border border-white-400/50 px-4"
+          parentClassname="w-full px-0 border border-white-400/50 px-3"
           inputClassname="w-full px-3 outline-none border-none"
         />
 
@@ -67,7 +67,7 @@ const OperationInfo: FC<OperationInfoProps> = ({
             />
           }
           placeholder="Enter Business Email"
-          parentClassname="w-full px-0 border border-white-400/50 px-4"
+          parentClassname="w-full px-0 border border-white-400/50 px-3"
           inputClassname="w-full px-3 outline-none border-none"
         />
 

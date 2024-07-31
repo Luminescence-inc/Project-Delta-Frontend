@@ -42,6 +42,7 @@ import { toast } from "react-toastify";
 import withAuth from "@/utils/auth-helpers/withAuth";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import { useDataCtx } from "@/context/DataCtx";
 
 
 const dayOrder: { [key: string]: number } = {
@@ -71,7 +72,7 @@ const tabs = [
 ] as { name: RegisterBusinessTabs; title: string }[];
 
 const RegisterBusiness = () => {
-  const router = useRouter();
+  const { setNavbarBgColor } = useDataCtx();
   const [searchParams] = useSearchParams();
   const { setSocialLinksError } = useBusinessCtx();
   const [pageLoading, setPageLoading] = useState(false);
@@ -103,6 +104,10 @@ const RegisterBusiness = () => {
   useEffect(() => {
     const param = new URLSearchParams(window.location.search);
     setBusinessId(param.get("update"));
+    setNavbarBgColor({
+      child: "#fff",
+      parent: "#fff",
+    });
   }, [window]);
 
   useEffect(() => {
@@ -473,14 +478,21 @@ const RegisterBusiness = () => {
       "stateAndProvince",
       "city",
     ];
-    let error = false;
+    let resp = {
+      error: false,
+      field: "",
+    };
     for (let field of requiredFields) {
       // @ts-expect-error
       if (!formik.values[field]) {
-        error = true;
+        resp = {
+          error: true,
+          field: field,
+        };
+        break;
       }
     }
-    return error;
+    return resp;
   };
 
   return (

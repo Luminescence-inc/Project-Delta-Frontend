@@ -291,6 +291,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title,
       description: metaOgDescription,
       url: header_url,
+      images: [
+        {
+          url: constructBizImgUrl(data?.businessDetails?.logoUrl!),
+        },
+      ],
     },
   } as Metadata;
 }

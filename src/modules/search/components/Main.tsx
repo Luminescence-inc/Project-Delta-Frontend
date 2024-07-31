@@ -8,20 +8,19 @@ import {
 import { Filter, SearchIcon2 } from "@components/icons";
 import BusinessCardContainer from "@/modules/search/components/BusinessCard";
 import BusinessesFilterComponent from "@components/BusinessFilter";
-import { UserBusinessList } from "@/types/business";
+import { UserBusinessList, type IOption } from "@/types/business";
 import { FilterData, useBusinessCtx } from "@context/BusinessCtx";
-import { IFilter } from "@/types/business-profile";
+import { type IFilter } from "@/types/business-profile";
 import { LoaderComponent } from "@components/Loader";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Input from "@/components/ui/input";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import { Pagination } from "@/components/Pagination";
 import { extractQueryParams, forceReloadClientPage } from "@/utils";
 import useTrackPageSearch from "@/hooks/useTrackSearch";
 import { prevPageSearchKeyName } from "@/config";
-import { useSearchDebounce } from "@/hooks/useSearchDebounce";
 import { useDataCtx } from "@/context/DataCtx";
+import { useRouter } from "next/navigation";
 
 dayjs.extend(relativeTime);
 
@@ -37,9 +36,9 @@ export default function MainSearchPageComponent() {
     searchQuery,
   } = useBusinessCtx();
   const { setNavbarBgColor } = useDataCtx();
-
+  const router = useRouter();
   const [showFilter, setShowFilter] = useState<boolean>(false);
-  const [debouncedSearch, setQuery] = useSearchDebounce(100);
+  const [query, setQuery] = useState<string | null>(null);
   const [urlSearchQuery, setUrlSearchQuery] = useState<string>("");
   const [headline, setHeadline] = useState({
     title: "",
@@ -168,10 +167,97 @@ export default function MainSearchPageComponent() {
   }, [prevPageSearch]);
 
   useEffect(() => {
+    const searchParam = new URLSearchParams(window.location.search);
+    const _query = searchParam.get("query");
+
+    if (_query && !query) setQuery(_query);
+
     setNavbarBgColor({
       child: "#fff",
     });
   }, []);
+
+  const handleInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.currentTarget.value.trim();
+      setQuery(value.length > 0 ? value : null);
+    },
+    []
+  );
+
+  const handleKeyUp = useCallback(
+    (event: React.KeyboardEvent<HTMLInputElement>) => {
+      const value = event.currentTarget.value.trim();
+
+      if (value.length === 0) {
+        setQuery(null);
+      }
+
+      if (event.key === "Enter") {
+        const params = new URLSearchParams(window.location.search);
+
+        if (!query && params.get("query") !== null) {
+          params.delete("query");
+          updateURLAndSearch(params);
+          updateSearch("query", null, "query", true);
+        } else {
+          const page = params.get("page");
+          if (page && parseInt(page) > 1) {
+            params.delete("page");
+            params.set("query", query!);
+            updateURLAndSearch(params);
+            updateSearch("query", query, "page", true);
+          } else {
+            params.set("query", query!);
+            updateURLAndSearch(params);
+            updateSearch("query", query, null, true);
+          }
+        }
+      }
+    },
+    [query, router]
+  );
+
+  const updateURLAndSearch = useCallback((params: URLSearchParams) => {
+    // this is consider faster than router.push
+    window.history.pushState(
+      {},
+      "",
+      `${window.location.pathname}?${params.toString()}`
+    );
+  }, []);
+
+  const updateSearch = useCallback(
+    (
+      fieldName: string | null,
+      value: string | null,
+      removedFieldName?: string | null,
+      timeout?: boolean
+    ) => {
+      // @ts-expect-error
+      setSearchQuery((prev) => ({
+        filters: [
+          ...(removedFieldName
+            ? [
+                prev.filters.filter(
+                  (f: IFilter) => f.targetFieldName !== removedFieldName
+                ),
+              ]
+            : [prev.filters.filter]),
+          ...(value ? [{ targetFieldName: fieldName, values: [value] }] : []),
+        ],
+      }));
+
+      if (timeout) {
+        setTimeout(() => {
+          forceReloadClientPage();
+        }, 500);
+      } else {
+        forceReloadClientPage();
+      }
+    },
+    []
+  );
 
   return (
     <FlexColStart className="w-full h-full bg-blue-204 pb-[2em] px-[20px]">
@@ -197,32 +283,10 @@ export default function MainSearchPageComponent() {
               className="stroke-gray-103"
             />
           }
-          defaultValue={debouncedSearch ? debouncedSearch : urlSearchQuery}
-          onChange={(e) =>
-            setQuery(
-              e.target.value.trim().length > 0 ? e.target.value.trim() : null
-            )
-          }
-          onKeyUp={(e) => {
-            if (e.key === "Enter") {
-              if (!debouncedSearch) return;
-              // @ts-expect-error
-              setSearchQuery((prev: ISearch) => ({
-                filters: [
-                  ...prev.filters.filter(
-                    (f: IFilter) => f.targetFieldName !== "query"
-                  ),
-                  {
-                    targetFieldName: "query",
-                    values: [debouncedSearch],
-                  },
-                ],
-              }));
-
-              forceReloadClientPage();
-            }
-          }}
-          autoComplete="nope"
+          defaultValue={query ? query : urlSearchQuery}
+          onChange={handleInputChange}
+          onKeyUp={handleKeyUp}
+          autoComplete="off"
         />
         <div className="flex items-center gap-2 pt-5">
         <button
@@ -272,9 +336,9 @@ export default function MainSearchPageComponent() {
         />
       )}
 
-      {businesses?.length > 0 && !allBusinessesLoading && (
+      {/* {businesses?.length > 0 && !allBusinessesLoading && (
         <Pagination totalPages={totalPages} />
-      )}
+      )} */}
 
       {/* Filtering component */}
       <BusinessesFilterComponent

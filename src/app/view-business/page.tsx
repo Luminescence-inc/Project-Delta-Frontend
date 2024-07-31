@@ -111,7 +111,7 @@ const ViewBusiness = () => {
 
   return (
     <>
-      <div className="w-full p-[16px] bg-gray-202">
+      <div className="w-full p-[16px] bg-blue-205">
         <header className="w-ful mt-0 mb-4">
           <h2 className="mb-[16px] text-[32px] leading-[40px] font-semibold font-pp text-blue-200">
             My Businesses
@@ -125,7 +125,7 @@ const ViewBusiness = () => {
           <FlexRowStartCenter className="w-full gap-[5px] bg-transparent">
             <Input
               inputClassname="font-pp px-0 font-normal border-none tracking-[0] placeholder:text-gray-103"
-              parentClassname="w-full h-[44px] px-4 bg-white-100 cursor-pointer rounded-[10px] border-none"
+              parentClassname="w-full px-4 bg-white-100 cursor-pointer rounded-[10px] border-none"
               type="text"
               placeholder="Search business"
               leftIcon={
