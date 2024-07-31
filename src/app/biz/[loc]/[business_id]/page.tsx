@@ -263,7 +263,7 @@ export default async function BusinessPage({ params }: BizPageProps) {
             </h3>
 
             <SimilarBusinesses
-              businesses={similarBusinesses.data?.businesses}
+              businesses={similarBusinesses.data?.businesses!}
               layout={similarBusinesses.data?.layout as "col" | "row"}
               windowLocation={similarBusinesses.data?.windowLocation!}
             />
@@ -392,8 +392,16 @@ type SimilarBusinessesProps = {
   currentBusinessId: string;
 };
 
+type CombBusinessesData = IBusinessProfile & { category: string[] };
+
 async function getSimilarBusinesses(props: SimilarBusinessesProps) {
-  const { businessCategory, allCategories, country, stateAndProvince } = props;
+  const {
+    businessCategory,
+    allCategories,
+    country,
+    stateAndProvince,
+    currentBusinessId,
+  } = props;
 
   const header_url = headers().get("x-url") || "";
   const searchParams = extractQueryParam(header_url);
@@ -410,7 +418,8 @@ async function getSimilarBusinesses(props: SimilarBusinessesProps) {
   try {
     const req = await fetch(url);
     const resp = await req.json();
-    const bizProfiles = resp.data?.businessProfiles.data || [];
+    const bizProfiles =
+      (resp.data?.businessProfiles.data as IBusinessProfile[]) || [];
 
     bizProfiles.forEach((biz: any) => {
       const category = allCategories?.find(
@@ -419,9 +428,13 @@ async function getSimilarBusinesses(props: SimilarBusinessesProps) {
       if (category) biz["category"] = [category];
     });
 
+    const nonDuplicateBiz = bizProfiles.filter(
+      (biz) => biz.uuid !== currentBusinessId
+    );
+
     return {
       data: {
-        businesses: bizProfiles,
+        businesses: nonDuplicateBiz as CombBusinessesData[],
         layout: searchParams.filters.layout ?? "col",
         windowLocation: header_url,
       },
