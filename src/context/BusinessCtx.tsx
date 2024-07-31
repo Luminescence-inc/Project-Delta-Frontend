@@ -109,6 +109,21 @@ export default function BusinessContextProvider({
     } catch (err) {}
   }, []);
 
+  useEffect(() => {
+    // on page load, determine layout
+    const { pathname } = new URL(window.location.href);
+    const isSearchPage = pathname.split("/")[1].toLowerCase() === "search";
+    if (isSearchPage) {
+      const search = new URLSearchParams(window.location.search);
+      const layout = search.get("layout");
+      setLayout(
+        !layout
+          ? ("col" as BusinessListingLayouts)
+          : (layout as BusinessListingLayouts)
+      );
+    }
+  }, []);
+
   const getBusinesses = async (
     currPage: number,
     filterApplied: boolean,
