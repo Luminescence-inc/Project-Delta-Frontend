@@ -32,7 +32,7 @@ const OperationInfo: FC<OperationInfoProps> = ({
 
   return (
     <FlexColStart className="w-full h-full bg-gray-200  pb-[150px] ">
-      <FlexColStartCenter className="w-full h-auto text-center bg-white-100 rounded-[8px]] px-3 pb-[23px] ">
+      <FlexColStartCenter className="w-full h-auto text-center bg-white-100 px-3 pb-[23px] gap-0">
       <div className="flex flex-col items-center justify-center my-[24px]">
         <h4 className="text-[16px] text-center font-bold font-pp leading-[24px] text-blue-200">Setup your business Profile</h4>
         <h6 className="text-[15px] text-gray-103">Operation Info</h6>
@@ -70,33 +70,37 @@ const OperationInfo: FC<OperationInfoProps> = ({
           parentClassname="w-full px-0 border border-white-400/50 px-4"
           inputClassname="w-full px-3 outline-none border-none"
         />
-
+        <div className="flex items-end justify-between gap-4 w-full">
         <Select
           label="Business open time"
           name="openTime"
           formikValue={formik.values.openTime}
           formik={formik}
-          placeholder={"Business open time"}
+          placeholder={"--"}
+          // placeholder={"Business open time"}
           options={OPERATING_TIME_OPTIONS}
-        />
+          />
 
         <Select
-          label="Business close time"
+          // label="Business close time"
           name="closeTime"
           formikValue={formik.values.closeTime}
           formik={formik}
-          placeholder={"Business close time"}
+          placeholder={"--"}
+          // placeholder={"Business close time"}
           options={OPERATING_TIME_OPTIONS}
         />
 
         <MultiSelect
-          label="Days of operation"
-          placeholder={"Days of operation"}
+          // label="Days of operation"
+          placeholder={"--"}
+          // placeholder={"Days of operation"}
           name="daysOfOperation"
           formikValue={filterDaysOfOperation}
           formik={formik}
           options={DAYS_OF_OPERATIONS_OPTIONS}
         />
+</div>
 
         <Button
           intent={"primary"}

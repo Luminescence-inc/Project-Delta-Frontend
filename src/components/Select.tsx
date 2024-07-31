@@ -10,7 +10,7 @@ import {
 import { cn } from "@/lib/utils";
 
 interface ISelect {
-  label: string;
+  label?: string;
   name: string;
   formikValue: string | undefined;
   formik: FormikProps<any>;
@@ -59,7 +59,7 @@ const Select = ({ label, options, name, formikValue, formik, required }: ISelect
   return (
     <>
       <FlexColStart className="w-full gap-[4px] text-left pb-4">
-        <label className="text-[14px] font-semibold font-inter text-dark-100/60">
+        <label className="text-[14px] font-semibold font-inter text-dark-100/60 whitespace-nowrap">
           {label}{required &&(<span className="text-[#F75B4E]">*</span>)}
         </label>
         <button

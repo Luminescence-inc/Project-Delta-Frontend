@@ -7,7 +7,7 @@ import { FlexColStart, FlexRowCenter } from "@components/Flex";
 import { cn } from "@/lib/utils";
 
 interface ISelect {
-  label: string;
+  label?: string;
   name: string;
   formik: FormikProps<any>;
   options: IOption[] | undefined;
@@ -73,7 +73,7 @@ const MultiSelect = ({
 
   return (
     <>
-      <FlexColStart className="w-full">
+      <FlexColStart className="w-full mb-4">
         <label className="text-[14px] font-inter font-semibold text-dark-100/60">
           {label}
         </label>
@@ -90,7 +90,7 @@ const MultiSelect = ({
             readOnly
           />
           <ChevronDown
-            className={cn("absolute top-[15px] right-[20px]")}
+            className={cn("absolute right-[20px]")}
             size={20}
           />
         </FlexRowCenter>
