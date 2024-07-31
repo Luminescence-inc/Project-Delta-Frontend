@@ -144,7 +144,7 @@ export default function MultiSearch({
         >
           <input
             type="text"
-            className="w-full px-[3px] py-[2px] text-[15px] border-b-[1px] bordcer-b-solid border-b-white-40 outline-none"
+            className="w-full px-[3px] py-[2px] text-[15px] !border-none focus:border-none focus:ring-0 bordcer-b-solid border-b-white-40 outline-none"
             placeholder="Search..."
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
