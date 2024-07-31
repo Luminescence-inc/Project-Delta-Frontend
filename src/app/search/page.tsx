@@ -1,4 +1,5 @@
 import { Pagination } from "@/components/Pagination";
+import SITE_CONFIG from "@/config/site";
 import {
   extractQueryParam,
   generateTitle,
@@ -59,53 +60,87 @@ const ExploreBusiness = async () => {
 export default ExploreBusiness;
 
 export async function getBusinessesBasedOnQueryParams() {
-  const headersList = headers();
-  const header_url = headersList.get("x-url") || "";
-  const { search } = extractQueryParam(header_url);
-  const { businesses, pagination } = await getBusinessesWithPagination(search);
-  const urlSearchParam = new URLSearchParams(search);
+  try {
+    const headersList = headers();
+    const header_url = headersList.get("x-url") || "";
+    const { search } = extractQueryParam(header_url);
+    const { businesses, pagination } = await getBusinessesWithPagination(
+      search
+    );
+    const urlSearchParam = new URLSearchParams(search);
 
-  return {
-    businesses,
-    pagination: {
-      ...pagination,
-      search,
-      urlSearchParam,
-      activePage: String(pagination.page),
-      location: {
-        pathname: "/search",
+    return {
+      businesses,
+      pagination: {
+        ...pagination,
+        search,
+        urlSearchParam,
+        activePage: String(pagination.page),
+        location: {
+          pathname: "/search",
+        },
       },
-    },
-  };
+    };
+  } catch (e: any) {
+    const err = e?.response?.data ?? e?.message;
+    console.error(`Error fetching businesses based on query params:`, err);
+    return {
+      businesses: [],
+      pagination: {
+        totalPages: 1,
+        total: 0,
+        limit: 0,
+        page: 1,
+        urlSearchParam: new URLSearchParams(),
+        activePage: "1",
+        location: {
+          pathname: "/search",
+        },
+      },
+    };
+  }
 }
 
 // Generate Dynamic Metadata
 export async function generateMetadata() {
-  const headersList = headers();
-  const header_url = headersList.get("x-url") || "";
-  const { filters, search } = extractQueryParam(header_url);
-  const businesses = await getBusinesses(search);
+  try {
+    const headersList = headers();
+    const header_url = headersList.get("x-url") || "";
+    const { filters, search } = extractQueryParam(header_url);
+    const businesses = await getBusinesses(search);
 
-  const title = generateTitle({
-    ...filters,
-    businessesLength: businesses.length,
-  });
+    const title = generateTitle({
+      ...filters,
+      businessesLength: businesses.length,
+    });
 
-  const topBusinesses =
-    businesses.length > 0
-      ? businesses
-          ?.slice(0, 10)
-          .map((b: any) => b.name)
-          .join(" - ")
-      : "No businesses found";
-  const metaDescription = `${title}, - ${topBusinesses}`;
+    const topBusinesses =
+      businesses.length > 0
+        ? businesses
+            ?.slice(0, 10)
+            .map((b: any) => b.name)
+            .join(" - ")
+        : "No businesses found";
+    const metaDescription = `${title}, - ${topBusinesses}`;
 
-  return {
-    title,
-    description: metaDescription,
-    openGraph: {
+    return {
       title,
       description: metaDescription,
-    },
-  } as Metadata;
+      openGraph: {
+        title,
+        description: metaDescription,
+      },
+    } as Metadata;
+  } catch (e: any) {
+    const err = e?.response?.data ?? e?.message;
+    console.error(`Error generating dynamic data:`, err);
+    return {
+      title: "Explore Businesses",
+      description: SITE_CONFIG.description,
+      openGraph: {
+        title: "Explore Businesses",
+        description: SITE_CONFIG.description,
+      },
+    } as Metadata;
+  }
 }

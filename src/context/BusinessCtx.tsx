@@ -129,40 +129,46 @@ export default function BusinessContextProvider({
     filterApplied: boolean,
     filter?: ISearch
   ) => {
-    setAllBusinessesLoading(true);
+    try {
+      setAllBusinessesLoading(true);
 
-    const queryParams = constructSearchUrl(
-      filter || searchQuery || { filters: [] }
-    );
-
-    // update the address bar with the search query
-    // only do this when in search page
-    const isSearchPage =
-      window.location.pathname.split("/")[1].toLowerCase() === "search";
-
-    if (isSearchPage) {
-      const url = `/search?${queryParams}`;
-      window.history.pushState({}, "", url);
-    }
-
-    const result = await searchForBusinesses(queryParams);
-    const data = result.data?.data.businessProfiles;
-
-    setAllBusinessesLoading(false);
-
-    // remove any duplicates
-    if (!filterApplied) {
-      const comb = [...businesses, ...data?.data];
-      const unique = comb.filter(
-        (v, i, a) => a.findIndex((t) => t.uuid === v.uuid) === i
+      const queryParams = constructSearchUrl(
+        filter || searchQuery || { filters: [] }
       );
-      setBusinesses(unique);
-    } else {
-      setBusinesses(data.data);
-    }
 
-    setTotalPages(data?.totalPages || 1);
-    setCurrPage(currPage);
+      // update the address bar with the search query
+      // only do this when in search page
+      const isSearchPage =
+        window.location.pathname.split("/")[1].toLowerCase() === "search";
+
+      if (isSearchPage) {
+        const url = `/search?${queryParams}`;
+        window.history.pushState({}, "", url);
+      }
+
+      const result = await searchForBusinesses(queryParams);
+      const data = result.data?.data.businessProfiles;
+
+      setAllBusinessesLoading(false);
+
+      // remove any duplicates
+      if (!filterApplied) {
+        const comb = [...businesses, ...data?.data];
+        const unique = comb.filter(
+          (v, i, a) => a.findIndex((t) => t.uuid === v.uuid) === i
+        );
+        setBusinesses(unique);
+      } else {
+        setBusinesses(data.data);
+      }
+
+      setTotalPages(data?.totalPages || 1);
+      setCurrPage(currPage);
+    } catch (e: any) {
+      const err = e?.response?.data ?? e?.message;
+      console.error(`Error fetching businesses:`, err);
+      setAllBusinessesLoading(false);
+    }
   };
 
   const ctxValues = {
