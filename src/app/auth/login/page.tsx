@@ -70,7 +70,7 @@ const Login = () => {
           // so every component can get the updated data
           window.location.href = "/?login=true";
         } else {
-          router.push("/verify-account");
+          router.push("/auth/verify-account");
           window.location.reload();
         }
 
@@ -193,7 +193,7 @@ const Login = () => {
 
         <p className="text-dark-100/50 text-[14px] font-pp mt-[14px] ">
           {noAccount}
-          <a href="/signup">
+          <a href="/auth/signup">
             <span className="text-blue-200 underline">Sign up</span>
           </a>
         </p>

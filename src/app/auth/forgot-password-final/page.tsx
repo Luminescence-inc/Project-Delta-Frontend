@@ -14,7 +14,7 @@ const ForgotPasswordFinal = () => {
           type="submit"
           intent="primary"
           size="lg"
-          href="/login"
+          href="/auth/login"
           className="w-full rounded-[5px] mt-3 font-pp font-semibold"
         >
           Login
