@@ -94,7 +94,7 @@ const Select = ({ label, options, name, formikValue, formik, required }: ISelect
       {showDropdown && (
         <div
           ref={dropdownRef}
-          className="w-full relative border-[1px] border-gray-102 shadow-md py-4 px-6 mb-[20px] rounded-[8px]"
+          className="w-full items-center relative border-[1px] border-gray-102 shadow-md py-4 px-6  rounded-[8px]"
         >
           <FlexColStart className="w-full border-b-[1px] border-b-white-300 py-1">
             {selectedValue ? (
@@ -113,7 +113,7 @@ const Select = ({ label, options, name, formikValue, formik, required }: ISelect
               </span>
             )}
           </FlexColStart>
-          <div className="w-full h-full max-h-[250px] overflow-y-auto mt-2">
+          <div className="w-full h-full max-h-[150px] overflow-y-auto mt-2">
             <ul className="w-full list-none p-0 m-0 ">
               {options?.map((option) => {
                 const isSelected = selectedValue?.uuid === option.uuid;

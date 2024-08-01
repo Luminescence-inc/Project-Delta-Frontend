@@ -72,40 +72,49 @@ const OperationInfo: FC<OperationInfoProps> = ({
         />
 
         <div className="flex items-start text-start w-full">
-          <label className="w-full text-start text-[14px] font-semibold font-inter text-dark-100/60 whitespace-nowrap -mb-2">
+          <label className="w-full text-start text-[14px] font-semibold font-inter text-dark-100/60 whitespace-nowrap mb-1">
             Business open time<span className="text-[#F75B4E]">*</span>
           </label>
         </div>
-        <div className="flex items-end justify-between gap-4 w-full">
-          <Select
-            // label="Business open time"
-            name="openTime"
-            formikValue={formik.values.openTime}
-            formik={formik}
-            placeholder={"--"}
-            // placeholder={"Business open time"}
-            options={OPERATING_TIME_OPTIONS}
-          />
+        
+        <div className="grid grid-cols-3 items-start gap-4 w-full">
+          <div className="flex flex-col">
+            <Select
+              // label="Business open time"
+              name="openTime"
+              formikValue={formik.values.openTime}
+              formik={formik}
+              placeholder={"--"}
+              // placeholder={"Business open time"}
+              options={OPERATING_TIME_OPTIONS}
+            />
+          </div>
 
-          <Select
-            // label="Business close time"
-            name="closeTime"
-            formikValue={formik.values.closeTime}
-            formik={formik}
-            placeholder={"--"}
-            // placeholder={"Business close time"}
-            options={OPERATING_TIME_OPTIONS}
-          />
+          <div className="flex flex-col">
 
-          <MultiSelect
-            // label="Days of operation"
-            placeholder={"--"}
-            // placeholder={"Days of operation"}
-            name="daysOfOperation"
-            formikValue={filterDaysOfOperation}
-            formik={formik}
-            options={DAYS_OF_OPERATIONS_OPTIONS}
-          />
+            <Select
+              // label="Business close time"
+              name="closeTime"
+              formikValue={formik.values.closeTime}
+              formik={formik}
+              placeholder={"--"}
+              // placeholder={"Business close time"}
+              options={OPERATING_TIME_OPTIONS}
+            />
+          </div>
+
+          <div className="flex flex-col" >
+            <MultiSelect
+              // label="Days of operation"
+              placeholder={"--"}
+              // placeholder={"Days of operation"}
+              name="daysOfOperation"
+              isSearch
+              formikValue={filterDaysOfOperation}
+              formik={formik}
+              options={DAYS_OF_OPERATIONS_OPTIONS}
+            />
+          </div>
         </div>
 
         <Button
