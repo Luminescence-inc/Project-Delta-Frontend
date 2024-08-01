@@ -296,7 +296,16 @@ export default function MainSearchPageComponent() {
         </button>
         <button
           onClick={() => {
-            setLayout && setLayout(layout === "col" ? "row" : "col");
+            const search = new URLSearchParams(window.location.search);
+            const layout = search.get("layout");
+            const newLayout = !layout
+              ? "row"
+              : layout === "col"
+              ? "row"
+              : "col";
+            search.set("layout", newLayout);
+            setLayout && setLayout(newLayout);
+            router.push(`${window.location.pathname}?${search.toString()}`);
           }}
           className="border-none outline-none cursor-pointer rounded-[10px] p-2 flex items-center justify-center -translate-y-2"
         >

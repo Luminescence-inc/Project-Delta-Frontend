@@ -67,6 +67,7 @@ const replacedFilterNamesReverse = {
   sortBy: "sortBy",
   sortDirection: "sortDirection",
   query: "query",
+  layout: "layout",
 };
 
 type QueryKey = keyof typeof replacedFilterNamesReverse;
@@ -79,9 +80,13 @@ export function extractQueryParam(url: string) {
     state?: string | Empty;
     city?: string | Empty;
     query?: string | Empty;
+    businessCategoryUuid?: string | Empty;
+    limit?: string | Empty;
+    page?: string | Empty;
+    sortBy?: string | Empty;
+    sortDirection?: string | Empty;
+    layout?: string | Empty;
   } = {};
-
-  console.log({ urlParams });
 
   for (const [key, value] of urlParams.entries()) {
     const filterName = replacedFilterNamesReverse[key as QueryKey];

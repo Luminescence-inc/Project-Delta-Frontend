@@ -1,4 +1,3 @@
-"use client";
 import { FlexColStart } from "@components/Flex";
 import { IOption, UserBusinessList } from "@/types/business";
 import { CloudinaryConfig } from "@/config";
@@ -51,6 +50,7 @@ const BusinessCardContainer = ({
                 _key={bd.uuid}
                 key={bd.uuid}
                 _urlLocation={`${bd.country}-${bd.stateAndProvince}`}
+                windowLocation={window.location.href}
               />
             ) : (
               <RowLayoutCard
@@ -64,6 +64,7 @@ const BusinessCardContainer = ({
                 _key={bd.uuid}
                 key={bd.uuid}
                 _urlLocation={`${bd.country}-${bd.stateAndProvince}`}
+                windowLocation={window.location.href}
               />
             );
           })
