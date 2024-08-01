@@ -56,7 +56,7 @@ const ForgotPassword = () => {
 
       if (resData?.success) {
         // route to forgot-password-final
-        router.push("/forgot-password-final");
+        router.push("/auth/forgot-password-final");
         setError(false);
         // window.location.reload();
         setIsLoading(false);
