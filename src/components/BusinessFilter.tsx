@@ -309,6 +309,7 @@ const BusinessesFilterComponent = ({
               listsData={businessesCategories}
               selectedListData={filterData?.businessCategoryUuid}
               dataType="businessCategory"
+              isSearch
               onChange={() => {
                 // close filter
                 closeFilter();
@@ -385,6 +386,7 @@ const BusinessesFilterComponent = ({
             onChange={({ type, uuid, value }) =>
               onFilter({ type, uuid, value })
             }
+            isSearch
             activePanel={activePanel}
             setActivePanel={setActivePanel}
           />
@@ -397,6 +399,7 @@ const BusinessesFilterComponent = ({
             listsData={filteredStates}
             selectedListData={filterData?.stateAndProvince!}
             dataType="stateAndProvince"
+            isSearch
             onChange={({ type, uuid, value }) =>
               onFilter({ type, uuid, value })
             }
@@ -419,6 +422,7 @@ const BusinessesFilterComponent = ({
             listsData={filteredCities}
             selectedListData={filterData?.city!}
             dataType="city"
+            isSearch
             onChange={({ type, uuid, value }) =>
               onFilter({ type, uuid, value })
             }
