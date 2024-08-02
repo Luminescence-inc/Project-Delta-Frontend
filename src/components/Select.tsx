@@ -129,7 +129,7 @@ const Select = ({ label, options, name, formikValue, formik, required }: ISelect
                       key={option.uuid}
                       onClick={() => handleSelect(option)}
                       className={cn(
-                        "w-full py-[8px] px-3 text-left cursor-pointer leading-[20px] tracking-normal text-dark-103 text-[14px] font-pp font-medium rounded-md ",
+                        "w-full py-[8px] px-2 text-left cursor-pointer leading-[20px] tracking-normal text-dark-103 text-[14px] font-pp font-medium rounded-md ",
                         isSelected
                           ? "bg-blue-200 text-white-100"
                           : "text-dark-106"

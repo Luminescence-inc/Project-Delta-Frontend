@@ -178,9 +178,13 @@ const RegisterBusiness = () => {
             "closeTime",
             formatInput(businessDetailsData.closeTime)
           );
+          // formik.setFieldValue(
+          //   "daysOfOperation",
+          //   formatInput(businessDetailsData.daysOfOperation)
+          // );
           formik.setFieldValue(
-            "daysOfOperation",
-            formatInput(businessDetailsData.daysOfOperation)
+            "daysOfOperationOG",
+            formatInput(businessDetailsData.daysOfOperationOG)
           );
 
           setLogoUrl(businessDetailsData.logoUrl);
@@ -445,6 +449,7 @@ const RegisterBusiness = () => {
       openTime: "",
       closeTime: "",
       daysOfOperation: [],
+      daysOfOperationOG: "",
     },
     validateOnBlur: true,
     onSubmit,

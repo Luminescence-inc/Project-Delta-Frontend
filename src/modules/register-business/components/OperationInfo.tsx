@@ -122,9 +122,9 @@ const OperationInfo: FC<OperationInfoProps> = ({
             const Tag = i === 0 ? 'div' : SlideDown
             return (
               <Tag key={i} className='repeater-wrapper  w-full'>
-                {count > 1 && <span className={`${i == 0 ? "!hidden" : ""} absolute -right-1 -top-1 z-50 cursor-pointer`} onClick={deleteForm}>
+                {count > 1 && <span className={`${i == 0 ? "hidden" : ""} absolute -right-1 -top-1 z-50 cursor-pointer`} onClick={deleteForm}>
                   <button
-                    className="p-1 rounded-full  bg-blue-200 flex flex-col items-center justify-center"
+                    className={`${i == 0 ? "hidden" : ""} p-1 rounded-full  bg-blue-200 flex flex-col items-center justify-center`}
                     onClick={deleteForm}
                   >
                     <X size={12} className="stroke-white-100" />
@@ -133,12 +133,19 @@ const OperationInfo: FC<OperationInfoProps> = ({
 
                 <div className="grid grid-cols-3 items-start gap-4 w-full">
                   <div className="flex flex-col">
-                    <MultiSelect
+                    {/* <MultiSelect
                       placeholder={"Days"}
                       name="daysOfOperation"
                       isSearch={false}
                       formikValue={filterDaysOfOperation}
                       formik={formik}
+                      options={DAYS_OF_OPERATIONS_OPTIONS}
+                    /> */}
+                    <Select
+                      name="Days"
+                      formikValue={formik.values.daysOfOperationOG}
+                      formik={formik}
+                      placeholder={"--"}
                       options={DAYS_OF_OPERATIONS_OPTIONS}
                     />
                   </div>
@@ -171,8 +178,10 @@ const OperationInfo: FC<OperationInfoProps> = ({
         </Repeater>
 
         <div className='flex items-start w-full gap-3'>
-          <div className='flex items-center text-[13px] leading-[15.87px] font-medium bg-white-100 text-blue-200 p-4 cursor-pointer' onClick={() => setCount(count + 1)}>
-            <AddMore className='me-4' /> <span className='underline'>Add more</span>
+          <div className='flex items-center gap-2 text-[13px] leading-[15.87px] font-medium bg-white-100 text-blue-200 p-4 cursor-pointer' onClick={() => setCount(count + 1)}>
+            {/* <AddMore className='me-4' />  */}
+            <img src="/plus-add.svg" alt="" />
+            <span className='underline'>Add more</span>
           </div>
         </div>
 

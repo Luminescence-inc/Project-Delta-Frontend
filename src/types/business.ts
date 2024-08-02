@@ -18,6 +18,7 @@ export type BusinessProfileFormikPropsValues = {
   openTime: string;
   closeTime: string;
   daysOfOperation: [];
+  daysOfOperationOG: string;
 };
 
 export interface BusinessCreationBody {
@@ -91,6 +92,7 @@ export interface UserBusinessList {
   openTime: string | null;
   closeTime: string | null;
   daysOfOperation: string[] | null;
+  daysOfOperationOG: string | null;
   websiteUrl: string | null;
   linkedinUrl: string | null;
   instagramUrl: string | null;
