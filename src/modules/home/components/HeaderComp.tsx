@@ -105,7 +105,11 @@ export function HeaderBusinessBtn() {
             }
             className="w-full mt-8 rounded-md h-[44px]"
           >
-            <span className={`font-pp font-semibold text-[14px] leading-[24px] ${!businessPresent && 'text-blue-200' }`}>
+            <span
+              className={`font-pp font-semibold text-[14px] leading-[24px] ${
+                !businessPresent && "text-blue-200"
+              }`}
+            >
               {businessPresent
                 ? "Create a new business profile"
                 : "Create your first business profile"}
