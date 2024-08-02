@@ -171,14 +171,14 @@ export const RowLayoutCard = ({
   const hasBusinessClosed = daysOfOps ? determineBusOpTime(daysOfOps) : null;
 
   return (
-    <CardWrapper className="w-full max-h-[110px] pb-[10px] gap-1">
-      <FlexRowStartCenter className="w-full px-[0px] gap-1">
-        <CardNavigateWrapper
-          id={id}
-          name={name}
-          location={_urlLocation}
-          windowLocation={windowLocation}
-        >
+    <CardNavigateWrapper
+      id={id}
+      name={name}
+      location={_urlLocation}
+      windowLocation={windowLocation}
+    >
+      <CardWrapper className="w-full max-h-[110px] pb-[10px]">
+        <FlexRowStartCenter className="w-full px-[0px]">
           <div
             className="w-full h-auto rounded-[10px]"
             style={{
@@ -194,75 +194,74 @@ export const RowLayoutCard = ({
               height: "95px",
             }}
           ></div>
-        </CardNavigateWrapper>
-        <FlexColStart className="w-full px-[5px] gap-0 mt-2">
-          <h2 className="text-[15px] font-semibold font-pp text-blue-200 leading-[18.31px]">
-            {name.length > NAME_CONSTRAINT
-              ? name.slice(0, NAME_CONSTRAINT) + "..."
-              : name}
-          </h2>
+          <FlexColStart className="w-full px-[5px] gap-0 mt-2">
+            <h2 className="text-[15px] font-semibold font-pp text-blue-200 leading-[18.31px]">
+              {name.length > NAME_CONSTRAINT
+                ? name.slice(0, NAME_CONSTRAINT) + "..."
+                : name}
+            </h2>
 
-          {/* categories */}
-          <FlexRowCenterBtw className="w-auto gap-2 mt-1">
-            {categories &&
-              categories.map((c) => {
-                return (
-                  <FlexRowCenter className="gap-[2px]" key={c}>
-                    <span className="text-[11px] leading-[13px] font-light font-pp text-gray-103">
-                      {c}
-                    </span>
-                    {categories[categories.length - 1] !== c && (
-                      <span className="h-[3px] w-[3px] rounded-full text-[6px] bg-teal-100"></span>
-                    )}
-                  </FlexRowCenter>
-                );
-              })}
-          </FlexRowCenterBtw>
+            {/* categories */}
+            <FlexRowCenterBtw className="w-auto gap-2 mt-1">
+              {categories &&
+                categories.map((c) => {
+                  return (
+                    <FlexRowCenter className="gap-[2px]" key={c}>
+                      <span className="text-[11px] leading-[13px] font-light font-pp text-gray-103">
+                        {c}
+                      </span>
+                      {categories[categories.length - 1] !== c && (
+                        <span className="h-[3px] w-[3px] rounded-full text-[6px] bg-teal-100"></span>
+                      )}
+                    </FlexRowCenter>
+                  );
+                })}
+            </FlexRowCenterBtw>
 
-          {/* location */}
-          <FlexRowStartCenter className="gap-[5px] h-[16px] py-[15px]">
-            <MapPin size={15} className="stroke-gray-100/70" />
-            <span className="text-[13px] font-normal font-pp text-blue-200 mt-[3px]">
-              {location}
-            </span>
-          </FlexRowStartCenter>
-
-          {/* opening time */}
-          <FlexRowStartCenter className="w-full">
-            <FlexRowStartCenter className="w-full gap-[10px] whitespace-nowrap">
-              {hasBusinessClosed && hasBusinessClosed.isOpened ? (
-                <>
-                  <span className="text-[11px] font-normal font-pp leading-[13px] text-teal-100">
-                    Open
-                  </span>
-                  <span className="h-[3px] w-[3px] rounded-full text-[6px] bg-dark-105"></span>
-
-                  <span className="text-[11px] font-normal font-pp leading-[13px]">
-                    Closes {hasBusinessClosed.closingTime}
-                  </span>
-                </>
-              ) : (
-                <span className="text-[11px] font-normal font-pp leading-[13px] text-red-301">
-                  Closed
-                </span>
-              )}
+            {/* location */}
+            <FlexRowStartCenter className="gap-[5px] h-[16px] py-[15px]">
+              <MapPin size={15} className="stroke-gray-100/70" />
+              <span className="text-[13px] font-normal font-pp text-blue-200 mt-[3px]">
+                {location}
+              </span>
             </FlexRowStartCenter>
 
-            <FlexRowEnd className="w-full">
-              <button
-                // href={`tel:${phone}`}
-                onClick={() => null}
-                // onClick={() => window.open(`tel:${phone}`)}
-                className="flex flex-row items-center justify-center text-blue-200 bg-blue-202 w-[35px] h-[25px] px-[5px] rounded-full gap-[5px] text-[12px] businesss-call-line"
-              >
-                <Phone size={15} className="stroke-blue-200/80" />
-              </button>
-            </FlexRowEnd>
-          </FlexRowStartCenter>
-        </FlexColStart>
-      </FlexRowStartCenter>
-    </CardWrapper>
-    // </CardNavigateWrapper>
+            {/* opening time */}
+            <FlexRowCenterBtw className="w-full">
+              <FlexRowStartCenter className="w-full gap-[10px] whitespace-nowrap">
+                {hasBusinessClosed && hasBusinessClosed.isOpened ? (
+                  <>
+                    <span className="text-[11px] font-normal font-pp leading-[13px] text-teal-100">
+                      Open
+                    </span>
+                    <span className="h-[3px] w-[3px] rounded-full text-[6px] bg-dark-105"></span>
+
+                    <span className="text-[11px] font-normal font-pp leading-[13px]">
+                      Closes {hasBusinessClosed.closingTime}
+                    </span>
+                  </>
+                ) : (
+                  <span className="text-[11px] font-normal font-pp leading-[13px] text-red-301">
+                    Closed
+                  </span>
+                )}
+              </FlexRowStartCenter>
+
+              <FlexRowEnd className="w-full">
+                <button
+                  // href={`tel:${phone}`}
+                  onClick={() => null}
+                  // onClick={() => window.open(`tel:${phone}`)}
+                  className="flex flex-row items-center justify-center text-blue-200 bg-blue-202 w-[35px] h-[25px] px-[5px] rounded-full gap-[5px] text-[12px] businesss-call-line"
+                >
+                  <Phone size={15} className="stroke-blue-200/80" />
+                </button>
+              </FlexRowEnd>
+            </FlexRowCenterBtw>
+          </FlexColStart>
+        </FlexRowStartCenter>
+      </CardWrapper>
+    </CardNavigateWrapper>
   );
 };
 
