@@ -178,7 +178,7 @@ const OperationInfo: FC<OperationInfoProps> = ({
                 <div className="grid grid-cols-3 items-start gap-4 w-full">
                   <div className="flex flex-col">
                     <Select
-                      // label="Business open time"
+                      label="Day"
                       name="openTime"
                       formikValue={formik.values.openTime}
                       formik={formik}
@@ -191,7 +191,7 @@ const OperationInfo: FC<OperationInfoProps> = ({
                   <div className="flex flex-col">
 
                     <Select
-                      // label="Business close time"
+                      label="Opening hour"
                       name="closeTime"
                       formikValue={formik.values.closeTime}
                       formik={formik}
@@ -203,7 +203,7 @@ const OperationInfo: FC<OperationInfoProps> = ({
 
                   <div className="flex flex-col" >
                     <MultiSelect
-                      // label="Days of operation"
+                      label="Closing hour"
                       placeholder={"--"}
                       // placeholder={"Days of operation"}
                       name="daysOfOperation"
