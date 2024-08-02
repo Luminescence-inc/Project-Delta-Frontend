@@ -205,7 +205,7 @@ const Home = () => {
           >
             <Button
               intent="primary"
-              href="/search"
+              href="/search?cn=Canada"
               className="w-[303px] h-[55px] px-[15px] py-[15px] rounded-md border-[1px] border-white-100 "
               rightIcon={
                 <CtaArrow strokeWidth={0.4} className="stroke-white-100" />
