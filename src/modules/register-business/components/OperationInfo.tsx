@@ -20,7 +20,6 @@ import {
   LinkedIn,
   Globe,
   X,
-  CircleUser,
 } from "@components/icons";
 import { cn } from "@/lib/utils";
 import { toast } from "react-toastify";
@@ -121,10 +120,10 @@ const OperationInfo: FC<OperationInfoProps> = ({
           {(i: number) => {
             const Tag = i === 0 ? 'div' : SlideDown
             return (
-              <Tag key={i} className='repeater-wrapper  w-full'>
+              <Tag key={i} className='repeater-wrapper relative w-full'>
                 {count > 1 && <span className={`${i == 0 ? "hidden" : ""} absolute -right-1 -top-1 z-50 cursor-pointer`} onClick={deleteForm}>
                   <button
-                    className={`${i == 0 ? "hidden" : ""} p-1 rounded-full  bg-blue-200 flex flex-col items-center justify-center`}
+                    className={`p-1 rounded-full  bg-blue-200 flex flex-col items-center justify-center`}
                     onClick={deleteForm}
                   >
                     <X size={12} className="stroke-white-100" />
@@ -145,7 +144,7 @@ const OperationInfo: FC<OperationInfoProps> = ({
                       name="Days"
                       formikValue={formik.values.daysOfOperationOG}
                       formik={formik}
-                      placeholder={"--"}
+                      placeholder={"ejhbifuweiufhweiufhwe"}
                       options={DAYS_OF_OPERATIONS_OPTIONS}
                     />
                   </div>
@@ -155,7 +154,7 @@ const OperationInfo: FC<OperationInfoProps> = ({
                       name="openTime"
                       formikValue={formik.values.openTime}
                       formik={formik}
-                      placeholder={"--"}
+                      placeholder={"ewfwefwefwe"}
                       options={OPERATING_TIME_OPTIONS}
                     />
                   </div>
