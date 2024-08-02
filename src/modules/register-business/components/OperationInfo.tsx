@@ -13,7 +13,7 @@ import Button from "@components/ui/button";
 import Select from "@/components/Select";
 import MultiSelect from "@/components/MultiSelect";
 import { FlexColStart, FlexColStartCenter, FlexRowCenter } from "@components/Flex";
-import { Mail, Phone, Plus } from "@/components/icons";
+import { Mail, Phone, AddMore, AddMoreClose } from "@/components/icons";
 import {
   Instagram,
   Facebook,
@@ -123,6 +123,12 @@ const OperationInfo: FC<OperationInfoProps> = ({
     margin: "0px",
   };
 
+   // ** Deletes form
+   const deleteForm = (e: any) => {
+    e.preventDefault()
+    e.target.closest('.repeater-wrapper').remove()
+  }
+
   return (
     <FlexColStart className="w-full h-full bg-gray-200  pb-[150px] ">
       <FlexColStartCenter className="w-full h-auto text-center bg-white-100 px-3 pb-[23px] gap-0">
@@ -170,20 +176,27 @@ const OperationInfo: FC<OperationInfoProps> = ({
           </label>
         </div>
 
+        <div className="grid grid-cols-3 gap-4 w-full text-[13px] text-start font-normal text-gray-202 leading-[15.51px]">
+          <span>Day</span>
+          <span>Opening hour</span>
+          <span>Closing hour</span>
+        </div>
+
         <Repeater {...{ count }}>
           {(i: number) => {
             const Tag = i === 0 ? 'div' : SlideDown
             return (
-              <Tag key={i} className='repeater-wrapper'>
+              <Tag key={i} className='repeater-wrapper relative'>
+              {count > i && <span className="absolute -right-1 -top-1 z-50 flex items-center justify-center cursor-pointer rounded-full" onClick={deleteForm}>
+                <AddMoreClose />
+                </span>}
                 <div className="grid grid-cols-3 items-start gap-4 w-full">
                   <div className="flex flex-col">
                     <Select
-                      label="Day"
                       name="openTime"
                       formikValue={formik.values.openTime}
                       formik={formik}
                       placeholder={"--"}
-                      // placeholder={"Business open time"}
                       options={OPERATING_TIME_OPTIONS}
                     />
                   </div>
@@ -191,21 +204,17 @@ const OperationInfo: FC<OperationInfoProps> = ({
                   <div className="flex flex-col">
 
                     <Select
-                      label="Opening hour"
                       name="closeTime"
                       formikValue={formik.values.closeTime}
                       formik={formik}
                       placeholder={"--"}
-                      // placeholder={"Business close time"}
                       options={OPERATING_TIME_OPTIONS}
                     />
                   </div>
 
                   <div className="flex flex-col" >
                     <MultiSelect
-                      label="Closing hour"
                       placeholder={"--"}
-                      // placeholder={"Days of operation"}
                       name="daysOfOperation"
                       isSearch
                       formikValue={filterDaysOfOperation}
@@ -219,10 +228,10 @@ const OperationInfo: FC<OperationInfoProps> = ({
           }}
         </Repeater>
 
-        <div className='flex items-start'>
-          <Button color='primary' size='sm' className='bg-white-100 text-blue-200' onClick={() => setCount(count + 1)}>
-            <Plus size={14} className='me-25'></Plus> <span className='underline'>Add more</span>
-          </Button>
+        <div className='flex items-start w-full gap-3'>
+          <div  className='flex items-center text-[13px] leading-[15.87px] font-medium bg-white-100 text-blue-200 p-4 cursor-pointer' onClick={() => setCount(count + 1)}>
+            <AddMore className='me-4' /> <span className='underline'>Add more</span>
+          </div>
         </div>
 
 
