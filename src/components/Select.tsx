@@ -96,7 +96,7 @@ const Select = ({ label, options, name, formikValue, formik, required }: ISelect
       {showDropdown && (
         <div
           ref={dropdownRef}
-          className="w-full items-center relative border-[1px] border-gray-102 shadow-md py-4 px-6  rounded-[8px]"
+          className="w-full items-center relative border-[1px] border-gray-102 shadow-md py-4 px-3  rounded-[8px]"
         >
           <FlexColStart className="w-full border-b-[1px] border-b-white-300 py-1">
             {selectedValue ? (
