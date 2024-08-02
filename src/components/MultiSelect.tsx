@@ -5,6 +5,7 @@ import Button from "@components/ui/button";
 import SelectedPlaceholder from "@components/SelectedPlaceholder";
 import { FlexColStart, FlexRowCenter } from "@components/Flex";
 import { cn } from "@/lib/utils";
+import { ClickOutside } from "./hooks/useClickOutside";
 
 interface ISelect {
   label?: string;
@@ -41,7 +42,7 @@ const MultiSelect = ({
   }, [formikValue]);
 
   const toggleDropdown = () => {
-    setShowDropdown(!showDropdown);
+    setShowDropdown(prev => !prev);
   };
 
   const handleSelect = (option: IOption) => {
@@ -110,11 +111,11 @@ const MultiSelect = ({
           type={name}
         />
       </FlexColStart>
-
+    <ClickOutside onClickOutside={() => setShowDropdown(false)}>
       {showDropdown && (
         <FlexColStart
           ref={dropdownRef}
-          className="w-full gap-5 shadow-lg outline outline-[1px] outline-gray-100/10  px-3 py-3 rounded-md"
+          className="w-full gap-5 shadow-lg outline border border-gray-102 outline-[1px] outline-gray-100/10  px-3 py-3 rounded-md"
         >
          {isSearch && <input
             type="text"
@@ -152,6 +153,7 @@ const MultiSelect = ({
           </div>
         </FlexColStart>
       )}
+       </ClickOutside>
     </>
   );
 };
@@ -178,12 +180,12 @@ function ListComponent({
       key={option.uuid}
       onClick={() => handleSelect(option)}
     >
-      <input
+      {/* <input
         id="default-checkbox"
         type="checkbox"
         className="w-4 h-4 text-blue-600 bg-white-100 border-blue-200 rounded focus:ring-blue-500 focus:ring-2"
         checked={isSelected(option)}
-      />
+      /> */}
       <label className="relative text-dark-100/50 -top-1 font-pp font-medium cursor-pointer">
         {option.value}
       </label>

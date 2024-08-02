@@ -123,8 +123,8 @@ const OperationInfo: FC<OperationInfoProps> = ({
     margin: "0px",
   };
 
-   // ** Deletes form
-   const deleteForm = (e: any) => {
+  // ** Deletes form
+  const deleteForm = (e: any) => {
     e.preventDefault()
     e.target.closest('.repeater-wrapper').remove()
   }
@@ -186,11 +186,29 @@ const OperationInfo: FC<OperationInfoProps> = ({
           {(i: number) => {
             const Tag = i === 0 ? 'div' : SlideDown
             return (
-              <Tag key={i} className='repeater-wrapper relative'>
-              {count > i && <span className="absolute -right-1 -top-1 z-50 flex items-center justify-center cursor-pointer rounded-full" onClick={deleteForm}>
-                <AddMoreClose />
+              <Tag key={i} className='repeater-wrapper  w-full'>
+                {count > 1 && <span className={`${i == 0 ? "!hidden" : ""} absolute -right-1 -top-1 z-50 cursor-pointer`} onClick={deleteForm}>
+                  {/* <AddMoreClose /> */}
+                  <button
+                    className="p-1 rounded-full  bg-blue-200 flex flex-col items-center justify-center"
+                    onClick={deleteForm}
+                  >
+                    <X size={12} className="stroke-white-100" />
+                  </button>
                 </span>}
+
                 <div className="grid grid-cols-3 items-start gap-4 w-full">
+                  <div className="flex flex-col">
+                    <MultiSelect
+                      placeholder={"Days"}
+                      name="daysOfOperation"
+                      isSearch={false}
+                      formikValue={filterDaysOfOperation}
+                      formik={formik}
+                      options={DAYS_OF_OPERATIONS_OPTIONS}
+                    />
+                  </div>
+
                   <div className="flex flex-col">
                     <Select
                       name="openTime"
@@ -212,16 +230,6 @@ const OperationInfo: FC<OperationInfoProps> = ({
                     />
                   </div>
 
-                  <div className="flex flex-col" >
-                    <MultiSelect
-                      placeholder={"--"}
-                      name="daysOfOperation"
-                      isSearch
-                      formikValue={filterDaysOfOperation}
-                      formik={formik}
-                      options={DAYS_OF_OPERATIONS_OPTIONS}
-                    />
-                  </div>
                 </div>
               </Tag>
             )
@@ -229,7 +237,7 @@ const OperationInfo: FC<OperationInfoProps> = ({
         </Repeater>
 
         <div className='flex items-start w-full gap-3'>
-          <div  className='flex items-center text-[13px] leading-[15.87px] font-medium bg-white-100 text-blue-200 p-4 cursor-pointer' onClick={() => setCount(count + 1)}>
+          <div className='flex items-center text-[13px] leading-[15.87px] font-medium bg-white-100 text-blue-200 p-4 cursor-pointer' onClick={() => setCount(count + 1)}>
             <AddMore className='me-4' /> <span className='underline'>Add more</span>
           </div>
         </div>
@@ -239,7 +247,7 @@ const OperationInfo: FC<OperationInfoProps> = ({
 
 
         <h4 className="mt-[30px] text-[13px] text-base leading-[21.79px] font-pp font-semibold text-blue-200">
-            Upload social media links(optional)
+          Upload social media links<span className="text-gray-103 text-[13px] leading-[17.7px]">(optional)</span>
         </h4>
         <br />
         {socialMediaLinksInput.map((socialIconName) => (

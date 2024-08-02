@@ -8,6 +8,7 @@ import {
   FlexRowCenterBtw,
 } from "@/components/Flex";
 import { cn } from "@/lib/utils";
+import { ClickOutside } from "./hooks/useClickOutside";
 
 interface ISelect {
   label?: string;
@@ -53,7 +54,7 @@ const Select = ({ label, options, name, formikValue, formik, required }: ISelect
   };
 
   const toggleDropdown = () => {
-    setShowDropdown(!showDropdown);
+    setShowDropdown(prev => !prev);
   };
 
   return (
@@ -64,7 +65,7 @@ const Select = ({ label, options, name, formikValue, formik, required }: ISelect
         </label>
         <button
           className="w-full border-none outline-none bg-none cursor-pointer"
-          onClick={toggleDropdown}
+          
         >
           <FlexRowCenter className="w-full relative">
             <input
@@ -90,7 +91,8 @@ const Select = ({ label, options, name, formikValue, formik, required }: ISelect
           </FlexRowCenter>
         </button>
       </FlexColStart>
-
+      
+      <ClickOutside onClickOutside={() => setShowDropdown(false)}>
       {showDropdown && (
         <div
           ref={dropdownRef}
@@ -109,7 +111,7 @@ const Select = ({ label, options, name, formikValue, formik, required }: ISelect
               </FlexRowCenterBtw>
             ) : (
               <span className="px-3 font-pp text-[12px] text-dark-104">
-                Select...
+               
               </span>
             )}
           </FlexColStart>
@@ -143,6 +145,7 @@ const Select = ({ label, options, name, formikValue, formik, required }: ISelect
           </div>
         </div>
       )}
+        </ClickOutside>
     </>
   );
 };
