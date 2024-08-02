@@ -42,6 +42,7 @@ export default function useLocationBasedFilters({
     const countryFilter = filters.find((f) => f.targetFieldName === "country");
 
     if (!countryFilter) {
+      console.log("NO COUNTRY");
       const country = location?.country;
       const state = location?.state;
       const city = location?.city;
@@ -55,15 +56,15 @@ export default function useLocationBasedFilters({
         } else {
           filters.push({ targetFieldName: "country", values: [country] });
 
-          if (state) {
-            filters.push({
-              targetFieldName: "stateAndProvince",
-              values: [state],
-            });
-          }
-          if (city) {
-            filters.push({ targetFieldName: "city", values: [city] });
-          }
+          // if (state) {
+          //   filters.push({
+          //     targetFieldName: "stateAndProvince",
+          //     values: [state],
+          //   });
+          // }
+          // if (city) {
+          //   filters.push({ targetFieldName: "city", values: [city] });
+          // }
         }
       }
     } else {
@@ -80,19 +81,19 @@ export default function useLocationBasedFilters({
           //! This was commented out to prevent forcing the
           // ! city and state from getting added to address bar
           // ! when the user default location (country) is supported.
-          // if (location) {
-          //   const state = location.state;
-          //   const city = location.city;
-          //   if (state) {
-          //     filters.push({
-          //       targetFieldName: "stateAndProvince",
-          //       values: [state],
-          //     });
-          //   }
-          //   if (city) {
-          //     filters.push({ targetFieldName: "city", values: [city] });
-          //   }
-          // }
+          if (location) {
+            const state = location.state;
+            const city = location.city;
+            if (state) {
+              filters.push({
+                targetFieldName: "stateAndProvince",
+                values: [state],
+              });
+            }
+            if (city) {
+              filters.push({ targetFieldName: "city", values: [city] });
+            }
+          }
         } else {
           const isLocationCountrySupported =
             countryHelpers.isCountrySupportedByName(location?.country!);
@@ -112,7 +113,7 @@ export default function useLocationBasedFilters({
         a.findIndex((t) => t.targetFieldName === v.targetFieldName) === i
     );
     return nonDuplicateFilters;
-  }, [searchQuery, loading, search, location]);
+  }, [loading, search]);
 
   useEffect(() => {
     if (loading || !uniqueFilters || !location) return;

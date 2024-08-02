@@ -84,16 +84,16 @@ export default function BusinessContextProvider({
   const [socialLinksError, setSocialLinksError] = useState<string | null>(null);
 
   // location based filters
-  useLocationBasedFilters({
-    searchQuery,
-    setSearchQuery,
-    setFilterData,
-    filterData,
-    bizCategories: businessCategory,
-    getBusinesses: (currPage, filterApplied, searchQuery) => {
-      getBusinesses(currPage, filterApplied, searchQuery);
-    },
-  });
+  // useLocationBasedFilters({
+  //   searchQuery,
+  //   setSearchQuery,
+  //   setFilterData,
+  //   filterData,
+  //   bizCategories: businessCategory,
+  //   getBusinesses: (currPage, filterApplied, searchQuery) => {
+  //     getBusinesses(currPage, filterApplied, searchQuery);
+  //   },
+  // });
 
   // all business categories
   useEffect(() => {

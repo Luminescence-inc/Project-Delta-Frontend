@@ -10,17 +10,25 @@ import BusinessCardContainer from "@/modules/search/components/BusinessCard";
 import BusinessesFilterComponent from "@components/BusinessFilter";
 import { UserBusinessList, type IOption } from "@/types/business";
 import { FilterData, useBusinessCtx } from "@context/BusinessCtx";
-import { type IFilter } from "@/types/business-profile";
+import { type IFilter, type INFilters } from "@/types/business-profile";
 import { LoaderComponent } from "@components/Loader";
 import { useCallback, useEffect, useState } from "react";
 import Input from "@/components/ui/input";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import { extractQueryParams, forceReloadClientPage } from "@/utils";
+import {
+  constructNSearchUrl,
+  extractQueryParams,
+  forceReloadClientPage,
+  overrideQueryParameters,
+} from "@/utils";
 import useTrackPageSearch from "@/hooks/useTrackSearch";
-import { prevPageSearchKeyName } from "@/config";
+import { DEFAULT_COUNTRY, prevPageSearchKeyName } from "@/config";
 import { useDataCtx } from "@/context/DataCtx";
 import { useRouter } from "next/navigation";
+import NBusinessFilter from "@/components/NewFilterComponent/NBusinessFilter";
+import { useLocation } from "@/hooks/useLocation";
+import countryHelpers from "@/helpers/countries-states-city/country";
 
 dayjs.extend(relativeTime);
 
@@ -37,9 +45,20 @@ export default function MainSearchPageComponent() {
   } = useBusinessCtx();
   const { setNavbarBgColor } = useDataCtx();
   const router = useRouter();
+  const { loading, location } = useLocation();
   const [showFilter, setShowFilter] = useState<boolean>(false);
   const [query, setQuery] = useState<string | null>(null);
   const [urlSearchQuery, setUrlSearchQuery] = useState<string>("");
+  const [nFilters, setNFilters] = useState<INFilters>({
+    category: null,
+    country: null,
+    stateAndProvince: null,
+    city: null,
+    pagination: {
+      page: 1,
+      limit: 10,
+    },
+  });
   const [headline, setHeadline] = useState({
     title: "",
     businesses: "",
@@ -48,9 +67,11 @@ export default function MainSearchPageComponent() {
   // track the page location search query
   const prevPageSearch = useTrackPageSearch();
 
+  const nSearchParam = constructNSearchUrl(nFilters);
+
   // construct the search query
-  const constructQuery = (filterData: FilterData) => {
-    const query: IFilter[] = [];
+  const constructQuery = (filterData: INFilters) => {
+    const params = new URLSearchParams(window.location.search);
     for (let key in filterData) {
       // @ts-expect-error
       const val = filterData[key];
@@ -62,109 +83,162 @@ export default function MainSearchPageComponent() {
 
         // make sure the value isn't undefined
         if (queryValues[0]) {
-          query.push({
-            targetFieldName: key,
-            values: queryValues,
-          });
+          params.set(
+            key === "category" ? "cat" : key,
+            encodeURIComponent(queryValues[0])
+          );
         }
       }
     }
-    setSearchQuery({
-      filters: query,
-    });
-
     forceReloadClientPage();
   };
 
-  const generateHeadlineFromQuery = () => {
-    let state = null,
-      country = null,
-      city = null,
-      query = null;
+  const extractFilterFromQueryParam = useCallback(() => {
     const { filters } = extractQueryParams();
-    country = filters.find((it) => it.targetFieldName === "country");
-    state = filters.find((it) => it.targetFieldName === "stateAndProvince");
-    city = filters.find((it) => it.targetFieldName === "city");
-    query = filters.find((it) => it.targetFieldName === "query");
-
-    return {
-      country: country?.values[0],
-      state: state?.values[0],
-      city: city?.values[0],
-      query: query?.values[0],
-    };
-  };
-
-  useEffect(() => {
-    if (searchQuery) {
-      setShowFilter(false);
-    }
-  }, [searchQuery]);
-
-  useEffect(() => {
-    if (allBusinessesLoading) return;
-    const { country, state, city, query } = generateHeadlineFromQuery();
-
-    if (businesses && businesses.length === 0) {
-      const locHeadline = (country: string, state: string, city: string) => {
-        if (country && state) {
-          return `Near '${country}, ${state}'`;
-        } else if (state && country) {
-          return `Near '${state}, ${country}'`;
-        } else if (city) {
-          return `Near '${city}'`;
-        } else if (state) {
-          return `Near '${state}'`;
-        } else if (country) {
-          return `In '${country}'`;
-        }
-      };
-
-      setHeadline({
-        title: `No result for${
-          query ? " '" + query + "'" : " businesses"
-        } ${locHeadline(country!, state!, city!)}`,
-        businesses: "",
-      });
-      return;
-    }
-
-    const top10BusinessesName = businesses
-      ?.map((b) => b.name)
-      .slice(0, 10)
-      .join(" - ");
-
-    let title = `Explore ${query ? `"${query}" Businesses` : "Businesses"}`;
-
-    if (city && state) {
-      title += ` Near ${city}, ${state}`;
-    } else if (state && country) {
-      title += ` Near ${state}, ${country}`;
-    } else if (city) {
-      title += ` Near ${city}`;
-    } else if (state) {
-      title += ` Near ${state}`;
-    } else if (country) {
-      title += ` in ${country}`;
-    } else {
-      title = `Explore ${
-        query ? `"${query}" Businesses` : "Businesses"
-      } Near You`;
-    }
-
-    setHeadline({
-      title,
-      businesses: top10BusinessesName,
+    filters.forEach((f) => {
+      setNFilters((p) => ({
+        ...p,
+        [f.targetFieldName === "businessCategoryUuid"
+          ? "category"
+          : f.targetFieldName]: decodeURIComponent(f.values[0]),
+      }));
     });
-  }, [businesses, allBusinessesLoading]);
+  }, []);
+
+  const updateUrlQueryParam = useCallback(
+    (key: string, value: string) => {
+      const search = new URLSearchParams(window.location.search);
+      search.set(key, value);
+      window.history.replaceState(
+        {},
+        "",
+        `${window.location.pathname}?${search.toString()}`
+      );
+    },
+    [router]
+  );
+
+  const handleLocationBaseFilter = useCallback(async () => {
+    if (!loading && location) {
+      const isoCode = location.countryCode;
+      const { filters } = extractQueryParams();
+      const isCountrySupported = countryHelpers.isCountrySupportedByIsoCode(
+        isoCode!
+      );
+
+      const filterCopy = nFilters;
+
+      if (!isCountrySupported) {
+        filterCopy.country = DEFAULT_COUNTRY;
+      } else {
+        const countryExists = filters.find(
+          (f) => f.targetFieldName === "country"
+        );
+        if (!countryExists) {
+          filterCopy.country = location.country!;
+        }
+      }
+      setNFilters(filterCopy);
+      overrideQueryParameters({
+        cn: filterCopy.country!,
+      });
+    }
+  }, [loading, location]);
 
   useEffect(() => {
-    const search = localStorage.getItem(prevPageSearchKeyName) || "";
-    if (search.length > 0) {
-      const query = new URLSearchParams(search);
-      setUrlSearchQuery(query.get("query") || "");
-    }
-  }, [prevPageSearch]);
+    extractFilterFromQueryParam();
+    handleLocationBaseFilter();
+  }, [extractFilterFromQueryParam, handleLocationBaseFilter]);
+
+  // const generateHeadlineFromQuery = () => {
+  //   let state = null,
+  //     country = null,
+  //     city = null,
+  //     query = null;
+  //   const { filters } = extractQueryParams();
+  //   country = filters.find((it) => it.targetFieldName === "country");
+  //   state = filters.find((it) => it.targetFieldName === "stateAndProvince");
+  //   city = filters.find((it) => it.targetFieldName === "city");
+  //   query = filters.find((it) => it.targetFieldName === "query");
+
+  //   return {
+  //     country: country?.values[0],
+  //     state: state?.values[0],
+  //     city: city?.values[0],
+  //     query: query?.values[0],
+  //   };
+  // };
+
+  // useEffect(() => {
+  //   if (searchQuery) {
+  //     setShowFilter(false);
+  //   }
+  // }, [searchQuery]);
+
+  // useEffect(() => {
+  //   if (allBusinessesLoading) return;
+  //   const { country, state, city, query } = generateHeadlineFromQuery();
+
+  //   if (businesses && businesses.length === 0) {
+  //     const locHeadline = (country: string, state: string, city: string) => {
+  //       if (country && state) {
+  //         return `Near '${country}, ${state}'`;
+  //       } else if (state && country) {
+  //         return `Near '${state}, ${country}'`;
+  //       } else if (city) {
+  //         return `Near '${city}'`;
+  //       } else if (state) {
+  //         return `Near '${state}'`;
+  //       } else if (country) {
+  //         return `In '${country}'`;
+  //       }
+  //     };
+
+  //     setHeadline({
+  //       title: `No result for${
+  //         query ? " '" + query + "'" : " businesses"
+  //       } ${locHeadline(country!, state!, city!)}`,
+  //       businesses: "",
+  //     });
+  //     return;
+  //   }
+
+  //   const top10BusinessesName = businesses
+  //     ?.map((b) => b.name)
+  //     .slice(0, 10)
+  //     .join(" - ");
+
+  //   let title = `Explore ${query ? `"${query}" Businesses` : "Businesses"}`;
+
+  //   if (city && state) {
+  //     title += ` Near ${city}, ${state}`;
+  //   } else if (state && country) {
+  //     title += ` Near ${state}, ${country}`;
+  //   } else if (city) {
+  //     title += ` Near ${city}`;
+  //   } else if (state) {
+  //     title += ` Near ${state}`;
+  //   } else if (country) {
+  //     title += ` in ${country}`;
+  //   } else {
+  //     title = `Explore ${
+  //       query ? `"${query}" Businesses` : "Businesses"
+  //     } Near You`;
+  //   }
+
+  //   setHeadline({
+  //     title,
+  //     businesses: top10BusinessesName,
+  //   });
+  // }, [businesses, allBusinessesLoading]);
+
+  // useEffect(() => {
+  //   const search = localStorage.getItem(prevPageSearchKeyName) || "";
+  //   if (search.length > 0) {
+  //     const query = new URLSearchParams(search);
+  //     setUrlSearchQuery(query.get("query") || "");
+  //   }
+  // }, [prevPageSearch]);
 
   useEffect(() => {
     const searchParam = new URLSearchParams(window.location.search);
@@ -320,11 +394,11 @@ export default function MainSearchPageComponent() {
       </FlexRowStartCenter>
 
       <FlexColCenter className="w-full">
-        {allBusinessesLoading && (
+        {/* {allBusinessesLoading && (
           <div className="mt-5">
             <LoaderComponent />
           </div>
-        )}
+        )} */}
 
         {/* not found msg */}
         {!allBusinessesLoading && businesses?.length === 0 && (
@@ -336,25 +410,34 @@ export default function MainSearchPageComponent() {
         )}
       </FlexColCenter>
 
+      <NBusinessFilter
+        nFilters={nFilters}
+        setNFilters={setNFilters}
+        onClose={() => {}}
+        onApplyFilters={() => {
+          constructQuery(nFilters);
+        }}
+      />
+
       {/* business card lists */}
-      {!allBusinessesLoading && (
+      {/* {!allBusinessesLoading && (
         <BusinessCardContainer
           data={businesses as UserBusinessList[]}
           businessCategories={businessCategory}
         />
-      )}
+      )} */}
 
       {/* {businesses?.length > 0 && !allBusinessesLoading && (
         <Pagination totalPages={totalPages} />
       )} */}
 
       {/* Filtering component */}
-      <BusinessesFilterComponent
+      {/* <BusinessesFilterComponent
         closeFilter={() => setShowFilter(false)}
         getfilterData={(filter) => constructQuery(filter)}
         businessesCategories={businessCategory}
         showFilter={showFilter}
-      />
+      /> */}
     </FlexColStart>
   );
 }

@@ -1,5 +1,5 @@
 import { CloudinaryConfig } from "@/config";
-import type { ISearch } from "@/types/business-profile";
+import type { INFilters, ISearch } from "@/types/business-profile";
 
 const defaultImg = "/assets/images/default-img.jpeg";
 
@@ -102,6 +102,7 @@ export const constructBizImgUrl = (url: string | null) => {
 
 const replacedFilterNames = {
   businessCategoryUuid: "cat",
+  category: "cat",
   stateAndProvince: "st",
   state: "st",
   city: "cty",
@@ -195,6 +196,23 @@ export const constructSearchUrl = (
   return query.join("&");
 };
 
+export const constructNSearchUrl = (filters: INFilters) => {
+  const query: string[] = [];
+  for (const [key, value] of Object.entries(filters)) {
+    if (key === "pagination") {
+      for (const [k, v] of Object.entries(value)) {
+        query.push(`${k}=${v}`);
+      }
+      continue;
+    }
+    if (value && key !== "pagination") {
+      query.push(`${replacedFilterNames[key as QueryKey]}=${encodeURI(value)}`);
+    }
+  }
+
+  return query.join("&");
+};
+
 export const forceReloadClientPage = (time?: number) => {
   // force reload the page to update the search query
   // fetch business data
@@ -202,4 +220,24 @@ export const forceReloadClientPage = (time?: number) => {
   setTimeout(() => {
     window.location.reload();
   }, time ?? 10);
+};
+
+export const lowerCase = (str: string | null) => {
+  if (!str) return str;
+  return str.toLowerCase();
+};
+
+export const upperCase = (str: string | null) => {
+  if (!str) return str;
+  return str.toUpperCase();
+};
+
+export const overrideQueryParameters = (newParams: Record<string, string>) => {
+  const urlObj = new URL(window.location.href);
+  const params = new URLSearchParams();
+  Object.keys(newParams).forEach((key) => {
+    params.set(key, newParams[key]);
+  });
+  urlObj.search = params.toString();
+  window.history.replaceState({}, "", urlObj.toString());
 };

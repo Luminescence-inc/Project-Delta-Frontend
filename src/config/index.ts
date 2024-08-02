@@ -11,3 +11,5 @@ export const CloudinaryConfig = {
 
 export const prevPageLocalKeyName = "bizconnect_prev_page";
 export const prevPageSearchKeyName = "bizconnect_prev_page_search";
+export const prevLocationSearchKeyName = "bizconnect_prev_location_search";
+export const DEFAULT_COUNTRY = "Canada";

@@ -214,6 +214,15 @@ module.exports = {
             transform: "scale(0.85)",
           },
         },
+        ".enableMiniBounceEffect": {
+          transition: "all 0.1s",
+          "&:target": {
+            transform: "scale(1)",
+          },
+          "&:active": {
+            transform: "scale(0.99)",
+          },
+        },
         ".flex-center": {
           display: "flex",
           justifyContent: "center",

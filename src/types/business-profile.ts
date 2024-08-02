@@ -46,3 +46,15 @@ export interface IFilter {
 export interface ISearch {
   filters: IFilter[];
 }
+
+export interface INFilters {
+  category: string | null;
+  country: string | null;
+  stateAndProvince: string | null;
+  city: string | null;
+  query?: string;
+  pagination?: {
+    page?: number;
+    limit?: number;
+  };
+}
