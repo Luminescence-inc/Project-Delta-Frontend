@@ -19,7 +19,6 @@ import {
   Facebook,
   LinkedIn,
   Globe,
-  ArrowBigUpDash,
   X,
   CircleUser,
 } from "@components/icons";
@@ -33,16 +32,7 @@ import 'react-slidedown/lib/slidedown.css'
 interface OperationInfoProps {
   formik: FormikProps<BusinessProfileFormikPropsValues>;
   businessId?: string | null;
-  isLoading: boolean;
-  deleteLogo: boolean;
-  tabsRef: React.RefObject<HTMLDivElement>;
-  imageFile: File | null | undefined;
-  logoUrl: string | null;
-  isRequiredFieldEmpty: () => { error: boolean; field: string };
-  setActiveTab: React.Dispatch<React.SetStateAction<number>>;
-  setSelectedTab: React.Dispatch<React.SetStateAction<RegisterBusinessTabs>>;
-  setImageFile: React.Dispatch<React.SetStateAction<File | null | undefined>>;
-  setDeleteLogo: React.Dispatch<React.SetStateAction<boolean>>;
+  isLoading: boolean;  
 }
 
 
@@ -58,70 +48,15 @@ const socialMediaLinksInput = [
 const OperationInfo: FC<OperationInfoProps> = ({
   formik,
   businessId,
-  isLoading,
-  imageFile,
-  logoUrl,
-  tabsRef,
-  deleteLogo,
-  setActiveTab,
-  setSelectedTab,
-  setImageFile,
-  setDeleteLogo,
-  isRequiredFieldEmpty
+  isLoading
 }) => {
   const [count, setCount] = useState(1)
-  const [error, setError] = useState<Boolean>(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const filterDaysOfOperation = DAYS_OF_OPERATIONS_OPTIONS.filter((days) => {
     const d = formik.values.daysOfOperation as Array<string>;
     return d.includes(days.value);
   });
-  const handleNextButton = () => {
-    if (tabsRef.current) {
-      tabsRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-    if (isRequiredFieldEmpty().error) {
-      toast.error(`Please fill in the ${isRequiredFieldEmpty().field}`);
-      return;
-    }
-    setActiveTab(1);
-    setSelectedTab("operations-info");
-  };
-
-  const handleImage = (files: FileList | null) => {
-    if (files) {
-      const uploadedFile: File = files[0];
-      const fileTypeExsit = FILE_TYPES.find((ft) => {
-        return ft === uploadedFile.type;
-      });
-      if (fileTypeExsit) {
-        setImageFile(uploadedFile);
-        setError(false);
-      } else {
-        setError(true);
-      }
-    }
-  };
-
-  const handleDelete = () => {
-    setImageFile(null);
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
-  };
-
-  const handleDeleteLogo = () => {
-    setDeleteLogo(!deleteLogo);
-  };
-
-  // Custom Styles
-  const errorMessageStyle = {
-    color: "red",
-    display: "flex",
-    fontSize: "13px",
-    margin: "0px",
-  };
+ 
 
   // ** Deletes form
   const deleteForm = (e: any) => {
@@ -188,7 +123,6 @@ const OperationInfo: FC<OperationInfoProps> = ({
             return (
               <Tag key={i} className='repeater-wrapper  w-full'>
                 {count > 1 && <span className={`${i == 0 ? "!hidden" : ""} absolute -right-1 -top-1 z-50 cursor-pointer`} onClick={deleteForm}>
-                  {/* <AddMoreClose /> */}
                   <button
                     className="p-1 rounded-full  bg-blue-200 flex flex-col items-center justify-center"
                     onClick={deleteForm}

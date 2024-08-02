@@ -551,17 +551,6 @@ const RegisterBusiness = () => {
           formik={formik}
           businessId={businessId}
           isLoading={isLoading}
-          imageFile={imageFile}
-
-          setActiveTab={setActiveTab}
-          setSelectedTab={setSelectedTab}
-          tabsRef={tabsRef}
-          setImageFile={setImageFile}
-          deleteLogo={deleteLogo}
-          logoUrl={logoUrl}
-          setDeleteLogo={setDeleteLogo}
-          isRequiredFieldEmpty={isRequiredFieldEmpty}
-
         />
       )}
 
