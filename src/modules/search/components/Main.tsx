@@ -10,7 +10,11 @@ import BusinessCardContainer from "@/modules/search/components/BusinessCard";
 import BusinessesFilterComponent from "@components/BusinessFilter";
 import { UserBusinessList, type IOption } from "@/types/business";
 import { FilterData, useBusinessCtx } from "@context/BusinessCtx";
-import { type IFilter, type INFilters } from "@/types/business-profile";
+import {
+  type IBusinessProfile,
+  type IFilter,
+  type INFilters,
+} from "@/types/business-profile";
 import { LoaderComponent } from "@components/Loader";
 import { useCallback, useEffect, useState } from "react";
 import Input from "@/components/ui/input";
@@ -29,13 +33,24 @@ import { useRouter } from "next/navigation";
 import NBusinessFilter from "@/components/NewFilterComponent/NBusinessFilter";
 import { useLocation } from "@/hooks/useLocation";
 import countryHelpers from "@/helpers/countries-states-city/country";
+import { useMutation } from "@tanstack/react-query";
+import { searchForBusinesses } from "@/api/business";
+import { toast } from "react-toastify";
+import { Pagination } from "@/components/Pagination";
 
 dayjs.extend(relativeTime);
+
+interface BusinessesData {
+  data: IBusinessProfile[];
+  limit: number;
+  page: number;
+  total: number;
+  totalPages: number;
+}
 
 export default function MainSearchPageComponent() {
   const {
     businessCategory,
-    businesses,
     allBusinessesLoading,
     totalPages,
     setSearchQuery,
@@ -44,6 +59,14 @@ export default function MainSearchPageComponent() {
     searchQuery,
   } = useBusinessCtx();
   const { setNavbarBgColor } = useDataCtx();
+  const [pageLoading, setPageLoading] = useState<boolean>(true);
+  const [businesses, setBusinesses] = useState<BusinessesData>({
+    data: [],
+    limit: 0,
+    page: 0,
+    total: 0,
+    totalPages: 0,
+  });
   const router = useRouter();
   const { loading, location } = useLocation();
   const [showFilter, setShowFilter] = useState<boolean>(false);
@@ -63,11 +86,23 @@ export default function MainSearchPageComponent() {
     title: "",
     businesses: "",
   });
+  const getBusinessesMut = useMutation({
+    mutationFn: async (param: string) => await searchForBusinesses(param),
+    onSuccess: (res) => {
+      const resp = res?.data?.businessProfiles as BusinessesData;
+      setBusinesses(resp);
+      setPageLoading(false);
+    },
+    onError: (error) => {
+      const err = (error as any).response.data;
+      // setError(err.message);
+      setPageLoading(false);
+      toast.error(err.message);
+    },
+  });
 
   // track the page location search query
   const prevPageSearch = useTrackPageSearch();
-
-  const nSearchParam = constructNSearchUrl(nFilters);
 
   // construct the search query
   const constructQuery = (filterData: INFilters) => {
@@ -95,60 +130,64 @@ export default function MainSearchPageComponent() {
 
   const extractFilterFromQueryParam = useCallback(() => {
     const { filters } = extractQueryParams();
+    const paginationKeys = ["page", "limit"];
     filters.forEach((f) => {
-      setNFilters((p) => ({
-        ...p,
-        [f.targetFieldName === "businessCategoryUuid"
-          ? "category"
-          : f.targetFieldName]: decodeURIComponent(f.values[0]),
-      }));
+      if (paginationKeys.includes(f.targetFieldName)) {
+        setNFilters((p) => ({
+          ...p,
+          pagination: {
+            ...p.pagination,
+            [f.targetFieldName]: parseInt(f.values[0]),
+          },
+        }));
+      } else {
+        setNFilters((p) => ({
+          ...p,
+          [f.targetFieldName === "businessCategoryUuid"
+            ? "category"
+            : f.targetFieldName]: decodeURIComponent(f.values[0]),
+        }));
+      }
     });
   }, []);
 
-  const updateUrlQueryParam = useCallback(
-    (key: string, value: string) => {
-      const search = new URLSearchParams(window.location.search);
-      search.set(key, value);
-      window.history.replaceState(
-        {},
-        "",
-        `${window.location.pathname}?${search.toString()}`
-      );
-    },
-    [router]
-  );
-
-  const handleLocationBaseFilter = useCallback(async () => {
+  const handleLocationBaseFilterOnMount = useCallback(async () => {
     if (!loading && location) {
       const isoCode = location.countryCode;
       const { filters } = extractQueryParams();
       const isCountrySupported = countryHelpers.isCountrySupportedByIsoCode(
         isoCode!
       );
-
-      const filterCopy = nFilters;
-
       if (!isCountrySupported) {
-        filterCopy.country = DEFAULT_COUNTRY;
+        nFilters.country = DEFAULT_COUNTRY;
       } else {
         const countryExists = filters.find(
           (f) => f.targetFieldName === "country"
         );
         if (!countryExists) {
-          filterCopy.country = location.country!;
+          nFilters.country = location.country!;
+          nFilters.stateAndProvince = location.state!;
+          nFilters.city = location.city!;
         }
       }
-      setNFilters(filterCopy);
+      setNFilters(nFilters);
       overrideQueryParameters({
-        cn: filterCopy.country!,
+        cn: nFilters.country!,
+        st: nFilters.stateAndProvince!,
+        ct: nFilters.city!,
       });
+
+      if (businesses?.data.length === 0) {
+        const nSearchParam = constructNSearchUrl(nFilters);
+        getBusinessesMut.mutate(nSearchParam);
+      }
     }
   }, [loading, location]);
 
   useEffect(() => {
     extractFilterFromQueryParam();
-    handleLocationBaseFilter();
-  }, [extractFilterFromQueryParam, handleLocationBaseFilter]);
+    handleLocationBaseFilterOnMount();
+  }, [extractFilterFromQueryParam, handleLocationBaseFilterOnMount]);
 
   // const generateHeadlineFromQuery = () => {
   //   let state = null,
@@ -333,6 +372,8 @@ export default function MainSearchPageComponent() {
     []
   );
 
+  console.log({ nFilters });
+
   return (
     <FlexColStart className="w-full h-full bg-blue-204 pb-[2em]">
       <FlexColStart className="w-full h-auto px-[20px] mt-3 gap-[5px]">
@@ -394,28 +435,32 @@ export default function MainSearchPageComponent() {
       </FlexRowStartCenter>
 
       <FlexColCenter className="w-full">
-        {/* {allBusinessesLoading && (
+        {(pageLoading || getBusinessesMut.isPending) && (
           <div className="mt-5">
             <LoaderComponent />
           </div>
-        )} */}
+        )}
 
         {/* not found msg */}
-        {!allBusinessesLoading && businesses?.length === 0 && (
-          <FlexColStartCenter className="w-full">
-            <p className="text-[15px] font-semibold font-inter text-gray-103">
-              No business found. Please modify your search
-            </p>
-          </FlexColStartCenter>
-        )}
+        {(!pageLoading || !getBusinessesMut.isPending) &&
+          businesses?.data?.length === 0 && (
+            <FlexColStartCenter className="w-full">
+              <p className="text-[15px] font-semibold font-inter text-gray-103">
+                No business found. Please modify your search
+              </p>
+            </FlexColStartCenter>
+          )}
       </FlexColCenter>
 
       <NBusinessFilter
+        opened={showFilter}
         nFilters={nFilters}
         setNFilters={setNFilters}
-        onClose={() => {}}
+        onClose={() => setShowFilter(false)}
         onApplyFilters={() => {
-          constructQuery(nFilters);
+          const nSearchParam = constructNSearchUrl(nFilters);
+          getBusinessesMut.mutate(nSearchParam);
+          setShowFilter(false);
         }}
       />
 
@@ -427,9 +472,17 @@ export default function MainSearchPageComponent() {
         />
       )} */}
 
-      {/* {businesses?.length > 0 && !allBusinessesLoading && (
-        <Pagination totalPages={totalPages} />
-      )} */}
+      {businesses?.data?.length > 0 &&
+        !pageLoading &&
+        !getBusinessesMut.isPending && (
+          <Pagination
+            totalPages={businesses.totalPages}
+            urlSearchParam={new URLSearchParams(window.location.search)}
+            activePage={String(businesses.page)}
+            location={window.location}
+            SSR={true}
+          />
+        )}
 
       {/* Filtering component */}
       {/* <BusinessesFilterComponent

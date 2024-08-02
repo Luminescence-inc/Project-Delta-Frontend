@@ -35,9 +35,9 @@ export const getUserBusinessProfileList = () => {
   return $axios.get(url);
 };
 
-export const searchForBusinesses = (queryParams: string) => {
-  const url = `/businesses/search?${queryParams}`;
-  return $axios.get(url);
+export const searchForBusinesses = async (queryParams: string) => {
+  const res = await $axios.get(`/businesses/search?${queryParams}`);
+  return res.data;
 };
 
 export const getBusinessProfileById = (id: string) => {

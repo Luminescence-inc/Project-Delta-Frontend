@@ -68,4 +68,6 @@ export default {
   getStateByCodeAndCountry,
   getStateByCode,
   sortByIsoCode,
+  isStateSupportedByName,
+  isStateSupportedByCode,
 };

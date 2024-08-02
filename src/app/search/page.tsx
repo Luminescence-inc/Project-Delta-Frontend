@@ -22,12 +22,15 @@ const ExploreBusiness = async () => {
 
       {/* pagination */}
       {businesses.length > 0 && (
-        <Pagination
-          totalPages={pagination.totalPages}
-          urlSearchParam={pagination.urlSearchParam}
-          activePage={pagination.activePage}
-          location={pagination.location}
-        />
+        <div className="hidden">
+          <Pagination
+            totalPages={pagination.totalPages}
+            urlSearchParam={pagination.urlSearchParam}
+            activePage={pagination.activePage}
+            location={pagination.location}
+            SSR={true}
+          />
+        </div>
       )}
 
       {/* render hidden link with businesses data for seo purposes */}

@@ -12,14 +12,15 @@ import { FILTERED_COUNTRY } from "@/utils/business-profile-utils";
 import { lowerCase } from "@/utils";
 import type { INFilters } from "@/types/business-profile";
 import countryHelpers from "@/helpers/countries-states-city/country";
-import stateHelpers from "@/helpers/countries-states-city/country";
-import cityHelpers from "@/helpers/countries-states-city/country";
+import stateHelpers from "@/helpers/countries-states-city/state";
+import cityHelpers from "@/helpers/countries-states-city/city";
 
 interface NBusinessFilterProps {
   nFilters: INFilters;
   setNFilters: React.Dispatch<React.SetStateAction<INFilters>>;
   onClose: () => void;
   onApplyFilters?: () => void;
+  opened: boolean;
 }
 
 const NFilterComponents = [
@@ -38,7 +39,7 @@ const NFilterComponents = [
 ] as const;
 
 const NBusinessFilter: React.FC<NBusinessFilterProps> = React.memo(
-  ({ nFilters, setNFilters, onClose, onApplyFilters }) => {
+  ({ nFilters, opened, setNFilters, onClose, onApplyFilters }) => {
     const [businessCategories, setBusinessCategories] = useState<IOption[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const getCategories = useCallback(async () => {
@@ -154,21 +155,21 @@ const NBusinessFilter: React.FC<NBusinessFilterProps> = React.memo(
       []
     );
 
-    const getPlaceholder = (name: string, nFilters: INFilters) => {
-      if (name === "country") {
+    const getPlaceholder = (name: string) => {
+      if (name === "country" && nFilters.country) {
         const isCountrySupported = countryHelpers.isCountrySupportedByName(
           nFilters.country!
         );
         return isCountrySupported ? nFilters.country : null;
       }
-      if (name === "stateAndProvince") {
-        const isStateSupported = stateHelpers.isCountrySupportedByName(
+      if (name === "stateAndProvince" && nFilters.stateAndProvince) {
+        const isStateSupported = stateHelpers.isStateSupportedByName(
           nFilters.stateAndProvince!
         );
         return isStateSupported ? nFilters.stateAndProvince : null;
       }
-      if (name === "city") {
-        const isCitySupported = cityHelpers.isCountrySupportedByName(
+      if (name === "city" && nFilters.city) {
+        const isCitySupported = cityHelpers.isCitySupportedByName(
           nFilters.city!
         );
         return isCitySupported ? nFilters.city : null;
@@ -180,7 +181,7 @@ const NBusinessFilter: React.FC<NBusinessFilterProps> = React.memo(
 
     return (
       <ReactModal
-        isOpen={true}
+        isOpen={opened}
         contentLabel="Filter"
         className="w-full h-full bg-white-100 relative px-[20px] py-[50px]"
         shouldCloseOnEsc={true}
@@ -200,9 +201,8 @@ const NBusinessFilter: React.FC<NBusinessFilterProps> = React.memo(
             <NSelect
               key={name}
               label={title}
-              placeholder={
-                getPlaceholder(name as string, nFilters) ?? placeholder
-              }
+              placeholder={placeholder}
+              value={getPlaceholder(name as string) as string}
               items={getLists(name as keyof INFilters)}
               leftIcon={
                 name === "category" ? (

@@ -67,6 +67,7 @@ export function NSelect({
   loading,
   onClick,
   activeItem,
+  value,
 }: NSelectProps) {
   const [open, setOpen] = useState(false);
   const [searchValue, setSearchValue] = useState<string>("");
@@ -113,11 +114,11 @@ export function NSelect({
               {leftIcon}
               <span
                 className={cn(
-                  "text-[14px] font-pp text-dark-100",
-                  placeholder && "opacity-[.6]"
+                  "text-[14px] font-pp text-dark-100 font-medium",
+                  placeholder && !value && "opacity-[.4] font-normal"
                 )}
               >
-                {placeholder ?? "Select..."}
+                {value ?? placeholder ?? "Select..."}
               </span>
             </FlexRowStartCenter>
             <FlexRowEndCenter className="w-auto">

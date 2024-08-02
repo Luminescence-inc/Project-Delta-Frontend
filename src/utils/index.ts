@@ -236,7 +236,12 @@ export const overrideQueryParameters = (newParams: Record<string, string>) => {
   const urlObj = new URL(window.location.href);
   const params = new URLSearchParams();
   Object.keys(newParams).forEach((key) => {
-    params.set(key, newParams[key]);
+    console.log(newParams[key], key);
+    if (newParams[key] !== null) {
+      params.set(key, newParams[key]);
+    } else {
+      // params.delete(key);
+    }
   });
   urlObj.search = params.toString();
   window.history.replaceState({}, "", urlObj.toString());

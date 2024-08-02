@@ -146,28 +146,28 @@ export default function BusinessContextProvider({
         window.history.pushState({}, "", url);
       }
 
-      const result = await searchForBusinesses(queryParams);
-      const data = result.data?.data.businessProfiles;
+      // const result = await searchForBusinesses(queryParams);
+      // const data = result.data?.data.businessProfiles;
 
-      setAllBusinessesLoading(false);
+      // setAllBusinessesLoading(false);
 
-      // remove any duplicates
-      if (!filterApplied) {
-        const comb = [...businesses, ...data?.data];
-        const unique = comb.filter(
-          (v, i, a) => a.findIndex((t) => t.uuid === v.uuid) === i
-        );
-        setBusinesses(unique);
-      } else {
-        setBusinesses(data.data);
-      }
+      // // remove any duplicates
+      // if (!filterApplied) {
+      //   const comb = [...businesses, ...data?.data];
+      //   const unique = comb.filter(
+      //     (v, i, a) => a.findIndex((t) => t.uuid === v.uuid) === i
+      //   );
+      //   setBusinesses(unique);
+      // } else {
+      //   setBusinesses(data.data);
+      // }
 
-      setTotalPages(data?.totalPages || 1);
-      setCurrPage(currPage);
+      // setTotalPages(data?.totalPages || 1);
+      // setCurrPage(currPage);
     } catch (e: any) {
-      const err = e?.response?.data ?? e?.message;
-      console.error(`Error fetching businesses:`, err);
-      setAllBusinessesLoading(false);
+      // const err = e?.response?.data ?? e?.message;
+      // console.error(`Error fetching businesses:`, err);
+      // setAllBusinessesLoading(false);
     }
   };
 
