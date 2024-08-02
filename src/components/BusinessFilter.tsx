@@ -267,7 +267,7 @@ const BusinessesFilterComponent = ({
     >
       <div className="w-full h-auto flex flex-col items-start justify-start px-[20px] py-[50px] bg-white-100">
         <div className="w-full h-auto flex flex-row items-center justify-between ">
-          <h2 className="text-[30px] font-bold font-inter">Filter</h2>
+          <h2 className="text-[30px] font-bold font-inter text-blue-200">Filter</h2>
           <button
             className="be-none border-none outline-none cursor-pointer"
             onClick={() => {
@@ -309,6 +309,7 @@ const BusinessesFilterComponent = ({
               listsData={businessesCategories}
               selectedListData={filterData?.businessCategoryUuid}
               dataType="businessCategory"
+              isSearch
               onChange={() => {
                 // close filter
                 closeFilter();
@@ -385,6 +386,7 @@ const BusinessesFilterComponent = ({
             onChange={({ type, uuid, value }) =>
               onFilter({ type, uuid, value })
             }
+            isSearch
             activePanel={activePanel}
             setActivePanel={setActivePanel}
           />
@@ -397,6 +399,7 @@ const BusinessesFilterComponent = ({
             listsData={filteredStates}
             selectedListData={filterData?.stateAndProvince!}
             dataType="stateAndProvince"
+            isSearch
             onChange={({ type, uuid, value }) =>
               onFilter({ type, uuid, value })
             }
@@ -419,6 +422,7 @@ const BusinessesFilterComponent = ({
             listsData={filteredCities}
             selectedListData={filterData?.city!}
             dataType="city"
+            isSearch
             onChange={({ type, uuid, value }) =>
               onFilter({ type, uuid, value })
             }
