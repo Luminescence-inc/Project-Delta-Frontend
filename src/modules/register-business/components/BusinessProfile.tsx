@@ -237,6 +237,94 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
           />
         </div>
 
+        {error && (
+          <span style={errorMessageStyle}>File Type not Supported</span>
+        )}
+        {error && (
+          <span style={errorMessageStyle}>Supported format: jpg/jpeg/png</span>
+        )}
+        {imageFile && businessId != null && logoUrl && (
+          <span style={errorMessageStyle}>
+            NB: Uploading a new logo will override the previous Logo
+          </span>
+        )}
+
+        <div className="w-full relative font-pp border-[1px] border-white-200 rounded-[5px] mb-4 ">
+          <FlexRowCenter className="w-full p-[16px] relative ">
+            <span
+              onClick={(e) => {
+                e.stopPropagation();
+                fileInputRef.current?.click();
+              }}
+              className="cursor-pointer flex items-center justify-center text-blue-200 text-[10px] font-semibold font-pp leading-[14px] "
+            >
+              {imageFile ? imageFile.name : "Upload Your Logo (jpg/jpeg/png)"}
+              <ArrowBigUpDash
+                onClick={(e) => {
+                  e.stopPropagation();
+                  fileInputRef.current?.click();
+                }}
+                size={15}
+                strokeWidth={2.5}
+                className="ml-[10px] cursor-pointer"
+              />
+            </span>
+            <input
+              type="file"
+              ref={fileInputRef}
+              onChange={(e) => handleImage(e.target.files)}
+              className="hidden"
+            />
+            {imageFile && (
+              <button
+                className="p-1 rounded-full absolute top-[15px] right-5 bg-blue-200 flex flex-col items-center justify-center"
+                onClick={handleDelete}
+              >
+                <X size={12} className="stroke-white-100" />
+              </button>
+            )}
+          </FlexRowCenter>
+        </div>
+        {imageFile && (
+          <div className="mt-2">
+            <h3 className="pb-[20px] text-[13px] pt-[10px] font-pp font-medium">
+              Selected Logo:
+            </h3>
+            <img
+              src={URL.createObjectURL(imageFile)}
+              alt="Uploaded"
+              className="max-w-[100%] w-[342px] h-[328px] rounded-md object-cover"
+            />
+          </div>
+        )}
+        {!imageFile && businessId != null && logoUrl && (
+          <div className="w-full">
+            <h3 className="font-pp font-medium pt-[20px] pb-[10px]">
+              Current Logo:
+            </h3>
+            <img
+              src={
+                logoUrl
+                  ? `https://res.cloudinary.com/${CloudinaryConfig.cloudName}/image/upload/c_fill,q_400/${logoUrl}.jpg`
+                  : "/assets/images/default-img.jpeg"
+              }
+              alt="Uploaded"
+              className="max-w-[100%]"
+            />
+            <Button
+              onClick={handleDeleteLogo}
+              className="w-full rounded-[5px] mt-5 text-sm"
+              type="submit"
+              intent={!deleteLogo ? "error" : "primary"}
+              size="md"
+            >
+              <span className="font-pp font-medium">
+                {!deleteLogo ? "Delete Logo" : "Reverse"}
+              </span>
+            </Button>
+          </div>
+        )}
+
         <ErrorComponent
           value={
             formik.touched.businessCategory && formik.errors.businessCategory
@@ -326,96 +414,7 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
           inputClassname="w-full px-3 border-white-400/50"
         />
 
-
-        {error && (
-          <span style={errorMessageStyle}>File Type not Supported</span>
-        )}
-        {error && (
-          <span style={errorMessageStyle}>Supported format: jpg/jpeg/png</span>
-        )}
-        {imageFile && businessId != null && logoUrl && (
-          <span style={errorMessageStyle}>
-            NB: Uploading a new logo will override the previous Logo
-          </span>
-        )}
-
-        <div className="w-full relative font-pp border-[1px] border-white-200 rounded-[5px] mt-[10px] ">
-          <FlexRowCenter className="w-full p-[16px] relative ">
-            <span
-              onClick={(e) => {
-                e.stopPropagation();
-                fileInputRef.current?.click();
-              }}
-              className="cursor-pointer flex items-center justify-center text-blue-200 text-[10px] font-semibold font-pp leading-[14px] "
-            >
-              {imageFile ? imageFile.name : "Upload Your Logo (jpg/jpeg/png)"}
-              <ArrowBigUpDash
-                onClick={(e) => {
-                  e.stopPropagation();
-                  fileInputRef.current?.click();
-                }}
-                size={15}
-                strokeWidth={2.5}
-                className="ml-[10px] cursor-pointer"
-              />
-            </span>
-            <input
-              type="file"
-              ref={fileInputRef}
-              onChange={(e) => handleImage(e.target.files)}
-              className="hidden"
-            />
-            {imageFile && (
-              <button
-                className="p-1 rounded-full absolute top-[15px] right-5 bg-blue-200 flex flex-col items-center justify-center"
-                onClick={handleDelete}
-              >
-                <X size={12} className="stroke-white-100" />
-              </button>
-            )}
-          </FlexRowCenter>
-        </div>
-        {imageFile && (
-          <div className="mt-2">
-            <h3 className="pb-[20px] text-[13px] pt-[10px] font-pp font-medium">
-              Selected Logo:
-            </h3>
-            <img
-              src={URL.createObjectURL(imageFile)}
-              alt="Uploaded"
-              className="max-w-[100%] w-[342px] h-[328px] rounded-md object-cover"
-            />
-          </div>
-        )}
-        {!imageFile && businessId != null && logoUrl && (
-          <div className="w-full">
-            <h3 className="font-pp font-medium pt-[20px] pb-[10px]">
-              Current Logo:
-            </h3>
-            <img
-              src={
-                logoUrl
-                  ? `https://res.cloudinary.com/${CloudinaryConfig.cloudName}/image/upload/c_fill,q_400/${logoUrl}.jpg`
-                  : "/assets/images/default-img.jpeg"
-              }
-              alt="Uploaded"
-              className="max-w-[100%]"
-            />
-            <Button
-              onClick={handleDeleteLogo}
-              className="w-full rounded-[5px] mt-5 text-sm"
-              type="submit"
-              intent={!deleteLogo ? "error" : "primary"}
-              size="md"
-            >
-              <span className="font-pp font-medium">
-                {!deleteLogo ? "Delete Logo" : "Reverse"}
-              </span>
-            </Button>
-          </div>
-        )}
-
-        <h4 className="mt-[30px] text-[13px] font-pp font-semibold text-blue-200">
+        {/* <h4 className="mt-[30px] text-[13px] font-pp font-semibold text-blue-200">
           Add social media links
         </h4>
         <br />
@@ -425,7 +424,7 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
             key={socialIconName}
             socialIconName={socialIconName as SupportedSocialMedia}
           />
-        ))}
+        ))} */}
 
         <Button
           onClick={handleNextButton}

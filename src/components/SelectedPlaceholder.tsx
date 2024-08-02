@@ -23,7 +23,7 @@ export default function SelectedPlaceholder({
   return (
     <>
       {selectedValues.length > 0 && !visible && (
-        <FlexRowStart className="">
+        <FlexRowStart className="flex-wrap">
           {selectedValues.map((d) => (
             <FlexRowStartCenter
               key={d.uuid}
