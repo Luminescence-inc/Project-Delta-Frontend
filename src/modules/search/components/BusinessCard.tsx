@@ -3,18 +3,18 @@ import { IOption, UserBusinessList } from "@/types/business";
 import { CloudinaryConfig } from "@/config";
 import { constructDOP } from "@/utils";
 import { ColLayoutCard, RowLayoutCard } from "./LayoutCard";
-import { useBusinessCtx } from "@context/BusinessCtx";
 
 interface BusinessCardContainerProps {
   data: UserBusinessList[];
   businessCategories: IOption[] | undefined;
+  layout: "row" | "col";
 }
 
 const BusinessCardContainer = ({
   data,
   businessCategories,
+  layout,
 }: BusinessCardContainerProps) => {
-  const { layout } = useBusinessCtx();
   const constructLogoUrl = (url: string | null) => {
     return !url
       ? "/assets/images/default-img.jpeg"
