@@ -88,7 +88,7 @@ const OperationInfo: FC<OperationInfoProps> = ({
   const deleteForm = (e: any, index: number) => {
     e.preventDefault()
     e.target.closest('.repeater-wrapper').remove()
-    setFields(fields.filter((_, i) => i !== index));
+    // setFields(fields.filter((_, i) => i !== index));
   }
 
   return (
