@@ -7,29 +7,22 @@ import {
 } from "@components/Flex";
 import { Filter, SearchIcon2 } from "@components/icons";
 import BusinessCardContainer from "@/modules/search/components/BusinessCard";
-import BusinessesFilterComponent from "@components/BusinessFilter";
-import { UserBusinessList, type IOption } from "@/types/business";
-import { FilterData, useBusinessCtx } from "@context/BusinessCtx";
-import {
-  type IBusinessProfile,
-  type IFilter,
-  type INFilters,
-} from "@/types/business-profile";
+import { UserBusinessList } from "@/types/business";
+import { useBusinessCtx } from "@context/BusinessCtx";
+import { type INFilters } from "@/types/business-profile";
 import { LoaderComponent } from "@components/Loader";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Input from "@/components/ui/input";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import {
-  constructNSearchUrl,
+  constructNSearchUrlFromFilters,
   extractQueryParams,
-  forceReloadClientPage,
   overrideQueryParameters,
 } from "@/utils";
-import useTrackPageSearch from "@/hooks/useTrackSearch";
 import { DEFAULT_COUNTRY, prevPageSearchKeyName } from "@/config";
 import { useDataCtx } from "@/context/DataCtx";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import NBusinessFilter from "@/components/NewFilterComponent/NBusinessFilter";
 import { useLocation } from "@/hooks/useLocation";
 import countryHelpers from "@/helpers/countries-states-city/country";
@@ -41,7 +34,7 @@ import { Pagination } from "@/components/Pagination";
 dayjs.extend(relativeTime);
 
 interface BusinessesData {
-  data: IBusinessProfile[];
+  data: UserBusinessList[];
   limit: number;
   page: number;
   total: number;
@@ -49,15 +42,7 @@ interface BusinessesData {
 }
 
 export default function MainSearchPageComponent() {
-  const {
-    businessCategory,
-    allBusinessesLoading,
-    totalPages,
-    setSearchQuery,
-    layout,
-    setLayout,
-    searchQuery,
-  } = useBusinessCtx();
+  const { businessCategory, layout, setLayout } = useBusinessCtx();
   const { setNavbarBgColor } = useDataCtx();
   const [pageLoading, setPageLoading] = useState<boolean>(true);
   const [businesses, setBusinesses] = useState<BusinessesData>({
@@ -68,6 +53,8 @@ export default function MainSearchPageComponent() {
     totalPages: 0,
   });
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const { loading, location } = useLocation();
   const [showFilter, setShowFilter] = useState<boolean>(false);
   const [query, setQuery] = useState<string | null>(null);
@@ -77,10 +64,6 @@ export default function MainSearchPageComponent() {
     country: null,
     stateAndProvince: null,
     city: null,
-    pagination: {
-      page: 1,
-      limit: 10,
-    },
   });
   const [headline, setHeadline] = useState({
     title: "",
@@ -95,189 +78,159 @@ export default function MainSearchPageComponent() {
     },
     onError: (error) => {
       const err = (error as any).response.data;
-      // setError(err.message);
       setPageLoading(false);
       toast.error(err.message);
     },
   });
 
-  // track the page location search query
-  const prevPageSearch = useTrackPageSearch();
+  const initialMountRef = useRef(false);
 
-  // construct the search query
-  const constructQuery = (filterData: INFilters) => {
-    const params = new URLSearchParams(window.location.search);
-    for (let key in filterData) {
-      // @ts-expect-error
-      const val = filterData[key];
-      if (val) {
-        const isCategory = key === "businessCategoryUuid";
-        const queryValues = Array.isArray(val)
-          ? val.map((it) => (isCategory ? it.value : it.uuid))
-          : [isCategory ? val.value : val.uuid];
-
-        // make sure the value isn't undefined
-        if (queryValues[0]) {
-          params.set(
-            key === "category" ? "cat" : key,
-            encodeURIComponent(queryValues[0])
-          );
-        }
-      }
-    }
-    forceReloadClientPage();
-  };
-
+  // extract filters from query params and set them to nFilters state
   const extractFilterFromQueryParam = useCallback(() => {
     const { filters } = extractQueryParams();
     const paginationKeys = ["page", "limit"];
-    filters.forEach((f) => {
-      if (paginationKeys.includes(f.targetFieldName)) {
-        setNFilters((p) => ({
-          ...p,
-          pagination: {
-            ...p.pagination,
-            [f.targetFieldName]: parseInt(f.values[0]),
-          },
-        }));
-      } else {
-        setNFilters((p) => ({
-          ...p,
-          [f.targetFieldName === "businessCategoryUuid"
-            ? "category"
-            : f.targetFieldName]: decodeURIComponent(f.values[0]),
-        }));
-      }
-    });
+    const updates = filters.reduce(
+      (acc: Partial<INFilters>, f) => {
+        const key = paginationKeys.includes(f.targetFieldName)
+          ? "pagination"
+          : f.targetFieldName === "businessCategoryUuid"
+          ? "category"
+          : (f.targetFieldName as keyof INFilters);
+        const value = paginationKeys.includes(f.targetFieldName)
+          ? parseInt(f.values[0])
+          : decodeURIComponent(f.values[0]);
+
+        if (key === "pagination") {
+          acc.pagination = { ...acc.pagination, [f.targetFieldName]: value };
+        } else {
+          (acc as any)[key] = value;
+        }
+        return acc;
+      },
+      { pagination: { ...nFilters.pagination } }
+    );
+    setNFilters((p) => ({
+      ...p,
+      ...updates,
+    }));
   }, []);
 
-  const handleLocationBaseFilterOnMount = useCallback(async () => {
-    if (!loading && location) {
-      const isoCode = location.countryCode;
-      const { filters } = extractQueryParams();
-      const isCountrySupported = countryHelpers.isCountrySupportedByIsoCode(
-        isoCode!
-      );
-      if (!isCountrySupported) {
-        nFilters.country = DEFAULT_COUNTRY;
-      } else {
-        const countryExists = filters.find(
-          (f) => f.targetFieldName === "country"
-        );
-        if (!countryExists) {
-          nFilters.country = location.country!;
-          nFilters.stateAndProvince = location.state!;
-          nFilters.city = location.city!;
-        }
-      }
-      setNFilters(nFilters);
-      overrideQueryParameters({
-        cn: nFilters.country!,
-        st: nFilters.stateAndProvince!,
-        ct: nFilters.city!,
-      });
+  // apply filters on mount
+  const applyFiltersOnMount = useCallback(() => {
+    if (loading || !location || initialMountRef.current) return;
 
-      if (businesses?.data.length === 0) {
-        const nSearchParam = constructNSearchUrl(nFilters);
-        getBusinessesMut.mutate(nSearchParam);
-      }
+    console.log("CALLED 2");
+    initialMountRef.current = true;
+
+    const isoCode = location.countryCode;
+    const isCountrySupported = countryHelpers.isCountrySupportedByIsoCode(
+      isoCode!
+    );
+
+    const country = isCountrySupported ? location.country! : DEFAULT_COUNTRY;
+    const state = isCountrySupported ? location.state! : "";
+    const city = isCountrySupported ? location.city! : "";
+
+    setNFilters((prevFilters) => ({
+      ...prevFilters,
+      country,
+      stateAndProvince: state,
+      city,
+    }));
+
+    const overrideParams = {
+      cn: country,
+      ...(state && { st: state }),
+      ...(city && { ct: city }),
+      ...(nFilters.query && { query: nFilters.query }),
+      ...(nFilters.category && { cat: nFilters.category }),
+
+      // only add pagination if it is not already in the URL
+      ...(nFilters.pagination?.page && {
+        page: nFilters.pagination?.page?.toString(),
+      }),
+      ...(nFilters.pagination?.limit && {
+        limit: nFilters.pagination?.limit?.toString(),
+      }),
+    };
+    overrideQueryParameters(overrideParams);
+
+    if (businesses?.data.length === 0) {
+      const nSearchParam = constructNSearchUrlFromFilters({
+        ...nFilters,
+        country,
+        stateAndProvince: state,
+        city,
+      });
+      getBusinessesMut.mutate(nSearchParam);
     }
-  }, [loading, location]);
+  }, [
+    loading,
+    location,
+    nFilters.query,
+    nFilters.category,
+    nFilters.pagination,
+    businesses?.data.length,
+  ]);
+
+  useEffect(() => {
+    applyFiltersOnMount();
+  }, [applyFiltersOnMount]);
 
   useEffect(() => {
     extractFilterFromQueryParam();
-    handleLocationBaseFilterOnMount();
-  }, [extractFilterFromQueryParam, handleLocationBaseFilterOnMount]);
+  }, []);
 
-  // const generateHeadlineFromQuery = () => {
-  //   let state = null,
-  //     country = null,
-  //     city = null,
-  //     query = null;
-  //   const { filters } = extractQueryParams();
-  //   country = filters.find((it) => it.targetFieldName === "country");
-  //   state = filters.find((it) => it.targetFieldName === "stateAndProvince");
-  //   city = filters.find((it) => it.targetFieldName === "city");
-  //   query = filters.find((it) => it.targetFieldName === "query");
+  const generateHeadlineFromQuery = () => {
+    return {
+      country: nFilters.country || null,
+      state: nFilters.stateAndProvince || null,
+      city: nFilters.city || null,
+      query: nFilters.query || null,
+    };
+  };
 
-  //   return {
-  //     country: country?.values[0],
-  //     state: state?.values[0],
-  //     city: city?.values[0],
-  //     query: query?.values[0],
-  //   };
-  // };
+  useEffect(() => {
+    if (pageLoading || getBusinessesMut.isPending) return;
+    const { country, state, city, query } = generateHeadlineFromQuery();
 
-  // useEffect(() => {
-  //   if (searchQuery) {
-  //     setShowFilter(false);
-  //   }
-  // }, [searchQuery]);
+    const locHeadline = (country: string, state: string, city: string) => {
+      const locations = [country, state, city].filter(Boolean).join(", ");
+      return locations ? `Near '${locations}'` : "";
+    };
 
-  // useEffect(() => {
-  //   if (allBusinessesLoading) return;
-  //   const { country, state, city, query } = generateHeadlineFromQuery();
+    const titlePrefix = `Explore ${
+      query ? `"${query}" Businesses` : "Businesses"
+    }`;
+    const titleSuffix = `${
+      city && state
+        ? ` Near ${city}, ${state}`
+        : city
+        ? ` Near ${city}`
+        : state
+        ? ` Near ${state}`
+        : country
+        ? ` in ${country}`
+        : " Near You"
+    }`;
 
-  //   if (businesses && businesses.length === 0) {
-  //     const locHeadline = (country: string, state: string, city: string) => {
-  //       if (country && state) {
-  //         return `Near '${country}, ${state}'`;
-  //       } else if (state && country) {
-  //         return `Near '${state}, ${country}'`;
-  //       } else if (city) {
-  //         return `Near '${city}'`;
-  //       } else if (state) {
-  //         return `Near '${state}'`;
-  //       } else if (country) {
-  //         return `In '${country}'`;
-  //       }
-  //     };
+    const top10BusinessesName = businesses.data
+      ?.map((b) => b.name)
+      .slice(0, 10)
+      .join(" - ");
 
-  //     setHeadline({
-  //       title: `No result for${
-  //         query ? " '" + query + "'" : " businesses"
-  //       } ${locHeadline(country!, state!, city!)}`,
-  //       businesses: "",
-  //     });
-  //     return;
-  //   }
+    const title = `${titlePrefix}${titleSuffix}`;
 
-  //   const top10BusinessesName = businesses
-  //     ?.map((b) => b.name)
-  //     .slice(0, 10)
-  //     .join(" - ");
-
-  //   let title = `Explore ${query ? `"${query}" Businesses` : "Businesses"}`;
-
-  //   if (city && state) {
-  //     title += ` Near ${city}, ${state}`;
-  //   } else if (state && country) {
-  //     title += ` Near ${state}, ${country}`;
-  //   } else if (city) {
-  //     title += ` Near ${city}`;
-  //   } else if (state) {
-  //     title += ` Near ${state}`;
-  //   } else if (country) {
-  //     title += ` in ${country}`;
-  //   } else {
-  //     title = `Explore ${
-  //       query ? `"${query}" Businesses` : "Businesses"
-  //     } Near You`;
-  //   }
-
-  //   setHeadline({
-  //     title,
-  //     businesses: top10BusinessesName,
-  //   });
-  // }, [businesses, allBusinessesLoading]);
-
-  // useEffect(() => {
-  //   const search = localStorage.getItem(prevPageSearchKeyName) || "";
-  //   if (search.length > 0) {
-  //     const query = new URLSearchParams(search);
-  //     setUrlSearchQuery(query.get("query") || "");
-  //   }
-  // }, [prevPageSearch]);
+    setHeadline({
+      title:
+        businesses.data.length === 0
+          ? `No result for${
+              query ? " '" + query + "'" : " businesses"
+            } ${locHeadline(country!, state!, city!)}`
+          : title,
+      businesses: top10BusinessesName,
+    });
+  }, [businesses, pageLoading, getBusinessesMut.isPending]);
 
   useEffect(() => {
     const searchParam = new URLSearchParams(window.location.search);
@@ -288,91 +241,80 @@ export default function MainSearchPageComponent() {
     setNavbarBgColor({
       child: "#fff",
     });
-  }, []);
+  }, [query, setNavbarBgColor]);
 
-  const handleInputChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const value = e.currentTarget.value.trim();
-      setQuery(value.length > 0 ? value : null);
-    },
-    []
-  );
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.currentTarget.value.trim();
+    setQuery(value.length > 0 ? value : null);
+  };
 
-  const handleKeyUp = useCallback(
-    (event: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
       const value = event.currentTarget.value.trim();
+      setQuery(value.length > 0 ? value : null);
 
-      if (value.length === 0) {
-        setQuery(null);
-      }
-
-      if (event.key === "Enter") {
-        const params = new URLSearchParams(window.location.search);
-
-        if (!query && params.get("query") !== null) {
-          params.delete("query");
-          updateURLAndSearch(params);
-          updateSearch("query", null, "query", true);
-        } else {
-          const page = params.get("page");
-          if (page && parseInt(page) > 1) {
-            params.delete("page");
-            params.set("query", query!);
-            updateURLAndSearch(params);
-            updateSearch("query", query, "page", true);
-          } else {
-            params.set("query", query!);
-            updateURLAndSearch(params);
-            updateSearch("query", query, null, true);
-          }
-        }
-      }
-    },
-    [query, router]
-  );
-
-  const updateURLAndSearch = useCallback((params: URLSearchParams) => {
-    // this is consider faster than router.push
-    window.history.pushState(
-      {},
-      "",
-      `${window.location.pathname}?${params.toString()}`
-    );
-  }, []);
-
-  const updateSearch = useCallback(
-    (
-      fieldName: string | null,
-      value: string | null,
-      removedFieldName?: string | null,
-      timeout?: boolean
-    ) => {
-      // @ts-expect-error
-      setSearchQuery((prev) => ({
-        filters: [
-          ...(removedFieldName
-            ? [
-                prev.filters.filter(
-                  (f: IFilter) => f.targetFieldName !== removedFieldName
-                ),
-              ]
-            : [prev.filters.filter]),
-          ...(value ? [{ targetFieldName: fieldName, values: [value] }] : []),
-        ],
+      // update NFILTERS with query
+      setNFilters((prev) => ({
+        ...prev,
+        query: value,
       }));
 
-      if (timeout) {
-        setTimeout(() => {
-          forceReloadClientPage();
-        }, 500);
-      } else {
-        forceReloadClientPage();
-      }
-    },
-    []
-  );
+      let searchParams: Record<string, string> = {
+        ...(nFilters.country && { cn: nFilters.country }),
+        ...(nFilters.stateAndProvince && { st: nFilters.stateAndProvince }),
+        ...(nFilters.city && { ct: nFilters.city }),
+        ...(nFilters.category && { cat: nFilters.category }),
+        ...(nFilters.pagination?.limit && {
+          limit: nFilters.pagination.limit.toString(),
+        }),
+      };
 
-  console.log({ nFilters });
+      if (value && value.length > 0) {
+        searchParams.query = value;
+      }
+
+      const urlSearchParams = new URLSearchParams(searchParams);
+      const nSearchParam = urlSearchParams.toString();
+
+      // Update URL using Next.js router
+      router.push(`${pathname}?${nSearchParam}`);
+
+      // Perform search
+      getBusinessesMut.mutate(nSearchParam);
+    }
+  };
+
+  const applyFilter = () => {
+    // check if country exists
+    if (!nFilters.country) {
+      toast.error("Please select a country");
+      return;
+    }
+
+    // override the query params
+    const overrideParams: Record<string, string> = {
+      ...(nFilters.country && { cn: nFilters.country }),
+      ...(nFilters.stateAndProvince && { st: nFilters.stateAndProvince }),
+      ...(nFilters.city && { ct: nFilters.city }),
+      ...(nFilters.category && { cat: nFilters.category }),
+      ...(nFilters.query && { query: nFilters.query }),
+    };
+
+    overrideQueryParameters(overrideParams);
+
+    const params = new URLSearchParams(window.location.search);
+    getBusinessesMut.mutate(params.toString());
+    setShowFilter(false);
+  };
+
+  // Effect to sync URL with state
+  useEffect(() => {
+    const currentParams = new URLSearchParams(window.location.search);
+    const urlQuery = currentParams.get("query");
+    if (urlQuery !== query) {
+      setQuery(urlQuery);
+    }
+  }, [searchParams, query]);
 
   return (
     <FlexColStart className="w-full h-full bg-blue-204 pb-[2em]">
@@ -457,20 +399,15 @@ export default function MainSearchPageComponent() {
         nFilters={nFilters}
         setNFilters={setNFilters}
         onClose={() => setShowFilter(false)}
-        onApplyFilters={() => {
-          const nSearchParam = constructNSearchUrl(nFilters);
-          getBusinessesMut.mutate(nSearchParam);
-          setShowFilter(false);
-        }}
+        onApplyFilters={() => applyFilter()}
       />
 
-      {/* business card lists */}
-      {/* {!allBusinessesLoading && (
+      {getBusinessesMut.isPending || pageLoading ? null : (
         <BusinessCardContainer
-          data={businesses as UserBusinessList[]}
+          data={businesses.data}
           businessCategories={businessCategory}
         />
-      )} */}
+      )}
 
       {businesses?.data?.length > 0 &&
         !pageLoading &&

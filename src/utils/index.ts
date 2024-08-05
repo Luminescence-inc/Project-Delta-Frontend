@@ -196,7 +196,7 @@ export const constructSearchUrl = (
   return query.join("&");
 };
 
-export const constructNSearchUrl = (filters: INFilters) => {
+export const constructNSearchUrlFromFilters = (filters: INFilters) => {
   const query: string[] = [];
   for (const [key, value] of Object.entries(filters)) {
     if (key === "pagination") {
@@ -210,6 +210,16 @@ export const constructNSearchUrl = (filters: INFilters) => {
     }
   }
 
+  return query.join("&");
+};
+
+export const constructSearchUrlFromObject = (
+  filters: Record<string, string>
+) => {
+  const query: string[] = [];
+  for (const [key, value] of Object.entries(filters)) {
+    query.push(`${key}=${value}`);
+  }
   return query.join("&");
 };
 
@@ -233,14 +243,16 @@ export const upperCase = (str: string | null) => {
 };
 
 export const overrideQueryParameters = (newParams: Record<string, string>) => {
-  const urlObj = new URL(window.location.href);
+  const nParams = constructSearchUrlFromObject(newParams);
+  const urlObj = new URL(
+    `${window.location.origin}${window.location.pathname}?${nParams}`
+  );
   const params = new URLSearchParams();
   Object.keys(newParams).forEach((key) => {
-    console.log(newParams[key], key);
     if (newParams[key] !== null) {
       params.set(key, newParams[key]);
     } else {
-      // params.delete(key);
+      params.delete(key);
     }
   });
   urlObj.search = params.toString();
