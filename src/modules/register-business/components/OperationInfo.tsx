@@ -76,6 +76,7 @@ const OperationInfo: FC<OperationInfoProps> = ({
     setFields(newFields);
   };
 
+  console.log(fields, 'fields')
 
   const filterDaysOfOperation = DAYS_OF_OPERATIONS_OPTIONS.filter((days) => {
     const d = formik.values.daysOfOperation as Array<string>;
@@ -84,9 +85,10 @@ const OperationInfo: FC<OperationInfoProps> = ({
  
 
   // ** Deletes form
-  const deleteForm = (e: any) => {
+  const deleteForm = (e: any, index: number) => {
     e.preventDefault()
     e.target.closest('.repeater-wrapper').remove()
+    setFields(fields.filter((_, i) => i !== index));
   }
 
   return (
@@ -147,10 +149,10 @@ const OperationInfo: FC<OperationInfoProps> = ({
             const Tag = i === 0 ? 'div' : SlideDown
             return (
               <Tag key={i} className='repeater-wrapper relative w-full'>
-                {count > 1 && <span className={`${i == 0 ? "hidden" : ""} absolute -right-1 -top-1 z-50 cursor-pointer`} onClick={deleteForm}>
+                {count > 1 && <span className={`${i == 0 ? "hidden" : ""} absolute -right-1 -top-1 z-50 cursor-pointer`}>
                   <button
                     className={`p-1 rounded-full  bg-blue-200 flex flex-col items-center justify-center`}
-                    onClick={deleteForm}
+                    onClick={(e) => deleteForm(e, i)}
                   >
                     <X size={12} className="stroke-white-100" />
                   </button>
