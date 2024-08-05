@@ -270,7 +270,7 @@ export default async function BusinessPage({ params }: BizPageProps) {
           </FlexColStart>
         </>
       ) : (
-        <BusinessesNotfound message="Not Found" />
+        <BusinessesNotfound message="This business does not exist" />
       )}
     </FlexColStart>
   );
@@ -294,11 +294,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title,
     description: metaOgDescription,
-    url: header_url,
+    url: header_url.replace("http://", "https://"),
     openGraph: {
       title,
       description: metaOgDescription,
-      url: header_url,
+      url: header_url.replace("http://", "https://"),
       images: [
         {
           url: constructBizImgUrl(data?.businessDetails?.logoUrl!),

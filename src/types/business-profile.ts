@@ -48,13 +48,14 @@ export interface ISearch {
 }
 
 export interface INFilters {
-  category: string | null;
-  country: string | null;
-  stateAndProvince: string | null;
+  category?: string | null;
+  country?: string | null;
+  stateAndProvince?: string | null;
   city: string | null;
-  query?: string;
+  query?: string | null;
+  layout?: string | null;
   pagination?: {
-    page?: number;
-    limit?: number;
+    page?: number | null;
+    limit?: number | null;
   };
 }

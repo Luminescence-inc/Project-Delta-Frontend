@@ -214,11 +214,13 @@ export const constructNSearchUrlFromFilters = (filters: INFilters) => {
 };
 
 export const constructSearchUrlFromObject = (
-  filters: Record<string, string>
+  filters: Record<string, string | null>
 ) => {
   const query: string[] = [];
   for (const [key, value] of Object.entries(filters)) {
-    query.push(`${key}=${value}`);
+    if (value) {
+      query.push(`${key}=${value}`);
+    }
   }
   return query.join("&");
 };
@@ -242,7 +244,9 @@ export const upperCase = (str: string | null) => {
   return str.toUpperCase();
 };
 
-export const overrideQueryParameters = (newParams: Record<string, string>) => {
+export const overrideQueryParameters = (
+  newParams: Record<string, string | null>
+) => {
   const nParams = constructSearchUrlFromObject(newParams);
   const urlObj = new URL(
     `${window.location.origin}${window.location.pathname}?${nParams}`
