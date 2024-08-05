@@ -31,7 +31,7 @@ import 'react-slidedown/lib/slidedown.css'
 interface OperationInfoProps {
   formik: FormikProps<BusinessProfileFormikPropsValues>;
   businessId?: string | null;
-  isLoading: boolean;  
+  isLoading: boolean;
 }
 
 
@@ -58,11 +58,22 @@ const OperationInfo: FC<OperationInfoProps> = ({
 }) => {
   const [count, setCount] = useState(1)
   const [fields, setFields] = useState<OperationField[]>([
-    { days: "", openTime: "", closeTime: "" }
+    { days: DAYS_OF_OPERATIONS_OPTIONS[0].value, openTime: "", closeTime: "" }
   ]);
 
+  // const addField = () => {
+  //   setFields([...fields, { days: "", openTime: "", closeTime: "" }]);
+  //   setCount(prev => prev + 1);
+  // };
   const addField = () => {
-    setFields([...fields, { days: "", openTime: "", closeTime: "" }]);
+    const usedDays = fields.map(field => field.days);
+    const availableDays = DAYS_OF_OPERATIONS_OPTIONS.filter(option => !usedDays.includes(option.value));
+
+    if (availableDays.length > 0) {
+      setFields([...fields, { days: availableDays[0].value, openTime: "", closeTime: "" }]);
+    } else {
+      setFields([...fields, { days: "", openTime: "", closeTime: "" }]);
+    }
     setCount(prev => prev + 1);
   };
 
@@ -82,14 +93,20 @@ const OperationInfo: FC<OperationInfoProps> = ({
     const d = formik.values.daysOfOperation as Array<string>;
     return d.includes(days.value);
   });
- 
+
 
   // ** Deletes form
-  const deleteForm = (e: any, index: number) => {
-    e.preventDefault()
-    e.target.closest('.repeater-wrapper').remove()
-    // setFields(fields.filter((_, i) => i !== index));
-  }
+  // const deleteForm = (e: any, index: number) => {
+  //   e.preventDefault()
+  //   e.target.closest('.repeater-wrapper').remove()
+  //   // setFields(fields.filter((_, i) => i !== index));
+  // }
+  // what is expected to use
+  const deleteForm = (e: React.MouseEvent<HTMLButtonElement>, day: string) => {
+    e.preventDefault();
+    setFields(prev => prev.filter(ff =>ff.days !== day));
+    setCount(prev => prev - 1);
+  };
 
   return (
     <FlexColStart className="w-full h-full bg-gray-200  pb-[150px] ">
@@ -144,97 +161,54 @@ const OperationInfo: FC<OperationInfoProps> = ({
           <span>Closing hour</span>
         </div>
 
-        <Repeater {...{ count }}>
-          {(i: number) => {
-            const Tag = i === 0 ? 'div' : SlideDown
-            return (
-              <Tag key={i} className='repeater-wrapper relative w-full'>
-                {count > 1 && <span className={`${i == 0 ? "hidden" : ""} absolute -right-1 -top-1 z-50 cursor-pointer`}>
-                  <button
-                    className={`p-1 rounded-full  bg-blue-200 flex flex-col items-center justify-center`}
-                    onClick={(e) => deleteForm(e, i)}
-                  >
-                    <X size={12} className="stroke-white-100" />
-                  </button>
-                </span>}
+        {fields.map((field, i) => (
+          <div key={i} className="relative w-full mb-4 repeater-wrapper">
+            {fields.length > 1 && (
+              <span className={`absolute -right-1 -top-1 z-50 cursor-pointer ${i === 0 ? "hidden" : ""}`}>
+                <button
+                  className="p-1 rounded-full bg-blue-200 flex flex-col items-center justify-center"
+                  // onClick={(e) => deleteField(e, i)}
+                  onClick={(e) => deleteForm(e, field.days)}
+                >
+                  <X size={12} className="stroke-white-100" />
+                </button>
+              </span>
+            )}
+            <div className="grid grid-cols-3 items-start gap-4 w-full">
+              <div className="flex flex-col">
+                <Select
+                  name={`daysOfOperation${i}`}
+                  formikValue={field.days}
+                  formik={formik}
+                  options={DAYS_OF_OPERATIONS_OPTIONS}
+                  placeholder="Select days"
+                  onChange={(e) => handleFieldChange(i, 'days', e.target.value)}
+                />
+              </div>
+              <div className="flex flex-col">
+                <Select
+                  name={`openTime${i}`}
+                  formikValue={field.openTime}
+                  formik={formik}
+                  options={OPERATING_TIME_OPTIONS}
+                  placeholder="Select opening time"
+                  onChange={(e) => handleFieldChange(i, 'openTime', e.target.value)}
+                />
+              </div>
+              <div className="flex flex-col">
+                <Select
+                  name={`closeTime${i}`}
+                  formikValue={field.closeTime}
+                  formik={formik}
+                  options={OPERATING_TIME_OPTIONS}
+                  placeholder="Select closing time"
+                  onChange={(e) => handleFieldChange(i, 'closeTime', e.target.value)}
+                />
+              </div>
+            </div>
+          </div>
+        ))}
 
-                {/* <div className="grid grid-cols-3 items-start gap-4 w-full">
-                  <div className="flex flex-col">
-                    <MultiSelect
-                      placeholder={"Days"}
-                      name="daysOfOperation"
-                      isSearch={false}
-                      formikValue={filterDaysOfOperation}
-                      formik={formik}
-                      options={DAYS_OF_OPERATIONS_OPTIONS}
-                    />
-                    <Select
-                      name="Days"
-                      formikValue={formik.values.daysOfOperationOG}
-                      formik={formik}
-                      placeholder={"ejhbifuweiufhweiufhwe"}
-                      options={DAYS_OF_OPERATIONS_OPTIONS}
-                    />
-                  </div>
-
-                  <div className="flex flex-col">
-                    <Select
-                      name="openTime"
-                      formikValue={formik.values.openTime}
-                      formik={formik}
-                      placeholder={"ewfwefwefwe"}
-                      options={OPERATING_TIME_OPTIONS}
-                    />
-                  </div>
-
-                  <div className="flex flex-col">
-
-                    <Select
-                      name="closeTime"
-                      formikValue={formik.values.closeTime}
-                      formik={formik}
-                      placeholder={"--"}
-                      options={OPERATING_TIME_OPTIONS}
-                    />
-                  </div>
-
-                </div> */}
-
-
-
-              <div className="grid grid-cols-3 items-start gap-4 w-full">
-                  <div className="flex flex-col">
-                    <Select
-                      name={`daysOfOperation${i}`}
-                      value={fields[i].days}
-                      onChange={(e) => handleFieldChange(i, 'days', e.target.value)}
-                      options={DAYS_OF_OPERATIONS_OPTIONS}
-                      placeholder="Select days"
-                    />
-                  </div>
-                  <div className="flex flex-col">
-                    <Select
-                      name={`openTime${i}`}
-                      value={fields[i].openTime}
-                      onChange={(e) => handleFieldChange(i, 'openTime', e.target.value)}
-                      options={OPERATING_TIME_OPTIONS}
-                      placeholder="Select opening time"
-                    />
-                  </div>
-                  <div className="flex flex-col">
-                    <Select
-                      name={`closeTime${i}`}
-                      value={fields[i].closeTime}
-                      onChange={(e) => handleFieldChange(i, 'closeTime', e.target.value)}
-                      options={OPERATING_TIME_OPTIONS}
-                      placeholder="Select closing time"
-                    />
-                  </div>
-                </div>
-              </Tag>
-            )
-          }}
-        </Repeater>
 
         <div className='flex items-start w-full gap-3'>
           <div className='flex items-center gap-2 text-[13px] leading-[15.87px] font-medium bg-white-100 text-blue-200 p-4 cursor-pointer' onClick={addField}>
