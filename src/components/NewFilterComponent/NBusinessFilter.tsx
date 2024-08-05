@@ -140,14 +140,16 @@ const NBusinessFilter: React.FC<NBusinessFilterProps> = React.memo(
       (name: keyof INFilters, value: string, closePanel?: () => void) => {
         setNFilters((prev) => {
           const newFilters = { ...prev, [name]: value };
-          if (name === "country") {
-            newFilters.stateAndProvince = null;
-            newFilters.city = null;
-          } else if (name === "stateAndProvince") {
-            newFilters.city = null;
+          if (name === "country" || name === "stateAndProvince") {
+            if (value !== prev[name]) {
+              newFilters.stateAndProvince = name === "country" ? null : value;
+              newFilters.city = null;
+            }
           }
           return newFilters;
         });
+
+        // close the panel if the name is not category
         if (name !== "category") {
           closePanel && closePanel();
         }
