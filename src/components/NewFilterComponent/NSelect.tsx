@@ -118,7 +118,7 @@ export function NSelect({
                   placeholder && !value && "opacity-[.4] font-normal"
                 )}
               >
-                {value ?? placeholder ?? "Select..."}
+                {!value ? placeholder ?? "Select..." : value}
               </span>
             </FlexRowStartCenter>
             <FlexRowEndCenter className="w-auto">
