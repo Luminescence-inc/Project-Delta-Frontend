@@ -19,7 +19,8 @@ interface NBusinessFilterProps {
   nFilters: INFilters;
   setNFilters: React.Dispatch<React.SetStateAction<INFilters>>;
   onClose: () => void;
-  onApplyFilters?: () => void;
+  onApplyFilters: () => void;
+  resetFilters: () => void;
   opened: boolean;
 }
 
@@ -39,7 +40,14 @@ const NFilterComponents = [
 ] as const;
 
 const NBusinessFilter: React.FC<NBusinessFilterProps> = React.memo(
-  ({ nFilters, opened, setNFilters, onClose, onApplyFilters }) => {
+  ({
+    nFilters,
+    opened,
+    resetFilters,
+    setNFilters,
+    onClose,
+    onApplyFilters,
+  }) => {
     const [businessCategories, setBusinessCategories] = useState<IOption[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const getCategories = useCallback(async () => {
@@ -139,23 +147,46 @@ const NBusinessFilter: React.FC<NBusinessFilterProps> = React.memo(
     const handleItemClick = useCallback(
       (name: keyof INFilters, value: string, closePanel?: () => void) => {
         setNFilters((prev) => {
-          const newFilters = { ...prev, [name]: value };
-          if (name === "country" || name === "stateAndProvince") {
-            if (value !== prev[name]) {
-              newFilters.stateAndProvince = name === "country" ? null : value;
+          const newFilters = { ...prev };
+          if (prev[name] === value) {
+            // Deselect if the same value is selected again
+            // @ts-ignore
+            newFilters[name] = null;
+            if (name === "country") {
+              newFilters.stateAndProvince = null;
+              newFilters.city = null;
+            } else if (name === "stateAndProvince") {
+              newFilters.city = null;
+            }
+          } else {
+            // Select new value
+            newFilters[name] = value;
+            if (name === "country") {
+              newFilters.stateAndProvince = null;
+              newFilters.city = null;
+            } else if (name === "stateAndProvince") {
               newFilters.city = null;
             }
           }
           return newFilters;
         });
 
-        // close the panel if the name is not category
+        // Close the panel if the name is not category
         if (name !== "category") {
           closePanel && closePanel();
         }
       },
-      []
+      [setNFilters]
     );
+
+    const getHref = (name: keyof INFilters, value: string) => {
+      if (name === "category") {
+        // make sure prev query is not removed
+        const prevQuery = window.location.search;
+        return `/search${prevQuery}&cat=${value}`;
+      }
+      return undefined;
+    };
 
     const getPlaceholder = (name: string) => {
       if (name === "country" && nFilters.country) {
@@ -179,8 +210,6 @@ const NBusinessFilter: React.FC<NBusinessFilterProps> = React.memo(
       return name !== "pagination" ? nFilters[name as keyof INFilters] : null;
     };
 
-    const resetFilters = useCallback(() => setNFilters(nFilters), [nFilters]);
-
     return (
       <ReactModal
         isOpen={opened}
@@ -198,7 +227,7 @@ const NBusinessFilter: React.FC<NBusinessFilterProps> = React.memo(
           </button>
         </FlexRowCenterBtw>
 
-        <FlexColCenter className="w-full max-w-[400px] gap-5">
+        <FlexColCenter className="w-full gap-5">
           {NFilterComponents.map(({ name, title, placeholder }) => (
             <NSelect
               key={name}
@@ -246,6 +275,8 @@ const NBusinessFilter: React.FC<NBusinessFilterProps> = React.memo(
                         active={
                           item.value === nFilters[name as keyof INFilters]
                         }
+                        // only for category
+                        href={getHref(name, item.value)}
                       />
                     ))
                   ) : (
