@@ -42,7 +42,8 @@ interface BusinessesData {
 }
 
 export default function MainSearchPageComponent() {
-  const { businessCategory, layout, setLayout } = useBusinessCtx();
+  const { businessCategory } = useBusinessCtx();
+  const [layout, setLayout] = useState<"row" | "col">("col");
   const { setNavbarBgColor } = useDataCtx();
   const [pageLoading, setPageLoading] = useState<boolean>(true);
   const [businesses, setBusinesses] = useState<BusinessesData>({
@@ -109,6 +110,10 @@ export default function MainSearchPageComponent() {
       },
       { pagination: { ...nFilters.pagination } }
     );
+
+    // check if layout is set in query params
+    const layout = searchParams.get("layout");
+    if (layout) setLayout(layout as "row" | "col");
     setNFilters((p) => ({
       ...p,
       ...updates,
@@ -119,59 +124,72 @@ export default function MainSearchPageComponent() {
   const applyFiltersOnMount = useCallback(() => {
     if (loading || !location || initialMountRef.current) return;
 
-    console.log("CALLED 2");
     initialMountRef.current = true;
 
-    const isoCode = location.countryCode;
+    const { countryCode, country, state, city } = location;
     const isCountrySupported = countryHelpers.isCountrySupportedByIsoCode(
-      isoCode!
+      countryCode!
     );
+    const defaultLocation = isCountrySupported
+      ? { country, state, city }
+      : { country: DEFAULT_COUNTRY, state: "", city: "" };
 
-    const country = isCountrySupported ? location.country! : DEFAULT_COUNTRY;
-    const state = isCountrySupported ? location.state! : "";
-    const city = isCountrySupported ? location.city! : "";
+    const currentParams = new URLSearchParams(window.location.search);
+    const overrideParams: Record<string, string> = {};
 
-    setNFilters((prevFilters) => ({
-      ...prevFilters,
-      country,
-      stateAndProvince: state,
-      city,
-    }));
+    if (!currentParams.has("cn")) {
+      overrideParams.cn = defaultLocation.country!;
+      if (defaultLocation.state) overrideParams.st = defaultLocation.state;
+      if (defaultLocation.city) overrideParams.ct = defaultLocation.city;
+    }
 
-    const overrideParams = {
-      cn: country,
-      ...(state && { st: state }),
-      ...(city && { ct: city }),
-      ...(nFilters.query && { query: nFilters.query }),
-      ...(nFilters.category && { cat: nFilters.category }),
+    // Add other parameters
+    Object.entries({
+      cn: nFilters.country,
+      st: nFilters.stateAndProvince,
+      ct: nFilters.city,
+      query: nFilters.query,
+      cat: nFilters.category,
+      layout,
+    }).forEach(([key, value]) => {
+      if (value) overrideParams[key] = value;
+    });
 
-      // only add pagination if it is not already in the URL
-      ...(nFilters.pagination?.page && {
-        page: nFilters.pagination?.page?.toString(),
-      }),
-      ...(nFilters.pagination?.limit && {
-        limit: nFilters.pagination?.limit?.toString(),
-      }),
-    };
+    // Add pagination only if not already in the URL
+    if (nFilters.pagination) {
+      ["page", "limit"].forEach((param) => {
+        if (
+          nFilters.pagination &&
+          nFilters.pagination[param as keyof typeof nFilters.pagination] &&
+          !currentParams.has(param)
+        ) {
+          overrideParams[param] =
+            nFilters.pagination[
+              param as keyof typeof nFilters.pagination
+            ]!.toString();
+        }
+      });
+    }
+
     overrideQueryParameters(overrideParams);
 
     if (businesses?.data.length === 0) {
       const nSearchParam = constructNSearchUrlFromFilters({
         ...nFilters,
-        country,
-        stateAndProvince: state,
-        city,
+        country: overrideParams.cn,
+        stateAndProvince: overrideParams.st || nFilters.stateAndProvince,
+        city: overrideParams.ct || nFilters.city,
       });
       getBusinessesMut.mutate(nSearchParam);
     }
-  }, [
-    loading,
-    location,
-    nFilters.query,
-    nFilters.category,
-    nFilters.pagination,
-    businesses?.data.length,
-  ]);
+
+    setNFilters((prev) => ({
+      ...prev,
+      country: overrideParams.cn,
+      stateAndProvince: overrideParams.st || prev.stateAndProvince,
+      city: overrideParams.ct || prev.city,
+    }));
+  }, [loading, location, nFilters, layout, businesses?.data.length]);
 
   useEffect(() => {
     applyFiltersOnMount();
@@ -225,7 +243,7 @@ export default function MainSearchPageComponent() {
       title:
         businesses.data.length === 0
           ? `No result for${
-              query ? " '" + query + "'" : " businesses"
+              query ? ` '${query}'` : " businesses"
             } ${locHeadline(country!, state!, city!)}`
           : title,
       businesses: top10BusinessesName,
@@ -251,6 +269,9 @@ export default function MainSearchPageComponent() {
   const handleKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       const value = event.currentTarget.value.trim();
+      const currentParams = new URLSearchParams(window.location.search);
+      const layout = currentParams.get("layout");
+
       setQuery(value.length > 0 ? value : null);
 
       // update NFILTERS with query
@@ -269,9 +290,8 @@ export default function MainSearchPageComponent() {
         }),
       };
 
-      if (value && value.length > 0) {
-        searchParams.query = value;
-      }
+      if (value && value.length > 0) searchParams.query = value;
+      if (layout) searchParams.layout = layout;
 
       const urlSearchParams = new URLSearchParams(searchParams);
       const nSearchParam = urlSearchParams.toString();
@@ -285,6 +305,8 @@ export default function MainSearchPageComponent() {
   };
 
   const applyFilter = () => {
+    const currentParams = new URLSearchParams(window.location.search);
+    const layout = currentParams.get("layout");
     // check if country exists
     if (!nFilters.country) {
       toast.error("Please select a country");
@@ -300,12 +322,45 @@ export default function MainSearchPageComponent() {
       ...(nFilters.query && { query: nFilters.query }),
     };
 
+    if (layout) overrideParams.layout = layout;
+
     overrideQueryParameters(overrideParams);
 
     const params = new URLSearchParams(window.location.search);
     getBusinessesMut.mutate(params.toString());
     setShowFilter(false);
   };
+
+  const resetFilters = () => {
+    // reset nFilters to initial state
+    setNFilters({
+      ...nFilters,
+      stateAndProvince: null,
+      city: null,
+      category: null,
+      query: null,
+    });
+    setShowFilter(false);
+    setQuery(null);
+    setLayout("col");
+    overrideQueryParameters({
+      cn: nFilters.country!,
+      st: null,
+      ct: null,
+      cat: null,
+      query: null,
+      page: null,
+      limit: null,
+    });
+    getBusinessesMut.mutate(window.location.search);
+  };
+
+  const generatePaginationSearchParams = useCallback(() => {
+    const searchParam = constructNSearchUrlFromFilters(nFilters);
+    const search = new URLSearchParams(searchParam);
+    search.set("layout", layout ?? "row");
+    return search;
+  }, [nFilters, layout]);
 
   // Effect to sync URL with state
   useEffect(() => {
@@ -399,13 +454,15 @@ export default function MainSearchPageComponent() {
         nFilters={nFilters}
         setNFilters={setNFilters}
         onClose={() => setShowFilter(false)}
-        onApplyFilters={() => applyFilter()}
+        resetFilters={resetFilters}
+        onApplyFilters={applyFilter}
       />
 
       {getBusinessesMut.isPending || pageLoading ? null : (
         <BusinessCardContainer
           data={businesses.data}
           businessCategories={businessCategory}
+          layout={layout}
         />
       )}
 
@@ -414,10 +471,10 @@ export default function MainSearchPageComponent() {
         !getBusinessesMut.isPending && (
           <Pagination
             totalPages={businesses.totalPages}
-            urlSearchParam={new URLSearchParams(window.location.search)}
+            urlSearchParam={generatePaginationSearchParams()}
             activePage={String(businesses.page)}
             location={window.location}
-            SSR={true}
+            SSR={true} // this uses <a> tags to navigate rather than <Link>
           />
         )}
 
