@@ -154,7 +154,7 @@ export const Pagination = ({
           activePage={activePage}
           url={`${
             location.pathname
-          }?page=${prevPage}&${urlSearchParam.toString()}`}
+          }?${urlSearchParam.toString()}&page=${prevPage}`}
           lastPage={isLastPage}
           SSR={SSR}
         />
@@ -167,7 +167,7 @@ export const Pagination = ({
           activePage={activePage}
           url={`${
             location.pathname
-          }?page=${nextPage}&${urlSearchParam.toString()}`}
+          }?${urlSearchParam.toString()}&page=${nextPage}`}
           lastPage={isLastPage}
           SSR={SSR}
         />
