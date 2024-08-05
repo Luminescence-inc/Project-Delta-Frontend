@@ -111,12 +111,12 @@ const Select = ({ label, options, name, formikValue, formik, required }: ISelect
               </FlexRowCenterBtw>
             ) : (
               <span className="px-3 font-pp text-[12px] text-dark-104">
-               
+               {/* Search... */}
               </span>
             )}
           </FlexColStart>
           <div className="w-full h-full max-h-[150px] overflow-y-auto mt-2">
-            <ul className="w-full list-none p-0 m-0 ">
+            <ul className="relative w-full list-none p-0 m-0 ">
               {options?.map((option) => {
                 const isSelected = selectedValue?.uuid === option.uuid;
                 const isMatchingValue =
@@ -129,7 +129,7 @@ const Select = ({ label, options, name, formikValue, formik, required }: ISelect
                       key={option.uuid}
                       onClick={() => handleSelect(option)}
                       className={cn(
-                        "w-full py-[8px] px-2 text-left cursor-pointer leading-[20px] tracking-normal text-dark-103 text-[14px] font-pp font-medium rounded-md ",
+                        "  z-50 h-full w-full py-[8px] px-2 text-left cursor-pointer leading-[20px] tracking-normal text-dark-103 text-[14px] font-pp font-medium rounded-md ",
                         isSelected
                           ? "bg-blue-200 text-white-100"
                           : "text-dark-106"

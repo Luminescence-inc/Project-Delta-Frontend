@@ -44,12 +44,38 @@ const socialMediaLinksInput = [
   "facebook",
 ] as SupportedSocialMedia[];
 
+interface OperationField {
+  days: string;
+  openTime: string;
+  closeTime: string;
+}
+
+
 const OperationInfo: FC<OperationInfoProps> = ({
   formik,
   businessId,
   isLoading
 }) => {
   const [count, setCount] = useState(1)
+  const [fields, setFields] = useState<OperationField[]>([
+    { days: "", openTime: "", closeTime: "" }
+  ]);
+
+  const addField = () => {
+    setFields([...fields, { days: "", openTime: "", closeTime: "" }]);
+    setCount(prev => prev + 1);
+  };
+
+  const deleteField = (index: number) => {
+    setFields(fields.filter((_, i) => i !== index));
+  };
+
+  const handleFieldChange = (index: number, field: keyof OperationField, value: string) => {
+    const newFields = [...fields];
+    newFields[index] = { ...newFields[index], [field]: value };
+    setFields(newFields);
+  };
+
 
   const filterDaysOfOperation = DAYS_OF_OPERATIONS_OPTIONS.filter((days) => {
     const d = formik.values.daysOfOperation as Array<string>;
@@ -130,16 +156,16 @@ const OperationInfo: FC<OperationInfoProps> = ({
                   </button>
                 </span>}
 
-                <div className="grid grid-cols-3 items-start gap-4 w-full">
+                {/* <div className="grid grid-cols-3 items-start gap-4 w-full">
                   <div className="flex flex-col">
-                    {/* <MultiSelect
+                    <MultiSelect
                       placeholder={"Days"}
                       name="daysOfOperation"
                       isSearch={false}
                       formikValue={filterDaysOfOperation}
                       formik={formik}
                       options={DAYS_OF_OPERATIONS_OPTIONS}
-                    /> */}
+                    />
                     <Select
                       name="Days"
                       formikValue={formik.values.daysOfOperationOG}
@@ -170,6 +196,38 @@ const OperationInfo: FC<OperationInfoProps> = ({
                     />
                   </div>
 
+                </div> */}
+
+
+
+              <div className="grid grid-cols-3 items-start gap-4 w-full">
+                  <div className="flex flex-col">
+                    <Select
+                      name={`daysOfOperation${i}`}
+                      value={fields[i].days}
+                      onChange={(e) => handleFieldChange(i, 'days', e.target.value)}
+                      options={DAYS_OF_OPERATIONS_OPTIONS}
+                      placeholder="Select days"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <Select
+                      name={`openTime${i}`}
+                      value={fields[i].openTime}
+                      onChange={(e) => handleFieldChange(i, 'openTime', e.target.value)}
+                      options={OPERATING_TIME_OPTIONS}
+                      placeholder="Select opening time"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <Select
+                      name={`closeTime${i}`}
+                      value={fields[i].closeTime}
+                      onChange={(e) => handleFieldChange(i, 'closeTime', e.target.value)}
+                      options={OPERATING_TIME_OPTIONS}
+                      placeholder="Select closing time"
+                    />
+                  </div>
                 </div>
               </Tag>
             )
@@ -177,7 +235,7 @@ const OperationInfo: FC<OperationInfoProps> = ({
         </Repeater>
 
         <div className='flex items-start w-full gap-3'>
-          <div className='flex items-center gap-2 text-[13px] leading-[15.87px] font-medium bg-white-100 text-blue-200 p-4 cursor-pointer' onClick={() => setCount(count + 1)}>
+          <div className='flex items-center gap-2 text-[13px] leading-[15.87px] font-medium bg-white-100 text-blue-200 p-4 cursor-pointer' onClick={addField}>
             {/* <AddMore className='me-4' />  */}
             <img src="/plus-add.svg" alt="" />
             <span className='underline'>Add more</span>
