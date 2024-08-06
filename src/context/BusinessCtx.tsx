@@ -1,5 +1,5 @@
 "use client";
-import { allBusinessCategories, searchForBusinesses } from "@/api/business";
+import { allBusinessCategories } from "@/api/business";
 import React, { PropsWithChildren, useEffect, useState } from "react";
 import { BusinessCategories, IOption } from "@/types/business";
 
