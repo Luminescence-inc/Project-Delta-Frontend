@@ -61,21 +61,38 @@ const OperationInfo: FC<OperationInfoProps> = ({
     { days: DAYS_OF_OPERATIONS_OPTIONS[0].value, openTime: "", closeTime: "" }
   ]);
 
+  const getNextDay = (currentDay: string) => {
+    const days = DAYS_OF_OPERATIONS_OPTIONS.map(option => option.value);
+    const currentIndex = days.indexOf(currentDay);
+    return currentIndex !== -1 ? days[(currentIndex + 1) % days.length] : days[0];
+  };
+
+  const addField = () => {
+    const usedDays = fields.map(field => field.days).filter(day => day !== "");
+    if (usedDays.length >= DAYS_OF_OPERATIONS_OPTIONS.length) return;
+
+    const lastDay = usedDays.length > 0 ? usedDays[usedDays.length - 1] : "";
+    const nextDay = getNextDay(lastDay);
+
+    setFields([...fields, { days: nextDay, openTime: "", closeTime: "" }]);
+  };
+  
+  const getAvailableDays = (index: number) => {
+    const usedDays = fields.map((field, i) => i !== index && field.days).filter(day => day !== "");
+    return DAYS_OF_OPERATIONS_OPTIONS.filter(option => !usedDays.includes(option.value));
+  };
+
   // const addField = () => {
-  //   setFields([...fields, { days: "", openTime: "", closeTime: "" }]);
+  //   const usedDays = fields.map(field => field.days);
+  //   const availableDays = DAYS_OF_OPERATIONS_OPTIONS.filter(option => !usedDays.includes(option.value));
+
+  //   if (availableDays.length > 0) {
+  //     setFields([...fields, { days: availableDays[0].value, openTime: "", closeTime: "" }]);
+  //   } else {
+  //     setFields([...fields, { days: "", openTime: "", closeTime: "" }]);
+  //   }
   //   setCount(prev => prev + 1);
   // };
-  const addField = () => {
-    const usedDays = fields.map(field => field.days);
-    const availableDays = DAYS_OF_OPERATIONS_OPTIONS.filter(option => !usedDays.includes(option.value));
-
-    if (availableDays.length > 0) {
-      setFields([...fields, { days: availableDays[0].value, openTime: "", closeTime: "" }]);
-    } else {
-      setFields([...fields, { days: "", openTime: "", closeTime: "" }]);
-    }
-    setCount(prev => prev + 1);
-  };
 
   const deleteField = (index: number) => {
     setFields(fields.filter((_, i) => i !== index));
@@ -180,7 +197,8 @@ const OperationInfo: FC<OperationInfoProps> = ({
                   name={`daysOfOperation${i}`}
                   formikValue={field.days}
                   formik={formik}
-                  options={DAYS_OF_OPERATIONS_OPTIONS}
+                  options={getAvailableDays(i)}
+                  // options={DAYS_OF_OPERATIONS_OPTIONS}
                   placeholder="Select days"
                   onChange={(e) => handleFieldChange(i, 'days', e.target.value)}
                 />
