@@ -2,7 +2,7 @@
 
 import { BusinessProfileFormikPropsValues, RegisterBusinessTabs } from "@/types/business";
 import { FormikProps } from "formik";
-import { FC, useRef, useState } from "react";
+import { FC, useState } from "react";
 import {
   DAYS_OF_OPERATIONS_OPTIONS,
   FILE_TYPES,
@@ -11,7 +11,6 @@ import {
 import Input from "@/components/ui/input";
 import Button from "@components/ui/button";
 import Select from "@/components/Select";
-import MultiSelect from "@/components/MultiSelect";
 import { FlexColStart, FlexColStartCenter, FlexRowCenter } from "@components/Flex";
 import { Mail, Phone, AddMore, AddMoreClose } from "@/components/icons";
 import {
@@ -23,11 +22,7 @@ import {
 } from "@components/icons";
 import { cn } from "@/lib/utils";
 import { toast } from "react-toastify";
-import Repeater from "@/components/Repeater";
-import { SlideDown } from 'react-slidedown'
 
-// ** Styles
-import 'react-slidedown/lib/slidedown.css'
 interface OperationInfoProps {
   formik: FormikProps<BusinessProfileFormikPropsValues>;
   businessId?: string | null;
@@ -64,7 +59,8 @@ const OperationInfo: FC<OperationInfoProps> = ({
   const getNextDay = (currentDay: string) => {
     const days = DAYS_OF_OPERATIONS_OPTIONS.map(option => option.value);
     const currentIndex = days.indexOf(currentDay);
-    return currentIndex !== -1 ? days[(currentIndex + 1) % days.length] : days[0];
+    return currentIndex !== -1 ? days[(currentIndex + 1) % days.length] : "";
+    // return currentIndex !== -1 ? days[(currentIndex + 1) % days.length] : days[0];
   };
 
   const addField = () => {
@@ -76,32 +72,31 @@ const OperationInfo: FC<OperationInfoProps> = ({
 
     setFields([...fields, { days: nextDay, openTime: "", closeTime: "" }]);
   };
-  
+
   const getAvailableDays = (index: number) => {
     const usedDays = fields.map((field, i) => i !== index && field.days).filter(day => day !== "");
     return DAYS_OF_OPERATIONS_OPTIONS.filter(option => !usedDays.includes(option.value));
   };
 
-  // const addField = () => {
-  //   const usedDays = fields.map(field => field.days);
-  //   const availableDays = DAYS_OF_OPERATIONS_OPTIONS.filter(option => !usedDays.includes(option.value));
-
-  //   if (availableDays.length > 0) {
-  //     setFields([...fields, { days: availableDays[0].value, openTime: "", closeTime: "" }]);
-  //   } else {
-  //     setFields([...fields, { days: "", openTime: "", closeTime: "" }]);
-  //   }
-  //   setCount(prev => prev + 1);
+  // const handleFieldChange = (index: number, field: keyof OperationField, value: string) => {
+  //   const newFields = [...fields];
+  //   newFields[index] = { ...newFields[index], [field]: value };
+  //   setFields(newFields);
   // };
-
-  const deleteField = (index: number) => {
-    setFields(fields.filter((_, i) => i !== index));
-  };
 
   const handleFieldChange = (index: number, field: keyof OperationField, value: string) => {
     const newFields = [...fields];
     newFields[index] = { ...newFields[index], [field]: value };
+
+    // If the day is changed, update subsequent days to follow the sequence
+    if (field === 'days') {
+      for (let i = index + 1; i < newFields.length; i++) {
+        newFields[i].days = getNextDay(newFields[i - 1].days);
+      }
+    }
+
     setFields(newFields);
+    console.log(newFields, "newFields"); // Log the fields to check the values
   };
 
   console.log(fields, 'fields')
@@ -121,7 +116,7 @@ const OperationInfo: FC<OperationInfoProps> = ({
   // what is expected to use
   const deleteForm = (e: React.MouseEvent<HTMLButtonElement>, day: string) => {
     e.preventDefault();
-    setFields(prev => prev.filter(ff =>ff.days !== day));
+    setFields(prev => prev.filter(ff => ff.days !== day));
     setCount(prev => prev - 1);
   };
 
@@ -200,7 +195,8 @@ const OperationInfo: FC<OperationInfoProps> = ({
                   options={getAvailableDays(i)}
                   // options={DAYS_OF_OPERATIONS_OPTIONS}
                   placeholder="Select days"
-                  onChange={(e) => handleFieldChange(i, 'days', e.target.value)}
+                  // onChange={formik.handleChange}
+                  onChange={(e: any) => handleFieldChange(i, 'days', e.target.value)}
                 />
               </div>
               <div className="flex flex-col">
@@ -210,7 +206,8 @@ const OperationInfo: FC<OperationInfoProps> = ({
                   formik={formik}
                   options={OPERATING_TIME_OPTIONS}
                   placeholder="Select opening time"
-                  onChange={(e) => handleFieldChange(i, 'openTime', e.target.value)}
+                  // onChange={formik.handleChange}
+                  onChange={(e: any) => handleFieldChange(i, 'openTime', e.target.value)}
                 />
               </div>
               <div className="flex flex-col">
@@ -220,7 +217,8 @@ const OperationInfo: FC<OperationInfoProps> = ({
                   formik={formik}
                   options={OPERATING_TIME_OPTIONS}
                   placeholder="Select closing time"
-                  onChange={(e) => handleFieldChange(i, 'closeTime', e.target.value)}
+                  // onChange={formik.handleChange}
+                  onChange={(e: any) => handleFieldChange(i, 'closeTime', e.target.value)}
                 />
               </div>
             </div>
@@ -228,13 +226,15 @@ const OperationInfo: FC<OperationInfoProps> = ({
         ))}
 
 
-        <div className='flex items-start w-full gap-3'>
-          <div className='flex items-center gap-2 text-[13px] leading-[15.87px] font-medium bg-white-100 text-blue-200 p-4 cursor-pointer' onClick={addField}>
-            {/* <AddMore className='me-4' />  */}
-            <img src="/plus-add.svg" alt="" />
-            <span className='underline'>Add more</span>
+        {fields.length < DAYS_OF_OPERATIONS_OPTIONS.length && (
+          <div className='flex items-start w-full gap-3'>
+            <div className='flex items-center gap-2 text-[13px] leading-[15.87px] font-medium bg-white-100 text-blue-200 p-4 cursor-pointer'
+              onClick={addField}>
+              <img src="/plus-add.svg" alt="" />
+              <span className='underline'>Add more</span>
+            </div>
           </div>
-        </div>
+        )}
 
 
         <hr className="border border-blue-200 border-dashed my-4" />
