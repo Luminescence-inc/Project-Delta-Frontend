@@ -94,8 +94,8 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
         const resData: BusinessCategories = res.data;
 
         setBusinessCategory(
-          resData.data.businessCategories.map((businessCat) => {
-            return { uuid: businessCat.uuid, value: businessCat.description };
+          resData?.data?.businessCategories.map((businessCat) => {
+            return { uuid: businessCat?.uuid, value: businessCat?.description };
           })
         );
 

@@ -170,7 +170,7 @@ interface IOption {
 
 interface ISelect {
   label: string;
-  options: IOption[];
+  options: IOption[] |undefined;
   name: string;
   formikValue: string;
   placeholder: string;
