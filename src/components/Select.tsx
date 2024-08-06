@@ -17,7 +17,8 @@ interface ISelect {
   formik: FormikProps<any>;
   options: IOption[] | undefined;
   placeholder: string;
-  required?: boolean
+  required?: boolean;
+  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
 interface IOption {
@@ -25,8 +26,7 @@ interface IOption {
   value: string;
 }
 
-const Select = ({ label, options, name, formikValue, formik, required }: ISelect) => {
-  //Based on the values(string) find the corresponding option (object)
+const Select = ({ label, options, name, formikValue, formik, required, onChange }: ISelect) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [value, setValue] = useState(formikValue || "");
   const [showDropdown, setShowDropdown] = useState(false);
@@ -44,6 +44,7 @@ const Select = ({ label, options, name, formikValue, formik, required }: ISelect
     setShowDropdown(false);
 
     formik.setFieldValue(`${name}`, option.value);
+    onChange({ target: { name, value: option.value } } as React.ChangeEvent<HTMLSelectElement>);
   };
 
   const handleCancel = () => {
@@ -51,6 +52,7 @@ const Select = ({ label, options, name, formikValue, formik, required }: ISelect
     setValue("");
 
     formik.setFieldValue(`${name}`, "");
+    onChange({ target: { name, value: "" } } as React.ChangeEvent<HTMLSelectElement>);
   };
 
   const toggleDropdown = () => {
