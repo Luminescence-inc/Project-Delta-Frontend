@@ -17,6 +17,7 @@ import { useAuth } from "@hooks/useAuth";
 import { Cancel, ChevronDown, Edit, Menu, Plus } from "./icons";
 import { useRouter } from "next/navigation";
 import { useDataCtx } from "@/context/DataCtx";
+import Link from "next/link";
 
 const navigationRoute = [
   { title: "Home", name: "home", path: "/" },
@@ -80,20 +81,20 @@ const Navbar = () => {
     <div className="w-full">
       <div className="w-full">
         <FlexColStart
-          className="w-full h-full"
+          className="w-full h-full bg-blue-203"
           onClick={(e) => {
             e.stopPropagation();
           }}
         >
           <div
-            className="w-full px-3 py-4 bg-blue-203"
+            className="w-full max-w-7xl mx-auto px-3 lg:px-0 py-4 bg-blue-203"
             style={{
               backgroundColor: navbarBgColor?.parent ?? "",
             }}
           >
             {!menuOpen && (
-              <FlexRowStartBtw
-                className="w-full mt-[24px] rounded-[5px] px-3 py-[18px]"
+              <FlexRowCenterBtw
+                className="w-full mt-[24px] rounded-[5px] px-3 py-[18px] md:bg-white-100"
                 style={{
                   backgroundColor: navbarBgColor?.child ?? "",
                 }}
@@ -101,6 +102,14 @@ const Navbar = () => {
                 <a href="/">
                   <img src={"/assets/images/logo/logo-header.svg"} />
                 </a>
+
+                <div className="justify-between items-center hidden sm:flex font-medium text-sm leading-[14px] text-gray-100">
+                    <Link href="/" className={`${window.location.pathname === '/' && ' text-brand-green-shade99'} mx-3 sm:mx-4 p-3`}>Home</Link>
+                    <Link href="/about" className={`${window.location.pathname === '/about' && ' text-brand-green-shade99'} mx-3 sm:mx-4 p-3`}>About</Link>
+                    <Link href="/search" className={`${window.location.pathname === '/search' && ' text-brand-green-shade99'} mx-3 sm:mx-4 p-3`}>FDiscover Businessesaq</Link>
+                    <Link href="#" className={`${window.location.pathname === '/' && ' text-brand-green-shade99'} mx-3 sm:mx-4 p-3`}>Cognito</Link>
+                    <Link href="/contact-support" className={`${window.location.pathname === '/contact-support' && ' text-brand-green-shade99'} mx-3 sm:mx-4 p-3`}>Support</Link>
+                </div>
                 <Menu
                   size={30}
                   className="stroke-blue-200 cursor-pointer relative top-3"
@@ -108,7 +117,7 @@ const Navbar = () => {
                     handleMenuIcon();
                   }}
                 />
-              </FlexRowStartBtw>
+              </FlexRowCenterBtw>
             )}
           </div>
 

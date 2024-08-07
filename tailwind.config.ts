@@ -34,6 +34,7 @@ module.exports = {
             shade80: "#96D4AB",
             shade90: "#CAEAD4",
             shade95: "#E6F5EA",
+            shade99: '#1ABEBB'
           },
           red: {
             primary: "#FF2E2E",

@@ -12,40 +12,66 @@ import {
   HeaderBusinessBtn,
   HeaderOnboardingComp,
   HeaderSearchComp,
-} from "@/modules/home/components/HeaderComp"; 
+} from "@/modules/home/components/HeaderComp";
 
 // gerald first branch and pr, make a small change
 
 const Home = () => {
   return (
     <div className="w-full h-full">
-      <header className="w-full px-3 py-4 bg-blue-203">
-        <HeaderSearchComp />
+      <header className="w-full md:px-3 py-4 bg-blue-203">
+        <div className=" md:hidden">
+          <HeaderSearchComp />
+        </div>
         <br />
-        <FlexColStart className="gap-[10px]">
-          <h1 className="w-full text-[25px] font-bold leading-[38px] tracking-normal text-left text-blue-200 font-pp">
-            Connecting Immigrant & Local Business Owners With Their Customers
-          </h1>
-          <p className="text-[13px] font-medium font-pp leading-[25px] text-left text-gray-103 ">
-            Seamlessly do business within your area and on the go
-          </p>
-        </FlexColStart>
+        <div className="flex flex-1 max-w-full md:py-5">
+          <FlexColStart className="flex gap-[10px] md:ml-20 flex-1">
+            <h1 className="w-full text-[25px] md:text-[45px] font-bold leading-[38px] sm:leading-[54.94px] tracking-normal text-left text-blue-200 font-pp">
+              Connecting Immigrant &
+              local Business Owners
+              with their Customers
+            </h1>
+            <p className="text-[13px] font-medium font-pp leading-[36px]  text-left text-gray-103 ">
+              Seamlessly do business within your area and on the go
+            </p>
+            <div className="hidden md:block">
+              <HeaderSearchComp />
+              <HeaderOnboardingComp />
+              <HeaderBusinessBtn />
+            </div>
 
-        <HeaderOnboardingComp />
 
-        <HeaderBusinessBtn />
+            <div className="block md:hidden">
+              <HeaderOnboardingComp />
 
-      </header>
-        <div className="w-full pt-[40px] pb-20 bg-blue-203">
-          <img
-            src={"/assets/images/world-map.svg"}
-            alt="world map"
-            className="w-full h-auto"
-            style={{ height: "auto", width: "100%" }}
-          />
+              <HeaderBusinessBtn />
+            </div>
+
+          </FlexColStart>
+
+          <div className="hidden md:flex flex-1">
+            <img src="/global.svg" className="hidden md:block" alt="" />
+          </div>
         </div>
 
-      <section className="w-full h-auto py-4 pt-[40px] bg-white-100 ">
+
+        <div className="md:hidden">
+          <HeaderOnboardingComp />
+
+          <HeaderBusinessBtn />
+        </div>
+
+      </header>
+      <div className="block md:hidden w-full pt-[40px] pb-20 bg-blue-203">
+        <img
+          src={"/assets/images/world-map.svg"}
+          alt="world map"
+          className="w-full h-auto"
+          style={{ height: "auto", width: "100%" }}
+        />
+      </div>
+
+      <section className="max-w-7xl mx-auto w-full h-auto py-4 pt-[40px] bg-white-100 ">
         <div className="w-full px-4 pb-[3em]">
           <TitleCard
             title={"FOR BUSINESS OWNERS"}
@@ -56,12 +82,13 @@ const Home = () => {
           />
 
           {/* Businesses Card */}
-          <FlexColStart className="w-full mt-[20px] gap-[13px] pb-[5em]">
+          {/* <FlexColStart className="w-full mt-[20px] gap-[13px] pb-[5em]"> */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3  w-full mt-[20px] gap-[13px] pb-[5em]">
             <BusinessCard
               className={"business-card"}
               icon={
                 <img
-                  className="w-[60px]"
+                  // className="w-[60px]"
                   src={"/assets/images/opportunities/visibility-icon.svg"}
                 />
               }
@@ -74,7 +101,7 @@ const Home = () => {
               className={"business-card"}
               icon={
                 <img
-                  className="w-[60px]"
+                  // className="w-[60px]"
                   src={"/assets/images/opportunities/audience-icon.svg"}
                 />
               }
@@ -87,7 +114,7 @@ const Home = () => {
               className={"business-card"}
               icon={
                 <img
-                  className="w-[60px]"
+                  // className="w-[60px]"
                   src={"/assets/images/opportunities/growth-icon.svg"}
                 />
               }
@@ -96,7 +123,7 @@ const Home = () => {
                 "With access to a larger customer base and tools to expand their reach, immigrant & Local business owners can experience accelerated growth and increased revenue opportunities."
               }
             />
-          </FlexColStart>
+          </div>
 
           <div className="w-full mt-5 h-[150px]">
             <TitleCard
@@ -117,7 +144,8 @@ const Home = () => {
           </div>
 
           {/* Customer Card */}
-          <FlexColCenter className="w-full mt-10 gap-[31px]">
+          {/* <FlexColCenter className="w-full mt-10 gap-[31px]"> */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3  w-full mt-10 gap-[31px]">
             <CustomerCard
               icon={
                 <img
@@ -156,7 +184,7 @@ const Home = () => {
                 "Through Bizconnect24, customers become part of a vibrant and supportive community, connecting with fellow enthusiasts who share a passion for diversity, entrepreneurship, and cultural exchange"
               }
             />
-          </FlexColCenter>
+          </div>
 
           <FlexColCenter className="w-full">
             <Button
