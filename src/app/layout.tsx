@@ -21,6 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <link rel="icon" href="next.svg" sizes="any" />
       <body
         className={cn(inter.variable, poppins.variable, open_sans.variable)}
       >

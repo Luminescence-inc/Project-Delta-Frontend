@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { FlexColCenter, FlexRowStartCenter } from "./Flex";
+import { FlexColCenter, FlexColStart, FlexRowStartCenter } from "./Flex";
 import { useEffect, useState } from "react";
 
 export default function BlockDesktopView({
@@ -10,15 +10,20 @@ export default function BlockDesktopView({
 }) {
   const [isMobile, setIsMobile] = useState(false);
 
-  useEffect(() => {
+  const checkMobile = () => {
     const { innerWidth } = window;
-    window.addEventListener("resize", (e) => {
-      if (innerWidth > 700) {
-        setIsMobile(true);
-      } else {
-        setIsMobile(false);
-      }
-    });
+    if (innerWidth > 700) {
+      setIsMobile(true);
+    } else {
+      setIsMobile(false);
+    }
+  };
+
+  useEffect(() => {
+    // Initial check
+    checkMobile();
+
+    window.addEventListener("resize", (e) => checkMobile());
 
     return () => {
       window.removeEventListener("resize", () => {});
@@ -29,25 +34,21 @@ export default function BlockDesktopView({
   if (override) return null;
 
   return (
-    <FlexColCenter className="w-screen h-screen fixed top-0 left-0 z-[99999] bg-white-100 px-7 md:px-10">
-      <FlexRowStartCenter className="gap-2 mb-5 text-center">
+    <FlexColStart className="w-screen h-screen fixed top-0 left-0 z-[99999] bg-white-100 px-7 md:px-10">
+      <FlexColCenter className="w-full h-auto mt-10 gap-2 mb-5 text-center">
         <Image
-          src={"/assets/images/logo/BizConnectLogo.svg"}
-          width={30}
-          height={30}
+          src={"/assets/images/logo/logo-header.svg"}
+          width={165}
+          height={28}
           alt=""
         />
-        <h1 className="text-2xl font-bold font-pp text-blue-200">
-          BizConnect24
+        <h1 className="text-[1.5rem] font-semibold font-pp text-blue-200 text-center p-[10px]">
+          Web View Notification
         </h1>
-      </FlexRowStartCenter>
-      <h1 className="text-md font-bold font-pp text-blue-200 text-center">
-        Unsupported Aspect Ratio
-      </h1>
-      <p className="text-sm md:text-md font-pp font-normal text-white-400 text-center">
-        This page isn't available on desktop view. Please consider viewing it on
-        mobile phone.
-      </p>
-    </FlexColCenter>
+        <p className="text-[1em] md:text-md font-pp font-normal text-blue-200 text-center p-[10px]">
+          For an awesome experience, please switch to your mobile phone. Thanks
+        </p>
+      </FlexColCenter>
+    </FlexColStart>
   );
 }

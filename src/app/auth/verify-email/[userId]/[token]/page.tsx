@@ -10,14 +10,14 @@ import ErrorComponent from "@/components/ErrorComponent";
 import { FlexColCenter } from "@/components/Flex";
 
 const VerifiedEmail = () => {
-  const { userId, uniqueString } = useParams();
+  const { userId, token } = useParams();
   const [error, setError] = useState(false);
   const [verified, setVerified] = useState(false);
   const [errorMessage, setErrorMessage] = useState<String | null>(null);
 
   useEffect(() => {
     try {
-      verifyUserAccount(userId as string, uniqueString as string)
+      verifyUserAccount(userId as string, token as string)
         .catch((err) => {
           const errorResponse: BaseResponseMessage = err.response.data;
 
@@ -56,7 +56,7 @@ const VerifiedEmail = () => {
               type="submit"
               intent="primary"
               size="lg"
-              href="/login"
+              href="/auth/login"
               className="w-full rounded-[5px] mt-3 font-pp font-semibold"
             >
               Login

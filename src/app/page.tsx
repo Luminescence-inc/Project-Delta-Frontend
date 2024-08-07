@@ -19,7 +19,7 @@ import {
 const Home = () => {
   return (
     <div className="w-full h-full">
-      <header className="w-full px-7 py-4 bg-blue-203">
+      <header className="w-full px-3 py-4 bg-blue-203">
         <HeaderSearchComp />
         <br />
         <FlexColStart className="gap-[10px]">
@@ -35,7 +35,8 @@ const Home = () => {
 
         <HeaderBusinessBtn />
 
-        <div className="w-full mt-[40px] pb-20">
+      </header>
+        <div className="w-full pt-[40px] pb-20 bg-blue-203">
           <img
             src={"/assets/images/world-map.svg"}
             alt="world map"
@@ -43,7 +44,6 @@ const Home = () => {
             style={{ height: "auto", width: "100%" }}
           />
         </div>
-      </header>
 
       <section className="w-full h-auto py-4 pt-[40px] bg-white-100 ">
         <div className="w-full px-4 pb-[3em]">
@@ -205,7 +205,7 @@ const Home = () => {
           >
             <Button
               intent="primary"
-              href="/search"
+              href="/search?cn=Canada"
               className="w-[303px] h-[55px] px-[15px] py-[15px] rounded-md border-[1px] border-white-100 "
               rightIcon={
                 <CtaArrow strokeWidth={0.4} className="stroke-white-100" />

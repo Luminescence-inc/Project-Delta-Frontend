@@ -90,7 +90,7 @@ const Signup = () => {
         setIsLoading(false);
 
         // route to verify-account
-        router.push("/verify-account");
+        router.push("/auth/verify-account");
         window.location.reload();
       } else {
         // Set error message
