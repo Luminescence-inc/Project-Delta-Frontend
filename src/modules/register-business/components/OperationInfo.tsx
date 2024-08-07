@@ -45,25 +45,20 @@ interface OperationField {
   closeTime: string;
 }
 
-
+const getNextDay = (currentDay: string): string => {
+  const days = DAYS_OF_OPERATIONS_OPTIONS.map(option => option.value);
+  const currentIndex = days.indexOf(currentDay);
+  return currentIndex !== -1 ? days[(currentIndex + 1) % days.length] : "";
+};
 const OperationInfo: FC<OperationInfoProps> = ({
   formik,
   businessId,
   isLoading
 }) => {
-  const [count, setCount] = useState(1)
-  const [fields, setFields] = useState<OperationField[]>([
-    { days: DAYS_OF_OPERATIONS_OPTIONS[0].value, openTime: "", closeTime: "" }
-  ]);
 
-  const getNextDay = (currentDay: string) => {
-    const days = DAYS_OF_OPERATIONS_OPTIONS.map(option => option.value);
-    const currentIndex = days.indexOf(currentDay);
-    return currentIndex !== -1 ? days[(currentIndex + 1) % days.length] : "";
-    // return currentIndex !== -1 ? days[(currentIndex + 1) % days.length] : days[0];
-  };
+  const [fields, setFields] = useState<OperationField[]>([{ days: "", openTime: "", closeTime: "" }]);
 
-  const addField = () => {
+  const addField = (): void => {
     const usedDays = fields.map(field => field.days).filter(day => day !== "");
     if (usedDays.length >= DAYS_OF_OPERATIONS_OPTIONS.length) return;
 
@@ -78,13 +73,7 @@ const OperationInfo: FC<OperationInfoProps> = ({
     return DAYS_OF_OPERATIONS_OPTIONS.filter(option => !usedDays.includes(option.value));
   };
 
-  // const handleFieldChange = (index: number, field: keyof OperationField, value: string) => {
-  //   const newFields = [...fields];
-  //   newFields[index] = { ...newFields[index], [field]: value };
-  //   setFields(newFields);
-  // };
-
-  const handleFieldChange = (index: number, field: keyof OperationField, value: string) => {
+  const handleFieldChange = (index: number, field: keyof OperationField, value: string): void => {
     const newFields = [...fields];
     newFields[index] = { ...newFields[index], [field]: value };
 
@@ -96,29 +85,20 @@ const OperationInfo: FC<OperationInfoProps> = ({
     }
 
     setFields(newFields);
-    console.log(newFields, "newFields"); // Log the fields to check the values
+  };
+
+  const deleteForm = (e: React.MouseEvent<HTMLButtonElement>, day: string): void => {
+    e.preventDefault();
+    setFields(prev => prev.filter(ff => ff.days !== day));
+  };
+
+
+  const handleClearSocialMedia = (fieldName: string) => {
+    formik.setFieldValue(fieldName, '');
   };
 
   console.log(fields, 'fields')
 
-  const filterDaysOfOperation = DAYS_OF_OPERATIONS_OPTIONS.filter((days) => {
-    const d = formik.values.daysOfOperation as Array<string>;
-    return d.includes(days.value);
-  });
-
-
-  // ** Deletes form
-  // const deleteForm = (e: any, index: number) => {
-  //   e.preventDefault()
-  //   e.target.closest('.repeater-wrapper').remove()
-  //   // setFields(fields.filter((_, i) => i !== index));
-  // }
-  // what is expected to use
-  const deleteForm = (e: React.MouseEvent<HTMLButtonElement>, day: string) => {
-    e.preventDefault();
-    setFields(prev => prev.filter(ff => ff.days !== day));
-    setCount(prev => prev - 1);
-  };
 
   return (
     <FlexColStart className="w-full h-full bg-gray-200  pb-[150px] ">
@@ -174,67 +154,56 @@ const OperationInfo: FC<OperationInfoProps> = ({
         </div>
 
         {fields.map((field, i) => (
-          <div key={i} className="relative w-full mb-4 repeater-wrapper">
-            {fields.length > 1 && (
-              <span className={`absolute -right-1 -top-1 z-50 cursor-pointer ${i === 0 ? "hidden" : ""}`}>
-                <button
-                  className="p-1 rounded-full bg-blue-200 flex flex-col items-center justify-center"
-                  // onClick={(e) => deleteField(e, i)}
-                  onClick={(e) => deleteForm(e, field.days)}
-                >
-                  <X size={12} className="stroke-white-100" />
-                </button>
-              </span>
-            )}
-            <div className="grid grid-cols-3 items-start gap-4 w-full">
-              <div className="flex flex-col">
-                <Select
-                  name={`daysOfOperation${i}`}
-                  formikValue={field.days}
-                  formik={formik}
-                  options={getAvailableDays(i)}
-                  // options={DAYS_OF_OPERATIONS_OPTIONS}
-                  placeholder="Select days"
-                  // onChange={formik.handleChange}
-                  onChange={(e: any) => handleFieldChange(i, 'days', e.target.value)}
-                />
-              </div>
-              <div className="flex flex-col">
-                <Select
-                  name={`openTime${i}`}
-                  formikValue={field.openTime}
-                  formik={formik}
-                  options={OPERATING_TIME_OPTIONS}
-                  placeholder="Select opening time"
-                  // onChange={formik.handleChange}
-                  onChange={(e: any) => handleFieldChange(i, 'openTime', e.target.value)}
-                />
-              </div>
-              <div className="flex flex-col">
-                <Select
-                  name={`closeTime${i}`}
-                  formikValue={field.closeTime}
-                  formik={formik}
-                  options={OPERATING_TIME_OPTIONS}
-                  placeholder="Select closing time"
-                  // onChange={formik.handleChange}
-                  onChange={(e: any) => handleFieldChange(i, 'closeTime', e.target.value)}
-                />
-              </div>
+        <div key={i} className="relative w-full mb-4 repeater-wrapper">
+          {fields.length > 1 && (
+            <span className={`absolute -right-1 -top-1 z-50 cursor-pointer ${i === 0 ? "hidden" : ""}`}>
+              <button
+                className="p-1 rounded-full bg-blue-200 flex flex-col items-center justify-center"
+                onClick={(e) => deleteForm(e, field.days)}
+              >
+                <X size={12} className="stroke-white-100" />
+              </button>
+            </span>
+          )}
+          <div className="grid grid-cols-3 items-start gap-4 w-full">
+            <div className="flex flex-col">
+              <Select
+                name={`daysOfOperation${i}`}
+                formikValue={field.days}
+                options={getAvailableDays(i)}
+                placeholder="--"
+                onChange={(e) => handleFieldChange(i, 'days', e.target.value)}
+              />
+            </div>
+            <div className="flex flex-col">
+              <Select
+                name={`openTime${i}`}
+                formikValue={field.openTime}
+                options={OPERATING_TIME_OPTIONS}
+                placeholder="--"
+                onChange={(e) => handleFieldChange(i, 'openTime', e.target.value)}
+              />
+            </div>
+            <div className="flex flex-col">
+              <Select
+                name={`closeTime${i}`}
+                formikValue={field.closeTime}
+                options={OPERATING_TIME_OPTIONS}
+                placeholder="--"
+                onChange={(e) => handleFieldChange(i, 'closeTime', e.target.value)}
+              />
             </div>
           </div>
-        ))}
-
-
-        {fields.length < DAYS_OF_OPERATIONS_OPTIONS.length && (
-          <div className='flex items-start w-full gap-3'>
-            <div className='flex items-center gap-2 text-[13px] leading-[15.87px] font-medium bg-white-100 text-blue-200 p-4 cursor-pointer'
-              onClick={addField}>
-              <img src="/plus-add.svg" alt="" />
-              <span className='underline'>Add more</span>
-            </div>
+        </div>
+      ))}
+      {fields.length < DAYS_OF_OPERATIONS_OPTIONS.length && (
+        <div className='flex items-start w-full gap-3'>
+          <div className='flex items-center gap-2 text-[13px] leading-[15.87px] font-medium bg-white-100 text-blue-200 p-4 cursor-pointer' onClick={addField}>
+            <img src="/plus-add.svg" alt="" />
+            <span className='underline'>Add more</span>
           </div>
-        )}
+        </div>
+      )}
 
 
         <hr className="border border-blue-200 border-dashed my-4" />
@@ -249,6 +218,7 @@ const OperationInfo: FC<OperationInfoProps> = ({
             formik={formik}
             key={socialIconName}
             socialIconName={socialIconName as SupportedSocialMedia}
+            onClear={handleClearSocialMedia}
           />
         ))}
 
@@ -278,11 +248,17 @@ export default OperationInfo;
 interface ISocialMediaLinks {
   formik: FormikProps<BusinessProfileFormikPropsValues>;
   socialIconName: SupportedSocialMedia;
+  onClear: (fieldName: string) => void;
+
 }
-const SocialMediaLinks = ({ formik, socialIconName }: ISocialMediaLinks) => {
+const SocialMediaLinks = ({ formik, socialIconName, onClear }: ISocialMediaLinks) => {
   const formattedSocialIconName =
     socialIconName.charAt(0).toUpperCase() + socialIconName.slice(1);
   const linkName = socialIconName.toLowerCase() + "Url";
+
+  const handleClear = () => {
+    onClear(linkName);
+  };
   return (
     <div className="w-full mb-[24px]">
       <FlexRowCenter className="w-full relative">
@@ -296,6 +272,16 @@ const SocialMediaLinks = ({ formik, socialIconName }: ISocialMediaLinks) => {
           value={formik.values[linkName as any]}
           onChange={formik.handleChange}
         />
+
+      {formik.values[linkName as keyof typeof formik.values] && (
+          <button
+            className="absolute right-2 p-1 rounded-full bg-blue-200 flex flex-col items-center justify-center"
+            onClick={handleClear}
+            type="button"
+          >
+            <X size={12} className="stroke-white-100" />
+          </button>
+        )}
       </FlexRowCenter>
     </div>
   );

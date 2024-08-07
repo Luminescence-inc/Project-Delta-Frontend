@@ -414,18 +414,6 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
           inputClassname="w-full px-3 border-white-400/50"
         />
 
-        {/* <h4 className="mt-[30px] text-[13px] font-pp font-semibold text-blue-200">
-          Add social media links
-        </h4>
-        <br />
-        {socialMediaLinksInput.map((socialIconName) => (
-          <SocialMediaLinks
-            formik={formik}
-            key={socialIconName}
-            socialIconName={socialIconName as SupportedSocialMedia}
-          />
-        ))} */}
-
         <Button
           onClick={handleNextButton}
           className="w-full rounded-[5px] mt-5"

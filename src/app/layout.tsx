@@ -12,7 +12,6 @@ import { NotsupportedCountryBanner } from "@/components/NotSupportedCountry";
 import SITE_CONFIG from "@/config/site";
 import { headers } from "next/headers";
 import NextTopLoader from "@/components/Toploader";
-import Head from "next/head"; // Import Head from next/head
 import BlockDesktopView from "@/components/BlockDesktopView";
 
 export default function RootLayout({
@@ -21,14 +20,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-       <Head>
-        <link rel="preload"
-          href="/fonts/HelveticaNeueRegular.otf" as="font" type="font/otf" crossOrigin="anonymous" />
-      </Head>
+    <html lang="en">  
       <body
-        // className={cn(inter.variable, poppins.variable, open_sans.variable)}
-      >
+        className={cn(inter.variable, poppins.variable, open_sans.variable)}>
         <DataCtxProvider>
           <NotsupportedCountryBanner />
           <BlockDesktopView override={false} />

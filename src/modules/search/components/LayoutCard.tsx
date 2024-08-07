@@ -11,7 +11,6 @@ import {
 import { MapPin, Phone, Share } from "@components/icons";
 import { determineBusOpTime } from "@/utils";
 import { cn } from "@/lib/utils";
-import { usePathname } from "next/navigation";
 
 interface BusinessCardProps {
   name: string;
@@ -44,7 +43,6 @@ export const ColLayoutCard = ({
   _key,
   _urlLocation,
 }: BusinessCardProps) => {
-  const pathname = usePathname()
 
   const hasBusinessClosed = daysOfOps ? determineBusOpTime(daysOfOps) : null;
 
@@ -97,7 +95,7 @@ export const ColLayoutCard = ({
           </FlexRowStartCenter>
 
           {/* opening time */}
-          {pathname != '/view-business' &&  <FlexRowCenterBtw className="w-full">
+          <FlexRowCenterBtw className="w-full">
            <FlexRowStartCenter className="gap-[10px]">
               {hasBusinessClosed && hasBusinessClosed.isOpened ? (
                 <>
@@ -127,9 +125,10 @@ export const ColLayoutCard = ({
                 Call me
               </span>
             </button>
-          </FlexRowCenterBtw>}
+          </FlexRowCenterBtw>
           {/* share */}
-          {pathname == '/view-business' &&  <FlexRowCenterBtw className="gap-[10px] w-full">
+
+          <FlexRowCenterBtw className="gap-[10px] w-full">
            <button className="flex flex-row items-center justify-center w-full bg-blue-202 px-[5px] py-[10px] rounded-[5px] gap-[5px] text-[12px] businesss-call-line">
               <span className="text-[12px] font-normal font-pp leading-[14.53px] mt-[2px] text-blue-200">
               Update Business Details
@@ -139,7 +138,7 @@ export const ColLayoutCard = ({
             <div className="bg-blue-204 p-3 round-[5px]">
               <Share size={15} className="stroke-blue-200/80" />
             </div>
-           </FlexRowCenterBtw>}
+           </FlexRowCenterBtw>
         </FlexColStart>
       </CardWrapper>
     </CardNavigateWrapper>

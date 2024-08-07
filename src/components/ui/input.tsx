@@ -31,7 +31,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps & IInputProps>(
     ref
   ) => {
     return (
-      <FlexColStart className="w-full gap-[4px] text-left mb-4">
+      <FlexColStart className="w-full  gap-[4px] text-left mb-4">
         <label className="text-sm font-normal leading-[140%] tracking-[0] font-pp text-red-700">
           {label}{required &&(<span className="text-[#F75B4E]">*</span>)}
         </label>

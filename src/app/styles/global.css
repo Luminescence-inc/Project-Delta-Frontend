@@ -2,17 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: 'Helvetica Neue' !important;
-  src: url('/fonts/HelveticaNeueRegular.otf') format('opentype');
-  font-weight: normal;
-  font-style: normal;
-}
-
-body {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
-}
-
 ::selection {
   background: rgba(86, 86, 255, 0.362);
 }
