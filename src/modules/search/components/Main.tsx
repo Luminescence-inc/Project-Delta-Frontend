@@ -20,7 +20,7 @@ import {
   extractQueryParams,
   overrideQueryParameters,
 } from "@/utils";
-import { DEFAULT_COUNTRY, prevPageSearchKeyName } from "@/config";
+import { DEFAULT_COUNTRY } from "@/config";
 import { useDataCtx } from "@/context/DataCtx";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import NBusinessFilter from "@/components/NewFilterComponent/NBusinessFilter";
