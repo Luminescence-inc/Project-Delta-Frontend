@@ -27,7 +27,7 @@ export default function RootLayout({
       >
         <DataCtxProvider>
           <NotsupportedCountryBanner />
-          <BlockDesktopView override={false} />
+          <BlockDesktopView override={true} />
           <Navbar />
           <BusinessContextProvider>{children}</BusinessContextProvider>
           <Footer />
