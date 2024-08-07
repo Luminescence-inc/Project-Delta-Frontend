@@ -311,4 +311,6 @@ const NBusinessFilter: React.FC<NBusinessFilterProps> = React.memo(
   }
 );
 
+NBusinessFilter.displayName = "NBusinessFilter";
+
 export default NBusinessFilter;
