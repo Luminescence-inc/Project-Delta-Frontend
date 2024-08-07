@@ -477,14 +477,6 @@ export default function MainSearchPageComponent() {
             SSR={true} // this uses <a> tags to navigate rather than <Link>
           />
         )}
-
-      {/* Filtering component */}
-      {/* <BusinessesFilterComponent
-        closeFilter={() => setShowFilter(false)}
-        getfilterData={(filter) => constructQuery(filter)}
-        businessesCategories={businessCategory}
-        showFilter={showFilter}
-      /> */}
     </FlexColStart>
   );
 }
