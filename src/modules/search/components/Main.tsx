@@ -49,7 +49,7 @@ export default function MainSearchPageComponent() {
   const [businesses, setBusinesses] = useState<BusinessesData>({
     data: [],
     limit: 0,
-    page: 0,
+    page: 1,
     total: 0,
     totalPages: 0,
   });
@@ -74,6 +74,7 @@ export default function MainSearchPageComponent() {
     mutationFn: async (param: string) => await searchForBusinesses(param),
     onSuccess: (res) => {
       const resp = res?.data?.businessProfiles as BusinessesData;
+      if (resp.page === 0) resp.page = 1;
       setBusinesses(resp);
       setPageLoading(false);
     },
@@ -160,8 +161,7 @@ export default function MainSearchPageComponent() {
       ["page", "limit"].forEach((param) => {
         if (
           nFilters.pagination &&
-          nFilters.pagination[param as keyof typeof nFilters.pagination] &&
-          !currentParams.has(param)
+          nFilters.pagination[param as keyof typeof nFilters.pagination]
         ) {
           overrideParams[param] =
             nFilters.pagination[
