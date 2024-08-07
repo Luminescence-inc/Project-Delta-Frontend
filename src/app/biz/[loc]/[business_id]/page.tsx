@@ -258,9 +258,11 @@ export default async function BusinessPage({ params }: BizPageProps) {
 
           {/* Similar businesses */}
           <FlexColStart className="w-full mt-5 h-auto pb-[200px]">
-            <h3 className="text-[15px] leading-[18px] font-bold font-pp text-blue-200">
-              Similar Businesses
-            </h3>
+            {similarBusinesses.data?.businesses.length > 0 && (
+              <h3 className="text-[15px] leading-[18px] font-bold font-pp text-blue-200">
+                Similar Businesses
+              </h3>
+            )}
 
             <SimilarBusinesses
               businesses={similarBusinesses.data?.businesses!}
@@ -447,7 +449,11 @@ async function getSimilarBusinesses(props: SimilarBusinessesProps) {
     };
   } catch (e: any) {
     return {
-      data: null,
+      data: {
+        businesses: [],
+        layout: "col",
+        windowLocation: header_url,
+      },
       error: e?.message ?? "An error occurred",
     };
   }
