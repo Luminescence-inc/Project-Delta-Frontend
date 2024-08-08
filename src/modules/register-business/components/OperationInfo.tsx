@@ -11,7 +11,7 @@ import {
 import Input from "@/components/ui/input";
 import Button from "@components/ui/button";
 import { FlexColStart, FlexColStartCenter, FlexRowCenter } from "@components/Flex";
-import { Mail, Phone, AddMore, AddMoreClose } from "@/components/icons";
+import { Mail, Phone, AddMore, AddMoreClose, Tiktok } from "@/components/icons";
 import {
   Instagram,
   Facebook,
@@ -30,7 +30,7 @@ interface OperationInfoProps {
 }
 
 
-type SupportedSocialMedia = "instagram" | "website" | "linkedin" | "facebook";
+type SupportedSocialMedia = "instagram" | "website" | "linkedin" | "facebook" | "tiktok";
 
 const socialMediaLinksInput = [
   "instagram",
@@ -113,10 +113,10 @@ const OperationInfo: FC<OperationInfoProps> = ({
 
   return (
     <FlexColStart className="w-full h-full bg-gray-205  pb-[150px] ">
-      <FlexColStartCenter className="w-full h-auto text-center bg-white-100 px-3 pb-[23px] gap-0">
+      <FlexColStartCenter className="w-full h-auto text-center bg-white-100 px-3 pb-[23px] gap-0 rounded-[8px]">
         <div className="flex flex-col items-center justify-center my-[24px]">
-          <h4 className="text-[16px] text-center font-bold font-pp leading-[24px] text-blue-200">Setup your business Profile</h4>
-          <h6 className="text-[15px] text-gray-103">Operation Info</h6>
+          <h4 className="text-lg text-center font-bold font-pp leading-[24px] text-blue-200">Setup your business Profile</h4>
+          <h6 className="text-[15px] text-gray-103 font-normal leading-[17.89px]">Operation Info</h6>
         </div>
 
         <Input
@@ -140,7 +140,6 @@ const OperationInfo: FC<OperationInfoProps> = ({
           value={formik.values.businessEmail}
           onChange={formik.handleChange}
           label="Business Email"
-          required
           rightIcon={
             <Mail
               strokeWidth={1}
@@ -152,8 +151,12 @@ const OperationInfo: FC<OperationInfoProps> = ({
           inputClassname="w-full px-3 outline-none border-none"
         />
 
+        <div className="w-full">
+            <hr className="border border-gray-203 border-dashed mb-4 mt-2" />
+        </div>
+
         <div className="flex items-start text-start w-full">
-          <label className="w-full text-start text-[14px] font-semibold font-inter text-dark-100/60 whitespace-nowrap mb-1">
+          <label className="w-full text-start text-[14px] font-semibold font-inter text-blue-200 whitespace-nowrap mb-1">
           Setup opening hours<span className="text-[#F75B4E]">*</span>
           </label>
         </div>
@@ -208,19 +211,20 @@ const OperationInfo: FC<OperationInfoProps> = ({
         </div>
       ))}
       {fields.length < DAYS_OF_OPERATIONS_OPTIONS.length && (
-        <div className='flex items-start w-full gap-3'>
-          <div className='flex items-center gap-2 text-[13px] leading-[15.87px] font-medium bg-white-100 text-blue-200 p-4 cursor-pointer' onClick={addField}>
-            <img src="/plus-add.svg" alt="" />
+        <div className='flex items-start w-full'>
+          <div className='flex items-center gap-1 text-[13px] leading-[15.87px] font-medium bg-white-100 text-blue-200 p-3 cursor-pointer' onClick={addField}>
+            <img src="/plus-add.svg" className="w-[13px] h-[13px]" alt="" />
             <span className='underline'>Add more</span>
           </div>
         </div>
       )}
 
+<div className="w-full">
+        <hr className="border border-gray-203 border-dashed my-2" />
+</div>
 
-        <hr className="border border-blue-200 border-dashed my-4" />
 
-
-        <h4 className="mt-[30px] text-[13px] text-base leading-[21.79px] font-pp font-semibold text-blue-200">
+        <h4 className="mt-[15px] text-[13px] text-base leading-[21.79px] font-pp font-semibold text-blue-200">
           Upload social media links<span className="text-gray-103 text-[13px] leading-[17.7px]">(optional)</span>
         </h4>
         <br />
@@ -278,7 +282,7 @@ const SocialMediaLinks = ({ formik, socialIconName, onClear }: ISocialMediaLinks
           className="w-full rounded-[5px]  p-[16px] border-[1px] border-dark-103 text-[12px] font-pp font-medium leading-[14px] tracking-wide text-blue-200 pl-[60px]"
           name={linkName}
           type="url"
-          placeholder={`Add ${formattedSocialIconName} Link`}
+          placeholder={`copy & paste ${formattedSocialIconName} link here`}
           // @ts-expect-error
           value={formik.values[linkName as any]}
           onChange={formik.handleChange}
@@ -319,6 +323,12 @@ const renderSocialMediaIcons = (name: SupportedSocialMedia) => {
     case "facebook":
       icon = (
         <Facebook
+          className={cn(defaultClass, "left-5 stroke-none fill-blue-200")}
+        />
+      );
+    case "tiktok":
+      icon = (
+        <Tiktok
           className={cn(defaultClass, "left-5 stroke-none fill-blue-200")}
         />
       );

@@ -78,7 +78,7 @@ const SelectAlpha: FC<ISelect> = ({
           <FlexRowCenter className="w-full relative">
             <input
               className={cn(
-                "w-full h-[46px] border-[1px] border-solid focus:border-none ring-0 border-dark-103 tracking-[0px] text-[12px] text-blue-200 p-[12px] cursor-pointer placeholder:text- placeholder:text-gray-103 placeholder:font-medium placeholder:text-[13px] placeholder:leading-[15.87px] rounded outline-none placeholder:pl-5",
+                "w-full h-[46px] border-[1px] border-solid focus:border-none focus:right-0 focus:outline-none ring-0 border-dark-103 tracking-[0px] text-[12px] text-blue-200 p-[12px] cursor-pointer placeholder:text-gray-103 placeholder:font-medium placeholder:text-[13px] placeholder:leading-[15.87px] rounded outline-none placeholder:pl-5",
                 "font-inter",
                 // showDropdown ? "border-[#4974A5]" : ""
               )}
