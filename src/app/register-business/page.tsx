@@ -521,6 +521,10 @@ const RegisterBusiness = () => {
             key={idx}
             className={cn(
               "text-[16px] font-bold font-pp cursor-pointer leading-[24px] py-2 w-full text-center border-b-4 border-gray-204",
+              // selectedTab?.toLowerCase() === tab.name.toLowerCase()
+              (idx === 0)
+                ? "border-b-4 border-[#1ABEBB] text-blue-200"
+                : "text-blue-200/60",
               selectedTab?.toLowerCase() === tab.name.toLowerCase()
                 ? "border-b-4 border-[#1ABEBB] text-blue-200"
                 : "text-blue-200/60"
