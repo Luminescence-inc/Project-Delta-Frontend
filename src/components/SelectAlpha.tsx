@@ -100,7 +100,7 @@ const SelectAlpha: FC<ISelect> = ({
               className="absolute right-[16px] cursor-pointer bg-white-100 p-[0.5px] rounded-full"
               onClick={toggleDropdown}
             >
-              <ChevronDown />
+              <ChevronDown width={15} />
             </span>
           </FlexRowCenter>
         </button>
