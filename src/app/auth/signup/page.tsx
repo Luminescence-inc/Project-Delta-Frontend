@@ -23,6 +23,7 @@ import ErrorComponent from "../../../components/ErrorComponent";
 import withoutAuth from "@/utils/auth-helpers/withoutAuth";
 import Link from "next/link";
 import { useDataCtx } from "@/context/DataCtx";
+import { toast } from "react-toastify";
 
 const validationSchema = yup.object({
   firstName: yup
@@ -49,6 +50,7 @@ const Signup = () => {
   const [showConfirmPassword, setShowConirmPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState<String | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [termsAccepted, setTermsAccepted] = useState(false);
 
   useEffect(() => {
     // remove this during code cleanup
@@ -62,6 +64,11 @@ const Signup = () => {
   }, []);
 
   const onSubmit = async (values: SignUpData) => {
+    if (!termsAccepted) {
+      toast.error("Accept the Terms and Conditions to continue.");
+      return;
+    }
+
     const { confirmPassword, ...data } = values;
     setIsLoading(true);
     try {
@@ -270,7 +277,11 @@ const Signup = () => {
           />
 
           <FlexRowStartBtw className="w-full py-10 mb-[24px]">
-            <input type="checkbox" />
+            <input
+              type="checkbox"
+              checked={termsAccepted}
+              onChange={(e) => setTermsAccepted(e.target.checked)}
+            />
             <p className="font-pp font-normal text-blue-200 text-[12px] leading-[17px]">
               By clicking Sign Up you agree to our{" "}
               <a
