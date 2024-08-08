@@ -30,12 +30,12 @@ const socialLinks = [
 const Footer = () => {
   return (
     <footer
-      className="text-white-100 px-7 py-10"
+      className="text-white-100 px-7 py-10 mx-auto max-w-7xl"
       onClick={(e) => {
         e.stopPropagation();
       }}
     >
-      <div className="">
+      <div className="flex flex-col md:flex-row items-center justify-between">
         <div className="">
           <a href="/">
             <img
@@ -44,37 +44,41 @@ const Footer = () => {
             />
           </a>
           <p className="text-[14px] font-normal font-pp py-[20px] text-blue-200 pb-[30px]">
-            Connecting Immigrant and Local Business Owners with their Customers
+            Connecting Immigrant and Local Business Owners with <br className="hidden md:block" /> their Customers
           </p>
         </div>
+
+        {/* <div className=""> */}
+          <div className={`flex flex-col md:flex-row md:w-full gap-1 md:gap-4 md:flex md:items-center`}>
+            {navigations.map((n, i) => (
+              <a
+                href={n.link}
+                key={i}
+                className={cn(
+                  `${n.link && "text-brand-green-shade99"}`,
+                  "text-[14px] leading-[14px] cursor-pointer font-medium font-pp pb-[10px] text-gray-100",
+                  "text-gray-100"
+                )}
+              >
+                {n.name}
+              </a>
+            ))}
+          </div>
+        {/* </div> */}
+
+        <FlexRowStart className="gap-[16px] my-[16px]">
+          {socialLinks.map((s, i) => (
+            <a
+              href="#"
+              key={i}
+              className={`w-[30px] h-[30px] flex items-center justify-center rounded-full bg-blue-200/10`}
+            >
+              <RenderSocialIcons name={s.name} />
+            </a>
+          ))}
+        </FlexRowStart>
+
       </div>
-      <FlexColStart className="w-full gap-1">
-        {navigations.map((n, i) => (
-          <a
-            href={n.link}
-            key={i}
-            className={cn(
-              "text-[14px] cursor-pointer font-medium font-pp pb-[10px] text-gray-100",
-              "text-gray-100"
-            )}
-          >
-            {n.name}
-          </a>
-        ))}
-      </FlexColStart>
-
-      <FlexRowStart className="w-full gap-[16px] my-[16px]">
-        {socialLinks.map((s, i) => (
-          <a
-            href="#"
-            key={i}
-            className="w-[30px] h-[30px] flex items-center justify-center rounded-full bg-blue-200/10"
-          >
-            <RenderSocialIcons name={s.name} />
-          </a>
-        ))}
-      </FlexRowStart>
-
       <h5 className="text-center text-gray-100 leading-[14px] font-normal text-[12px] font-pp mt-10">
         2024 Bizconnect24. All right reserved
       </h5>

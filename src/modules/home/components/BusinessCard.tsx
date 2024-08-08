@@ -18,7 +18,7 @@ const BusinessCard = ({
   return (
     <FlexColStart
       className={cn(
-        "w-full h-[253.21px] text-left mt-[15px] px-[25px] py-[30px] rounded-[14px] border-[2px] border-gray-103/5 opacity-[0.04px] shadow-sm",
+        "w-full text-left mt-[15px] px-[25px] py-[30px] rounded-[14px] border-[2px] border-gray-103/5 opacity-[0.04px] shadow-sm",
         className
       )}
     >

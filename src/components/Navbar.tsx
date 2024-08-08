@@ -103,7 +103,7 @@ const Navbar = () => {
                   <img src={"/assets/images/logo/logo-header.svg"} />
                 </a>
 
-                <div className="justify-between items-center hidden sm:flex font-medium text-sm leading-[14px] text-gray-100">
+                <div className="justify-between items-center hidden md:flex font-medium text-sm leading-[14px] text-gray-100">
                     <Link href="/" className={`${window.location.pathname === '/' && ' text-brand-green-shade99'} mx-3 sm:mx-4 p-3`}>Home</Link>
                     <Link href="/about" className={`${window.location.pathname === '/about' && ' text-brand-green-shade99'} mx-3 sm:mx-4 p-3`}>About</Link>
                     <Link href="/search" className={`${window.location.pathname === '/search' && ' text-brand-green-shade99'} mx-3 sm:mx-4 p-3`}>FDiscover Businessesaq</Link>

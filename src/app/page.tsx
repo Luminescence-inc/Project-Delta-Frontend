@@ -19,13 +19,13 @@ import {
 const Home = () => {
   return (
     <div className="w-full h-full">
-      <header className="w-full md:px-3 py-4 bg-blue-203">
-        <div className=" md:hidden">
+      <header className="w-full px-3 lg:px-0 py-4 bg-blue-203">
+        <div className="md:hidden">
           <HeaderSearchComp />
         </div>
         <br />
         <div className="flex flex-1 max-w-full md:py-5">
-          <FlexColStart className="flex gap-[10px] md:ml-20 flex-1">
+          <FlexColStart className="flex gap-[10px] sm:ml-8 md:ml-20 flex-1">
             <h1 className="w-full text-[25px] md:text-[45px] font-bold leading-[38px] sm:leading-[54.94px] tracking-normal text-left text-blue-200 font-pp">
               Connecting Immigrant &
               local Business Owners
@@ -36,12 +36,12 @@ const Home = () => {
             </p>
             <div className="hidden md:block">
               <HeaderSearchComp />
-              <HeaderOnboardingComp />
+              {/* <HeaderOnboardingComp /> */}
               <HeaderBusinessBtn />
             </div>
 
 
-            <div className="block md:hidden">
+            <div className="hidden">
               <HeaderOnboardingComp />
 
               <HeaderBusinessBtn />
@@ -74,7 +74,7 @@ const Home = () => {
       <section className="max-w-7xl mx-auto w-full h-auto py-4 pt-[40px] bg-white-100 ">
         <div className="w-full px-4 pb-[3em]">
           <TitleCard
-            title={"FOR BUSINESS OWNERS"}
+            title={"FOR BUSINESSES"}
             header={"Unlock Boundless Opportunities"}
             subTitle={
               "We've built a platform to help immigrant & Local businesses showcase their products and services to consumers, addressing the challenges of navigating unfamiliar territories."
@@ -125,7 +125,7 @@ const Home = () => {
             />
           </div>
 
-          <div className="w-full mt-5 h-[150px]">
+          <div className="hidden md:block w-full mt-5 h-[150px]">
             <TitleCard
               className={"title-card"}
               title={"FOR CUSTOMERS"}
@@ -135,106 +135,123 @@ const Home = () => {
               }
             />
           </div>
-          <div className="w-full h-auto mt-5 px-[5px]">
-            <img
-              style={{ width: "100%", height: "auto" }}
-              src={"/assets/images/customer-homebg.jpeg"}
-              alt={"customer-homebg"}
-            />
+          <div className="grid md:grid-cols-2 gap-4">
+
+
+            <div className="md:order-1 w-full h-auto mt-5 px-[5px]">
+
+              <div className="md:hidden  w-full mt-5 h-[150px]">
+                <TitleCard
+                  className={"title-card"}
+                  title={"FOR CUSTOMERS"}
+                  header={"Discover Businesses"}
+                  subTitle={
+                    "Bizconnect24 brings the best of local services to your fingertips, engage with businesses as a customer"
+                  }
+                />
+              </div>
+              <img
+                style={{ width: "100%", height: "auto" }}
+                src={"/assets/images/customer-homebg.jpeg"}
+                alt={"customer-homebg"}
+              />
+            </div>
+
+            {/* Customer Card */}
+            {/* <FlexColCenter className="w-full mt-10 gap-[31px]"> */}
+            <div className=" order-1 md:order-2 grid grid-cols-1 w-full mt-10 gap-[31px]">
+              <CustomerCard
+                icon={
+                  <img
+                    className="w-[60px] mr-[20px]"
+                    src={"/assets/images/opportunities/choice-icon.svg"}
+                  />
+                }
+                header={"Choice"}
+                subTitle={
+                  "With Bizconnect24, customers have a myriad of options at their fingertips, empowering them to explore diverse businesses and find the perfect fit for their needs and preferences"
+                }
+              />
+
+              <CustomerCard
+                icon={
+                  <img
+                    className="w-[60px] mr-[20px]"
+                    src={"/assets/images/opportunities/convenience-icon.svg"}
+                  />
+                }
+                header={"Convenience"}
+                subTitle={
+                  "Through the diverse options Bizconnect24 offers, customers are also effortlessly able to discover and engage with immigrant businesses closest to them"
+                }
+              />
+
+              <CustomerCard
+                icon={
+                  <img
+                    className="w-[60px] mr-[20px]"
+                    src={"/assets/images/opportunities/community-icon.svg"}
+                  />
+                }
+                header={"Community"}
+                subTitle={
+                  "Through Bizconnect24, customers become part of a vibrant and supportive community, connecting with fellow enthusiasts who share a passion for diversity, entrepreneurship, and cultural exchange"
+                }
+              />
+
+              <FlexColCenter className="w-full">
+                <Button
+                  intent="primary"
+                  href="/search"
+                  // rightIcon={}
+                  className="w-full max-w-[400px] h-[55px] mt-4 rounded-md pt-[10px] pr-[72px] pb-[10px] pl-[62px] gap-[7px] flex-center"
+                  hardRefresh={true}
+                >
+                  <span className="font-pp font-medium text-[14px] leading-[14px] text-white-100 ">
+                    Explore Businesses
+                  </span>
+                  <CtaArrow strokeWidth={0.4} className="stroke-white-100" />
+                </Button>
+              </FlexColCenter>
+            </div>
           </div>
 
-          {/* Customer Card */}
-          {/* <FlexColCenter className="w-full mt-10 gap-[31px]"> */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3  w-full mt-10 gap-[31px]">
-            <CustomerCard
-              icon={
-                <img
-                  className="w-[60px] mr-[20px]"
-                  src={"/assets/images/opportunities/choice-icon.svg"}
-                />
-              }
-              header={"Choice"}
-              subTitle={
-                "With Bizconnect24, customers have a myriad of options at their fingertips, empowering them to explore diverse businesses and find the perfect fit for their needs and preferences"
-              }
-            />
-
-            <CustomerCard
-              icon={
-                <img
-                  className="w-[60px] mr-[20px]"
-                  src={"/assets/images/opportunities/convenience-icon.svg"}
-                />
-              }
-              header={"Convenience"}
-              subTitle={
-                "Through the diverse options Bizconnect24 offers, customers are also effortlessly able to discover and engage with immigrant businesses closest to them"
-              }
-            />
-
-            <CustomerCard
-              icon={
-                <img
-                  className="w-[60px] mr-[20px]"
-                  src={"/assets/images/opportunities/community-icon.svg"}
-                />
-              }
-              header={"Community"}
-              subTitle={
-                "Through Bizconnect24, customers become part of a vibrant and supportive community, connecting with fellow enthusiasts who share a passion for diversity, entrepreneurship, and cultural exchange"
-              }
-            />
-          </div>
-
-          <FlexColCenter className="w-full">
-            <Button
-              intent="primary"
-              href="/search"
-              // rightIcon={}
-              className="w-full max-w-[400px] h-[55px] mt-4 rounded-md pt-[10px] pr-[72px] pb-[10px] pl-[62px] gap-[7px] flex-center"
-              hardRefresh={true}
-            >
-              <span className="font-pp font-medium text-[14px] leading-[14px] text-white-100 ">
-                Explore Businesses
-              </span>
-              <CtaArrow strokeWidth={0.4} className="stroke-white-100" />
-            </Button>
-          </FlexColCenter>
         </div>
 
-        <FlexColCenter
-          className="w-full h-[497px]"
-          style={{
-            marginTop: "35px",
-            backgroundImage: `url("/assets/images/join-network-bg.svg")`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        >
-          <FlexColCenter className="w-full px-8 pb-[20px] text-center gap-[18px]">
-            <h1 className="text-[30px] text-white-100 text-center font-pp font-semibold leading-[36.63px] ">
-              Join Our Growing Network
-            </h1>
-            <p className="text-[15px] leading-[25px] font-pp font-normal text-white-100 ">
-              Join immigrant entrepreneurs leveraging BizConnect24 to unlock
-              your business growth. Sign up now for greater visibility and
-              experience record breaking earnings
-            </p>
-          </FlexColCenter>
-
+      </section>
+      <FlexColCenter
+        className="relative w-full py-20 md:py-40 top-0 right-0 bg-[url('/assets/images/join-network-bg.svg')] bg-blue-200"
+        style={{
+          marginTop: "35px",
+          backgroundImage: `url("/assets/images/join-network-bg.svg")`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        <img src="/grow-network.svg" className="absolute right-0 top-0" alt="" />
+        <img src="/grow-network2.svg" className="absolute hidden sm:block left-0 bottom-0" alt="" />
+        <FlexColCenter className="w-full px-8 pb-[20px] text-center gap-[18px] max-w-4xl mx-auto">
+          <h1 className="text-[30px] text-white-100 text-center font-pp font-semibold leading-[36.63px] ">
+            Join Our Growing Network
+          </h1>
+          <p className="text-[15px] leading-[25px] font-pp font-normal text-white-100 ">
+            Join immigrant entrepreneurs leveraging BizConnect24 to unlock
+            your business growth. Sign up now for greater visibility and
+            experience record breaking earnings
+          </p>
+        </FlexColCenter>
+        <div className="flex items-center gap-10 flex-col md:flex-row py-4">
           <HomeSignupBtn />
-
           <div
             style={{
               display: "flex",
               justifyContent: "center",
-              paddingTop: "30px",
             }}
           >
             <Button
               intent="primary"
               href="/search?cn=Canada"
-              className="w-[303px] h-[55px] px-[15px] py-[15px] rounded-md border-[1px] border-white-100 "
+              className="w-[303px] px-[15px] py-[15px] rounded-md border-[1px] border-white-100 "
               rightIcon={
                 <CtaArrow strokeWidth={0.4} className="stroke-white-100" />
               }
@@ -245,8 +262,8 @@ const Home = () => {
               </span>
             </Button>
           </div>
-        </FlexColCenter>
-      </section>
+        </div>
+      </FlexColCenter>
     </div>
   );
 };
