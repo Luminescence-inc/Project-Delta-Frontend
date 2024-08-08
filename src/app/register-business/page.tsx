@@ -512,8 +512,8 @@ const RegisterBusiness = () => {
   };
 
   return (
-    <div ref={tabsRef} className="w-full px-3 pb-[150px] bg-blue-205 rounded-[8px]">
-      <FlexRowCenter className="w-full h-full gap-[10px] mt-[33px] px-3 bg-white-100 rounded-t-[8px]">
+    <div ref={tabsRef} className="w-full px-3 pb-[150px] pt-[33px] bg-blue-205 rounded-[8px]">
+      <FlexRowCenter className="w-full h-full gap-[10px] px-3 bg-white-100 rounded-t-[8px]">
         {tabs.map((tab, idx) => (
           <motion.span
             layoutId="pill-tab"
