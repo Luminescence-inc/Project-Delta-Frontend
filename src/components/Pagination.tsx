@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { FlexRowCenter, FlexRowStartCenter } from "./Flex";
 import { ChevronLeft, ChevronRight } from "./icons";
 import { cn } from "@/lib/utils";
@@ -9,6 +10,7 @@ interface IPaginationProps {
   location: {
     pathname: string;
   };
+  SSR?: boolean;
 }
 
 const PaginationLink = ({
@@ -16,17 +18,29 @@ const PaginationLink = ({
   activePage,
   query,
   location,
+  SSR = true,
 }: {
   page: number;
   activePage: string;
   query: URLSearchParams;
   location: ReturnType<any>;
+  SSR?: boolean;
 }) => {
   query.set("page", String(page));
   const link = `${location.pathname}?${query.toString()}`;
-
-  console.log({ activePage, page });
-  return (
+  return !SSR ? (
+    <Link
+      href={link}
+      className={cn(
+        "w-[40px] h-[40px] rounded-[6px] m-1 flex items-center justify-center font-hnL",
+        activePage === String(page)
+          ? "bg-blue-200 font-bold text-white-100"
+          : "bg-white-100"
+      )}
+    >
+      {page}
+    </Link>
+  ) : (
     <a
       href={link}
       className={cn(
@@ -46,6 +60,7 @@ export const Pagination = ({
   urlSearchParam,
   activePage,
   location,
+  SSR,
 }: IPaginationProps) => {
   const prevPage = Number(activePage) > 1 ? Number(activePage) - 1 : 1;
   const nextPage =
@@ -66,6 +81,7 @@ export const Pagination = ({
           activePage={activePage}
           query={urlSearchParam}
           location={location}
+          SSR={SSR}
         />
       );
     }
@@ -91,6 +107,7 @@ export const Pagination = ({
           activePage={activePage}
           query={urlSearchParam}
           location={location}
+          SSR={SSR}
         />
       );
     }
@@ -114,6 +131,7 @@ export const Pagination = ({
         activePage={activePage}
         query={urlSearchParam}
         location={location}
+        SSR={SSR}
       />
     );
 
@@ -136,8 +154,9 @@ export const Pagination = ({
           activePage={activePage}
           url={`${
             location.pathname
-          }?page=${prevPage}&${urlSearchParam.toString()}`}
+          }?${urlSearchParam.toString()}&page=${prevPage}`}
           lastPage={isLastPage}
+          SSR={SSR}
         />
 
         {totalPages > 1 && renderPageLinks()}
@@ -148,8 +167,9 @@ export const Pagination = ({
           activePage={activePage}
           url={`${
             location.pathname
-          }?page=${nextPage}&${urlSearchParam.toString()}`}
+          }?${urlSearchParam.toString()}&page=${nextPage}`}
           lastPage={isLastPage}
+          SSR={SSR}
         />
       </FlexRowStartCenter>
     </FlexRowCenter>
@@ -162,6 +182,7 @@ interface RenderNextPrevButtonProps {
   activePage: string;
   url: string;
   lastPage?: boolean;
+  SSR?: boolean;
 }
 
 function RenderNextPrevButton({
@@ -170,28 +191,49 @@ function RenderNextPrevButton({
   totalPages,
   url,
   lastPage,
+  SSR = false,
 }: RenderNextPrevButtonProps) {
   return (
     <>
       {lastPage ? (
         direction === "prev" ? (
-          <a
-            href={url}
-            className={cn(
-              "w-[40px] h-[40px] rounded-[6px] flex items-center justify-center",
-              Number(activePage) > 1 ? "bg-white-300" : "bg-white-100"
-            )}
-          >
-            <ChevronLeft
-              size={20}
-              strokeWidth={2}
+          !SSR ? (
+            <Link
+              href={url}
               className={cn(
-                Number(activePage) > 1
-                  ? "stroke-dark-105"
-                  : "stroke-white-200 cursor-not-allowed"
+                "w-[40px] h-[40px] rounded-[6px] flex items-center justify-center",
+                Number(activePage) > 1 ? "bg-white-300" : "bg-white-100"
               )}
-            />
-          </a>
+            >
+              <ChevronLeft
+                size={20}
+                strokeWidth={2}
+                className={cn(
+                  Number(activePage) > 1
+                    ? "stroke-dark-105"
+                    : "stroke-white-200 cursor-not-allowed"
+                )}
+              />
+            </Link>
+          ) : (
+            <a
+              href={url}
+              className={cn(
+                "w-[40px] h-[40px] rounded-[6px] flex items-center justify-center",
+                Number(activePage) > 1 ? "bg-white-300" : "bg-white-100"
+              )}
+            >
+              <ChevronLeft
+                size={20}
+                strokeWidth={2}
+                className={cn(
+                  Number(activePage) > 1
+                    ? "stroke-dark-105"
+                    : "stroke-white-200 cursor-not-allowed"
+                )}
+              />
+            </a>
+          )
         ) : (
           <button
             className={cn(
@@ -211,6 +253,36 @@ function RenderNextPrevButton({
             />
           </button>
         )
+      ) : !SSR ? (
+        <Link
+          href={url}
+          className={cn(
+            "w-[40px] h-[40px] rounded-[6px] flex items-center justify-center",
+            Number(activePage) > 1 ? "bg-white-300" : "bg-white-100"
+          )}
+        >
+          {direction === "prev" ? (
+            <ChevronLeft
+              size={20}
+              strokeWidth={2}
+              className={cn(
+                Number(activePage) > 1
+                  ? "stroke-dark-105"
+                  : "stroke-white-200 cursor-not-allowed"
+              )}
+            />
+          ) : (
+            <ChevronRight
+              size={20}
+              strokeWidth={2}
+              className={cn(
+                Number(activePage) < totalPages
+                  ? "stroke-dark-105"
+                  : "stroke-white-200 cursor-not-allowed"
+              )}
+            />
+          )}
+        </Link>
       ) : (
         <a
           href={url}
