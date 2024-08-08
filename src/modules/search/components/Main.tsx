@@ -20,7 +20,7 @@ import {
   extractQueryParams,
   overrideQueryParameters,
 } from "@/utils";
-import { DEFAULT_COUNTRY, prevPageSearchKeyName } from "@/config";
+import { DEFAULT_COUNTRY } from "@/config";
 import { useDataCtx } from "@/context/DataCtx";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import NBusinessFilter from "@/components/NewFilterComponent/NBusinessFilter";
@@ -477,14 +477,6 @@ export default function MainSearchPageComponent() {
             SSR={true} // this uses <a> tags to navigate rather than <Link>
           />
         )}
-
-      {/* Filtering component */}
-      {/* <BusinessesFilterComponent
-        closeFilter={() => setShowFilter(false)}
-        getfilterData={(filter) => constructQuery(filter)}
-        businessesCategories={businessCategory}
-        showFilter={showFilter}
-      /> */}
     </FlexColStart>
   );
 }
