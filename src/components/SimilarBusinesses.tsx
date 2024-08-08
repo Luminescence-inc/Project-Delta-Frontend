@@ -20,8 +20,6 @@ const SimilarBusinesses = ({
   layout,
   windowLocation,
 }: SimilarBusinessesProps) => {
-  if (businesses?.length === 0) return null;
-
   const defaultImg = "/assets/images/default-img.jpeg";
 
   return (
@@ -71,7 +69,7 @@ const SimilarBusinesses = ({
             );
           })
         ) : (
-          <BusinessesNotfound />
+          <BusinessesNotfound message="No similar businesses found." />
         )}
       </FlexColStart>
     </FlexColStart>

@@ -13,7 +13,7 @@ const BusinessesNotfound = ({ message }: NotfoundProps) => {
   return (
     <FlexColCenter className="w-full gap-4 min-h-[250px]">
       <EmptyCart
-        size={25}
+        size={30}
         strokeWidth={1}
         className="fill-gray-100 stroke-none"
       />
