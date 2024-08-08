@@ -18,7 +18,7 @@ export type BusinessProfileFormikPropsValues = {
   openTime: string;
   closeTime: string;
   daysOfOperation: [];
-  daysOfOperationOG: string;
+  operationDays: OperationDays;
 };
 
 export interface BusinessCreationBody {
@@ -45,6 +45,7 @@ export interface BusinessCreationBody {
   facebookUrl: string | null;
   deleteLogo: boolean;
   logoUrl: string | null;
+  operationDays: OperationDays
 }
 
 export interface CloudinaryUploadResponse {
@@ -92,7 +93,7 @@ export interface UserBusinessList {
   openTime: string | null;
   closeTime: string | null;
   daysOfOperation: string[] | null;
-  daysOfOperationOG: string | null;
+  operationDays: OperationDays;
   websiteUrl: string | null;
   linkedinUrl: string | null;
   instagramUrl: string | null;
@@ -160,3 +161,22 @@ export enum BusinessFilterType {
 }
 
 export type RegisterBusinessTabs = "business-profile" | "operations-info";
+
+
+interface OperationDay {
+  openTime: string;
+  closeTime: string;
+}
+
+type OperationDays = {
+  [key: string]: OperationDay;
+};
+// interface OperationDays {
+//   monday: OperationDay;
+//   tuesday: OperationDay;
+//   wednesday: OperationDay;
+//   thursday: OperationDay;
+//   friday: OperationDay;
+//   saturday: OperationDay;
+//   sunday: OperationDay;
+// }

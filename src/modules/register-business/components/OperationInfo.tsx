@@ -2,7 +2,7 @@
 
 import { BusinessProfileFormikPropsValues, RegisterBusinessTabs } from "@/types/business";
 import { FormikProps } from "formik";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import {
   DAYS_OF_OPERATIONS_OPTIONS,
   FILE_TYPES,
@@ -10,7 +10,6 @@ import {
 } from "@/utils/business-profile-utils";
 import Input from "@/components/ui/input";
 import Button from "@components/ui/button";
-import Select from "@/components/Select";
 import { FlexColStart, FlexColStartCenter, FlexRowCenter } from "@components/Flex";
 import { Mail, Phone, AddMore, AddMoreClose } from "@/components/icons";
 import {
@@ -22,6 +21,7 @@ import {
 } from "@components/icons";
 import { cn } from "@/lib/utils";
 import { toast } from "react-toastify";
+import SelectAlpha from "@/components/SelectAlpha";
 
 interface OperationInfoProps {
   formik: FormikProps<BusinessProfileFormikPropsValues>;
@@ -57,6 +57,20 @@ const OperationInfo: FC<OperationInfoProps> = ({
 }) => {
 
   const [fields, setFields] = useState<OperationField[]>([{ days: "", openTime: "", closeTime: "" }]);
+
+  useEffect(() => {
+    const operationDays = fields.reduce((acc, field) => {
+      if (field.days.toLowerCase()) {
+        acc[field.days] = {
+          openTime: field.openTime,
+          closeTime: field.closeTime,
+        };
+      }
+      return acc;
+    }, {} as Record<string, { openTime: string; closeTime: string }>);
+
+    formik.setFieldValue('operationDays', operationDays);
+  }, [fields]);
 
   const addField = (): void => {
     const usedDays = fields.map(field => field.days).filter(day => day !== "");
@@ -97,11 +111,8 @@ const OperationInfo: FC<OperationInfoProps> = ({
     formik.setFieldValue(fieldName, '');
   };
 
-  console.log(fields, 'fields')
-
-
   return (
-    <FlexColStart className="w-full h-full bg-gray-200  pb-[150px] ">
+    <FlexColStart className="w-full h-full bg-gray-205  pb-[150px] ">
       <FlexColStartCenter className="w-full h-auto text-center bg-white-100 px-3 pb-[23px] gap-0">
         <div className="flex flex-col items-center justify-center my-[24px]">
           <h4 className="text-[16px] text-center font-bold font-pp leading-[24px] text-blue-200">Setup your business Profile</h4>
@@ -143,7 +154,7 @@ const OperationInfo: FC<OperationInfoProps> = ({
 
         <div className="flex items-start text-start w-full">
           <label className="w-full text-start text-[14px] font-semibold font-inter text-dark-100/60 whitespace-nowrap mb-1">
-            Business open time<span className="text-[#F75B4E]">*</span>
+          Setup opening hours<span className="text-[#F75B4E]">*</span>
           </label>
         </div>
 
@@ -167,7 +178,7 @@ const OperationInfo: FC<OperationInfoProps> = ({
           )}
           <div className="grid grid-cols-3 items-start gap-4 w-full">
             <div className="flex flex-col">
-              <Select
+              <SelectAlpha
                 name={`daysOfOperation${i}`}
                 formikValue={field.days}
                 options={getAvailableDays(i)}
@@ -176,7 +187,7 @@ const OperationInfo: FC<OperationInfoProps> = ({
               />
             </div>
             <div className="flex flex-col">
-              <Select
+              <SelectAlpha
                 name={`openTime${i}`}
                 formikValue={field.openTime}
                 options={OPERATING_TIME_OPTIONS}
@@ -185,7 +196,7 @@ const OperationInfo: FC<OperationInfoProps> = ({
               />
             </div>
             <div className="flex flex-col">
-              <Select
+              <SelectAlpha
                 name={`closeTime${i}`}
                 formikValue={field.closeTime}
                 options={OPERATING_TIME_OPTIONS}
