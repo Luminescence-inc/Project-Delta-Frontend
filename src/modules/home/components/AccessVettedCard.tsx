@@ -17,7 +17,7 @@ const AccessVettedCard = ({
 }: Props) => {
     return (
         <FlexColStart className="gap-0">
-            <div className="w-full p-4 md:p-6 shadow-lg rounded-[8px]">
+            <div className="w-full p-4 md:p-6 shadow-lg rounded-[15px]">
                 <div className=" rounded-[8px] w-full">
                     <img
                         src={icon}

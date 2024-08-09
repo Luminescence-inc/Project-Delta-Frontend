@@ -43,12 +43,11 @@ const Footer = () => {
               src={"/assets/images/logo/logo-header.svg"}
             />
           </a>
-          <p className="text-[14px] font-normal font-pp py-[20px] text-blue-200 pb-[30px]">
+          <p className="text-[14px] font-normal font-pp leading-[16.7px] py-[20px] text-blue-200 pb-[30px]">
             Connecting Immigrant and Local Business Owners with <br className="hidden md:block" /> their Customers
           </p>
         </div>
 
-        {/* <div className=""> */}
           <div className={`flex flex-col md:flex-row md:w-full flex-1 gap-1 md:gap-4 md:flex items-start md:items-center md:ml-20`}>
             {navigations.map((n, i) => (
               <a
@@ -64,7 +63,6 @@ const Footer = () => {
               </a>
             ))}
           </div>
-        {/* </div> */}
 
         <FlexRowStart className="gap-[16px] my-[16px] md:justify-end">
           {socialLinks.map((s, i) => (

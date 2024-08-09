@@ -104,19 +104,42 @@ const Navbar = () => {
                 </a>
 
                 <div className="justify-between items-center hidden md:flex font-medium text-sm leading-[14px] text-gray-100">
-                    <Link href="/" className={`${window.location.pathname === '/' && ' text-brand-green-shade99'} mx-3 sm:mx-4 p-3`}>Home</Link>
-                    <Link href="/about" className={`${window.location.pathname === '/about' && ' text-brand-green-shade99'} mx-3 sm:mx-4 p-3`}>About</Link>
-                    <Link href="/search" className={`${window.location.pathname === '/search' && ' text-brand-green-shade99'} mx-3 sm:mx-4 p-3`}>FDiscover Businessesaq</Link>
-                    <Link href="#" className={`${window.location.pathname === '/' && ' text-brand-green-shade99'} mx-3 sm:mx-4 p-3`}>Cognito</Link>
-                    <Link href="/contact-support" className={`${window.location.pathname === '/contact-support' && ' text-brand-green-shade99'} mx-3 sm:mx-4 p-3`}>Support</Link>
+                  <Link href="/" className={`${window.location.pathname === '/' && ' text-brand-green-shade99'} mx-3 sm:mx-4 p-3`}>Home</Link>
+                  <Link href="/about" className={`${window.location.pathname === '/about' && ' text-brand-green-shade99'} mx-3 sm:mx-4 p-3`}>About</Link>
+                  <Link href="/search" className={`${window.location.pathname === '/search' && ' text-brand-green-shade99'} mx-3 sm:mx-4 p-3`}>FDiscover Businessesaq</Link>
+                  <Link href="#" className={`${window.location.pathname === '/' && ' text-brand-green-shade99'} mx-3 sm:mx-4 p-3`}>Cognito</Link>
+                  <Link href="/contact-support" className={`${window.location.pathname === '/contact-support' && ' text-brand-green-shade99'} mx-3 sm:mx-4 p-3`}>Support</Link>
                 </div>
-                <Menu
-                  size={30}
-                  className="stroke-blue-200 cursor-pointer relative top-3"
-                  onClick={() => {
-                    handleMenuIcon();
-                  }}
-                />
+
+                  <Menu
+                    size={30}
+                    className="stroke-blue-200 cursor-pointer relative top-3 lg:hidden"
+                    onClick={() => {
+                      handleMenuIcon();
+                    }}
+                    />
+                    <div className="flex items-center gap-3">
+                  <Button
+                    intent="transparent"
+                    href="/auth/login"
+                    className="px-[15px] py-[15.5px] b !text-blue-200 bg-white-100 rounded-md border-[1px] border-white-100 hidden lg:flex text-center items-center justify-center"
+                    hardRefresh={true}
+                  >
+                    <span className="font-hnM text-sm leading-[15px] font-medium">
+                      Log In
+                    </span>
+                  </Button>
+                  <Button
+                    intent="primary"
+                    href="/auth/signup"
+                    className="px-[20px] py-[15.5px] hidden lg:flex text-center items-center justify-center"
+                    hardRefresh={true}
+                  >
+                    <span className="font-hnM text-sm leading-[15px] font-medium">
+                      Sign Up
+                    </span>
+                  </Button>
+                </div>
               </FlexRowCenterBtw>
             )}
           </div>
