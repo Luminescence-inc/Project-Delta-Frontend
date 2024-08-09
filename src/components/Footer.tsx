@@ -1,6 +1,6 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { FlexColStart, FlexRowStart } from "@components/Flex";
+import { FlexRowStart } from "@components/Flex";
 
 const navigations = [
   {
@@ -35,7 +35,7 @@ const Footer = () => {
         e.stopPropagation();
       }}
     >
-      <div className="flex flex-col md:flex-row items-center justify-between">
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between">
         <div className="">
           <a href="/">
             <img
@@ -49,13 +49,13 @@ const Footer = () => {
         </div>
 
         {/* <div className=""> */}
-          <div className={`flex flex-col md:flex-row md:w-full gap-1 md:gap-4 md:flex md:items-center`}>
+          <div className={`flex flex-col md:flex-row md:w-full flex-1 gap-1 md:gap-4 md:flex items-start md:items-center md:ml-20`}>
             {navigations.map((n, i) => (
               <a
                 href={n.link}
                 key={i}
                 className={cn(
-                  `${n.link && "text-brand-green-shade99"}`,
+                  `${window.location.pathname === n.link && "text-brand-green-shade99"}`,
                   "text-[14px] leading-[14px] cursor-pointer font-medium font-pp pb-[10px] text-gray-100",
                   "text-gray-100"
                 )}
@@ -66,7 +66,7 @@ const Footer = () => {
           </div>
         {/* </div> */}
 
-        <FlexRowStart className="gap-[16px] my-[16px]">
+        <FlexRowStart className="gap-[16px] my-[16px] md:justify-end">
           {socialLinks.map((s, i) => (
             <a
               href="#"

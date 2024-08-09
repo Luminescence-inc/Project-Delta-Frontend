@@ -32,7 +32,7 @@ const AccessVettedCard = ({
                     {subTitle}
                 </h3>
                 <div className="flex items-center justify-between mt-2">
-                    <div className="flex items-center">
+                    <div className="flex items-center gap-2">
                         <img src="/acc-min-img.svg" alt="" />
                         <div className="flex flex-col">
                             <span className="text-[13px] leading-[20px] font-medium text-dark-501">Bizconnect24</span>

@@ -233,7 +233,7 @@ const Home = () => {
                   your journey in a new country
                 </h1>
               </div>
-              <img src="/access-v.svg" alt="" />
+              <img src="/access-v.svg" className="hidden md:blcok" alt="" />
             </div>
 
 
