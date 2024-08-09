@@ -372,8 +372,8 @@ export default function MainSearchPageComponent() {
   }, [searchParams, query]);
 
   return (
-    <FlexColStart className="w-full h-full bg-blue-204 pb-[2em]">
-      <FlexColStart className="w-full h-auto px-[20px] mt-3 gap-[5px]">
+    <FlexColStart className="w-full h-full bg-blue-204 pb-[2em] px-[20px]">
+      <FlexColStart className="w-full h-auto mt-3 gap-[5px]">
         <h1 className="text-[25px] md:text-[30px] font-bold font-pp text-blue-200">
           {headline.title}
         </h1>
@@ -382,10 +382,10 @@ export default function MainSearchPageComponent() {
         </p>
       </FlexColStart>
       {/* search component */}
-      <FlexRowStartCenter className="w-full px-[20px] gap-[5px] bg-transparent">
+      <FlexRowStartCenter className="w-full gap-[5px] bg-transparent">
         <Input
           inputClassname="font-pp px-0 font-normal border-none tracking-[0] placeholder:text-gray-103"
-          parentClassname="w-full h-[44px] px-4 bg-white-100 cursor-pointer rounded-[10px] border-none"
+          parentClassname="w-full px-4 bg-white-100 cursor-pointer rounded-[10px] border-none"
           type="text"
           placeholder="Search business"
           leftIcon={
@@ -400,10 +400,11 @@ export default function MainSearchPageComponent() {
           onKeyUp={handleKeyUp}
           autoComplete="off"
         />
+        <div className="flex items-center gap-2 pt-5">
         <button
           className="border-none outline-none cursor-pointer rounded-[5px] p-2 flex items-center justify-center bg-blue-50 -translate-y-2"
           onClick={() => setShowFilter(true)}
-        >
+          >
           <Filter size={15} className="stroke-blue-200" />
         </button>
         <button
@@ -423,13 +424,15 @@ export default function MainSearchPageComponent() {
         >
           <FlexColCenter>
             {layout === "col" ? (
-              <img src={"/assets/icons/layout-panel-top.svg"} />
+              <img src={"/assets/icons/layout-panel-top.svg"} className="w-14" />
             ) : (
-              <img src={"/assets/icons/layout-panel-left.svg"} />
+              <img src={"/assets/icons/layout-panel-left.svg"} className="w-14" />
             )}
           </FlexColCenter>
         </button>
+        </div>
       </FlexRowStartCenter>
+      <br />
 
       <FlexColCenter className="w-full">
         {(pageLoading || getBusinessesMut.isPending) && (

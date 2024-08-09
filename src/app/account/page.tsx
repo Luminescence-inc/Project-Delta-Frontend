@@ -121,7 +121,7 @@ const MyAccount = () => {
   }
 
   return (
-    <FlexColCenter className="w-full bg-gray-201/20 px-5">
+    <FlexColCenter className="w-full bg-gray-201/20">
       <FlexColCenter className="w-full bg-white-100 px-5 py-9 gap-1 ">
         <h4 className="font-pp font-semibold leading-0">My Account</h4>
         <p className="font-pp text-[13px] text-white-400 mb-5">
@@ -138,7 +138,7 @@ const MyAccount = () => {
           </span>
         )}
 
-        <form onSubmit={formik.handleSubmit} className="w-full">
+        <form onSubmit={formik.handleSubmit} className="flex flex-col w-full">
           <span style={errorMessageStyle}>
             {formik.touched.firstName && formik.errors.firstName
               ? formik.errors.firstName
@@ -186,7 +186,6 @@ const MyAccount = () => {
             parentClassname="w-full px-0 border border-white-400/50 px-4"
             inputClassname="w-full px-3 outline-none border-none"
           />
-
           <Input
             type="email"
             label="Email Address"
@@ -203,7 +202,6 @@ const MyAccount = () => {
             parentClassname="w-full px-0 border border-white-400/50 px-4"
             inputClassname="w-full px-3 outline-none border-none"
           />
-
           <span style={errorMessageStyle}>
             {formik.touched.password && formik.errors.password
               ? formik.errors.password
@@ -245,7 +243,6 @@ const MyAccount = () => {
             parentClassname="w-full px-0 border border-white-400/50 px-4"
             inputClassname="w-full px-3 outline-none border-none"
           />
-
           <span style={errorMessageStyle}>
             {formik.touched.confirmPassword && formik.errors.confirmPassword
               ? formik.errors.confirmPassword

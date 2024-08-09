@@ -5,14 +5,16 @@ import Button from "@components/ui/button";
 import SelectedPlaceholder from "@components/SelectedPlaceholder";
 import { FlexColStart, FlexRowCenter } from "@components/Flex";
 import { cn } from "@/lib/utils";
+import { ClickOutside } from "./hooks/useClickOutside";
 
 interface ISelect {
-  label: string;
+  label?: string;
   name: string;
   formik: FormikProps<any>;
   options: IOption[] | undefined;
   placeholder: string;
   formikValue?: IOption[];
+  isSearch?:  boolean
 }
 
 interface IOption {
@@ -26,6 +28,7 @@ const MultiSelect = ({
   name,
   formik,
   formikValue,
+  isSearch
 }: ISelect) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -39,7 +42,7 @@ const MultiSelect = ({
   }, [formikValue]);
 
   const toggleDropdown = () => {
-    setShowDropdown(!showDropdown);
+    setShowDropdown(prev => !prev);
   };
 
   const handleSelect = (option: IOption) => {
@@ -73,24 +76,25 @@ const MultiSelect = ({
 
   return (
     <>
-      <FlexColStart className="w-full">
-        <label className="text-[14px] font-medium font-pp text-dark-100/60">
+      <FlexColStart className="w-full pb-4">
+        {label && <label className="text-[14px] font-semibold font-inter text-dark-100/60 whitespace-nowrap">
           {label}
-        </label>
-        <FlexRowCenter className="w-full relative">
+        </label>}
+        <FlexRowCenter className="w-full relative !gap-0 mt-1">
           <input
             className={cn(
               "w-full h-[46px] border-[1px] border-solid border-dark-103 tracking-[0px] text-[12px] text-blue-200 p-[16px] font-pp rounded-[5px] placeholder:text-dark-104 placeholder:text-[12px]",
               showDropdown ? "cursor-text" : "cursor-pointer"
             )}
             type="text"
+            // value={value}
             name={name}
             placeholder={label}
             onClick={toggleDropdown}
             readOnly
           />
           <ChevronDown
-            className={cn("absolute top-[15px] right-[20px]")}
+            className={cn("absolute right-[20px]")}
             size={20}
           />
         </FlexRowCenter>
@@ -108,19 +112,19 @@ const MultiSelect = ({
           type={name}
         />
       </FlexColStart>
-
+    <ClickOutside onClickOutside={() => setShowDropdown(false)}>
       {showDropdown && (
         <FlexColStart
           ref={dropdownRef}
-          className="w-full gap-5 shadow-lg outline outline-[1px] outline-gray-100/10  px-3 py-3 rounded-md"
+          className="w-full gap-5 shadow-lg outline border border-gray-102 outline-[1px] outline-gray-100/10  px-3 py-3 rounded-md"
         >
-          <input
+         {isSearch && <input
             type="text"
-            className="outline-none border-none fcus:border-none focus:outline-none"
+            className="w-full !outline-none border-r-0 border-t-0 border-l-0 !ring-0 roz !focus:border-none !focus:outline-none"
             placeholder="Search..."
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
-          />
+          />}
           <ul>
             {options
               ?.filter(
@@ -150,6 +154,7 @@ const MultiSelect = ({
           </div>
         </FlexColStart>
       )}
+       </ClickOutside>
     </>
   );
 };
@@ -176,12 +181,12 @@ function ListComponent({
       key={option.uuid}
       onClick={() => handleSelect(option)}
     >
-      <input
+      {/* <input
         id="default-checkbox"
         type="checkbox"
         className="w-4 h-4 text-blue-600 bg-white-100 border-blue-200 rounded focus:ring-blue-500 focus:ring-2"
         checked={isSelected(option)}
-      />
+      /> */}
       <label className="relative text-dark-100/50 -top-1 font-pp font-medium cursor-pointer">
         {option.value}
       </label>

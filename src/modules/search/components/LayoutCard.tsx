@@ -8,7 +8,7 @@ import {
   FlexRowStart,
   FlexRowStartCenter,
 } from "@components/Flex";
-import { MapPin, Phone } from "@components/icons";
+import { MapPin, Phone, Share } from "@components/icons";
 import { determineBusOpTime } from "@/utils";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
@@ -47,7 +47,6 @@ export const ColLayoutCard = ({
   windowLocation
 }: BusinessCardProps) => {
   const pathname = usePathname()
-
   const hasBusinessClosed = daysOfOps ? determineBusOpTime(daysOfOps) : null;
 
   return (
@@ -99,6 +98,7 @@ export const ColLayoutCard = ({
           </FlexRowStartCenter>
 
           {/* opening time */}
+
           {pathname != '/view-business' &&  <FlexRowCenterBtw className="w-full">
            <FlexRowStartCenter className="gap-[10px] whitespace-nowrap">
               {hasBusinessClosed && hasBusinessClosed.isOpened ? (

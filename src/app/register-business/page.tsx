@@ -41,7 +41,9 @@ import { LoaderComponent } from "@components/Loader";
 import { toast } from "react-toastify";
 import withAuth from "@/utils/auth-helpers/withAuth";
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 import { useDataCtx } from "@/context/DataCtx";
+
 
 const dayOrder: { [key: string]: number } = {
   Monday: 0,
@@ -180,6 +182,10 @@ const RegisterBusiness = () => {
             "daysOfOperation",
             formatInput(businessDetailsData.daysOfOperation)
           );
+          formik.setFieldValue(
+            "daysOfOperation",
+            formatInput(businessDetailsData.operationDays)
+          );
 
           setLogoUrl(businessDetailsData.logoUrl);
           setCountry(
@@ -246,6 +252,7 @@ const RegisterBusiness = () => {
       formik.setFieldValue("openTime", "");
       formik.setFieldValue("closeTime", "");
       formik.setFieldValue("daysOfOperation", []);
+      formik.setFieldValue("operationDays", {});
 
       // Cause a Re-render and refresh the formik setFields
       switchTab(1);
@@ -288,6 +295,15 @@ const RegisterBusiness = () => {
     const folderPath = `BizConnect/Logo/${parsedToken.id}`;
     setIsLoading(true);
 
+    const operationDaysPayload = Object.keys(values.operationDays).reduce((acc, day) => {
+      const lowerCaseDay = day.toLowerCase();
+      acc[lowerCaseDay] = {
+        openTime: values.operationDays[day].openTime,
+        closeTime: values.operationDays[day].closeTime,
+      };
+      return acc;
+    }, {} as any);
+
     const payload: BusinessCreationBody = {
       name: values.businessName,
       description: values.description,
@@ -312,6 +328,7 @@ const RegisterBusiness = () => {
       signature: null,
       deleteLogo: deleteLogo,
       logoUrl: logoUrl,
+      operationDays: operationDaysPayload
     };
 
     // validate all social links
@@ -443,6 +460,7 @@ const RegisterBusiness = () => {
       openTime: "",
       closeTime: "",
       daysOfOperation: [],
+      operationDays: {}
     },
     validateOnBlur: true,
     onSubmit,
@@ -494,19 +512,22 @@ const RegisterBusiness = () => {
   };
 
   return (
-    <div
-      ref={tabsRef}
-      className="w-full pt-[30px] px-[16px] pb-[150px] bg-blue-204 "
-    >
-      <FlexRowCenter className="w-full h-full gap-10">
+    <div ref={tabsRef} className="w-full px-3 pb-[150px] pt-[33px] bg-blue-205 rounded-[8px]">
+      <FlexRowCenter className="w-full h-full gap-[10px] px-3 bg-white-100 rounded-t-[8px]">
         {tabs.map((tab, idx) => (
-          <span
+          <motion.span
+            layoutId="pill-tab"
+            transition={{ type: "spring", duration: 0.5 }}
             key={idx}
             className={cn(
-              "text-[16px] font-medium font-pp cursor-pointer leading-[24px]",
+              "text-[16px] font-bold font-pp cursor-pointer leading-[24px] py-2 w-full text-center border-b-4 border-gray-204",
+              // selectedTab?.toLowerCase() === tab.name.toLowerCase()
+              (idx === 0)
+                ? "border-b-4 border-[#1ABEBB] text-blue-200"
+                : "text-blue-200/60",
               selectedTab?.toLowerCase() === tab.name.toLowerCase()
-                ? "border-b-[1px] border-blue-200 text-blue-200"
-                : "text-blue-200/40 font-semibold"
+                ? "border-b-4 border-[#1ABEBB] text-blue-200"
+                : "text-blue-200/60"
             )}
             onClick={() => {
               if (isRequiredFieldEmpty() && idx === 1) {
@@ -517,8 +538,9 @@ const RegisterBusiness = () => {
               setSelectedTab(tab.name as any);
             }}
           >
-            {tab.title}
-          </span>
+            {/* {tab.title} */}
+            <motion.span className="inset-0 z-0 bg-gradient-to- border-b-2 border-[#1ABEBB]"></motion.span>
+          </motion.span>
         ))}
       </FlexRowCenter>
 

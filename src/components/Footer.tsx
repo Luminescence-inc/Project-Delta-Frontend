@@ -30,7 +30,7 @@ const socialLinks = [
 const Footer = () => {
   return (
     <footer
-      className="text-white-100 px-7 py-10"
+      className="bg-blue-205 text-white-100 px-7 py-10"
       onClick={(e) => {
         e.stopPropagation();
       }}
@@ -76,7 +76,7 @@ const Footer = () => {
       </FlexRowStart>
 
       <h5 className="text-center text-gray-100 leading-[14px] font-normal text-[12px] font-pp mt-10">
-        2024 Bizconnect24. All right reserved
+        {new Date().getFullYear()} Bizconnect24. All right reserved
       </h5>
     </footer>
   );

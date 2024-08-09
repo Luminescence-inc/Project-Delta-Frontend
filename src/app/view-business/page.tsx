@@ -18,8 +18,6 @@ import {
 import { LoaderComponent } from "@components/Loader";
 import ReadMoreText from "@/components/ReadMoreText";
 import withAuth from "@/utils/auth-helpers/withAuth";
-import Input from "@/components/ui/input";
-import { SearchIcon2 } from "@/components/icons";
 
 const ViewBusiness = () => {
   const router = useRouter();
@@ -181,7 +179,7 @@ const ViewBusiness = () => {
             </h2>
             <p className="text-[12px] font-normal font-pp">
               {confirmDelete
-                ? `You’re about to delete (${businessName}) business, you can’t undo this request.`
+                ? `You're about to delete (${businessName}) business, you can't undo this request.`
                 : "You have successfully deleted your business profile"}
             </p>
             {confirmDelete && (

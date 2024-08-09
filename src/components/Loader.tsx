@@ -6,7 +6,7 @@ interface LoaderProps {
 
 export const LoaderComponent = ({ text }: LoaderProps) => {
   return (
-    <div className="flex items-center justify-center w-full h-full">
+    <div className="flex items-center justify-center w-full h-full bg-blue-205 py-20">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"

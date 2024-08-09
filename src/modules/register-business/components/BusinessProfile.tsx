@@ -20,6 +20,7 @@ import {
   Globe,
   ArrowBigUpDash,
   X,
+  CircleUser,
 } from "@components/icons";
 import Input from "@/components/ui/input";
 import Button from "@/components/ui/button";
@@ -93,8 +94,8 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
         const resData: BusinessCategories = res.data;
 
         setBusinessCategory(
-          resData.data.businessCategories.map((businessCat) => {
-            return { uuid: businessCat.uuid, value: businessCat.description };
+          resData?.data?.businessCategories.map((businessCat) => {
+            return { uuid: businessCat?.uuid, value: businessCat?.description };
           })
         );
 
@@ -195,11 +196,12 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
   };
 
   return (
-    <FlexColStart className="w-full h-full bg-gray-200 pt-[40px] px-[16px] pb-[150px] ">
-      <FlexColStartCenter className="w-full h-auto text-center bg-white-100 rounded-[8px] pt-[24px] px-[16px] pb-[23px] gap-0">
-        <h4 className="text-[16px] text-center font-medium font-pp leading-[24px] mb-[24px] text-blue-200 ">
-          Complete Business Profile
-        </h4>
+    <FlexColStart className="w-full h-full bg-blue-205 px-0 pb-[150px] ">
+      <FlexColStartCenter className="w-full h-auto text-center bg-white-100 px-3 pb-[23px] gap-0">
+        <div className="flex flex-col items-center justify-center my-[24px] 0">
+          <h4 className="text-[16px] text-center font-bold font-pp leading-[24px] text-blue-200">Setup your business Profile</h4>
+          <h6 className="text-[15px] text-gray-103">Tell Us about your business</h6>
+        </div>
 
         <ErrorComponent
           value={
@@ -210,22 +212,20 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
         />
         <Input
           type="text"
-          label="Business Name (required)"
+          label="Business Name"
           name="businessName"
           value={formik.values.businessName}
           onChange={formik.handleChange}
-          rightIcon={
-            // <ContactIcon className="input-icon" />
-            null
-          }
+          required
+          rightIcon={<CircleUser width={"24px"} height={'24px'} className="stroke-none mt-1 mr-2" />}
           parentClassname="w-full px-0"
           inputClassname="w-full px-3 border-white-400/50"
           placeholder="Enter Business Name"
         />
 
-        <FlexColStart className="w-full mt-5 mb-3">
-          <label className="text-[14px] font-normal font-pp text-dark-100/60">
-            Describe your business (required)
+        <div className="flex flex-col items-start w-full mb-4">
+          <label className="mb-1 text-sm font-normal leading-[140%] tracking-[0] font-pp text-red-700">
+            Describe your business
           </label>
           <textarea
             name="description"
@@ -235,100 +235,7 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
             rows={4}
             placeholder="Short sentence about your business"
           />
-        </FlexColStart>
-        <br />
-        <ErrorComponent
-          value={
-            formik.touched.businessCategory && formik.errors.businessCategory
-              ? formik.errors.businessCategory
-              : ""
-          }
-        />
-        <Select
-          label="Business Category (required)"
-          name="businessCategory"
-          formikValue={formik.values.businessCategory}
-          formik={formik}
-          placeholder={"Business Category"}
-          options={businessCategory}
-        />
-
-        <br />
-
-        <ErrorComponent
-          value={
-            formik.touched.country && formik.errors.country
-              ? formik.errors.country
-              : ""
-          }
-        />
-        <Select
-          label="Select Country (required)"
-          name="country"
-          formikValue={formik.values.country}
-          formik={formik}
-          placeholder={"Select Country"}
-          options={country}
-        />
-
-        <br />
-
-        <ErrorComponent
-          value={
-            formik.touched.stateAndProvince && formik.errors.stateAndProvince
-              ? formik.errors.stateAndProvince
-              : ""
-          }
-        />
-        <Select
-          label="State and Province (required)"
-          name="stateAndProvince"
-          formikValue={formik.values.stateAndProvince}
-          formik={formik}
-          placeholder={"State and Province"}
-          options={stateAndProvince}
-        />
-
-        <br />
-
-        <ErrorComponent
-          value={
-            formik.touched.city && formik.errors.city ? formik.errors.city : ""
-          }
-        />
-        <Select
-          label="Select City (required)"
-          name="city"
-          formikValue={formik.values.city}
-          formik={formik}
-          placeholder={"Select City"}
-          options={city}
-        />
-
-        <br />
-        <Input
-          name="street"
-          type="text"
-          label="Street"
-          value={formik.values.street}
-          onChange={formik.handleChange}
-          placeholder="Enter Street Name"
-          parentClassname="w-full px-0"
-          inputClassname="w-full px-3 border-white-400/50"
-        />
-        <br />
-
-        <Input
-          type="text"
-          name="postalCode"
-          label="Zip code/Postal code"
-          value={formik.values.postalCode}
-          onChange={formik.handleChange}
-          placeholder="Enter Postal Code"
-          parentClassname="w-full px-0"
-          inputClassname="w-full px-3 border-white-400/50"
-        />
-        <br />
+        </div>
 
         {error && (
           <span style={errorMessageStyle}>File Type not Supported</span>
@@ -342,7 +249,7 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
           </span>
         )}
 
-        <div className="w-full relative font-pp border-[1px] border-white-200 rounded-[5px] mt-[10px] ">
+        <div className="w-full relative font-pp border-[1px] border-white-200 rounded-[5px] mb-4 ">
           <FlexRowCenter className="w-full p-[16px] relative ">
             <span
               onClick={(e) => {
@@ -418,17 +325,94 @@ const BusinessProfile: FC<BusinessProfileProps> = ({
           </div>
         )}
 
-        <h4 className="mt-[30px] text-[13px] font-pp font-semibold text-blue-200">
-          Add social media links
-        </h4>
-        <br />
-        {socialMediaLinksInput.map((socialIconName) => (
-          <SocialMediaLinks
-            formik={formik}
-            key={socialIconName}
-            socialIconName={socialIconName as SupportedSocialMedia}
-          />
-        ))}
+        <ErrorComponent
+          value={
+            formik.touched.businessCategory && formik.errors.businessCategory
+              ? formik.errors.businessCategory
+              : ""
+          }
+        />
+        <Select
+          label="Business Category"
+          name="businessCategory"
+          formikValue={formik.values.businessCategory}
+          formik={formik}
+          placeholder={"Business Category"}
+          options={businessCategory}
+          required
+        />
+
+        <ErrorComponent
+          value={
+            formik.touched.country && formik.errors.country
+              ? formik.errors.country
+              : ""
+          }
+        />
+        <Select
+          label="Select Country"
+          name="country"
+          formikValue={formik.values.country}
+          formik={formik}
+          placeholder={"Select Country"}
+          options={country}
+          required
+        />
+
+        <ErrorComponent
+          value={
+            formik.touched.stateAndProvince && formik.errors.stateAndProvince
+              ? formik.errors.stateAndProvince
+              : ""
+          }
+        />
+        <Select
+          label="State and Province"
+          name="stateAndProvince"
+          formikValue={formik.values.stateAndProvince}
+          formik={formik}
+          placeholder={"State and Province"}
+          options={stateAndProvince}
+          required
+        />
+
+        <ErrorComponent
+          value={
+            formik.touched.city && formik.errors.city ? formik.errors.city : ""
+          }
+        />
+        <Select
+          label="Select City"
+          name="city"
+          formikValue={formik.values.city}
+          formik={formik}
+          placeholder={"Select City"}
+          options={city}
+          required
+        />
+
+        <Input
+          name="street"
+          type="text"
+          label="Street"
+          value={formik.values.street}
+          onChange={formik.handleChange}
+          placeholder="Enter Street Name"
+          parentClassname="w-full px-0"
+          inputClassname="w-full px-3 border-white-400/50"
+        />
+
+
+        <Input
+          type="text"
+          name="postalCode"
+          label="Zip code/Postal code"
+          value={formik.values.postalCode}
+          onChange={formik.handleChange}
+          placeholder="Enter Postal Code"
+          parentClassname="w-full px-0"
+          inputClassname="w-full px-3 border-white-400/50"
+        />
 
         <Button
           onClick={handleNextButton}

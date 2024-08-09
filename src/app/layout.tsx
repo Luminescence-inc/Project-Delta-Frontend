@@ -23,8 +23,7 @@ export default function RootLayout({
     <html lang="en">
       <link rel="icon" href="next.svg" sizes="any" />
       <body
-        className={cn(inter.variable, poppins.variable, open_sans.variable)}
-      >
+        className={cn(inter.variable, poppins.variable, open_sans.variable)}>
         <DataCtxProvider>
           <NotsupportedCountryBanner />
           <BlockDesktopView override={true} />
