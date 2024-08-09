@@ -111,14 +111,7 @@ const Navbar = () => {
                   <Link href="/contact-support" className={`${window.location.pathname === '/contact-support' && ' text-brand-green-shade99'} mx-3 sm:mx-4 p-3`}>Support</Link>
                 </div>
 
-                  <Menu
-                    size={30}
-                    className="stroke-blue-200 cursor-pointer relative top-3 lg:hidden"
-                    onClick={() => {
-                      handleMenuIcon();
-                    }}
-                    />
-                    <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3">
                   <Button
                     intent="transparent"
                     href="/auth/login"
@@ -140,6 +133,13 @@ const Navbar = () => {
                     </span>
                   </Button>
                 </div>
+                <Menu
+                  size={30}
+                  className="stroke-blue-200 cursor-pointer relative top-3 lg:hidden"
+                  onClick={() => {
+                    handleMenuIcon();
+                  }}
+                />
               </FlexRowCenterBtw>
             )}
           </div>
