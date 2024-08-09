@@ -1,17 +1,15 @@
 "use client";
 import {
-  FlexColEnd,
   FlexColStart,
   FlexRowCenter,
   FlexRowCenterBtw,
   FlexRowEnd,
-  FlexRowStart,
   FlexRowStartCenter,
 } from "@components/Flex";
 import { MapPin, Phone } from "@components/icons";
 import { determineBusOpTime } from "@/utils";
 import { cn } from "@/lib/utils";
-import { usePathname } from "next/navigation";
+import TooltipComp from "@/components/TooltipComp";
 
 interface BusinessCardProps {
   name: string;
@@ -46,9 +44,18 @@ export const ColLayoutCard = ({
   _urlLocation,
   windowLocation,
 }: BusinessCardProps) => {
-  const pathname = usePathname();
-
   const hasBusinessClosed = daysOfOps ? determineBusOpTime(daysOfOps) : null;
+
+  const getPathname = () => {
+    try {
+      const { pathname } = new URL(windowLocation);
+      return pathname;
+    } catch (e: any) {
+      return null;
+    }
+  };
+
+  const pathname = getPathname();
 
   return (
     <CardNavigateWrapper
@@ -125,16 +132,7 @@ export const ColLayoutCard = ({
                 )}
               </FlexRowStartCenter>
 
-              <button
-                // href={`tel:${phone}`}
-                // onClick={() => window.open(`tel:${phone}`)}
-                className="flex flex-row items-center justify-center text-blue-200 bg-blue-202 w-[81px] h-[25px] px-[5px] rounded-full gap-[5px] text-[12px] whitespace-nowrap businesss-call-line"
-              >
-                <Phone size={15} className="stroke-blue-200/80" />
-                <span className="text-[12px] font-normal font-pp leading-[14px] mt-[2px]">
-                  Call me
-                </span>
-              </button>
+              <CallButton phone={phone} layout="col" />
             </FlexRowCenterBtw>
           )}
           {/* share */}
@@ -248,14 +246,7 @@ export const RowLayoutCard = ({
               </FlexRowStartCenter>
 
               <FlexRowEnd className="w-full">
-                <button
-                  // href={`tel:${phone}`}
-                  onClick={() => null}
-                  // onClick={() => window.open(`tel:${phone}`)}
-                  className="flex flex-row items-center justify-center text-blue-200 bg-blue-202 w-[35px] h-[25px] px-[5px] rounded-full gap-[5px] text-[12px] businesss-call-line"
-                >
-                  <Phone size={15} className="stroke-blue-200/80" />
-                </button>
+                <CallButton phone={phone} layout="row" />
               </FlexRowEnd>
             </FlexRowCenterBtw>
           </FlexColStart>
@@ -264,6 +255,57 @@ export const RowLayoutCard = ({
     </CardNavigateWrapper>
   );
 };
+
+function CallButton({
+  phone,
+  layout,
+}: {
+  phone: string;
+  layout: "col" | "row";
+}) {
+  let callBtn = null;
+  if (layout === "col") {
+    callBtn =
+      phone && phone.length > 0 ? (
+        <a
+          href={`tel:${phone}`}
+          className="flex flex-row items-center justify-center text-blue-200 bg-blue-202 w-[81px] h-[25px] px-[5px] rounded-full gap-[5px] text-[12px] whitespace-nowrap businesss-call-line"
+        >
+          <Phone size={15} className="stroke-blue-200/80" />
+          <span className="text-[12px] font-normal font-pp leading-[14px] mt-[2px]">
+            Call me
+          </span>
+        </a>
+      ) : (
+        <TooltipComp text="No phone number available">
+          <div className="flex flex-row items-center justify-center text-blue-200 w-[81px] h-[25px] px-[5px] rounded-full gap-[5px] text-[12px] whitespace-nowrap businesss-call-line opacity-50 cursor-not-allowed bg-gray-100/20">
+            <Phone size={15} className="stroke-blue-200/80" />
+            <span className="text-[12px] font-normal font-pp leading-[14px] mt-[2px]">
+              Call me
+            </span>
+          </div>
+        </TooltipComp>
+      );
+  }
+  if (layout === "row") {
+    callBtn =
+      phone && phone.length > 0 ? (
+        <a
+          href={`tel:${phone}`}
+          className="flex flex-row items-center justify-center text-blue-200 bg-blue-202 w-[35px] h-[25px] px-[5px] rounded-full gap-[5px] text-[12px] businesss-call-line"
+        >
+          <Phone size={15} className="stroke-blue-200/80" />
+        </a>
+      ) : (
+        <TooltipComp text="No phone number available">
+          <div className="flex flex-row items-center justify-center w-[35px] h-[25px] px-[5px] rounded-full gap-[5px] text-[12px] businesss-call-line opacity-50 cursor-not-allowed g-gray-100/20">
+            <Phone size={15} className="stroke-blue-200/80" />
+          </div>
+        </TooltipComp>
+      );
+  }
+  return callBtn;
+}
 
 interface CWProps {
   children: React.ReactNode;
