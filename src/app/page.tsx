@@ -219,12 +219,40 @@ const Home = () => {
         </div>
 
       </section>
-      <section className="bg-blue-204 mx-auto max-w-7xl">
-            <div className="flex flex-col">
-              <div className="text">Access well vetted articles to kick start 
-              your journey in a new country</div>
-
+      <section className="bg-blue-204 py-10">
+        <div className="mx-auto max-w-7xl">
+          <div className="flex items-center justify-between gap-4 w-full">
+            <div className="flex items-center gap-4">
+              <div className="flex flex-col" style={{ flex: 2 }}>
+                <h5 className="font-pp font-semibold text-[13px] leading-[24px] tracking-normal text-teal-100 h-[24px] ">
+                  COGNITO
+                </h5>
+                <h1 className="font-pp font-bold text-[30px] leading-[36.63px] tracking-normal text-blue-200 mt-[6px]">
+                  Access well vetted articles to kick start <br />
+                  your journey in a new country
+                </h1>
+              </div>
+              <img src="/access-v.svg" alt="" />
             </div>
+
+
+            <div className="flex items-end" >
+              <Button
+                intent="transparent"
+                href="/search?cn=Canada"
+                className="w-[303px] px-[15px] py-[15.5px] b !text-blue-200 bg-white-100 rounded-md border-[1px] border-white-100 "
+                rightIcon={
+                  <CtaArrow strokeWidth={0.4} className="stroke-white-100" />
+                }
+                hardRefresh={true}
+              >
+                <span className="font-hnM font-bold text-[15.5px] leading-[14px] text-left tex0 ">
+                  View Other Articles
+                </span>
+              </Button>
+            </div>
+          </div>
+        </div>
       </section>
       <FlexColCenter
         className="relative w-full py-20 md:py-40 top-0 right-0 bg-[url('/assets/images/join-network-bg.svg')] bg-blue-200"
@@ -258,13 +286,13 @@ const Home = () => {
             <Button
               intent="primary"
               href="/search?cn=Canada"
-              className="w-[303px] px-[15px] py-[15px] rounded-md border-[1px] border-white-100 "
+              className="w-[303px] px-[15px] py-[15.5px] rounded-md border-[1px] border-white-100 "
               rightIcon={
                 <CtaArrow strokeWidth={0.4} className="stroke-white-100" />
               }
               hardRefresh={true}
             >
-              <span className="font-hnM font-bold text-[15px] leading-[14px] text-left text-white-100 ">
+              <span className="font-hnM font-bold text-[15.5px] leading-[14px] text-left text-white-100 ">
                 Explore Businesses
               </span>
             </Button>
