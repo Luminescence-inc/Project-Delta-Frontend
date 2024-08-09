@@ -55,7 +55,7 @@ const Footer = () => {
                 href={n.link}
                 key={i}
                 className={cn(
-                  `${window.location.pathname === n.link && "text-brand-green-shade99"}`,
+                  `${window.location.pathname === n.link && "!text-brand-green-shade99"}`,
                   "text-[14px] leading-[14px] cursor-pointer font-medium font-pp pb-[10px] text-gray-100",
                   "text-gray-100"
                 )}
