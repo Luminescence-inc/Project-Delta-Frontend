@@ -219,6 +219,13 @@ const Home = () => {
         </div>
 
       </section>
+      <section className="bg-blue-204 mx-auto max-w-7xl">
+            <div className="flex flex-col">
+              <div className="text">Access well vetted articles to kick start 
+              your journey in a new country</div>
+
+            </div>
+      </section>
       <FlexColCenter
         className="relative w-full py-20 md:py-40 top-0 right-0 bg-[url('/assets/images/join-network-bg.svg')] bg-blue-200"
         style={{
