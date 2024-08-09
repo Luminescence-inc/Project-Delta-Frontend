@@ -114,10 +114,9 @@ const Navbar = () => {
 
           {menuOpen && (
             <div className="w-full h-full fixed md:absolute top-0 left-0 shadow-md px-[32px] py-[4em] bg-white-100 z-[999]">
-              <img
-                className="w-[180px]"
-                src={"/assets/images/logo/logo-header.svg"}
-              />
+              <a href="/">
+                <img src={"/assets/images/logo/logo-header.svg"} />
+              </a>
               <Cancel
                 className="absolute top-[4em] right-[24px] cursor-pointer"
                 onClick={() => setMenuOpen(false)}

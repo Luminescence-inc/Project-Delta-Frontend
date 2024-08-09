@@ -28,7 +28,7 @@ interface MultiSearchProps {
   activePanel: string;
   setActivePanel: (panel: string) => void;
   placeholder?: string;
-  isSearch?: boolean
+  isSearch?: boolean;
 }
 
 export default function MultiSearch({
@@ -46,7 +46,7 @@ export default function MultiSearch({
   placeholder,
   onClick,
   is_link,
-  isSearch
+  isSearch,
 }: MultiSearchProps) {
   const [search, setSearch] = useState("");
   //   const location = useLocation();
@@ -144,13 +144,15 @@ export default function MultiSearch({
             height: activePanel === dataType ? "auto" : "0px",
           }}
         >
-        {isSearch && <input
-            type="text"
-            className="w-full px-[3px] py-[2px] text-[15px] !border-b !border-t-0 !border-l-0 !border-r-0 focus:border-none focus:ring-0 bordcer-b-solid border-b-white-40 outline-none"
-            placeholder="Search..."
-            value={searchValue}
-            onChange={(e) => setSearchValue(e.target.value)}
-          />}
+          {isSearch && (
+            <input
+              type="text"
+              className="w-full px-[3px] py-[2px] text-[15px] !border-b !border-t-0 !border-l-0 !border-r-0 focus:border-none focus:ring-0 bordcer-b-solid border-b-white-40 outline-none"
+              placeholder="Search..."
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value)}
+            />
+          )}
           {/* lists */}
           <FlexColStart className="w-full flex flex-col items-start justify-start gap-[5px]">
             {type === "multi"

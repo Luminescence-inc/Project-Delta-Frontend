@@ -18,8 +18,6 @@ import {
 import { LoaderComponent } from "@components/Loader";
 import ReadMoreText from "@/components/ReadMoreText";
 import withAuth from "@/utils/auth-helpers/withAuth";
-import Input from "@/components/ui/input";
-import { SearchIcon2 } from "@/components/icons";
 
 const ViewBusiness = () => {
   const router = useRouter();
@@ -101,7 +99,7 @@ const ViewBusiness = () => {
       <div className="w-full p-[16px] bg-gray-202">
         <header className="w-full text- mt-[64px] mb-[64px]">
           <h2 className="mb-[16px] text-[32px] leading-[40px] font-semibold font-pp text-blue-200">
-          My Businesses
+            My Businesses
           </h2>
           <p className="text-[13px] font-pp leading-[24px] text-gray-103">
             Here is a list of all business associated with your account.
@@ -120,16 +118,16 @@ const ViewBusiness = () => {
               return (
                 <div className="w-full p-3 shadow-lg rounded-[8px]" key={i}>
                   <div className="min-h-[150px] rounded-[8px]">
-                  <img
-                    src={
-                      thisBusinessProfile?.logoUrl
-                      ? `https://res.cloudinary.com/${CloudinaryConfig.cloudName}/image/upload/c_fill,q_500/${thisBusinessProfile?.logoUrl}.jpg`
-                      : "/assets/images/default-img.jpeg"
-                    }
-                    className="bg-cover h-[150px] w-full rounded-[8px] bg-blue-205"
-                    alt="businessImage"
+                    <img
+                      src={
+                        thisBusinessProfile?.logoUrl
+                          ? `https://res.cloudinary.com/${CloudinaryConfig.cloudName}/image/upload/c_fill,q_500/${thisBusinessProfile?.logoUrl}.jpg`
+                          : "/assets/images/default-img.jpeg"
+                      }
+                      className="bg-cover bg-center h-[328px] w-fit rounded-[8px] bg-blue-205"
+                      alt="businessImage"
                     />
-                    </div>
+                  </div>
                   <h3 className="text-[16px] font-pp font-semibold leading-[40px]">
                     {thisBusinessProfile.name}
                   </h3>
