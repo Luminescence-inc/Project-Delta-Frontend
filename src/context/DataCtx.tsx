@@ -1,6 +1,6 @@
 "use client";
-import usePathname from "@/hooks/usePathname";
 import React, { PropsWithChildren, useState } from "react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 interface DataCtxProps {
   isAuth: boolean;
@@ -18,6 +18,8 @@ const DataContext = React.createContext({} as DataCtxProps);
 
 interface DataCtxProviderProps extends PropsWithChildren {}
 
+const queryClient = new QueryClient();
+
 export const DataCtxProvider = ({ children }: DataCtxProviderProps) => {
   const [isAuth, setIsAuth] = useState<boolean>(false);
   const [navbarBgColor, setNavbarBgColor] = useState<NavbarBgColor>({
@@ -33,9 +35,11 @@ export const DataCtxProvider = ({ children }: DataCtxProviderProps) => {
   } satisfies DataCtxProps;
 
   return (
-    <DataContext.Provider value={contextValues}>
-      {children}
-    </DataContext.Provider>
+    <QueryClientProvider client={queryClient}>
+      <DataContext.Provider value={contextValues}>
+        {children}
+      </DataContext.Provider>
+    </QueryClientProvider>
   );
 };
 

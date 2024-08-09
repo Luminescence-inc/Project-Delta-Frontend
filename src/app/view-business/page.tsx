@@ -163,50 +163,32 @@ const ViewBusiness = () => {
         </div>
         </div>
 
-
-
-        {businessesLoading && (
-          <FlexColCenter className="w-full">
-            <LoaderComponent />
-          </FlexColCenter>
-        )}
-
         {userListOfBusinessProfile && userListOfBusinessProfile.length > 0 && (
           <FlexColStart className="w-full gap-10">
             {userListOfBusinessProfile.map((thisBusinessProfile, i) => {
               return (
-                <div className="w-full" key={i}>
+                <div className="w-full p-3 shadow-lg rounded-[8px]" key={i}>
+                  <div className="min-h-[150px] rounded-[8px]">
                   <img
                     src={
                       thisBusinessProfile?.logoUrl
-                        ? `https://res.cloudinary.com/${CloudinaryConfig.cloudName}/image/upload/c_fill,q_500/${thisBusinessProfile?.logoUrl}.jpg`
-                        : "/assets/images/default-img.jpeg"
+                      ? `https://res.cloudinary.com/${CloudinaryConfig.cloudName}/image/upload/c_fill,q_500/${thisBusinessProfile?.logoUrl}.jpg`
+                      : "/assets/images/default-img.jpeg"
                     }
+                    className="bg-cover h-[150px] w-full rounded-[8px] bg-blue-205"
                     alt="businessImage"
-                  />
+                    />
+                    </div>
                   <h3 className="text-[16px] font-pp font-semibold leading-[40px]">
                     {thisBusinessProfile.name}
                   </h3>
-                  <p className="text-[16px] leading-[24px] mb-[32px]">
+                  <p className="text-[16px] leading-[24px] mb-[20px]">
                     <ReadMoreText text={thisBusinessProfile.description!} />
                   </p>
 
                   <Button
-                    className="w-full mb-[10px] text-[14px] font-pp font-semibold"
-                    intent="primary"
-                    size="lg"
-                    onClick={() =>
-                      router.push(
-                        `/register-business?update=${thisBusinessProfile.uuid}`
-                      )
-                    }
-                  >
-                    <span>Update Business</span>
-                  </Button>
-
-                  <Button
-                    className="w-full text-[14px] font-pp font-semibold"
-                    intent="error"
+                    className="w-full text-base font-pp leading-6 font-bold border bg-white-100 border-blue-200 text-blue-200"
+                    intent="none"
                     size="lg"
                     onClick={() =>
                       handleDeleteButton(
@@ -216,6 +198,19 @@ const ViewBusiness = () => {
                     }
                   >
                     <span>Delete Business</span>
+                  </Button>
+
+                  <Button
+                    className="w-full mt-[10px] text-base font-pp leading-6 font-bold"
+                    intent="primary"
+                    size="lg"
+                    onClick={() =>
+                      router.push(
+                        `/register-business?update=${thisBusinessProfile.uuid}`
+                      )
+                    }
+                  >
+                    <span>Update Business</span>
                   </Button>
                 </div>
               );

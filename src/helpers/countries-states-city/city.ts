@@ -54,9 +54,21 @@ function sortByStateAndName(cities: ICity[]): ICity[] {
   });
 }
 
+function isCitySupportedByName(cityName: string): boolean {
+  const cityList = getAllCities();
+  return cityList.some((city) => city.name === cityName);
+}
+
+function isCitySupportedByISOCode(isoCode: string): boolean {
+  const cityList = getAllCities();
+  return cityList.some((city) => city.stateCode === isoCode);
+}
+
 export default {
   getAllCities,
   getCitiesOfState,
   getCitiesOfCountry,
   sortByStateAndName,
+  isCitySupportedByName,
+  isCitySupportedByISOCode,
 };

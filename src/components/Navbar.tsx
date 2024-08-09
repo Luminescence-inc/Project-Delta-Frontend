@@ -86,7 +86,7 @@ const Navbar = () => {
           }}
         >
           <div
-            className="w-full px-4 py-4 bg-blue-205"
+            className="w-full px-3 py-4 bg-blue-203"
             style={{
               backgroundColor: navbarBgColor?.parent ?? "",
             }}

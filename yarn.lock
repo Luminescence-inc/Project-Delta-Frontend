@@ -410,6 +410,21 @@
     "@radix-ui/react-use-callback-ref" "1.1.0"
     "@radix-ui/react-use-controllable-state" "1.1.0"
 
+"@radix-ui/react-scroll-area@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@radix-ui/react-scroll-area/-/react-scroll-area-1.1.0.tgz#50b24b0fc9ada151d176395bcf47b2ec68feada5"
+  integrity sha512-9ArIZ9HWhsrfqS765h+GZuLoxaRHD/j0ZWOWilsCvYTpYJp8XwCqNG7Dt9Nu/TItKOdgLGkOPCodQvDc+UMwYg==
+  dependencies:
+    "@radix-ui/number" "1.1.0"
+    "@radix-ui/primitive" "1.1.0"
+    "@radix-ui/react-compose-refs" "1.1.0"
+    "@radix-ui/react-context" "1.1.0"
+    "@radix-ui/react-direction" "1.1.0"
+    "@radix-ui/react-presence" "1.1.0"
+    "@radix-ui/react-primitive" "2.0.0"
+    "@radix-ui/react-use-callback-ref" "1.1.0"
+    "@radix-ui/react-use-layout-effect" "1.1.0"
+
 "@radix-ui/react-select@^2.1.1":
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/@radix-ui/react-select/-/react-select-2.1.1.tgz#df05cb0b29d3deaef83b505917c4042e0e418a9f"
@@ -541,6 +556,18 @@
   integrity sha512-QE7X69iQI+ZXwldE+rzasvbJiyV/ju1FGHH0Qn2W3FKbuYtqp8LKcy6iSw79fVUT5/Vvf+0XgLCeYVG+UV6hOw==
   dependencies:
     mini-svg-data-uri "^1.2.3"
+
+"@tanstack/query-core@5.51.17":
+  version "5.51.17"
+  resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-5.51.17.tgz#f2ebad3f8511ebe5fecbd5d9b6b105471ed248d4"
+  integrity sha512-AtVNOgVrZNz4C7RzMfx7sCn1/gf0Ype4nX8UP2BOh0C2tTMszwXk98iCLRacTn5vTRNJCZxz3fgEcTJq0uv8GQ==
+
+"@tanstack/react-query@^5.51.18":
+  version "5.51.18"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-query/-/react-query-5.51.18.tgz#890db159b9b91e005b8f8c8442eb8305410259c7"
+  integrity sha512-l/PF3X6Coi53kEDpL2XEU0x+y3szOk/oKWSHMlyy8tyUHviaIg8tJ6O4Cc1AjLAhbyTG1a+bZobdSuLXzYTt/w==
+  dependencies:
+    "@tanstack/query-core" "5.51.17"
 
 "@types/axios@^0.14.0":
   version "0.14.0"

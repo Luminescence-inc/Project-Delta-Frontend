@@ -22,6 +22,7 @@ const buttonVariants = cva(
         error:
           "bg-red-305 text-white-100 hover:bg-brand-red-hover focus:bg-brand-red-focused active:bg-brand-red-pressed disabled:bg-red-305/70 disabled:cursor-not-allowed",
         dark: "bg-dark-100/90 text-white-100 hover:bg-dark-100 focus:bg-dark-100 active:bg-dark-100 disabled:bg-brand-disabled disabled:cursor-not-allowed",
+        none: ''
       },
       size: {
         sm: "text-sm py-2",
@@ -76,14 +77,14 @@ const Button: React.FC<ButtonProps> = ({
       <>
         {hardRefresh ? (
           // @ts-expect-error
-          <a href={href} className={classNames} {...props}>
+          <a href={href} className={classNames && classNames} {...props}>
             {leftIcon && leftIcon}
             {children}
             {rightIcon && rightIcon}
           </a>
         ) : (
           // @ts-expect-error
-          <Link href={href} relative="path" className={classNames} {...props}>
+          <Link href={href} relative="path" className={classNames && classNames} {...props}>
            {leftIcon && leftIcon}
             {children}
             {rightIcon && rightIcon}

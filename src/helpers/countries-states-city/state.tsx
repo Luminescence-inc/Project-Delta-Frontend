@@ -50,10 +50,24 @@ function sortByIsoCode(countries: IState[]): IState[] {
   });
 }
 
+function isStateSupportedByName(name: string): boolean {
+  return stateList.some(
+    (state) => state.name.toLowerCase() === name.toLowerCase()
+  );
+}
+
+function isStateSupportedByCode(isoCode: string): boolean {
+  return stateList.some(
+    (state) => state.isoCode.toLowerCase() === isoCode.toLowerCase()
+  );
+}
+
 export default {
   getAllStates,
   getStatesOfCountry,
   getStateByCodeAndCountry,
   getStateByCode,
   sortByIsoCode,
+  isStateSupportedByName,
+  isStateSupportedByCode,
 };

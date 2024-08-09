@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 interface LocationResp {
   status?: string;
@@ -23,39 +23,40 @@ export const useLocation = () => {
     loading: true,
   });
 
-  useEffect(() => {
-    const fetchLocation = async () => {
-      try {
-        const ipAddress = await getIpAddress();
-        if (!ipAddress) {
-          setLocationData({
-            location: { country: DEFAULT_COUNTRY },
-            loading: false,
-          });
-          return;
-        }
-
-        const location = await getLocation(ipAddress);
-        if (!location) {
-          setLocationData({
-            location: { country: DEFAULT_COUNTRY },
-            loading: false,
-          });
-          return;
-        }
-
-        setLocationData({ location, loading: false });
-      } catch (error) {
-        console.error(error);
+  const fetchLocation = useCallback(async () => {
+    try {
+      const ipAddress = await getIpAddress();
+      if (!ipAddress) {
         setLocationData({
           location: { country: DEFAULT_COUNTRY },
           loading: false,
         });
+        return;
       }
-    };
+      const location = await getLocation(ipAddress);
+      if (!location) {
+        setLocationData({
+          location: { country: DEFAULT_COUNTRY },
+          loading: false,
+        });
+        return;
+      }
 
-    fetchLocation();
+      setLocationData({ location, loading: false });
+    } catch (error) {
+      console.error(error);
+      setLocationData({
+        location: { country: DEFAULT_COUNTRY },
+        loading: false,
+      });
+    }
   }, []);
+
+  useEffect(() => {
+    if (!locationData.location) {
+      fetchLocation();
+    }
+  }, [fetchLocation]);
 
   useEffect(() => {
     if (locationData.location) {
@@ -86,7 +87,7 @@ const getIpAddress = async () => {
 
 const getLocation = async (ip: string) => {
   try {
-    const url = `http://ip-api.com/json/${ip}?fields=status,country,countryCode,region,regionName,city`;
+    const url = `https://api.ipgeolocation.io/ipgeo?apiKey=fabd20edf6994540a02509e7fcd41243&ip=${ip}`;
     const req = await fetch(url);
     const resp = await req.json();
 
@@ -95,9 +96,9 @@ const getLocation = async (ip: string) => {
     }
 
     return {
-      country: resp.country,
-      countryCode: resp.countryCode,
-      state: resp.regionName,
+      country: resp.country_name,
+      countryCode: resp.country_code2,
+      state: resp.state_prov,
       city: resp.city,
     } as LocationResp;
   } catch (e: any) {

@@ -137,6 +137,20 @@ export function FlexRowEnd({ children, className, ...props }: FlexProps) {
   );
 }
 
+export function FlexRowEndBtw({ children, className, ...props }: FlexProps) {
+  return (
+    <div
+      className={twMerge(
+        "w-auto flex items-end justify-between gap-3",
+        className
+      )}
+      {...props}
+    >
+      {children}
+    </div>
+  );
+}
+
 export function FlexRowStretch({ children, className, ...props }: FlexProps) {
   return (
     <div

@@ -16,7 +16,7 @@ export function HeaderSearchComp() {
   return (
     <FlexColCenter className="w-full">
       <a
-        href="/search?cn=Canada"
+        href="/search"
         className="w-full h-[44px] rounded-[10px] flex flex-row items-center justify-start px-[15px] gap-5 cursor-pointer bg-white border-[1px] border-solid border-blue-200 shadow-md bg-white-100"
         onClick={() => {
           // keep track of prev page route
@@ -49,9 +49,12 @@ export function HeaderOnboardingComp() {
         href="/onboarding"
         rightIcon={
           <span>
-        <CtaArrow strokeWidth={1} className="stroke-white-100 inline-block" />
+            <CtaArrow
+              strokeWidth={1}
+              className="stroke-white-100 inline-block"
+            />
           </span>
-      }
+        }
         className="w-full h-44px mt-4 rounded-md pt-[10px] pr-[100px] pb-[10px] pl-[100px]"
       >
         <span className="font-pp font-medium text-[14px] leading-[24px] text-white-100">
@@ -105,7 +108,11 @@ export function HeaderBusinessBtn() {
             }
             className="w-full mt-8 rounded-md h-[44px]"
           >
-            <span className={`font-pp font-semibold text-[14px] leading-[24px] ${!businessPresent && 'text-blue-200' }`}>
+            <span
+              className={`font-pp font-semibold text-[14px] leading-[24px] ${
+                !businessPresent && "text-blue-200"
+              }`}
+            >
               {businessPresent
                 ? "Create a new business profile"
                 : "Create your first business profile"}

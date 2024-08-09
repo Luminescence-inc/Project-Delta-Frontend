@@ -29,6 +29,11 @@ export default function withAuth<P>(Component: React.ComponentType<P>) {
       }
     }, [userDetails, loading]);
 
+    if (!loading && !userDetails?.verified) {
+      router.push("/auth/verify-account");
+      return;
+    }
+
     return localIsAuth ? <Component {...props} /> : null;
   };
   return ComponentWithAuth;

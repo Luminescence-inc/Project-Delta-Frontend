@@ -70,7 +70,7 @@ const Login = () => {
           // so every component can get the updated data
           window.location.href = "/?login=true";
         } else {
-          router.push("/verify-account");
+          router.push("/auth/verify-account");
           window.location.reload();
         }
 
@@ -187,7 +187,7 @@ const Login = () => {
         </form>
         <a
           className="forgot font-pp text-sm underline text-blue-200"
-          href="/forgot-password/email"
+          href="/auth/forgot-password/email"
         >
           <p>Forgot password?</p>
         </a>

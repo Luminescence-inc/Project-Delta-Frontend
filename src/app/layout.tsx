@@ -20,12 +20,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">  
+    <html lang="en">
+      <link rel="icon" href="next.svg" sizes="any" />
       <body
         className={cn(inter.variable, poppins.variable, open_sans.variable)}>
         <DataCtxProvider>
           <NotsupportedCountryBanner />
-          <BlockDesktopView override={false} />
+          <BlockDesktopView override={true} />
           <Navbar />
           <BusinessContextProvider>{children}</BusinessContextProvider>
           <Footer />
