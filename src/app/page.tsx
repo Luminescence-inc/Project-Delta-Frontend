@@ -8,6 +8,7 @@ import {
   HomeSignupBtn,
   TitleCard,
 } from "@/modules/home/components";
+import AccessVettedCard from "@/modules/home/components/AccessVettedCard";
 import {
   HeaderBusinessBtn,
   HeaderOnboardingComp,
@@ -219,7 +220,7 @@ const Home = () => {
         </div>
 
       </section>
-      <section className="bg-blue-204 py-10">
+      <section className="bg-blue-204 py-10 md:py-20 px-3 lg:px-0">
         <div className="mx-auto max-w-7xl">
           <div className="flex items-center justify-between gap-4 w-full">
             <div className="flex items-center gap-4">
@@ -228,7 +229,7 @@ const Home = () => {
                   COGNITO
                 </h5>
                 <h1 className="font-pp font-bold text-[30px] leading-[36.63px] tracking-normal text-blue-200 mt-[6px]">
-                  Access well vetted articles to kick start <br />
+                  Access well vetted articles to kick start <br className="hidden md:block" />
                   your journey in a new country
                 </h1>
               </div>
@@ -236,7 +237,7 @@ const Home = () => {
             </div>
 
 
-            <div className="flex items-end" >
+            <div className="hidden sm:flex items-end" >
               <Button
                 intent="transparent"
                 href="/search?cn=Canada"
@@ -251,6 +252,25 @@ const Home = () => {
                 </span>
               </Button>
             </div>
+          </div>
+
+
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 mt-10">
+            <AccessVettedCard
+              icon="/card1.svg"
+              header="10 things to consider while making your first trip to Canada"
+              subTitle="Blueprint fidelity between paper prototype and finished product traveling and Vancouver to study..."
+            />
+            <AccessVettedCard
+              icon="/card2.svg"
+              header="Are you a tourist in Canada? Visit these five places in Toronto "
+              subTitle="Blueprint fidelity between paper prototype and finished product traveling and Vancouver to study..."
+            />
+            <AccessVettedCard
+              icon="/card3.svg"
+              header="Best places to live in Canada for Nigerian immigrants"
+              subTitle="Blueprint fidelity between paper prototype and finished product traveling and Vancouver to study..."
+            />
           </div>
         </div>
       </section>
