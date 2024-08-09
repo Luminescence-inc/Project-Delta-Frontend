@@ -14,27 +14,12 @@ import {
   FlexColCenter,
   FlexColStart,
   FlexColStartCenter,
-  FlexRowStartCenter,
 } from "@components/Flex";
 import { LoaderComponent } from "@components/Loader";
 import ReadMoreText from "@/components/ReadMoreText";
 import withAuth from "@/utils/auth-helpers/withAuth";
-import Input from "@/components/ui/input";
-import { SearchIcon2 } from "@/components/icons";
-import { useBusinessCtx } from "@/context/BusinessCtx";
-import BusinessCardContainer from "@/modules/search/components/BusinessCard";
 
 const ViewBusiness = () => {
-  const {
-    businessCategory,
-    businesses,
-    allBusinessesLoading,
-    totalPages,
-    setSearchQuery,
-    layout,
-    setLayout,
-    searchQuery,
-  } = useBusinessCtx();
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [userListOfBusinessProfile, setUserListOfBusinessProfile] = useState<
@@ -111,57 +96,21 @@ const ViewBusiness = () => {
 
   return (
     <>
-      <div className="w-full p-[16px] bg-blue-205">
-        <header className="w-ful mt-0 mb-4">
+      <div className="w-full p-[16px] bg-gray-202">
+        <header className="w-full text- mt-[64px] mb-[64px]">
           <h2 className="mb-[16px] text-[32px] leading-[40px] font-semibold font-pp text-blue-200">
-            My Businesses
+          My Businesses
           </h2>
           <p className="text-[13px] font-pp leading-[24px] text-gray-103">
             Here is a list of all business associated with your account.
           </p>
         </header>
 
-        <div>
-          <FlexRowStartCenter className="w-full gap-[5px] bg-transparent">
-            <Input
-              inputClassname="font-pp px-0 font-normal border-none tracking-[0] placeholder:text-gray-103"
-              parentClassname="w-full px-4 bg-white-100 cursor-pointer rounded-[10px] border-none"
-              type="text"
-              placeholder="Search business"
-              leftIcon={
-                <SearchIcon2
-                  size={20}
-                  strokeWidth={1.2}
-                  className="stroke-gray-103"
-                />
-              }
-              onChange={(e) => null}
-              autoComplete="nope"
-            />
-
-            <button
-              onClick={() =>
-                setLayout && setLayout(layout === "col" ? "row" : "col")
-              }
-              className="border-none outline-none cursor-pointer rounded-[10px] p-2 flex items-center justify-center -translate-y-2"
-            >
-              <FlexColCenter>
-                {layout === "col" ? (
-                  <img src={"/assets/icons/layout-panel-top.svg"} />
-                ) : (
-                  <img src={"/assets/icons/layout-panel-left.svg"} />
-                )}
-              </FlexColCenter>
-            </button>
-          </FlexRowStartCenter>
-          
-        <div className="mt-10 w-full ">
-          <BusinessCardContainer
-            data={businesses as UserBusinessList[]}
-            businessCategories={businessCategory}
-          />
-        </div>
-        </div>
+        {businessesLoading && (
+          <FlexColCenter className="w-full">
+            <LoaderComponent />
+          </FlexColCenter>
+        )}
 
         {userListOfBusinessProfile && userListOfBusinessProfile.length > 0 && (
           <FlexColStart className="w-full gap-10">
@@ -230,7 +179,7 @@ const ViewBusiness = () => {
             </h2>
             <p className="text-[12px] font-normal font-pp">
               {confirmDelete
-                ? `You’re about to delete (${businessName}) business, you can’t undo this request.`
+                ? `You're about to delete (${businessName}) business, you can't undo this request.`
                 : "You have successfully deleted your business profile"}
             </p>
             {confirmDelete && (

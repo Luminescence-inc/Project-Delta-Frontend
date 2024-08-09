@@ -87,7 +87,7 @@ const MultiSelect = ({
               showDropdown ? "cursor-text" : "cursor-pointer"
             )}
             type="text"
-            value={value}
+            // value={value}
             name={name}
             placeholder={label}
             onClick={toggleDropdown}
